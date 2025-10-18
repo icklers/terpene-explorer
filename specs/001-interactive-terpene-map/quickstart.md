@@ -1,64 +1,24 @@
 # Quickstart
 
-This guide will help you set up and run the Interactive Terpene Map project locally.
+This document provides instructions on how to run the Interactive Terpene Map application.
 
 ## Prerequisites
 
-- Node.js (v18 or higher)
-- npm or yarn
+- Node.js and npm installed.
 
 ## Installation
 
-1. Clone the repository:
+1. Clone the repository.
+2. Install the dependencies:
 
-   ```bash
-   git clone <repository-url>
-   ```
+```bash
+npm install
+```
 
-2. Navigate to the project directory:
-
-   ```bash
-   cd interactive-terpene-map/frontend
-   ```
-
-3. Install the dependencies:
-
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-## Running the Application
-
-To start the development server, run the following command:
+## Running the application
 
 ```bash
 npm start
-# or
-yarn start
 ```
 
-This will open the application in your default browser at `http://localhost:3000`.
-
-## Building the Application
-
-To create a production build of the application, run:
-
-```bash
-npm run build
-# or
-yarn build
-```
-
-This will create a `build` directory with the static files that can be deployed to a hosting provider.
-
-## Running Tests
-
-To run the test suite, use the following command:
-
-```bash
-npm test
-# or
-yarn test
-```
+This will start the development server and open the application in your default browser.

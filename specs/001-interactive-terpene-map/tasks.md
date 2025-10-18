@@ -1,17 +1,29 @@
 # Tasks: Interactive Terpene Map
 
 **Input**: Design documents from `/specs/001-interactive-terpene-map/`
-**Prerequisites**: plan.md, spec.md, data-model.md
+**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
+
+**Tests**: The tasks below include test tasks as requested in the feature specification.
+
+**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+## Format: `[ID] [P?] [Story] Description`
+- **[P]**: Can run in parallel (different files, no dependencies)
+- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
+- Include exact file paths in descriptions
+
+## Path Conventions
+- **Web app**: `src/`, `tests/` at repository root
 
 ## Phase 1: Setup (Shared Infrastructure)
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Initialize React project using Create React App in `frontend/`
-- [ ] T002 [P] Install dependencies: `d3`, `tailwindcss`
-- [ ] T003 [P] Install development dependencies: `jest`, `playwright`, `@testing-library/react`
-- [ ] T004 [P] Configure Tailwind CSS in `frontend/tailwind.config.js` and `frontend/src/index.css`
-- [ ] T005 [P] Set up project structure in `frontend/src/` with `components`, `pages`, `services`, `data`, `hooks`, `styles`, `utils` directories.
+- [ ] T001 Create project structure per implementation plan
+- [ ] T002 Initialize React project with Create React App
+- [ ] T003 [P] Install dependencies: D3.js, Tailwind CSS, Jest, Playwright, React Testing Library
+- [ ] T004 [P] Configure Tailwind CSS in `tailwind.config.js`
+- [ ] T005 [P] Configure Jest and Playwright in `jest.config.js` and `playwright.config.js`
 
 ---
 
@@ -19,57 +31,200 @@
 
 **Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
 
-- [ ] T006 Implement data loading service in `frontend/src/services/dataService.js` to fetch and parse `terpenes.json`
-- [ ] T007 Set up global state management for terpene data, theme, and language using React Context in `frontend/src/context/`
+**⚠️ CRITICAL**: No user story work can begin until this phase is complete
+
+- [ ] T006 Create a data service in `src/services/dataService.js` to load and parse terpene data from `data/terpenes.json` and `data/terpenes.yaml`
+- [ ] T007 [P] Create a data validation service in `src/services/validationService.js` to validate the loaded data against the data model
+- [ ] T008 Implement the main application layout component in `src/components/Layout.js`
+
+**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
 ---
 
 ## Phase 3: User Story 1 - View and Filter Terpene Data (Priority: P1) 🎯 MVP
 
-**Goal**: Allow users to view and filter the terpene data.
+**Goal**: As a user, I want to see a visual representation of all terpenes from the dataset, so that I can get an overview of the available data. I also want to be able to filter the terpenes by their effects, so that I can find terpenes that have the characteristics I'm interested in.
 
-**Independent Test**: The user can see the terpene grid and filter it by effect.
+**Independent Test**: The user can load the application and see the terpene data. The user can use the filter controls and see the list of terpenes update accordingly.
 
-- [ ] T008 [US1] Create a `TerpeneCard` component in `frontend/src/components/TerpeneCard.js` to display a single terpene.
-- [ ] T009 [US1] Create a `TerpeneGrid` component in `frontend/src/components/TerpeneGrid.js` to display a grid of `TerpeneCard` components.
-- [ ] T010 [US1] Create a `Filter` component in `frontend/src/components/Filter.js` to allow users to filter by effect.
-- [ ] T011 [US1] Implement the filtering logic in the main page `frontend/src/pages/HomePage.js` to filter the terpenes based on the selected effect.
-- [ ] T012 [US1] Write unit tests for the `TerpeneCard`, `TerpeneGrid`, and `Filter` components in `frontend/src/tests/`.
+### Tests for User Story 1 ⚠️
 
----
+**NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-## Phase 4: User Story 2 - Theming and Language (Priority: P2)
+- [ ] T009 [P] [US1] Unit test for `TerpeneCard` component in `src/components/TerpeneCard.test.js`
+- [ ] T010 [P] [US1] Unit test for `TerpeneGrid` component in `src/components/TerpeneGrid.test.js`
+- [ ] T011 [P] [US1] Unit test for `EffectFilter` component in `src/components/EffectFilter.test.js`
+- [ ] T012 [P] [US1] Integration test for filtering logic in `src/pages/MainPage.test.js`
 
-**Goal**: Allow users to switch between light/dark themes and English/German languages.
+### Implementation for User Story 1
 
-**Independent Test**: The user can toggle the theme and language and see the UI update accordingly.
+- [ ] T013 [P] [US1] Create `TerpeneCard` component in `src/components/TerpeneCard.js`
+- [ ] T014 [US1] Create `TerpeneGrid` component in `src/components/TerpeneGrid.js` (depends on T013)
+- [ ] T015 [P] [US1] Create `EffectFilter` component in `src/components/EffectFilter.js`
+- [ ] T016 [US1] Implement the main page in `src/pages/MainPage.js` to display the `TerpeneGrid` and `EffectFilter` (depends on T014, T015)
+- [ ] T017 [US1] Implement filtering logic in `src/pages/MainPage.js`
 
-- [ ] T013 [US2] Implement theme switching (light/dark) in `frontend/src/hooks/useTheme.js` and apply it to the root component.
-- [ ] T014 [US2] Implement language switching (en/de) in `frontend/src/hooks/useLocalization.js` and create translation files in `frontend/public/locales/`.
-- [ ] T015 [US2] Write unit tests for the theme and localization hooks in `frontend/src/tests/`.
-
----
-
-## Phase 5: User Story 3 - Data Visualization and Search (Priority: P1)
-
-**Goal**: Provide advanced data visualization and search capabilities.
-
-**Independent Test**: The user can switch between views, use the sunburst chart, table view, and search bar.
-
-- [ ] T016 [US3] Create the `SunburstChart` component in `frontend/src/components/SunburstChart.js` using D3.js.
-- [ ] T017 [US3] Implement the interaction logic for the sunburst chart to filter the main data view when a slice is clicked.
-- [ ] T018 [US3] Create the `TableView` component in `frontend/src/components/TableView.js` with sortable columns.
-- [ ] T019 [US3] Create the `SearchBar` component in `frontend/src/components/SearchBar.js`.
-- [ ] T020 [US3] Implement the search logic in `frontend/src/pages/HomePage.js` to filter terpenes by name, aroma, and effects.
-- [ ] T021 [US3] Write unit tests for the `SunburstChart`, `TableView`, and `SearchBar` components in `frontend/src/tests/`.
+**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
 ---
 
-## Phase N: Polish & Cross-Cutting Concerns
+## Phase 4: User Story 3 - Data Visualization and Search (Priority: P1)
+
+**Goal**: As a user, I want to be able to view the terpene data in different formats, such as a sunburst chart and a table, so that I can choose the representation that best suits my needs. I also want to be able to search for specific terpenes by name, so that I can quickly find the information I'm looking for.
+
+**Independent Test**: The user can switch between the different views (sunburst, table). The user can type in the search bar and see the data views update with filtered results.
+
+### Tests for User Story 3 ⚠️
+
+- [ ] T018 [P] [US3] Unit test for `SunburstChart` component in `src/components/SunburstChart.test.js`
+- [ ] T019 [P] [US3] Unit test for `TableView` component in `src/components/TableView.test.js`
+- [ ] T020 [P] [US3] Unit test for `ViewSwitcher` component in `src/components/ViewSwitcher.test.js`
+- [ ] T021 [P] [US3] Unit test for `SearchBar` component in `src/components/SearchBar.test.js`
+- [ ] T022 [P] [US3] Integration test for search and view switching in `src/pages/MainPage.test.js`
+
+### Implementation for User Story 3
+
+- [ ] T023 [P] [US3] Create `SunburstChart` component in `src/components/SunburstChart.js` using D3.js
+- [ ] T024 [P] [US3] Create `TableView` component in `src/components/TableView.js`
+- [ ] T025 [P] [US3] Create `ViewSwitcher` component in `src/components/ViewSwitcher.js`
+- [ ] T026 [P] [US3] Create `SearchBar` component in `src/components/SearchBar.js`
+- [ ] T027 [US3] Integrate `ViewSwitcher` and `SearchBar` into `src/pages/MainPage.js` (depends on T025, T026)
+- [ ] T028 [US3] Implement search logic in `src/pages/MainPage.js`
+- [ ] T029 [US3] Implement sunburst chart filtering logic in `src/components/SunburstChart.js`
+
+**Checkpoint**: At this point, User Stories 1 and 3 should both work independently
+
+---
+
+## Phase 5: User Story 2 - Theming and Language (Priority: P2)
+
+**Goal**: As a user, I want to be able to switch between a light and a dark theme, so that I can use the application comfortably in different lighting conditions. I also want to be able to switch the language of the application between English and German.
+
+**Independent Test**: The user can toggle between light and dark mode and see the application's appearance change. The user can switch the language and see the UI text update.
+
+### Tests for User Story 2 ⚠️
+
+- [ ] T030 [P] [US2] Unit test for theme switching in `src/contexts/ThemeContext.test.js`
+- [ ] T031 [P] [US2] Unit test for language switching in `src/contexts/LanguageContext.test.js`
+
+### Implementation for User Story 2
+
+- [ ] T032 [US2] Implement a theme context and provider in `src/contexts/ThemeContext.js`
+- [ ] T033 [P] [US2] Create `ThemeToggleButton` component in `src/components/ThemeToggleButton.js`
+- [ ] T034 [US2] Implement a language context and provider in `src/contexts/LanguageContext.js`
+- [ ] T035 [P] [US2] Create `LanguageSwitcher` component in `src/components/LanguageSwitcher.js`
+- [ ] T036 [US2] Integrate `ThemeToggleButton` and `LanguageSwitcher` into `src/components/Layout.js` (depends on T033, T035)
+- [ ] T037 [P] [US2] Create localization files for English and German in `src/locales/en.json` and `src/locales/de.json`
+- [ ] T038 [US2] Update all UI text to use the localization service
+
+**Checkpoint**: All user stories should now be independently functional
+
+---
+
+## Phase 6: Polish & Cross-Cutting Concerns
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T022 [P] Write integration tests for all user flows in `frontend/src/tests/`.
-- [ ] T023 Write end-to-end tests with Playwright for the main user journeys in `frontend/tests/e2e/`.
-- [ ] T024 Review and refactor code for performance and readability.
-- [ ] T025 Update `README.md` with detailed instructions.
+- [ ] T039 [P] Implement the pulsing cannabis leaf loading indicator in `src/components/LoadingIndicator.js`
+- [ ] T040 [P] Implement user-friendly error messages in `src/components/ErrorMessage.js`
+- [ ] T041 [P] Implement "no results" message in `src/components/NoResults.js`
+- [ ] T042 [P] Sanitize search input in `src/components/SearchBar.js`
+- [ ] T043 Review accessibility (WCAG 2.1 AA) across the application
+- [ ] T044 Performance optimization across all stories
+- [ ] T045 [P] End-to-end tests with Playwright in `tests/e2e/`
+- [ ] T046 Final documentation review of `README.md` and `quickstart.md`
+
+---
+
+## Dependencies & Execution Order
+
+### Phase Dependencies
+
+- **Setup (Phase 1)**: No dependencies - can start immediately
+- **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
+- **User Stories (Phase 3-5)**: All depend on Foundational phase completion
+  - User stories can then proceed in parallel (if staffed)
+  - Or sequentially in priority order (P1 → P2 → P3)
+- **Polish (Final Phase)**: Depends on all desired user stories being complete
+
+### User Story Dependencies
+
+- **User Story 1 (P1)**: Can start after Foundational (Phase 2) - No dependencies on other stories
+- **User Story 3 (P1)**: Can start after Foundational (Phase 2) - No dependencies on other stories
+- **User Story 2 (P2)**: Can start after Foundational (Phase 2) - No dependencies on other stories
+
+### Within Each User Story
+
+- Tests (if included) MUST be written and FAIL before implementation
+- Models before services
+- Services before endpoints
+- Core implementation before integration
+- Story complete before moving to next priority
+
+### Parallel Opportunities
+
+- All Setup tasks marked [P] can run in parallel
+- All Foundational tasks marked [P] can run in parallel (within Phase 2)
+- Once Foundational phase completes, all user stories can start in parallel (if team capacity allows)
+- All tests for a user story marked [P] can run in parallel
+- Models within a story marked [P] can run in parallel
+- Different user stories can be worked on in parallel by different team members
+
+---
+
+## Parallel Example: User Story 1
+
+```bash
+# Launch all tests for User Story 1 together:
+Task: "Unit test for TerpeneCard component in src/components/TerpeneCard.test.js"
+Task: "Unit test for TerpeneGrid component in src/components/TerpeneGrid.test.js"
+Task: "Unit test for EffectFilter component in src/components/EffectFilter.test.js"
+Task: "Integration test for filtering logic in src/pages/MainPage.test.js"
+
+# Launch all components for User Story 1 together:
+Task: "Create TerpeneCard component in src/components/TerpeneCard.js"
+Task: "Create EffectFilter component in src/components/EffectFilter.js"
+```
+
+---
+
+## Implementation Strategy
+
+### MVP First (User Story 1 & 3)
+
+1. Complete Phase 1: Setup
+2. Complete Phase 2: Foundational (CRITICAL - blocks all stories)
+3. Complete Phase 3: User Story 1
+4. Complete Phase 4: User Story 3
+5. **STOP and VALIDATE**: Test User Stories 1 and 3 independently
+6. Deploy/demo if ready
+
+### Incremental Delivery
+
+1. Complete Setup + Foundational → Foundation ready
+2. Add User Story 1 & 3 → Test independently → Deploy/Demo (MVP!)
+3. Add User Story 2 → Test independently → Deploy/Demo
+4. Each story adds value without breaking previous stories
+
+### Parallel Team Strategy
+
+With multiple developers:
+
+1. Team completes Setup + Foundational together
+2. Once Foundational is done:
+   - Developer A: User Story 1
+   - Developer B: User Story 3
+   - Developer C: User Story 2
+3. Stories complete and integrate independently
+
+---
+
+## Notes
+
+- [P] tasks = different files, no dependencies
+- [Story] label maps task to specific user story for traceability
+- Each user story should be independently completable and testable
+- Verify tests fail before implementing
+- Commit after each task or logical group
+- Stop at any checkpoint to validate story independently
+- Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence

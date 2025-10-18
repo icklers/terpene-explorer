@@ -12,8 +12,14 @@
 - Q: How should the sunburst chart behave when a user interacts with it? → A: Clicking a slice filters the main data view.
 - Q: What columns should be displayed in the table view, and should they be sortable? → A: Name, Aroma, Sources, Effects (all sortable).
 - Q: Which fields should the search bar use to find matching terpenes? → A: Search by Name, Aroma, and Effects.
-
-## User Scenarios & Testing *(mandatory)*
+- Q: What are the specific attributes of a `Terpene`? → A: A `Terpene` should have the following attributes: `name` (string), `description` (string), `aroma` (string), `effects` (array of strings), and `sources` (array of strings).
+- Q: How is the relationship between `Terpene` and `Effect` structured in the data source? → A: The `effects` attribute on a `Terpene` is an array of strings, where each string is the name of an effect.
+- Q: How should the application behave while the initial data is loading? → A: Display a simple loading indicator in the center of the screen, which is a pulsing cannabis leaf instead of a spinner.
+- Q: Are there any specific security or privacy concerns to address? → A: The application must be secured against the OWASP Top 10 vulnerabilities. No user tracking or analytics will be included.
+- Q: Are there any known technical constraints for the implementation? → A: Use React with D3.js for visualization, Tailwind CSS for styling, and Jest/Playwright for testing.
+- Q: How should each terpene be uniquely identified? → A: A new `id` attribute (e.g., a UUID) should be added to each `Terpene`.
+- Q: What is the expected data volume? → A: The application should be optimized to handle up to 500 terpenes smoothly.
+- Q: What is explicitly out of scope? → A: User accounts, data persistence, and server-side rendering are out of scope.## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - View and Filter Terpene Data (Priority: P1)
 
@@ -66,6 +72,8 @@ As a user, I want to be able to view the terpene data in different formats, such
 
 - What happens when the terpene data fails to load? The application should display a user-friendly error message.
 - How does the system handle filtering for an effect that no terpenes have? The application should display a "no results" message.
+- What happens if the data format is invalid? The application should display a non-technical error message and gracefully degrade, for instance, by showing the interface with a "Data currently unavailable" message.
+- How should the application handle search queries containing special characters? Sanitize the input by removing special characters before performing the search.
 
 ## Requirements *(mandatory)*
 
@@ -82,6 +90,7 @@ As a user, I want to be able to view the terpene data in different formats, such
 - **FR-009**: The application MUST provide an interactive sunburst chart visualization of the terpene data, where clicking on a slice filters the main data view.
 - **FR-010**: The application MUST provide a table view of the terpene data with sortable columns for Name, Aroma, Sources, and Effects.
 - **FR-011**: The application MUST have a functional search bar that filters terpenes by Name, Aroma, and Effects.
+- **FR-012**: The application MUST display a pulsing cannabis leaf as a loading indicator in the center of the screen while initial data is loading.
 
 ### Non-Functional Requirements
 
@@ -91,11 +100,31 @@ As a user, I want to be able to view the terpene data in different formats, such
 - **NFR-A11Y-004 (Accessibility)**: The application SHALL use semantic HTML and ARIA attributes where necessary.
 - **NFR-PERF-001 (Performance)**: The application SHALL have a fast initial load time.
 - **NFR-PERF-002 (Performance)**: All interactions SHALL be processed instantly with no discernible lag.
+- **NFR-SEC-001 (Security)**: The application MUST be secured against the OWASP Top 10 vulnerabilities.
+- **NFR-PRIV-001 (Privacy)**: No user tracking or analytics will be included in the application.
+- **NFR-SCALE-001 (Scalability)**: The application should be optimized to handle up to 500 terpenes smoothly.
 
 ### Key Entities *(include if feature involves data)*
 
-- **Terpene**: Represents a single terpene. It has a name, description, and a list of associated effects.
+- **Terpene**: Represents a single terpene. It has the following attributes:
+  - `id` (string): A unique identifier for the terpene (e.g., a UUID).
+  - `name` (string): The name of the terpene.
+  - `description` (string): A brief description of the terpene.
+  - `aroma` (string): The characteristic aroma of the terpene.
+  - `effects` (array of strings): A list of effects associated with the terpene.
+  - `sources` (array of strings): A list of natural sources where the terpene can be found.
 - **Effect**: Represents a category of effect that a terpene can have (e.g., "calming", "energetic").
+
+### Constraints
+
+- **TC-001**: The project will use React for the user interface, D3.js for data visualization, and Tailwind CSS for styling.
+- **TC-002**: Testing will be conducted using Jest for unit tests and Playwright for end-to-end tests.
+
+### Out of Scope
+
+- User accounts and authentication.
+- Data persistence and server-side rendering.
+
 
 ## Success Criteria *(mandatory)*
 
