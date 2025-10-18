@@ -1,0 +1,317 @@
+{
+  "calming_and_sedative": {
+    "category_name": "Calming & Sedative Terpenes",
+    "terpenes": [
+      {
+        "name": "Myrcene",
+        "aroma": "Musky, earthy",
+        "key_effects": [
+          "Sedative",
+          "Muscle relaxant",
+          "Enhances THC absorption"
+        ],
+        "notable_differences": "High levels often lead to “couch-lock”"
+      },
+      {
+        "name": "Linalool",
+        "aroma": "Floral, lavender",
+        "key_effects": [
+          "Anxiolytic",
+          "Sedative",
+          "Anticonvulsant"
+        ],
+        "notable_differences": "Acts on GABA receptors"
+      },
+      {
+        "name": "Bisabolol",
+        "aroma": "Sweet, floral",
+        "key_effects": [
+          "Calming",
+          "Anti-inflammatory"
+        ],
+        "notable_differences": "Also supports skin health"
+      },
+      {
+        "name": "Humulene (α-, β-)",
+        "aroma": "Woody, hop-like",
+        "key_effects": [
+          "Sedative",
+          "Anti-inflammatory",
+          "Appetite suppressant"
+        ],
+        "notable_differences": "α more aromatic, β stronger in inflammation control"
+      },
+      {
+        "name": "Terpineol (α-, β-)",
+        "aroma": "Floral, lilac",
+        "key_effects": [
+          "Relaxing",
+          "Antioxidant"
+        ],
+        "notable_differences": "α more sedative, β mildly stimulating"
+      },
+      {
+        "name": "Nerolidol",
+        "aroma": "Woody, citrus",
+        "key_effects": [
+          "Sedative",
+          "Antimicrobial"
+        ],
+        "notable_differences": "Enhances skin absorption"
+      },
+      {
+        "name": "Phytol",
+        "aroma": "Green, grassy",
+        "key_effects": [
+          "Sedative",
+          "Antioxidant",
+          "Neuroprotective"
+        ],
+        "notable_differences": "From chlorophyll degradation"
+      },
+      {
+        "name": "Delta-3-Carene (δ³)",
+        "aroma": "Sweet, woody",
+        "key_effects": [
+          "Mildly sedative",
+          "Anti-inflammatory"
+        ],
+        "notable_differences": "May regulate sleep latency"
+      },
+      {
+        "name": "Isopulegol",
+        "aroma": "Minty, herbal",
+        "key_effects": [
+          "Calming",
+          "Anticonvulsant"
+        ],
+        "notable_differences": "Precursor to menthol"
+      }
+    ]
+  },
+  "uplifting_and_energizing": {
+    "category_name": "Uplifting & Energizing Terpenes",
+    "terpenes": [
+      {
+        "name": "Limonene (d-, l-, δ-)",
+        "aroma": "Citrus",
+        "key_effects": [
+          "Anti-stress",
+          "Mood-enhancing",
+          "Energizing"
+        ],
+        "notable_differences": "d-form boosts serotonin; l-form mildly sedating"
+      },
+      {
+        "name": "α-Pinene",
+        "aroma": "Fresh pine",
+        "key_effects": [
+          "Focus",
+          "Memory retention",
+          "Bronchodilator"
+        ],
+        "notable_differences": "Counters THC memory effects"
+      },
+      {
+        "name": "β-Pinene",
+        "aroma": "Woody, herbal",
+        "key_effects": [
+          "Mild focus",
+          "Mood balance"
+        ],
+        "notable_differences": "More calming than alpha form"
+      },
+      {
+        "name": "Ocimene (α-, β-)",
+        "aroma": "Fruity, sweet",
+        "key_effects": [
+          "Uplifting",
+          "Antiviral"
+        ],
+        "notable_differences": "β form adds antimicrobial benefits"
+      },
+      {
+        "name": "Terpinolene",
+        "aroma": "Floral, herbal",
+        "key_effects": [
+          "Energizing",
+          "Antioxidant"
+        ],
+        "notable_differences": "Found in sativa-dominant strains"
+      },
+      {
+        "name": "Sabinene",
+        "aroma": "Spicy, woody",
+        "key_effects": [
+          "Energizing",
+          "Antioxidant"
+        ],
+        "notable_differences": "Enhances oxidative stress resilience"
+      },
+      {
+        "name": "Camphene",
+        "aroma": "Earthy, coniferous",
+        "key_effects": [
+          "Mild stimulant",
+          "Cardiovascular support"
+        ],
+        "notable_differences": "Balances alertness with vascular protection"
+      },
+      {
+        "name": "Phellandrene (α-, β-)",
+        "aroma": "Citrus, mint",
+        "key_effects": [
+          "Stimulating"
+        ],
+        "notable_differences": "Found in eucalyptus and dill oils"
+      }
+    ]
+  },
+  "anti_inflammatory_and_analgesic": {
+    "category_name": "Anti-inflammatory & Analgesic Terpenes",
+    "terpenes": [
+      {
+        "name": "β-Caryophyllene",
+        "aroma": "Spicy, woody",
+        "key_effects": [
+          "Analgesic",
+          "Anti-inflammatory"
+        ],
+        "notable_differences": "Binds directly to CB2 receptors"
+      },
+      {
+        "name": "α-Caryophyllene",
+        "aroma": "Balsamic, woody",
+        "key_effects": [
+          "Anti-inflammatory",
+          "Immunomodulator"
+        ],
+        "notable_differences": "Complementary to beta form"
+      },
+      {
+        "name": "Eucalyptol (1,8-Cineole)",
+        "aroma": "Minty, woody",
+        "key_effects": [
+          "Pain relief",
+          "Bronchodilator"
+        ],
+        "notable_differences": "Improves focus and oxygenation"
+      },
+      {
+        "name": "Borneol (α-, β-)",
+        "aroma": "Camphorous, minty",
+        "key_effects": [
+          "Analgesic",
+          "Anti-spasmodic"
+        ],
+        "notable_differences": "β form more cooling"
+      },
+      {
+        "name": "Guaiol",
+        "aroma": "Woody, floral",
+        "key_effects": [
+          "Pain relief",
+          "Antimicrobial"
+        ],
+        "notable_differences": "Found in cypress pine"
+      },
+      {
+        "name": "Fenchone",
+        "aroma": "Minty, camphorous",
+        "key_effects": [
+          "Anti-inflammatory",
+          "Antioxidant"
+        ],
+        "notable_differences": "Found in fennel and basil"
+      },
+      {
+        "name": "Camphene",
+        "aroma": "Pine, earthy",
+        "key_effects": [
+          "Anti-inflammatory",
+          "Antioxidant"
+        ],
+        "notable_differences": "Supports lipid metabolism"
+      },
+      {
+        "name": "Nerolidol",
+        "aroma": "Woody, floral",
+        "key_effects": [
+          "Anti-inflammatory",
+          "Sedative"
+        ],
+        "notable_differences": "Common in evening strains"
+      }
+    ]
+  },
+  "balancing_and_general_wellbeing": {
+    "category_name": "Balancing & General Wellbeing Terpenes",
+    "terpenes": [
+      {
+        "name": "Geraniol",
+        "aroma": "Floral, rose",
+        "key_effects": [
+          "Antioxidant",
+          "Antimicrobial",
+          "Mood-lifting"
+        ],
+        "notable_differences": "Blends with linalool for complex aroma"
+      },
+      {
+        "name": "Farnesene (α-, β-)",
+        "aroma": "Green apple, herbal",
+        "key_effects": [
+          "Calming",
+          "Anti-spasmodic"
+        ],
+        "notable_differences": "β form common in calming strains"
+      },
+      {
+        "name": "Valencene",
+        "aroma": "Sweet, orange",
+        "key_effects": [
+          "Mood stabilizing",
+          "Anti-inflammatory"
+        ],
+        "notable_differences": "Found in citrus strains"
+      },
+      {
+        "name": "Cedrene (α-, β-)",
+        "aroma": "Woody, cedar",
+        "key_effects": [
+          "Grounding",
+          "Anti-inflammatory"
+        ],
+        "notable_differences": "β enhances focus"
+      },
+      {
+        "name": "Bergamotene (α-, β-)",
+        "aroma": "Citrus, spicy",
+        "key_effects": [
+          "Balancing",
+          "Stress relief"
+        ],
+        "notable_differences": "Acts on serotonin and GABA pathways"
+      },
+      {
+        "name": "Geranyl acetate",
+        "aroma": "Fruity, floral",
+        "key_effects": [
+          "Mood balancing",
+          "Anti-anxiety"
+        ],
+        "notable_differences": "Found in lemongrass and geraniums"
+      },
+      {
+        "name": "β-Elemene",
+        "aroma": "Herbal, spicy",
+        "key_effects": [
+          "Anticancer",
+          "Anti-inflammatory"
+        ],
+        "notable_differences": "Studied in Chinese medicine"
+      }
+    ]
+  }
+}
+
