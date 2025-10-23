@@ -16,7 +16,7 @@
 - Q: How is the relationship between `Terpene` and `Effect` structured in the data source? → A: The `effects` attribute on a `Terpene` is an array of strings, where each string is the name of an effect.
 - Q: How should the application behave while the initial data is loading? → A: Display a simple loading indicator in the center of the screen, which is a pulsing cannabis leaf instead of a spinner.
 - Q: Are there any specific security or privacy concerns to address? → A: The application must be secured against the OWASP Top 10 vulnerabilities. No user tracking or analytics will be included.
-- Q: Are there any known technical constraints for the implementation? → A: Use React with D3.js for visualization, Tailwind CSS for styling, and Jest/Playwright for testing.
+- Q: Are there any known technical constraints for the implementation? → A: Use React with D3.js for visualization, Material UI for styling, and Jest/Playwright for testing.
 - Q: How should each terpene be uniquely identified? → A: A new `id` attribute (e.g., a UUID) should be added to each `Terpene`.
 - Q: What is the expected data volume? → A: The application should be optimized to handle up to 500 terpenes smoothly.
 - Q: What is explicitly out of scope? → A: User accounts, data persistence, and server-side rendering are out of scope.## User Scenarios & Testing *(mandatory)*
@@ -117,7 +117,7 @@ As a user, I want to be able to view the terpene data in different formats, such
 
 ### Constraints
 
-- **TC-001**: The project will use React for the user interface, D3.js for data visualization, and Tailwind CSS for styling.
+- **TC-001**: The project will use React for the user interface, D3.js for data visualization, and Material UI for styling.
 - **TC-002**: Testing will be conducted using Jest for unit tests and Playwright for end-to-end tests.
 
 ### Out of Scope

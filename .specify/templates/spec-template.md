@@ -90,12 +90,6 @@
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
 
-### Non-Functional Requirements
-
-- **NFR-SEC-001 (Security)**: The application MUST be protected against common web vulnerabilities (OWASP Top 10).
-- **NFR-PERF-001 (Performance)**: The application MUST load in under 3 seconds on a standard 4G connection.
-- **NFR-A11Y-001 (Accessibility)**: The application MUST meet WCAG 2.1 AA standards.
-
 *Example of marking unclear requirements:*
 
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
@@ -119,4 +113,3 @@
 - **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
 - **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
 - **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
-

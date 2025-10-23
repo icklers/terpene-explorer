@@ -7,12 +7,12 @@
 
 ## Summary
 
-This document outlines the implementation plan for the Interactive Terpene Map, a dynamic, filterable, and visually engaging educational tool. The application will be built using React, D3.js, and Tailwind CSS, and will be deployable as a static website.
+This document outlines the implementation plan for the Interactive Terpene Map, a dynamic, filterable, and visually engaging educational tool. The application will be built using React, D3.js, and Material UI, and will be deployable as a static website.
 
 ## Technical Context
 
 **Language/Version**: JavaScript (ES2022)
-**Primary Dependencies**: React, D3.js, Tailwind CSS
+**Primary Dependencies**: React, D3.js, Material UI
 **Storage**: N/A (data from file)
 **Testing**: Jest, Playwright, React Testing Library
 **Target Platform**: Web

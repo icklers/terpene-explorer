@@ -1,0 +1,53 @@
+.layoutContainer {
+  min-height: 100vh;
+  background-color: #f3f4f6; /* bg-gray-100 */
+  color: #1f2937; /* text-gray-900 */
+}
+
+.layoutContainer.dark {
+  background-color: #111827; /* dark:bg-gray-900 */
+  color: #f9fafb; /* dark:text-gray-100 */
+}
+
+.header {
+  background-color: #ffffff; /* bg-white */
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow */
+}
+
+.header.dark {
+  background-color: #1f2937; /* dark:bg-gray-800 */
+}
+
+.headerContent {
+  max-width: 1280px; /* max-w-7xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1.5rem; /* py-6 */
+  padding-bottom: 1.5rem; /* py-6 */
+  padding-left: 1rem; /* px-4 */
+  padding-right: 1rem; /* px-4 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.appTitle {
+  font-size: 1.875rem; /* text-3xl */
+  line-height: 2.25rem; /* leading-tight */
+  font-weight: 700; /* font-bold */
+}
+
+.controls {
+  display: flex;
+  gap: 1rem; /* space-x-4 */
+}
+
+.mainContent {
+  max-width: 1280px; /* max-w-7xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1.5rem; /* py-6 */
+  padding-bottom: 1.5rem; /* py-6 */
+  padding-left: 1.5rem; /* sm:px-6 */
+  padding-right: 1.5rem; /* sm:px-6 */
+}

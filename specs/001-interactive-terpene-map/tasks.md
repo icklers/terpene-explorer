@@ -8,22 +8,24 @@
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
 ## Format: `[ID] [P?] [Story] Description`
+
 - **[P]**: Can run in parallel (different files, no dependencies)
 - **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
 - Include exact file paths in descriptions
 
 ## Path Conventions
+
 - **Web app**: `src/`, `tests/` at repository root
 
 ## Phase 1: Setup (Shared Infrastructure)
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize React project with Create React App
-- [ ] T003 [P] Install dependencies: D3.js, Tailwind CSS, Jest, Playwright, React Testing Library
-- [ ] T004 [P] Configure Tailwind CSS in `tailwind.config.js`
-- [ ] T005 [P] Configure Jest and Playwright in `jest.config.js` and `playwright.config.js`
+- [x] T001 Create project structure per implementation plan
+- [x] T002 Initialize React project with Create React App
+- [x] T003 [P] Install dependencies: D3.js, Material UI, Jest, Playwright, React Testing Library
+- [ ] T004 [P] Configure Material UI
+- [x] T005 [P] Configure Jest and Playwright in `jest.config.js` and `playwright.config.js`
 
 ---
 
@@ -33,9 +35,9 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T006 Create a data service in `src/services/dataService.js` to load and parse terpene data from `data/terpenes.json` and `data/terpenes.yaml`
-- [ ] T007 [P] Create a data validation service in `src/services/validationService.js` to validate the loaded data against the data model
-- [ ] T008 Implement the main application layout component in `src/components/Layout.js`
+- [x] T006 Create a data service in `src/services/dataService.js` to load and parse terpene data from `data/terpenes.json` and `data/terpenes.yaml`
+- [x] T007 [P] Create a data validation service in `src/services/validationService.js` to validate the loaded data against the data model
+- [x] T008 Implement the main application layout component in `src/components/Layout.js`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -51,18 +53,18 @@
 
 **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T009 [P] [US1] Unit test for `TerpeneCard` component in `src/components/TerpeneCard.test.js`
-- [ ] T010 [P] [US1] Unit test for `TerpeneGrid` component in `src/components/TerpeneGrid.test.js`
-- [ ] T011 [P] [US1] Unit test for `EffectFilter` component in `src/components/EffectFilter.test.js`
-- [ ] T012 [P] [US1] Integration test for filtering logic in `src/pages/MainPage.test.js`
+- [x] T009 [P] [US1] Unit test for `TerpeneCard` component in `src/components/TerpeneCard.test.js`
+- [x] T010 [P] [US1] Unit test for `TerpeneGrid` component in `src/components/TerpeneGrid.test.js`
+- [x] T011 [P] [US1] Unit test for `EffectFilter` component in `src/components/EffectFilter.test.js`
+- [x] T012 [P] [US1] Integration test for filtering logic in `src/pages/MainPage.test.js`
 
 ### Implementation for User Story 1
 
-- [ ] T013 [P] [US1] Create `TerpeneCard` component in `src/components/TerpeneCard.js`
-- [ ] T014 [US1] Create `TerpeneGrid` component in `src/components/TerpeneGrid.js` (depends on T013)
-- [ ] T015 [P] [US1] Create `EffectFilter` component in `src/components/EffectFilter.js`
-- [ ] T016 [US1] Implement the main page in `src/pages/MainPage.js` to display the `TerpeneGrid` and `EffectFilter` (depends on T014, T015)
-- [ ] T017 [US1] Implement filtering logic in `src/pages/MainPage.js`
+- [x] T013 [P] [US1] Create `TerpeneCard` component in `src/components/TerpeneCard.js`
+- [x] T014 [US1] Create `TerpeneGrid` component in `src/components/TerpeneGrid.js` (depends on T013)
+- [x] T015 [P] [US1] Create `EffectFilter` component in `src/components/EffectFilter.js`
+- [x] T016 [US1] Implement the main page in `src/pages/MainPage.js` to display the `TerpeneGrid` and `EffectFilter` (depends on T014, T015)
+- [x] T017 [US1] Implement filtering logic in `src/pages/MainPage.js`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -76,21 +78,21 @@
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T018 [P] [US3] Unit test for `SunburstChart` component in `src/components/SunburstChart.test.js`
-- [ ] T019 [P] [US3] Unit test for `TableView` component in `src/components/TableView.test.js`
-- [ ] T020 [P] [US3] Unit test for `ViewSwitcher` component in `src/components/ViewSwitcher.test.js`
-- [ ] T021 [P] [US3] Unit test for `SearchBar` component in `src/components/SearchBar.test.js`
-- [ ] T022 [P] [US3] Integration test for search and view switching in `src/pages/MainPage.test.js`
+- [x] T018 [P] [US3] Unit test for `SunburstChart` component in `src/components/SunburstChart.test.js` (Note: Unit test is basic due to D3/Jest compatibility issues with Create React App. Full D3 rendering will be covered by E2E tests.)
+- [x] T019 [P] [US3] Unit test for `TableView` component in `src/components/TableView.test.js`
+- [x] T020 [P] [US3] Unit test for `ViewSwitcher` component in `src/components/ViewSwitcher.test.js`
+- [x] T021 [P] [US3] Unit test for `SearchBar` component in `src/components/SearchBar.test.js`
+- [x] T022 [P] [US3] Integration test for search and view switching in `src/pages/MainPage.test.js`
 
 ### Implementation for User Story 3
 
-- [ ] T023 [P] [US3] Create `SunburstChart` component in `src/components/SunburstChart.js` using D3.js
-- [ ] T024 [P] [US3] Create `TableView` component in `src/components/TableView.js`
-- [ ] T025 [P] [US3] Create `ViewSwitcher` component in `src/components/ViewSwitcher.js`
-- [ ] T026 [P] [US3] Create `SearchBar` component in `src/components/SearchBar.js`
-- [ ] T027 [US3] Integrate `ViewSwitcher` and `SearchBar` into `src/pages/MainPage.js` (depends on T025, T026)
-- [ ] T028 [US3] Implement search logic in `src/pages/MainPage.js`
-- [ ] T029 [US3] Implement sunburst chart filtering logic in `src/components/SunburstChart.js`
+- [x] T023 [P] [US3] Create `SunburstChart` component in `src/components/SunburstChart.js` using D3.js
+- [x] T024 [P] [US3] Create `TableView` component in `src/components/TableView.js`
+- [x] T025 [P] [US3] Create `ViewSwitcher` component in `src/components/ViewSwitcher.js`
+- [x] T026 [P] [US3] Create `SearchBar` component in `src/components/SearchBar.js`
+- [x] T027 [US3] Integrate `ViewSwitcher` and `SearchBar` into `src/pages/MainPage.js` (depends on T025, T026)
+- [x] T028 [US3] Implement search logic in `src/pages/MainPage.js`
+- [x] T029 [US3] Implement sunburst chart filtering logic in `src/components/SunburstChart.js`
 
 **Checkpoint**: At this point, User Stories 1 and 3 should both work independently
 
@@ -104,18 +106,18 @@
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T030 [P] [US2] Unit test for theme switching in `src/contexts/ThemeContext.test.js`
-- [ ] T031 [P] [US2] Unit test for language switching in `src/contexts/LanguageContext.test.js`
+- [x] T030 [P] [US2] Unit test for theme switching in `src/contexts/ThemeContext.test.js`
+- [x] T031 [P] [US2] Unit test for language switching in `src/contexts/LanguageContext.test.js`
 
 ### Implementation for User Story 2
 
-- [ ] T032 [US2] Implement a theme context and provider in `src/contexts/ThemeContext.js`
-- [ ] T033 [P] [US2] Create `ThemeToggleButton` component in `src/components/ThemeToggleButton.js`
-- [ ] T034 [US2] Implement a language context and provider in `src/contexts/LanguageContext.js`
-- [ ] T035 [P] [US2] Create `LanguageSwitcher` component in `src/components/LanguageSwitcher.js`
-- [ ] T036 [US2] Integrate `ThemeToggleButton` and `LanguageSwitcher` into `src/components/Layout.js` (depends on T033, T035)
-- [ ] T037 [P] [US2] Create localization files for English and German in `src/locales/en.json` and `src/locales/de.json`
-- [ ] T038 [US2] Update all UI text to use the localization service
+- [x] T032 [US2] Implement a theme context and provider in `src/contexts/ThemeContext.js`
+- [x] T033 [P] [US2] Create `ThemeToggleButton` component in `src/components/ThemeToggleButton.js`
+- [x] T034 [US2] Implement a language context and provider in `src/contexts/LanguageContext.js`
+- [x] T035 [P] [US2] Create `LanguageSwitcher` component in `src/components/LanguageSwitcher.js`
+- [x] T036 [US2] Integrate `ThemeToggleButton` and `LanguageSwitcher` into `src/components/Layout.js` (depends on T033, T035)
+- [x] T037 [P] [US2] Create localization files for English and German in `src/locales/en.json` and `src/locales/de.json`
+- [x] T038 [US2] Update all UI text to use the localization service
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -125,10 +127,10 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T039 [P] Implement the pulsing cannabis leaf loading indicator in `src/components/LoadingIndicator.js`
-- [ ] T040 [P] Implement user-friendly error messages in `src/components/ErrorMessage.js`
-- [ ] T041 [P] Implement "no results" message in `src/components/NoResults.js`
-- [ ] T042 [P] Sanitize search input in `src/components/SearchBar.js`
+- [x] T039 [P] Implement the pulsing cannabis leaf loading indicator in `src/components/LoadingIndicator.js`
+- [x] T040 [P] Implement user-friendly error messages in `src/components/ErrorMessage.js`
+- [x] T041 [P] Implement "no results" message in `src/components/NoResults.js`
+- [x] T042 [P] Sanitize search input in `src/components/SearchBar.js`
 - [ ] T043 Review accessibility (WCAG 2.1 AA) across the application
 - [ ] T044 Performance optimization across all stories
 - [ ] T045 [P] End-to-end tests with Playwright in `tests/e2e/`

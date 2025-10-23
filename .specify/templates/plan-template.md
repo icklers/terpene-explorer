@@ -31,20 +31,13 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-- [ ] **Modern UX**: Does the plan account for a responsive, accessible, and intuitive UI?
-- [ ] **Component-Based Architecture**: Is the feature broken down into modular, reusable components?
-- [ ] **Static-First & Serverless**: Does the architecture adhere to static site generation and serverless principles?
-- [ ] **Security by Design**: Are security considerations (input validation, data protection) integrated into the plan?
-- [ ] **Comprehensive Testing**: Does the plan include tasks for unit, integration, and end-to-end testing?
-- [ ] **KISS**: Does the plan favor simplicity and avoid over-engineering?
-- [ ] **YAGNI**: Does the plan avoid implementing features that aren't immediately necessary?
-- [ ] **DRY**: Does the plan promote code reuse and avoid duplication?
+[Gates determined based on constitution file]
 
 ## Project Structure
 
 ### Documentation (this feature)
 
-```
+```text
 specs/[###-feature]/
 ├── plan.md              # This file (/speckit.plan command output)
 ├── research.md          # Phase 0 output (/speckit.plan command)
@@ -62,7 +55,7 @@ specs/[###-feature]/
   not include Option labels.
 -->
 
-```
+```text
 # [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
 src/
 ├── models/
@@ -103,10 +96,9 @@ directories captured above]
 
 ## Complexity Tracking
 
-*Fill ONLY if Constitution Check has violations that must be justified*
+> **Fill ONLY if Constitution Check has violations that must be justified**
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
 |-----------|------------|-------------------------------------|
 | [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
 | [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
-

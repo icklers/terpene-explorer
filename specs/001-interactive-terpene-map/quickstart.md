@@ -22,3 +22,13 @@ npm start
 ```
 
 This will start the development server and open the application in your default browser.
+
+## Building the application
+
+To create a production build of the application, run:
+
+```bash
+./build.sh
+```
+
+This will create a `build` directory with the static files that can be deployed to a hosting provider.

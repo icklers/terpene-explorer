@@ -1,0 +1,27 @@
+.viewSwitcherContainer {
+  display: flex;
+  gap: 0.5rem; /* space-x-2 */
+  margin-top: 1rem; /* my-4 */
+  margin-bottom: 1rem; /* my-4 */
+}
+
+.viewSwitcherButton {
+  padding-left: 1rem; /* px-4 */
+  padding-right: 1rem; /* px-4 */
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem; /* py-2 */
+  border-radius: 0.375rem; /* rounded-md */
+  background-color: #3b82f6; /* bg-blue-500 */
+  color: #ffffff; /* text-white */
+  outline: none;
+}
+
+.viewSwitcherButton:hover {
+  background-color: #2563eb; /* hover:bg-blue-600 */
+}
+
+.viewSwitcherButton:focus {
+  ring-width: 2px; /* focus:ring-2 */
+  ring-color: #3b82f6; /* focus:ring-blue-500 */
+  ring-opacity: 0.5; /* focus:ring-opacity-50 */
+}

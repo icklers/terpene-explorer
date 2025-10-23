@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: "npm" # Look for `package.json` and `lock` files
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly" # Check for updates weekly
+    # Optional: Specify labels for pull requests
+    labels:
+      - "dependencies"
+      - "dependabot"
+    # Optional: Group updates together
+    groups:
+      development-dependencies:
+        patterns:
+          - "@testing-library/*"
+          - "jest"
+          - "playwright"
+      production-dependencies:
+        patterns:
+          - "d3"
+      
+          - "react"
+          - "react-dom"
+          - "react-scripts"
+          - "js-yaml"
