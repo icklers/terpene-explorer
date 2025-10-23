@@ -68,117 +68,117 @@ export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
   'calming': {
     name: 'calming',
     displayName: { en: 'Calming', de: 'Beruhigend' },
-    color: EFFECT_COLORS['calming'],
+    color: EFFECT_COLORS['calming']!,
   },
   'sedative': {
     name: 'sedative',
     displayName: { en: 'Sedative', de: 'Beruhigungsmittel' },
-    color: EFFECT_COLORS['sedative'],
+    color: EFFECT_COLORS['sedative']!,
   },
   'anxiolytic': {
     name: 'anxiolytic',
     displayName: { en: 'Anti-Anxiety', de: 'Angstlösend' },
-    color: EFFECT_COLORS['anxiolytic'],
+    color: EFFECT_COLORS['anxiolytic']!,
   },
   'muscle-relaxant': {
     name: 'muscle-relaxant',
     displayName: { en: 'Muscle Relaxant', de: 'Muskelentspannend' },
-    color: EFFECT_COLORS['muscle-relaxant'],
+    color: EFFECT_COLORS['muscle-relaxant']!,
   },
   'anticonvulsant': {
     name: 'anticonvulsant',
     displayName: { en: 'Anticonvulsant', de: 'Krampflösend' },
-    color: EFFECT_COLORS['anticonvulsant'],
+    color: EFFECT_COLORS['anticonvulsant']!,
   },
   'energizing': {
     name: 'energizing',
     displayName: { en: 'Energizing', de: 'Energetisierend' },
-    color: EFFECT_COLORS['energizing'],
+    color: EFFECT_COLORS['energizing']!,
   },
   'mood-enhancing': {
     name: 'mood-enhancing',
     displayName: { en: 'Mood Enhancing', de: 'Stimmungsaufhellend' },
-    color: EFFECT_COLORS['mood-enhancing'],
+    color: EFFECT_COLORS['mood-enhancing']!,
   },
   'anti-stress': {
     name: 'anti-stress',
     displayName: { en: 'Anti-Stress', de: 'Anti-Stress' },
-    color: EFFECT_COLORS['anti-stress'],
+    color: EFFECT_COLORS['anti-stress']!,
   },
   'uplifting': {
     name: 'uplifting',
     displayName: { en: 'Uplifting', de: 'Aufmunternd' },
-    color: EFFECT_COLORS['uplifting'],
+    color: EFFECT_COLORS['uplifting']!,
   },
   'focus': {
     name: 'focus',
     displayName: { en: 'Focus', de: 'Fokus' },
-    color: EFFECT_COLORS['focus'],
+    color: EFFECT_COLORS['focus']!,
   },
   'anti-inflammatory': {
     name: 'anti-inflammatory',
     displayName: { en: 'Anti-Inflammatory', de: 'Entzündungshemmend' },
-    color: EFFECT_COLORS['anti-inflammatory'],
+    color: EFFECT_COLORS['anti-inflammatory']!,
   },
   'analgesic': {
     name: 'analgesic',
     displayName: { en: 'Pain Relief', de: 'Schmerzlindernd' },
-    color: EFFECT_COLORS['analgesic'],
+    color: EFFECT_COLORS['analgesic']!,
   },
   'pain-relief': {
     name: 'pain-relief',
     displayName: { en: 'Pain Relief', de: 'Schmerzlinderung' },
-    color: EFFECT_COLORS['pain-relief'],
+    color: EFFECT_COLORS['pain-relief']!,
   },
   'neuroprotective': {
     name: 'neuroprotective',
     displayName: { en: 'Neuroprotective', de: 'Neuroprotektiv' },
-    color: EFFECT_COLORS['neuroprotective'],
+    color: EFFECT_COLORS['neuroprotective']!,
   },
   'memory-retention': {
     name: 'memory-retention',
     displayName: { en: 'Memory Enhancement', de: 'Gedächtnisverbessernd' },
-    color: EFFECT_COLORS['memory-retention'],
+    color: EFFECT_COLORS['memory-retention']!,
   },
   'bronchodilator': {
     name: 'bronchodilator',
     displayName: { en: 'Bronchodilator', de: 'Bronchienerweiternd' },
-    color: EFFECT_COLORS['bronchodilator'],
+    color: EFFECT_COLORS['bronchodilator']!,
   },
   'antioxidant': {
     name: 'antioxidant',
     displayName: { en: 'Antioxidant', de: 'Antioxidans' },
-    color: EFFECT_COLORS['antioxidant'],
+    color: EFFECT_COLORS['antioxidant']!,
   },
   'antimicrobial': {
     name: 'antimicrobial',
     displayName: { en: 'Antimicrobial', de: 'Antimikrobiell' },
-    color: EFFECT_COLORS['antimicrobial'],
+    color: EFFECT_COLORS['antimicrobial']!,
   },
   'antibacterial': {
     name: 'antibacterial',
     displayName: { en: 'Antibacterial', de: 'Antibakteriell' },
-    color: EFFECT_COLORS['antibacterial'],
+    color: EFFECT_COLORS['antibacterial']!,
   },
   'antiviral': {
     name: 'antiviral',
     displayName: { en: 'Antiviral', de: 'Antiviral' },
-    color: EFFECT_COLORS['antiviral'],
+    color: EFFECT_COLORS['antiviral']!,
   },
   'antifungal': {
     name: 'antifungal',
     displayName: { en: 'Antifungal', de: 'Antimykotisch' },
-    color: EFFECT_COLORS['antifungal'],
+    color: EFFECT_COLORS['antifungal']!,
   },
   'appetite-suppressant': {
     name: 'appetite-suppressant',
     displayName: { en: 'Appetite Suppressant', de: 'Appetitzügler' },
-    color: EFFECT_COLORS['appetite-suppressant'],
+    color: EFFECT_COLORS['appetite-suppressant']!,
   },
   'decongestant': {
     name: 'decongestant',
     displayName: { en: 'Decongestant', de: 'Abschwellend' },
-    color: EFFECT_COLORS['decongestant'],
+    color: EFFECT_COLORS['decongestant']!,
   },
 };
 
@@ -202,7 +202,7 @@ export function getEffectMetadata(effectName: string): Omit<Effect, 'terpeneCoun
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(' '),
       },
-      color: EFFECT_COLORS['default'],
+      color: EFFECT_COLORS['default']!,
     }
   );
 }
