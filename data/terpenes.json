@@ -1,317 +1,102 @@
-{
-  "calming_and_sedative": {
-    "category_name": "Calming & Sedative Terpenes",
-    "terpenes": [
-      {
-        "name": "Myrcene",
-        "aroma": "Musky, earthy",
-        "key_effects": [
-          "Sedative",
-          "Muscle relaxant",
-          "Enhances THC absorption"
-        ],
-        "notable_differences": "High levels often lead to “couch-lock”"
-      },
-      {
-        "name": "Linalool",
-        "aroma": "Floral, lavender",
-        "key_effects": [
-          "Anxiolytic",
-          "Sedative",
-          "Anticonvulsant"
-        ],
-        "notable_differences": "Acts on GABA receptors"
-      },
-      {
-        "name": "Bisabolol",
-        "aroma": "Sweet, floral",
-        "key_effects": [
-          "Calming",
-          "Anti-inflammatory"
-        ],
-        "notable_differences": "Also supports skin health"
-      },
-      {
-        "name": "Humulene (α-, β-)",
-        "aroma": "Woody, hop-like",
-        "key_effects": [
-          "Sedative",
-          "Anti-inflammatory",
-          "Appetite suppressant"
-        ],
-        "notable_differences": "α more aromatic, β stronger in inflammation control"
-      },
-      {
-        "name": "Terpineol (α-, β-)",
-        "aroma": "Floral, lilac",
-        "key_effects": [
-          "Relaxing",
-          "Antioxidant"
-        ],
-        "notable_differences": "α more sedative, β mildly stimulating"
-      },
-      {
-        "name": "Nerolidol",
-        "aroma": "Woody, citrus",
-        "key_effects": [
-          "Sedative",
-          "Antimicrobial"
-        ],
-        "notable_differences": "Enhances skin absorption"
-      },
-      {
-        "name": "Phytol",
-        "aroma": "Green, grassy",
-        "key_effects": [
-          "Sedative",
-          "Antioxidant",
-          "Neuroprotective"
-        ],
-        "notable_differences": "From chlorophyll degradation"
-      },
-      {
-        "name": "Delta-3-Carene (δ³)",
-        "aroma": "Sweet, woody",
-        "key_effects": [
-          "Mildly sedative",
-          "Anti-inflammatory"
-        ],
-        "notable_differences": "May regulate sleep latency"
-      },
-      {
-        "name": "Isopulegol",
-        "aroma": "Minty, herbal",
-        "key_effects": [
-          "Calming",
-          "Anticonvulsant"
-        ],
-        "notable_differences": "Precursor to menthol"
-      }
-    ]
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "name": "Limonene",
+    "description": "A citrus-scented terpene commonly found in lemon peels, orange rinds, and other citrus fruits. Known for its mood-enhancing and anti-stress properties, d-limonene is one of the most abundant terpenes in cannabis.",
+    "aroma": "Citrus, Lemon, Orange",
+    "effects": ["mood-enhancing", "anti-stress", "energizing", "antioxidant"],
+    "sources": ["Lemon peel", "Orange rind", "Grapefruit", "Lime", "Juniper"],
+    "boilingPoint": 176,
+    "molecularFormula": "C10H16"
   },
-  "uplifting_and_energizing": {
-    "category_name": "Uplifting & Energizing Terpenes",
-    "terpenes": [
-      {
-        "name": "Limonene (d-, l-, δ-)",
-        "aroma": "Citrus",
-        "key_effects": [
-          "Anti-stress",
-          "Mood-enhancing",
-          "Energizing"
-        ],
-        "notable_differences": "d-form boosts serotonin; l-form mildly sedating"
-      },
-      {
-        "name": "α-Pinene",
-        "aroma": "Fresh pine",
-        "key_effects": [
-          "Focus",
-          "Memory retention",
-          "Bronchodilator"
-        ],
-        "notable_differences": "Counters THC memory effects"
-      },
-      {
-        "name": "β-Pinene",
-        "aroma": "Woody, herbal",
-        "key_effects": [
-          "Mild focus",
-          "Mood balance"
-        ],
-        "notable_differences": "More calming than alpha form"
-      },
-      {
-        "name": "Ocimene (α-, β-)",
-        "aroma": "Fruity, sweet",
-        "key_effects": [
-          "Uplifting",
-          "Antiviral"
-        ],
-        "notable_differences": "β form adds antimicrobial benefits"
-      },
-      {
-        "name": "Terpinolene",
-        "aroma": "Floral, herbal",
-        "key_effects": [
-          "Energizing",
-          "Antioxidant"
-        ],
-        "notable_differences": "Found in sativa-dominant strains"
-      },
-      {
-        "name": "Sabinene",
-        "aroma": "Spicy, woody",
-        "key_effects": [
-          "Energizing",
-          "Antioxidant"
-        ],
-        "notable_differences": "Enhances oxidative stress resilience"
-      },
-      {
-        "name": "Camphene",
-        "aroma": "Earthy, coniferous",
-        "key_effects": [
-          "Mild stimulant",
-          "Cardiovascular support"
-        ],
-        "notable_differences": "Balances alertness with vascular protection"
-      },
-      {
-        "name": "Phellandrene (α-, β-)",
-        "aroma": "Citrus, mint",
-        "key_effects": [
-          "Stimulating"
-        ],
-        "notable_differences": "Found in eucalyptus and dill oils"
-      }
-    ]
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "name": "Myrcene",
+    "description": "An earthy, musky terpene with sedative properties. Myrcene is known for enhancing THC absorption and producing the classic 'couch-lock' effect when present in high concentrations.",
+    "aroma": "Musky, Earthy, Herbal",
+    "effects": ["sedative", "muscle-relaxant", "analgesic", "anti-inflammatory"],
+    "sources": ["Mango", "Lemongrass", "Thyme", "Hops", "Bay leaves"],
+    "boilingPoint": 167,
+    "molecularFormula": "C10H16"
   },
-  "anti_inflammatory_and_analgesic": {
-    "category_name": "Anti-inflammatory & Analgesic Terpenes",
-    "terpenes": [
-      {
-        "name": "β-Caryophyllene",
-        "aroma": "Spicy, woody",
-        "key_effects": [
-          "Analgesic",
-          "Anti-inflammatory"
-        ],
-        "notable_differences": "Binds directly to CB2 receptors"
-      },
-      {
-        "name": "α-Caryophyllene",
-        "aroma": "Balsamic, woody",
-        "key_effects": [
-          "Anti-inflammatory",
-          "Immunomodulator"
-        ],
-        "notable_differences": "Complementary to beta form"
-      },
-      {
-        "name": "Eucalyptol (1,8-Cineole)",
-        "aroma": "Minty, woody",
-        "key_effects": [
-          "Pain relief",
-          "Bronchodilator"
-        ],
-        "notable_differences": "Improves focus and oxygenation"
-      },
-      {
-        "name": "Borneol (α-, β-)",
-        "aroma": "Camphorous, minty",
-        "key_effects": [
-          "Analgesic",
-          "Anti-spasmodic"
-        ],
-        "notable_differences": "β form more cooling"
-      },
-      {
-        "name": "Guaiol",
-        "aroma": "Woody, floral",
-        "key_effects": [
-          "Pain relief",
-          "Antimicrobial"
-        ],
-        "notable_differences": "Found in cypress pine"
-      },
-      {
-        "name": "Fenchone",
-        "aroma": "Minty, camphorous",
-        "key_effects": [
-          "Anti-inflammatory",
-          "Antioxidant"
-        ],
-        "notable_differences": "Found in fennel and basil"
-      },
-      {
-        "name": "Camphene",
-        "aroma": "Pine, earthy",
-        "key_effects": [
-          "Anti-inflammatory",
-          "Antioxidant"
-        ],
-        "notable_differences": "Supports lipid metabolism"
-      },
-      {
-        "name": "Nerolidol",
-        "aroma": "Woody, floral",
-        "key_effects": [
-          "Anti-inflammatory",
-          "Sedative"
-        ],
-        "notable_differences": "Common in evening strains"
-      }
-    ]
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "name": "Linalool",
+    "description": "A floral terpene with a distinctive lavender aroma. Linalool acts on GABA receptors to produce calming, anxiolytic effects and has been traditionally used to promote relaxation and sleep.",
+    "aroma": "Floral, Lavender, Spicy",
+    "effects": ["anxiolytic", "sedative", "anticonvulsant", "analgesic"],
+    "sources": ["Lavender", "Coriander", "Mint", "Rosewood", "Birch"],
+    "boilingPoint": 198,
+    "molecularFormula": "C10H18O"
   },
-  "balancing_and_general_wellbeing": {
-    "category_name": "Balancing & General Wellbeing Terpenes",
-    "terpenes": [
-      {
-        "name": "Geraniol",
-        "aroma": "Floral, rose",
-        "key_effects": [
-          "Antioxidant",
-          "Antimicrobial",
-          "Mood-lifting"
-        ],
-        "notable_differences": "Blends with linalool for complex aroma"
-      },
-      {
-        "name": "Farnesene (α-, β-)",
-        "aroma": "Green apple, herbal",
-        "key_effects": [
-          "Calming",
-          "Anti-spasmodic"
-        ],
-        "notable_differences": "β form common in calming strains"
-      },
-      {
-        "name": "Valencene",
-        "aroma": "Sweet, orange",
-        "key_effects": [
-          "Mood stabilizing",
-          "Anti-inflammatory"
-        ],
-        "notable_differences": "Found in citrus strains"
-      },
-      {
-        "name": "Cedrene (α-, β-)",
-        "aroma": "Woody, cedar",
-        "key_effects": [
-          "Grounding",
-          "Anti-inflammatory"
-        ],
-        "notable_differences": "β enhances focus"
-      },
-      {
-        "name": "Bergamotene (α-, β-)",
-        "aroma": "Citrus, spicy",
-        "key_effects": [
-          "Balancing",
-          "Stress relief"
-        ],
-        "notable_differences": "Acts on serotonin and GABA pathways"
-      },
-      {
-        "name": "Geranyl acetate",
-        "aroma": "Fruity, floral",
-        "key_effects": [
-          "Mood balancing",
-          "Anti-anxiety"
-        ],
-        "notable_differences": "Found in lemongrass and geraniums"
-      },
-      {
-        "name": "β-Elemene",
-        "aroma": "Herbal, spicy",
-        "key_effects": [
-          "Anticancer",
-          "Anti-inflammatory"
-        ],
-        "notable_differences": "Studied in Chinese medicine"
-      }
-    ]
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "name": "Pinene",
+    "description": "A fresh, pine-scented terpene found in conifer trees. Alpha-pinene is known for promoting alertness, focus, and memory retention while acting as a bronchodilator. It may counteract some THC-induced memory impairment.",
+    "aroma": "Pine, Fresh, Woody",
+    "effects": ["focus", "memory-retention", "bronchodilator", "anti-inflammatory"],
+    "sources": ["Pine needles", "Rosemary", "Basil", "Parsley", "Dill"],
+    "boilingPoint": 155,
+    "molecularFormula": "C10H16"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "name": "Caryophyllene",
+    "description": "A spicy, peppery terpene that uniquely binds directly to CB2 cannabinoid receptors. Beta-caryophyllene offers powerful anti-inflammatory and analgesic effects without psychoactive properties.",
+    "aroma": "Spicy, Peppery, Woody",
+    "effects": ["analgesic", "anti-inflammatory", "anxiolytic", "neuroprotective"],
+    "sources": ["Black pepper", "Cloves", "Cinnamon", "Hops", "Oregano"],
+    "boilingPoint": 130,
+    "molecularFormula": "C15H24"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "name": "Humulene",
+    "description": "A woody, earthy terpene with a distinctive hop-like aroma. Humulene is known for its anti-inflammatory properties and unique appetite-suppressant effects, distinguishing it from many cannabis compounds.",
+    "aroma": "Woody, Earthy, Hops",
+    "effects": ["anti-inflammatory", "appetite-suppressant", "antibacterial", "analgesic"],
+    "sources": ["Hops", "Coriander", "Cloves", "Basil", "Sage"],
+    "boilingPoint": 106,
+    "molecularFormula": "C15H24"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "name": "Terpinolene",
+    "description": "A complex terpene with floral, herbal, and slightly piney notes. Commonly found in sativa-dominant strains, terpinolene offers uplifting, energizing effects combined with antioxidant properties.",
+    "aroma": "Floral, Herbal, Pine",
+    "effects": ["energizing", "antioxidant", "antibacterial", "sedative"],
+    "sources": ["Lilac", "Nutmeg", "Cumin", "Apple", "Tea tree"],
+    "boilingPoint": 186,
+    "molecularFormula": "C10H16"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "name": "Ocimene",
+    "description": "A sweet, herbaceous terpene with fruity undertones. Ocimene is known for its uplifting effects and potential antiviral and antifungal properties, making it valuable for both mood and immune support.",
+    "aroma": "Sweet, Herbal, Woody",
+    "effects": ["uplifting", "antiviral", "antifungal", "decongestant"],
+    "sources": ["Mint", "Orchids", "Kumquats", "Parsley", "Pepper"],
+    "boilingPoint": 100,
+    "molecularFormula": "C10H16"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "name": "Bisabolol",
+    "description": "A gentle, sweet floral terpene with notable calming properties. Bisabolol is prized for its anti-inflammatory effects and skin-healing properties, often used in cosmetics and skincare products.",
+    "aroma": "Sweet, Floral, Chamomile",
+    "effects": ["calming", "anti-inflammatory", "antimicrobial", "analgesic"],
+    "sources": ["Chamomile", "Candeia tree", "Sage"],
+    "boilingPoint": 153,
+    "molecularFormula": "C15H26O"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "name": "Eucalyptol",
+    "description": "A minty, cooling terpene also known as 1,8-cineole. Eucalyptol is recognized for its pain-relieving properties, ability to improve focus and oxygenation, and its effectiveness as a bronchodilator.",
+    "aroma": "Minty, Cooling, Spicy",
+    "effects": ["pain-relief", "bronchodilator", "focus", "anti-inflammatory"],
+    "sources": ["Eucalyptus", "Tea tree", "Bay leaves", "Rosemary", "Sage"],
+    "boilingPoint": 176,
+    "molecularFormula": "C10H18O"
   }
-}
-
+]

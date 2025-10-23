@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+build/
+*.local
+
+# Testing
+coverage/
+test-results/
+playwright-report/
+
+# Configuration files
+*.config.js
+*.config.ts
+vite.config.ts
+vitest.config.ts
+playwright.config.ts
+
+# Minified files
+*.min.js
+*.min.css
+
+# Generated files
+*.d.ts
