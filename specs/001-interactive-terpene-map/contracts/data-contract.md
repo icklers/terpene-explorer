@@ -243,6 +243,7 @@ export type TerpeneDataset = Terpene[];
 ### Validation Errors
 
 **Schema Validation Failure:**
+
 ```typescript
 {
   "error": "SCHEMA_VALIDATION_ERROR",
@@ -257,6 +258,7 @@ export type TerpeneDataset = Terpene[];
 ```
 
 **Missing Required Field:**
+
 ```typescript
 {
   "error": "MISSING_FIELD",
@@ -267,6 +269,7 @@ export type TerpeneDataset = Terpene[];
 ```
 
 **Duplicate Entry:**
+
 ```typescript
 {
   "error": "DUPLICATE_ENTRY",
@@ -544,5 +547,5 @@ If the data format changes in the future:
 
 - Data Model: `data-model.md`
 - Feature Specification: `spec.md`
-- JSON Schema Specification: https://json-schema.org/
-- UUID v4 Specification: https://tools.ietf.org/html/rfc4122
+- JSON Schema Specification: <https://json-schema.org/>
+- UUID v4 Specification: <https://tools.ietf.org/html/rfc4122>

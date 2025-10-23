@@ -37,6 +37,7 @@ interface Terpene {
 ```
 
 **Validation Rules:**
+
 - `id`: Required, must be valid UUID v4 format
 - `name`: Required, 1-100 characters, must be unique within dataset
 - `description`: Required, 10-1000 characters
@@ -47,6 +48,7 @@ interface Terpene {
 - `molecularFormula`: Optional, if provided must match chemical formula pattern
 
 **Data Source:**
+
 - Primary: `/data/terpenes.json`
 - Alternative: `/data/terpenes.yaml`
 - Format: Array of Terpene objects
@@ -77,6 +79,7 @@ interface Effect {
 ```
 
 **Validation Rules:**
+
 - `name`: Required, 1-50 characters, lowercase, alphanumeric + hyphens only
 - `displayName.en`: Required, 1-50 characters
 - `displayName.de`: Required, 1-50 characters
@@ -84,12 +87,14 @@ interface Effect {
 - `terpeneCount`: Computed property, non-editable
 
 **Material UI Color Requirements:**
+
 - Each effect must have a unique, distinct color
 - Colors must meet WCAG 2.1 Level AA contrast requirements (4.5:1 ratio) when used with both light and dark backgrounds
 - Color palette managed in `src/services/colorService.ts`
 - Integration with Material UI theme palette
 
 **Data Source:**
+
 - Derived from `Terpene.effects` array
 - Effect metadata (colors, translations) stored in `src/utils/constants.ts` or separate config file
 
@@ -120,6 +125,7 @@ interface FilterState {
 ```
 
 **Validation Rules:**
+
 - `searchQuery`: 0-200 characters, sanitized to remove special characters
 - `selectedEffects`: Array of valid effect names
 - `effectFilterMode`: Must be 'any' or 'all', defaults to 'any'
@@ -128,6 +134,7 @@ interface FilterState {
 - `sortDirection`: Must be 'asc' or 'desc'
 
 **State Transitions:**
+
 - User types in search → Update `searchQuery` → Trigger filter recalculation
 - User clicks effect category → Toggle effect in `selectedEffects` → Trigger filter recalculation
 - User clicks sunburst slice → Set `selectedEffects` to clicked effect → Trigger filter recalculation
@@ -152,16 +159,19 @@ interface ThemeState {
 ```
 
 **Validation Rules:**
+
 - `mode`: Must be 'light', 'dark', or 'system'
 - `systemPreference`: Auto-detected via Material UI `useMediaQuery`, read-only
 - `language`: Must be 'en' or 'de', defaults to browser language or 'en'
 
 **State Transitions:**
+
 - User toggles theme → Update `mode` → Apply new Material UI theme
 - System preference changes → Update `systemPreference` → Apply theme if mode is 'system'
 - User switches language → Update `language` → Re-render all UI text via i18next
 
 **Material UI Integration:**
+
 - Uses `CssVarsProvider` with `colorSchemes` for light/dark mode
 - Uses `useColorScheme` hook for theme switching
 - Automatic system preference detection via `@media (prefers-color-scheme)`
@@ -181,6 +191,7 @@ type LoadingState<T> =
 ```
 
 **State Transitions:**
+
 - App initializes → `status: 'idle'`
 - Data fetch begins → `status: 'loading'` (show pulsing cannabis leaf using Material UI animations)
 - Data fetch succeeds → `status: 'success', data: Terpene[]` (render visualizations)
@@ -202,12 +213,14 @@ interface FilteredTerpenes {
 ```
 
 **Computation Logic:**
+
 1. Apply search query filter (matches `name`, `aroma`, or `effects`)
 2. Apply effect filters (based on `effectFilterMode`)
 3. Sort results (based on `sortBy` and `sortDirection`)
 4. Calculate derived metadata
 
 **Performance:**
+
 - Memoize computation using `useMemo`
 - Target: < 200ms for 500 terpenes (NFR-PERF-002)
 
@@ -226,7 +239,8 @@ interface SunburstNode {
 ```
 
 **Hierarchy:**
-```
+
+```sh
 Root
 ├── Effect Category 1 (Material UI theme color)
 │   ├── Terpene A
@@ -239,6 +253,7 @@ Root
 ```
 
 **Computation Logic:**
+
 1. Group terpenes by effect
 2. Create hierarchy: Root → Effects → Terpenes
 3. Calculate value (count) for each node
@@ -273,16 +288,19 @@ Root
 ### Context API
 
 **ThemeContext:**
+
 - Material UI theme mode (light/dark/system)
 - Language preference (en/de)
 - Provides theme and i18n configuration to all components
 
 **DataContext:**
+
 - Loaded terpene data (LoadingState<Terpene[]>)
 - Effect configuration
 - Data loading functions
 
 **FilterContext:**
+
 - Current filter state (FilterState)
 - Filtered results (FilteredTerpenes)
 - Filter update functions
@@ -314,12 +332,14 @@ interface StoredPreferences {
   theme: 'light' | 'dark' | 'system';
   language: 'en' | 'de';
   lastViewMode?: 'sunburst' | 'table';
+  filterMode?: 'any' | 'all'; // Persist AND/OR filter preference (FR-014)
 }
 ```
 
 **Storage Key**: `terpene-map-preferences`
 
 **Sync Strategy:**
+
 - Load preferences on app initialization
 - Save on preference change (debounced)
 - Graceful fallback if localStorage unavailable (Safari private mode)
@@ -328,16 +348,17 @@ interface StoredPreferences {
 
 ## Data Transformation Pipeline
 
-```
+```sh
 1. Load Raw Data
    ├── Fetch /data/terpenes.json (primary)
    └── Fallback to /data/terpenes.yaml
 
-2. Parse & Validate
+2. Parse & Validate (FR-015: Graceful validation)
    ├── Parse JSON/YAML
    ├── Validate schema (Zod recommended)
    ├── Add UUIDs if missing
-   └── Throw user-friendly errors (Material UI Alert)
+   ├── Filter out invalid entries (graceful degradation)
+   └── Show warning notification with count of skipped entries
 
 3. Transform & Enrich
    ├── Extract unique effects
@@ -350,8 +371,9 @@ interface StoredPreferences {
 
 5. Apply Filters
    ├── Listen to FilterState changes
+   ├── Apply effectFilterMode ('any' or 'all') for multi-effect filters (FR-013)
    ├── Compute filtered results
-   └── Update UI (< 200ms)
+   └── Update UI (<200ms per NFR-PERF-002)
 ```
 
 ---
@@ -374,9 +396,32 @@ const TerpeneSchema = z.object({
 
 const TerpeneDataSchema = z.array(TerpeneSchema);
 
-// Usage
-function validateTerpeneData(data: unknown): Terpene[] {
-  return TerpeneDataSchema.parse(data);
+// Usage with graceful validation (FR-015)
+interface ValidationResult {
+  validTerpenes: Terpene[];
+  invalidCount: number;
+  errors: string[];
+}
+
+function validateTerpeneData(data: unknown): ValidationResult {
+  const rawData = Array.isArray(data) ? data : [];
+  const validTerpenes: Terpene[] = [];
+  const errors: string[] = [];
+
+  rawData.forEach((item, index) => {
+    const result = TerpeneSchema.safeParse(item);
+    if (result.success) {
+      validTerpenes.push(result.data);
+    } else {
+      errors.push(`Entry ${index + 1}: ${result.error.message}`);
+    }
+  });
+
+  return {
+    validTerpenes,
+    invalidCount: errors.length,
+    errors
+  };
 }
 ```
 
@@ -471,5 +516,5 @@ function validateTerpeneData(data: unknown): Terpene[] {
 - Implementation Plan: `plan.md`
 - Research Findings: `research.md`
 - TypeScript Interfaces: `src/models/`
-- Material UI Documentation: https://mui.com/
-- i18next Documentation: https://www.i18next.com/
+- Material UI Documentation: <https://mui.com/>
+- i18next Documentation: <https://www.i18next.com/>

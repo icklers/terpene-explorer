@@ -7,20 +7,20 @@
 
 ## Summary
 
-Build a dynamic, filterable, and visually engaging educational tool for terpene data that transforms static JSON/YAML data into an interactive web application. The application will feature multiple visualization modes (sunburst chart, table view), comprehensive filtering and search capabilities, full localization support (English/German), and theme switching (light/dark mode). The technical stack centers on React 18 for UI, D3.js 7 for data visualization, Material UI 5 for component styling and theming, with Vite for build tooling, and Jest/Playwright for testing.
+Build a dynamic, filterable, and visually engaging educational tool for terpene data that transforms static JSON/YAML data into an interactive web application. The application will feature multiple visualization modes (sunburst chart, table view), advanced filtering with AND/OR toggle for multiple effects, comprehensive search capabilities, full localization support (English/German) with localStorage persistence, and theme switching (light/dark mode). Data validation will gracefully handle invalid entries with user notifications. The technical stack centers on React 18 for UI, D3.js 7 for data visualization, Material UI 6 for component styling and theming, with Vite 6 for build tooling, and Vitest/Playwright for testing. Performance targets: <2s initial load, <200ms interactions.
 
 ## Technical Context
 
 **Language/Version**: TypeScript 5.7+, Node.js 24 LTS, ES2024 target
-**Primary Dependencies**: React 18.3+, D3.js 7.9+, Material UI 5.16+, React Router 6.28+, i18next 24+ for localization, js-yaml for data parsing
+**Primary Dependencies**: React 18.3+, D3.js 7.9+, Material UI 6.0+, React Router 6.28+, i18next 24+ for localization, js-yaml for data parsing
 **Storage**: Static files (JSON/YAML data files in `/data` directory), no backend persistence
 **Testing**: Vitest (latest) for unit/integration tests, Playwright (latest) for end-to-end tests, React Testing Library 16+
 **Build Tooling**: Vite 6+ (latest), TypeScript compiler, ESLint 9+ (flat config), Prettier 3+
 **Target Platform**: Modern web browsers (Chrome, Firefox, Safari, Edge - last 2 versions), responsive design for mobile/tablet/desktop
 **Project Type**: Single-page web application (SPA)
-**Performance Goals**: Lighthouse performance ≥90, accessibility ≥95, <200ms filter/search response, <500ms chart/table render, handle 500 terpenes smoothly
-**Constraints**: WCAG 2.1 Level AA compliance, 4.5:1 contrast ratio, full keyboard navigation, OWASP Top 10 security, no analytics/tracking
-**Scale/Scope**: Up to 500 terpenes, 2 languages (en/de), multiple effect categories with color-coding
+**Performance Goals**: Initial load <2s, interactions <200ms (NFR-PERF-001/002), Lighthouse performance ≥90, accessibility ≥95, <500ms chart/table render, handle 500 terpenes smoothly
+**Constraints**: WCAG 2.1 Level AA compliance, 4.5:1 contrast ratio, full keyboard navigation, OWASP Top 10 security, no analytics/tracking, localStorage for user preferences
+**Scale/Scope**: Up to 500 terpenes with graceful validation, 2 languages (en/de), multiple effect categories with AND/OR filtering modes
 
 ## Constitution Check
 

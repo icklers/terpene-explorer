@@ -102,6 +102,7 @@ The application MUST support multiple languages (initially English and German). 
 ## Development Workflow
 
 All code changes MUST be introduced through Pull Requests (PRs) on GitHub. Each PR MUST:
+
 - Pass all automated tests (unit, integration, e2e, accessibility)
 - Pass ESLint linting with zero errors
 - Maintain or improve Lighthouse scores
@@ -115,6 +116,7 @@ The CI/CD pipeline MUST run on every PR and block merging if any check fails. De
 When filling out the "Constitution Check" section in `plan.md`, verify:
 
 ✅ **Gate 1: Accessibility Requirements**
+
 - [ ] WCAG 2.1 Level AA compliance documented
 - [ ] 4.5:1 contrast ratio specified for all color choices
 - [ ] Keyboard navigation plan documented
@@ -122,29 +124,34 @@ When filling out the "Constitution Check" section in `plan.md`, verify:
 - [ ] jest-axe or similar tool included in test strategy
 
 ✅ **Gate 2: Performance Budgets**
+
 - [ ] Lighthouse score targets defined (Performance ≥90, Accessibility ≥95)
 - [ ] Response time targets specified (<200ms filters, <500ms renders)
 - [ ] Bundle size budget considered (~500KB gzipped total)
 - [ ] Virtualization plan for large lists (>100 items)
 
 ✅ **Gate 3: Testing Strategy**
+
 - [ ] Unit test framework identified (Vitest recommended)
 - [ ] E2E test framework identified (Playwright recommended)
 - [ ] Accessibility test tool identified (jest-axe recommended)
 - [ ] Test coverage target defined (≥80% for critical paths)
 
 ✅ **Gate 4: Component Reuse**
+
 - [ ] Material UI components specified for UI elements
 - [ ] Custom components justified (e.g., D3.js visualizations)
 - [ ] No reinvention of existing Material UI components
 
 ✅ **Gate 5: Static Architecture**
+
 - [ ] No backend server dependencies
 - [ ] Data source is static files (JSON/YAML)
 - [ ] Deployment target is static hosting (Vercel/Netlify/GitHub Pages)
 - [ ] No database or API required
 
 ✅ **Gate 6: Internationalization**
+
 - [ ] i18next or similar internationalization library included
 - [ ] Supported languages specified (en, de minimum)
 - [ ] Translation files location documented
@@ -155,6 +162,7 @@ When filling out the "Constitution Check" section in `plan.md`, verify:
 ## Governance
 
 This constitution is the single source of truth for project principles and practices. Any proposed amendments require:
+
 1. A PR to this document with clear rationale
 2. Discussion with team/stakeholders
 3. Update to the Sync Impact Report at the top of this file

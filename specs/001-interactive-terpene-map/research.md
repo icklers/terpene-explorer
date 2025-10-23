@@ -166,6 +166,7 @@ function ThemeProvider({ children }) {
 ```
 
 **Why Not Chosen:**
+
 - Requires full component tree re-render on theme change, impacting performance
 - No built-in system preference detection
 - Manual implementation needed for SSR flicker prevention
@@ -195,6 +196,7 @@ function App() {
 ```
 
 **Why Not Chosen:**
+
 - Cannot override system preference without additional state management
 - Creates new theme object on every preference change
 - No built-in localStorage persistence
@@ -204,6 +206,7 @@ function App() {
 #### Alternative 3: Third-Party Theme Management (e.g., `next-themes`)
 
 **Why Not Chosen:**
+
 - Adds extra dependency when Material UI provides native solution
 - May conflict with Material UI's theming system
 - Less integration with Material UI's component styling
@@ -508,6 +511,7 @@ function SunburstAlternative({ data }) {
 ```
 
 **Why Not Chosen:**
+
 - Recharts doesn't provide native sunburst chart support (only basic pie charts)
 - Less flexible for complex hierarchical visualizations
 - Sunburst requires D3's partition layout algorithm
@@ -541,6 +545,7 @@ function D3OnlyChart({ data }) {
 ```
 
 **Why Not Chosen:**
+
 - Duplicates React's state management capabilities
 - Harder to integrate with React hooks and context (theme, language)
 - Cannot easily use Material UI components for legends, tooltips, or controls
@@ -572,6 +577,7 @@ function PlotChart({ data }) {
 ```
 
 **Why Not Chosen:**
+
 - Observable Plot/Vega-Lite lacks native sunburst chart support
 - Would require custom mark implementation, defeating the purpose
 - Less community support and examples for sunburst visualizations
@@ -1029,6 +1035,7 @@ function CustomAccessibleButton({ onClick, children }) {
 ```
 
 **Why Not Chosen:**
+
 - Reinvents the wheel when Material UI provides accessible components
 - Higher risk of missing accessibility requirements
 - More code to maintain and test
@@ -1053,6 +1060,7 @@ function AriaButton(props) {
 ```
 
 **Why Not Chosen:**
+
 - Creates styling conflicts with Material UI's design system
 - Requires custom styling to match Material UI appearance
 - Duplicates functionality already in Material UI
@@ -1083,6 +1091,7 @@ function HeadlessSelect({ options, value, onChange }) {
 ```
 
 **Why Not Chosen:**
+
 - Requires custom styling for every component to match Material UI
 - No automatic theme integration
 - Cannot leverage Material UI's built-in theming and variants
@@ -1570,6 +1579,7 @@ function Component() {
 ```
 
 **Why Not Chosen:**
+
 - More verbose API compared to react-i18next (requires FormattedMessage components)
 - Less flexible for dynamic translations and nested keys
 - Smaller community and fewer plugins compared to i18next
@@ -1601,6 +1611,7 @@ function LanguageProvider({ children }) {
 ```
 
 **Why Not Chosen:**
+
 - Reinvents mature i18n features (pluralization, interpolation, nesting)
 - No language detection or persistence out of the box
 - Manual implementation of date/number formatting
@@ -1624,6 +1635,7 @@ function Component() {
 ```
 
 **Why Not Chosen:**
+
 - Requires additional build step with babel-plugin-macros
 - Compile-time extraction can be complex with dynamic keys
 - Less adoption in Material UI ecosystem
@@ -2096,6 +2108,7 @@ const CracoConfig = {
 ```
 
 **Why Not Chosen:**
+
 - Slower build times compared to Vite (3-5x slower for production builds)
 - Larger bundle sizes without aggressive optimization
 - Requires ejecting or CRACO for advanced configuration
@@ -2113,6 +2126,7 @@ export async function getServerSideProps() {
 ```
 
 **Why Not Chosen:**
+
 - Adds complexity for static data that doesn't change frequently
 - Server infrastructure required (specification states no SSR - out of scope)
 - Larger deployment footprint
@@ -2128,6 +2142,7 @@ import { useEffect, useState } from 'preact/hooks';
 ```
 
 **Why Not Chosen:**
+
 - Material UI is built for React, not Preact (compatibility issues)
 - D3.js integration examples primarily use React
 - Team familiarity with React ecosystem
@@ -2330,6 +2345,7 @@ const processedData = useMemo(() => {
 ## Additional Resources
 
 ### Official Documentation
+
 - [Material UI Documentation](https://mui.com/)
 - [D3.js Documentation](https://d3js.org/)
 - [react-i18next Documentation](https://react.i18next.com/)
@@ -2337,12 +2353,14 @@ const processedData = useMemo(() => {
 - [Vite Documentation](https://vitejs.dev/)
 
 ### Tools and Testing
+
 - [axe DevTools](https://www.deque.com/axe/devtools/) - Accessibility testing
 - [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) - Performance monitoring
 - [Bundle Visualizer](https://www.npmjs.com/package/rollup-plugin-visualizer) - Bundle analysis
 - [React DevTools Profiler](https://react.dev/learn/react-developer-tools) - Performance profiling
 
 ### Community Examples
+
 - [Material UI Examples](https://github.com/mui/material-ui/tree/master/examples)
 - [D3 + React Gallery](https://d3-graph-gallery.com/)
 - [i18next Examples](https://github.com/i18next/react-i18next/tree/master/example)
