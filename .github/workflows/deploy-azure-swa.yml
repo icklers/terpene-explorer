@@ -45,15 +45,22 @@ jobs:
         with:
           # Required
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_GROUND_04EB9DE03 }}
-          action: "upload" # Required: specify upload action for deployment
           app_location: "dist" # The location of your built app files
-          
-          # Optional configurations
           skip_app_build: true # Skip build since we already have built files
           skip_api_build: true # Skip API build since we don't have an API
-          output_location: "" # Leave empty since files are already in correct structure
-          production_branch: "main" # Specify the production branch
-          deployment_environment: "production" # Specify the deployment environment
+          
+          # Optional configurations (commented out to use Azure portal defaults)
+          # output_location: "" # Use Azure portal configuration
+          # api_location: "" # Use Azure portal configuration
+          # app_build_command: "" # Use Azure portal configuration
+          # api_build_command: "" # Use Azure portal configuration
+          
+          # Deployment specific
+          action: "upload" # Required: specify upload action for deployment
+          deployment_environment: production # Use 'production' for main branch
+          production_branch: main # Consider this the production branch
         env:
           # Add any environment variables your app needs at runtime
           VITE_APP_VERSION: ${{ github.event.workflow_run.head_branch || github.ref_name }}
+          VITE_APP_BASE: /
+          VITE_APP_PUBLIC_URL: https://terpene.ickler.io
