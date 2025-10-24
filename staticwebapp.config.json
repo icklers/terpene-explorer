@@ -1,17 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/staticwebapp.config.json",
   "trailingSlash": "never",
-  "navigationFallback": {
-    "rewrite": "/index.html",
-    "exclude": [
-      "/assets/*",
-      "/data/*",
-      "/manifest.json",
-      "/favicon.ico",
-      "/favicon.svg",
-      "/*.{js,mjs,css,json,png,jpg,jpeg,gif,ico,svg,woff,woff2,ttf,eot,map,txt,yaml,yml}"
-    ]
-  },
+
   "routes": [
     {
       "route": "/assets/*.js",
@@ -37,7 +27,7 @@
       "route": "/*.js",
       "headers": {
         "Content-Type": "text/javascript; charset=utf-8",
-        "Cache-Control": "public, max-age=31536000, immutable"
+        "Cache-Control": "public, max-age=3600, immutable"
       }
     },
     {
@@ -71,7 +61,7 @@
     {
       "route": "/data/*.yaml",
       "headers": {
-        "Content-Type": "text/yaml; charset=utf-8",
+        "Content-Type": "application/yaml; charset=utf-8",
         "Cache-Control": "public, max-age=3600"
       }
     },
@@ -98,10 +88,6 @@
       "headers": {
         "Cache-Control": "no-cache, must-revalidate"
       }
-    },
-    {
-      "route": "/*",
-      "rewrite": "/index.html"
     }
   ],
   "globalHeaders": {
@@ -134,8 +120,7 @@
 
   "responseOverrides": {
     "404": {
-      "rewrite": "/index.html",
-      "statusCode": 200
+      "rewrite": "/index.html"
     }
   }
 }
