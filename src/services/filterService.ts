@@ -7,8 +7,8 @@
  * @see tasks.md T044
  */
 
-import type { Terpene } from '../models/Terpene';
 import type { FilterState } from '../models/FilterState';
+import type { Terpene } from '../models/Terpene';
 
 /**
  * Filter terpenes based on filter state

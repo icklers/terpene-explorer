@@ -7,9 +7,9 @@
  * @see tasks.md T040
  */
 
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within as _within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi } from 'vitest';
 
 // Import the component (will be implemented in T048)
 import { FilterControls } from '../../../src/components/filters/FilterControls';

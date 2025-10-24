@@ -7,9 +7,10 @@
  * @see data-model.md for Material UI CssVarsProvider integration
  */
 
-import { lightTheme } from './lightTheme';
-import { darkTheme } from './darkTheme';
 import type { Theme } from '@mui/material/styles';
+
+import { darkTheme } from './darkTheme';
+import { lightTheme } from './lightTheme';
 
 /**
  * Theme mode type

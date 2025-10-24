@@ -7,7 +7,9 @@
  * @see tasks.md T050
  */
 
-import React from 'react';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import {
   Box,
   Card,
@@ -19,10 +21,9 @@ import {
   Skeleton,
   Stack,
 } from '@mui/material';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import RefreshIcon from '@mui/icons-material/Refresh';
+
 import type { Terpene } from '../../models/Terpene';
 
 /**

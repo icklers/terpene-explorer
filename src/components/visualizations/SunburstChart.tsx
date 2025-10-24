@@ -7,10 +7,11 @@
  * @see tasks.md T065
  */
 
-import React, { useEffect, useRef, useState } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import * as d3 from 'd3';
 import { hierarchy, partition } from 'd3-hierarchy';
+import React, { useEffect, useRef, useState } from 'react';
+
 import type { SunburstNode } from '../../utils/sunburstTransform';
 
 /**

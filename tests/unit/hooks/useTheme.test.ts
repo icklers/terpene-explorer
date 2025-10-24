@@ -7,8 +7,8 @@
  * @see tasks.md T075
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 // Import the hook (will be implemented in T078)
 import { useTheme } from '../../../src/hooks/useTheme';

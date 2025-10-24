@@ -7,9 +7,9 @@
  * @see tasks.md T062
  */
 
-import { getEffectMetadata } from '../services/colorService';
-import type { Terpene } from '../models/Terpene';
 import type { Effect } from '../models/Effect';
+import type { Terpene } from '../models/Terpene';
+import { getEffectMetadata } from '../services/colorService';
 
 /**
  * Sunburst node type

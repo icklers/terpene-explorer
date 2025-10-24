@@ -7,7 +7,6 @@
  * @see tasks.md T068
  */
 
-import React, { useState, useMemo } from 'react';
 import {
   Box,
   Table,
@@ -21,7 +20,9 @@ import {
   Chip,
   Typography,
 } from '@mui/material';
+import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import type { Terpene } from '../../models/Terpene';
 
 // TODO: Re-enable virtualization with react-window after fixing import issues

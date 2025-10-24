@@ -7,11 +7,12 @@
  * @see tasks.md T063
  */
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { TextField, InputAdornment, IconButton, Box } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
+import { TextField, InputAdornment, IconButton, Box } from '@mui/material';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { sanitizeSearchQuery } from '../../utils/sanitize';
 
 /**

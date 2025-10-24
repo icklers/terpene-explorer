@@ -7,8 +7,8 @@
  * @see tasks.md T081
  */
 
-import React from 'react';
 import { Select, MenuItem, FormControl, SelectChangeEvent } from '@mui/material';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 /**

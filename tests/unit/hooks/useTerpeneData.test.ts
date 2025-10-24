@@ -7,18 +7,15 @@
  * @see tasks.md T038
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
-
-// Import the hook (will be implemented in T046)
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useTerpeneData } from '../../../src/hooks/useTerpeneData';
+import { loadTerpeneData } from '../../../src/services/dataLoader';
 
 // Mock the dataLoader service
 vi.mock('../../../src/services/dataLoader', () => ({
   loadTerpeneData: vi.fn(),
 }));
-
-import { loadTerpeneData } from '../../../src/services/dataLoader';
 
 describe('useTerpeneData', () => {
   beforeEach(() => {

@@ -7,9 +7,10 @@
  * @see tasks.md T059
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within as _within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi, beforeEach as _beforeEach } from 'vitest';
+
 import { SunburstChart } from '../../../src/components/visualizations/SunburstChart';
 import type { SunburstNode } from '../../../src/utils/sunburstTransform';
 

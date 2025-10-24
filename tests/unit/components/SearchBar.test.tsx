@@ -7,9 +7,10 @@
  * @see tasks.md T058
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor as _waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+
 import { SearchBar } from '../../../src/components/filters/SearchBar';
 
 describe('SearchBar', () => {
@@ -292,7 +293,6 @@ describe('SearchBar', () => {
 
   describe('User Interactions', () => {
     it('should call onChange when user types', async () => {
-      const onChange = vi.fn();
       const user = userEvent.setup({ delay: null });
 
       render(<SearchBar value="" onChange={vi.fn()} />);
@@ -394,12 +394,12 @@ describe('SearchBar', () => {
 
   describe('Performance', () => {
     it('should not re-render unnecessarily', async () => {
-      const onChange = vi.fn();
+      const _onChange = vi.fn();
       let renderCount = 0;
 
       function TestWrapper({ value }: { value: string }) {
         renderCount++;
-        return <SearchBar value={value} onChange={onChange} />;
+        return <SearchBar value={value} onChange={_onChange} />;
       }
 
       const { rerender } = render(<TestWrapper value="" />);

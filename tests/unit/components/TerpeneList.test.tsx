@@ -7,8 +7,8 @@
  * @see tasks.md T042
  */
 
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 
 // Import the component (will be implemented in T050)
 import { TerpeneList } from '../../../src/components/visualizations/TerpeneList';

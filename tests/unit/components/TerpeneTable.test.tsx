@@ -7,9 +7,10 @@
  * @see tasks.md T060
  */
 
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi as _vi } from 'vitest';
+
 import { TerpeneTable } from '../../../src/components/visualizations/TerpeneTable';
 import type { Terpene } from '../../../src/models/Terpene';
 

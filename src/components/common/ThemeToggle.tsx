@@ -7,10 +7,11 @@
  * @see tasks.md T080
  */
 
-import React from 'react';
-import { IconButton, Tooltip } from '@mui/material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
+import { IconButton, Tooltip } from '@mui/material';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import type { ThemeMode } from '../../hooks/useTheme';
 
 /**

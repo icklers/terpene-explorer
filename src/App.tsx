@@ -8,19 +8,19 @@
  * @see tasks.md T086, T087
  */
 
-import { useEffect, Suspense } from 'react';
 import { CssBaseline, GlobalStyles, ThemeProvider, Box } from '@mui/material';
+import { useEffect, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { LoadingIndicator } from './components/common/LoadingIndicator';
 import { AppBar } from './components/layout/AppBar';
 import { Footer } from './components/layout/Footer';
+import { useLocalStorage } from './hooks/useLocalStorage';
+import { useTheme } from './hooks/useTheme';
 import { Home } from './pages/Home';
 import { lightTheme, darkTheme } from './theme/themeConfig';
 import { globalAccessibilityStyles } from './theme/themeConfig';
-import { useTheme } from './hooks/useTheme';
-import { useLocalStorage } from './hooks/useLocalStorage';
 
 /**
  * Main App Component

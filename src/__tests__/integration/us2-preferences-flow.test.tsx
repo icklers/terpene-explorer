@@ -8,10 +8,11 @@
  * @see tasks.md T077
  */
 
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { App } from '../../src/App';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+
+import { App } from '../../App';
 
 describe('User Story 2: Theme & Language Preferences', () => {
   beforeEach(() => {

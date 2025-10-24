@@ -7,9 +7,9 @@
  * @see tasks.md T041
  */
 
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi } from 'vitest';
 
 // Import the component (will be implemented in T049)
 import { FilterModeToggle } from '../../../src/components/filters/FilterModeToggle';

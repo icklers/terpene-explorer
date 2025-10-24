@@ -7,7 +7,6 @@
  * @see tasks.md T051, T071-T074
  */
 
-import React, { lazy, Suspense } from 'react';
 import {
   Container,
   Box,
@@ -16,17 +15,19 @@ import {
   Stack,
   Skeleton,
 } from '@mui/material';
+import React, { lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTerpeneData } from '../hooks/useTerpeneData';
-import { useFilters } from '../hooks/useFilters';
-import { filterTerpenes } from '../services/filterService';
-import { transformToSunburstData } from '../utils/sunburstTransform';
-import { SearchBar } from '../components/filters/SearchBar';
+
+import { ViewModeToggle } from '../components/common/ViewModeToggle';
+import { WarningSnackbar } from '../components/common/WarningSnackbar';
 import { FilterControls } from '../components/filters/FilterControls';
 import { FilterModeToggle } from '../components/filters/FilterModeToggle';
-import { ViewModeToggle } from '../components/common/ViewModeToggle';
+import { SearchBar } from '../components/filters/SearchBar';
 import { TerpeneList } from '../components/visualizations/TerpeneList';
-import { WarningSnackbar } from '../components/common/WarningSnackbar';
+import { useFilters } from '../hooks/useFilters';
+import { useTerpeneData } from '../hooks/useTerpeneData';
+import { filterTerpenes } from '../services/filterService';
+import { transformToSunburstData } from '../utils/sunburstTransform';
 
 // Code splitting for visualization components (T074)
 const SunburstChart = lazy(() =>

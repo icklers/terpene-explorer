@@ -8,10 +8,11 @@
  */
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { loadTerpeneData } from '../services/dataLoader';
-import { getEffectMetadata } from '../services/colorService';
-import type { Terpene } from '../models/Terpene';
+
 import type { Effect } from '../models/Effect';
+import type { Terpene } from '../models/Terpene';
+import { getEffectMetadata } from '../services/colorService';
+import { loadTerpeneData } from '../services/dataLoader';
 
 /**
  * Hook return type

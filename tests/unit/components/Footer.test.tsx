@@ -7,8 +7,9 @@
  * @see tasks.md T089
  */
 
-import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+
 import { Footer } from '../../../src/components/layout/Footer';
 
 describe('Footer', () => {

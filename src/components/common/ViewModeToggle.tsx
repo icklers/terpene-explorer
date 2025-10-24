@@ -7,10 +7,10 @@
  * @see tasks.md T064
  */
 
-import React from 'react';
-import { ToggleButtonGroup, ToggleButton, Box, Typography } from '@mui/material';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import TableChartIcon from '@mui/icons-material/TableChart';
+import { ToggleButtonGroup, ToggleButton, Box, Typography } from '@mui/material';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 /**

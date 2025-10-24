@@ -7,8 +7,8 @@
  * @see tasks.md T049
  */
 
-import React from 'react';
 import { ToggleButtonGroup, ToggleButton, Box, Typography } from '@mui/material';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 /**

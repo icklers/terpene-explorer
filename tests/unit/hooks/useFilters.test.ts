@@ -7,8 +7,8 @@
  * @see tasks.md T039
  */
 
-import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
 
 // Import the hook (will be implemented in T047)
 import { useFilters } from '../../../src/hooks/useFilters';

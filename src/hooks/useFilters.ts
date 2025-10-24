@@ -9,6 +9,7 @@
  */
 
 import { useState, useCallback, useMemo } from 'react';
+
 import type { FilterState } from '../models/FilterState';
 
 /**

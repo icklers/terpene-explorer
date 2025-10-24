@@ -8,6 +8,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
+
 import { sanitizeInput, sanitizeSearchQuery } from '../../../src/utils/sanitize';
 
 describe('sanitizeInput', () => {

@@ -7,9 +7,9 @@
  * @see plan.md - Phase 2 foundational components
  */
 
-import { Component, ErrorInfo, ReactNode } from 'react';
-import { Alert, AlertTitle, Button, Box, Container } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { Alert, AlertTitle, Button, Box, Container } from '@mui/material';
+import { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;

@@ -7,6 +7,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
+
 import {
   TerpeneSchema,
   validateTerpeneData,
@@ -32,7 +33,7 @@ describe('TerpeneSchema', () => {
     });
 
     it('should validate a terpene without optional fields', () => {
-      const { boilingPoint, molecularFormula, ...minimalTerpene } = validTerpene;
+      const { ...minimalTerpene } = validTerpene;
       const result = TerpeneSchema.safeParse(minimalTerpene);
       expect(result.success).toBe(true);
     });
@@ -190,7 +191,7 @@ describe('validateTerpeneData - Graceful validation (FR-015)', () => {
     const result: ValidationResult = validateTerpeneData(data);
 
     expect(result.validTerpenes).toHaveLength(1);
-    expect(result.validTerpenes[0].name).toBe('Limonene');
+    expect(result.validTerpenes[0]!.name).toBe('Limonene');
     expect(result.invalidCount).toBe(2);
     expect(result.errors).toHaveLength(2);
   });

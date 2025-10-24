@@ -7,8 +7,8 @@
  * @see data-model.md for accessibility considerations
  */
 
-import type { Terpene } from '../models/Terpene';
 import type { Effect } from '../models/Effect';
+import type { Terpene } from '../models/Terpene';
 
 /**
  * Generates a generic ARIA label from object properties
@@ -125,26 +125,28 @@ export function announceLiveRegion(
   type: AnnouncementType,
   data: Record<string, unknown>
 ): string {
+  const count = data.count as number;
+  const query = data.query as string;
+  const mode = data.mode as string;
+
   switch (type) {
-    case 'filter':
-      const count = data.count as number;
+    case 'filter': {
       if (count === 0) {
         return 'No terpenes found matching your filters';
       }
       const terpeneText = count === 1 ? 'terpene' : 'terpenes';
       return `Filtered results: ${count} ${terpeneText} found`;
+    }
 
-    case 'search':
-      const searchCount = data.count as number;
-      const query = data.query as string;
-      if (searchCount === 0) {
+    case 'search': {
+      if (count === 0) {
         return `No results found for "${query}"`;
       }
-      const searchText = searchCount === 1 ? 'result' : 'results';
-      return `Search results: ${searchCount} ${searchText} for "${query}"`;
+      const searchText = count === 1 ? 'result' : 'results';
+      return `Search results: ${count} ${searchText} for "${query}"`;
+    }
 
     case 'viewChange':
-      const mode = data.mode as string;
       return `View switched to ${mode} mode`;
 
     case 'error':

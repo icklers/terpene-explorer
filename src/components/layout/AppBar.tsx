@@ -7,7 +7,6 @@
  * @see tasks.md T082
  */
 
-import React from 'react';
 import {
   AppBar as MuiAppBar,
   Toolbar,
@@ -15,10 +14,12 @@ import {
   Box,
   Container,
 } from '@mui/material';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ThemeToggle } from '../common/ThemeToggle';
-import { LanguageSelector } from '../common/LanguageSelector';
+
 import type { ThemeMode } from '../../hooks/useTheme';
+import { LanguageSelector } from '../common/LanguageSelector';
+import { ThemeToggle } from '../common/ThemeToggle';
 
 /**
  * Component props

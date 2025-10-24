@@ -7,10 +7,11 @@
  * @see tasks.md T048
  */
 
-import React from 'react';
-import { Box, Chip, Typography, Button } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import ClearIcon from '@mui/icons-material/Clear';
+import { Box, Chip, Typography, Button } from '@mui/material';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 import type { Effect } from '../../models/Effect';
 
 /**

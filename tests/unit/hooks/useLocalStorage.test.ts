@@ -7,8 +7,8 @@
  * @see tasks.md T076
  */
 
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 
 // Import the hook (will be implemented in T079)
 import { useLocalStorage } from '../../../src/hooks/useLocalStorage';
@@ -291,7 +291,7 @@ describe('useLocalStorage', () => {
   describe('Performance', () => {
     it('should not cause unnecessary re-renders', () => {
       let renderCount = 0;
-      const { result, rerender } = renderHook(() => {
+      const { result } = renderHook(() => {
         renderCount++;
         return useLocalStorage('test', 'initial');
       });

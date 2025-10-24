@@ -8,10 +8,8 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import type { Terpene } from '../../../src/models/Terpene';
 import type { FilterState } from '../../../src/models/FilterState';
-
-// Import the filterService functions (will be implemented in T044)
+import type { Terpene } from '../../../src/models/Terpene';
 import {
   filterTerpenes,
   matchesAnyEffect,
@@ -86,7 +84,7 @@ describe('filterService', () => {
       ];
 
       // Search by aroma
-      let filterState: FilterState = {
+      const filterState: FilterState = {
         searchQuery: 'citrus',
         selectedEffects: [],
         effectFilterMode: 'any',

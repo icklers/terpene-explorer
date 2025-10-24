@@ -31,7 +31,11 @@ export default [
     ],
   },
   {
-    files: ['**/*.{ts,tsx}'],
+    files: [
+      'src/**/*.{ts,tsx}',
+      'src/__tests__/**/*.{ts,tsx}',
+      'src/__tests__/**/*.test.{ts,tsx}'
+    ],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
@@ -44,6 +48,10 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.es2022,
+        ...globals.vitest,
+        React: 'readonly',
+        JSX: 'readonly',
+        vi: 'readonly',
       },
     },
     plugins: {

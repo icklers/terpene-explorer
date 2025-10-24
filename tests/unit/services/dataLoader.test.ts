@@ -7,6 +7,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+
 import { loadTerpeneData, type LoadResult } from '../../../src/services/dataLoader';
 
 describe('dataLoader service', () => {

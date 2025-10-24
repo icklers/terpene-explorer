@@ -8,11 +8,12 @@
  */
 
 import { describe, it, expect } from 'vitest';
+
+import type { Terpene } from '../../../src/models/Terpene';
 import {
   transformToSunburstData,
   type SunburstNode,
 } from '../../../src/utils/sunburstTransform';
-import type { Terpene } from '../../../src/models/Terpene';
 
 describe('sunburstTransform', () => {
   const mockTerpenes: Terpene[] = [

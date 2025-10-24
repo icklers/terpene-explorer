@@ -7,8 +7,8 @@
  * @see tasks.md T045
  */
 
-import { EFFECT_COLORS, EFFECT_METADATA } from '../utils/constants';
 import type { Effect } from '../models/Effect';
+import { EFFECT_COLORS, EFFECT_METADATA } from '../utils/constants';
 
 /**
  * Get color for an effect

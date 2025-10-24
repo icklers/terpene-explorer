@@ -7,8 +7,8 @@
  * @see tasks.md T054
  */
 
-import React from 'react';
 import { Snackbar, Alert } from '@mui/material';
+import React from 'react';
 
 /**
  * Component props

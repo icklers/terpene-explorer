@@ -124,9 +124,7 @@ describe('User Story 1: Data Flow Integration', () => {
   describe('Filter Service Integration', () => {
     it('should filter terpenes by single effect (ANY mode)', () => {
       // This will use the filterService implementation
-      const searchQuery = '';
       const selectedEffects = ['anti-inflammatory'];
-      const effectFilterMode = 'any';
 
       // Filter logic: terpenes that have anti-inflammatory effect
       const filtered = mockTerpeneData.filter((terpene) =>
@@ -141,8 +139,6 @@ describe('User Story 1: Data Flow Integration', () => {
 
     it('should filter terpenes by multiple effects (ANY mode - OR logic)', () => {
       const selectedEffects = ['energizing', 'sedative'];
-      const effectFilterMode = 'any';
-
       // OR logic: terpenes that have energizing OR sedative
       const filtered = mockTerpeneData.filter((terpene) =>
         selectedEffects.some((effect) => terpene.effects.includes(effect))
@@ -153,15 +149,13 @@ describe('User Story 1: Data Flow Integration', () => {
 
     it('should filter terpenes by multiple effects (ALL mode - AND logic)', () => {
       const selectedEffects = ['sedative', 'anti-inflammatory'];
-      const effectFilterMode = 'all';
-
       // AND logic: terpenes that have BOTH sedative AND anti-inflammatory
       const filtered = mockTerpeneData.filter((terpene) =>
         selectedEffects.every((effect) => terpene.effects.includes(effect))
       );
 
       expect(filtered).toHaveLength(1); // Only Linalool
-      expect(filtered[0].name).toBe('Linalool');
+      expect(filtered[0]?.name).toBe('Linalool');
     });
 
     it('should filter by search query across name, aroma, and effects', () => {
@@ -178,7 +172,7 @@ describe('User Story 1: Data Flow Integration', () => {
       });
 
       expect(filtered).toHaveLength(1); // Limonene (Citrus aroma)
-      expect(filtered[0].name).toBe('Limonene');
+      expect(filtered[0]?.name).toBe('Limonene');
     });
 
     it('should combine search and effect filters', () => {
@@ -399,8 +393,6 @@ describe('User Story 1: Data Flow Integration', () => {
 
   describe('Feature Requirements', () => {
     it('should support FR-013: AND/OR filter mode toggle', () => {
-      const selectedEffects = ['effect-1', 'effect-2'];
-
       // ANY mode test
       const anyMode = 'any';
       expect(anyMode).toBe('any');
