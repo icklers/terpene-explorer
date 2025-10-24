@@ -204,7 +204,7 @@
 
 ### Accessibility Polish
 
-- [ ] T089 [P] Create Footer component in src/components/layout/Footer.tsx with accessibility info
+- [x] T089 [P] Create Footer component in src/components/layout/Footer.tsx with accessibility info
 - [ ] T090 [P] Add ARIA live regions for announcing filter result counts in FilterControls
 - [ ] T091 [P] Add focus management when switching views in Home page (NFR-A11Y-003)
 - [ ] T092 [P] Add proper heading hierarchy (h1, h2, h3) throughout application (WCAG compliance)
@@ -212,9 +212,9 @@
 
 ### Security Hardening
 
-- [ ] T094 [P] Add Content Security Policy headers in vite.config.ts (NFR-SEC-001)
-- [ ] T095 [P] Sanitize search input to prevent XSS attacks in SearchBar component (NFR-SEC-001)
-- [ ] T096 [P] Run pnpm audit and fix any vulnerabilities (NFR-SEC-001)
+- [x] T094 [P] Add Content Security Policy headers in vite.config.ts (NFR-SEC-001)
+- [x] T095 [P] Sanitize search input to prevent XSS attacks in SearchBar component (NFR-SEC-001)
+- [x] T096 [P] Run pnpm audit and fix any vulnerabilities (NFR-SEC-001)
 
 ### Additional Data and Configuration
 
