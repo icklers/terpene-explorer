@@ -8,7 +8,7 @@
  */
 
 import { Container, Box, Typography, Paper, Stack, Skeleton } from '@mui/material';
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ViewModeToggle } from '../components/common/ViewModeToggle';
@@ -51,12 +51,23 @@ export function Home(): React.ReactElement {
   // Snackbar state for validation warnings
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
+  // Ref for visualization container (T091 - Focus management)
+  const visualizationRef = useRef<HTMLDivElement>(null);
+
   // Show snackbar when warnings appear
   React.useEffect(() => {
     if (warnings && warnings.length > 0) {
       setSnackbarOpen(true);
     }
   }, [warnings]);
+
+  // Focus management when view mode changes (T091 - NFR-A11Y-003)
+  useEffect(() => {
+    if (visualizationRef.current && !isLoading && !error) {
+      // Move focus to visualization container when view mode changes
+      visualizationRef.current.focus();
+    }
+  }, [filterState.viewMode, isLoading, error]);
 
   // Apply filters to terpenes
   const filteredTerpenes = React.useMemo(() => {
@@ -80,6 +91,11 @@ export function Home(): React.ReactElement {
 
       {/* Filter Controls */}
       <Paper elevation={1} sx={{ p: 3, mb: 3 }} role="search" aria-label={t('pages.home.filtersLabel', 'Filter controls')}>
+        {/* Heading for accessibility (T092) */}
+        <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
+          {t('pages.home.filtersHeading', 'Filters')}
+        </Typography>
+
         <Stack spacing={3}>
           {/* Search Input (T071) */}
           <SearchBar
@@ -96,6 +112,7 @@ export function Home(): React.ReactElement {
             selectedEffects={filterState.selectedEffects}
             onToggleEffect={toggleEffect}
             onClearFilters={clearAllFilters}
+            resultsCount={filteredTerpenes.length}
           />
 
           {/* Filter Mode Toggle (only show when effects are selected) */}
@@ -114,7 +131,13 @@ export function Home(): React.ReactElement {
       </Paper>
 
       {/* Results */}
-      <Box role="region" aria-label={t('pages.home.resultsLabel', 'Search results')}>
+      <Box
+        ref={visualizationRef}
+        role="region"
+        aria-label={t('pages.home.resultsLabel', 'Search results')}
+        tabIndex={-1}
+        sx={{ outline: 'none' }}
+      >
         {/* Loading State */}
         {isLoading && (
           <Box sx={{ textAlign: 'center', py: 8 }}>

@@ -28,6 +28,8 @@ export interface FilterControlsProps {
   onClearFilters?: () => void;
   /** Optional label */
   label?: string;
+  /** Results count for ARIA live region (T090) */
+  resultsCount?: number;
 }
 
 /**
@@ -42,6 +44,7 @@ export function FilterControls({
   onToggleEffect,
   onClearFilters,
   label,
+  resultsCount,
 }: FilterControlsProps): React.ReactElement {
   const { t } = useTranslation();
 
@@ -131,6 +134,31 @@ export function FilterControls({
           })
         )}
       </Box>
+
+      {/* ARIA live region for results count (T090) */}
+      {resultsCount !== undefined && hasSelection && (
+        <Box
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          sx={{
+            position: 'absolute',
+            left: '-10000px',
+            width: '1px',
+            height: '1px',
+            overflow: 'hidden',
+          }}
+        >
+          {resultsCount === 0
+            ? t('filters.noResultsFound', 'No terpenes match the selected filters')
+            : resultsCount === 1
+              ? t('filters.oneResult', '1 terpene found')
+              : t('filters.resultsCount', {
+                  defaultValue: '{{count}} terpenes found',
+                  count: resultsCount,
+                })}
+        </Box>
+      )}
     </Box>
   );
 }
