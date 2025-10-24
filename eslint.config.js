@@ -10,7 +10,25 @@ import tsParser from '@typescript-eslint/parser';
 
 export default [
   {
-    ignores: ['dist', 'node_modules', 'coverage', 'playwright-report', '*.config.ts'],
+    // Migrated ignore patterns from .eslintignore — use the `ignores` property per ESLint v8+ config
+    ignores: [
+      'node_modules/',
+      'dist/',
+      'dist-ssr/',
+      'build/',
+      '*.local',
+      'coverage/',
+      'test-results/',
+      'playwright-report/',
+      '*.config.js',
+      '*.config.ts',
+      'vite.config.ts',
+      'vitest.config.ts',
+      'playwright.config.ts',
+      '*.min.js',
+      '*.min.css',
+      '*.d.ts',
+    ],
   },
   {
     files: ['**/*.{ts,tsx}'],
