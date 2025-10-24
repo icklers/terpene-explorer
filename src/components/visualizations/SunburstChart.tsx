@@ -93,14 +93,14 @@ export function SunburstChart({
     // Create slices
     const slices = svg
       .selectAll('g')
-      .data(root.descendants().filter((d) => d.depth > 0))
+      .data(root.descendants().filter((d) => d.depth > 0) as d3.HierarchyRectangularNode<SunburstNode>[])
       .join('g')
       .attr('class', 'slice');
 
     // Add paths
     slices
       .append('path')
-      .attr('d', arc)
+      .attr('d', (d) => arc(d))
       .attr('fill', (d) => d.data.color || '#ccc')
       .attr('fill-opacity', 0.8)
       .attr('stroke', '#fff')
@@ -144,7 +144,7 @@ export function SunburstChart({
         d3.select(this).attr('fill-opacity', 0.8);
         setTooltip((prev) => ({ ...prev, show: false }));
       })
-      .on('focus', function(event, d) {
+      .on('focus', function() {
         d3.select(this).attr('fill-opacity', 1);
       })
       .on('blur', function() {
@@ -154,7 +154,7 @@ export function SunburstChart({
     // Add labels for larger slices
     slices
       .append('text')
-      .attr('transform', (d) => {
+      .attr('transform', (d: d3.HierarchyRectangularNode<SunburstNode>) => {
         const angle = ((d.x0 + d.x1) / 2) * (180 / Math.PI);
         const rotate = angle - 90;
         const radius = (d.y0 + d.y1) / 2;
@@ -165,7 +165,7 @@ export function SunburstChart({
       .attr('fill', '#fff')
       .attr('pointer-events', 'none')
       .style('user-select', 'none')
-      .text((d) => {
+      .text((d: d3.HierarchyRectangularNode<SunburstNode>) => {
         const arcLength = (d.x1 - d.x0) * (d.y0 + d.y1) / 2;
         return arcLength > 30 ? d.data.name : '';
       });
@@ -178,11 +178,13 @@ export function SunburstChart({
         if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
           event.preventDefault();
           const nextIndex = (index + 1) % pathElements.length;
-          pathElements[nextIndex].focus();
+          const nextElement = pathElements[nextIndex];
+          if (nextElement) nextElement.focus();
         } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
           event.preventDefault();
           const prevIndex = (index - 1 + pathElements.length) % pathElements.length;
-          pathElements[prevIndex].focus();
+          const prevElement = pathElements[prevIndex];
+          if (prevElement) prevElement.focus();
         }
       });
     });

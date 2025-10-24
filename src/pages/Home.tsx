@@ -1,31 +1,44 @@
 /**
  * Home Page
  *
- * Main page for User Story 1: View and Filter Terpene Data.
- * Integrates data loading, filtering, and visualization components.
+ * Main page for User Stories 1 & 3: View, Filter, and Visualize Terpene Data.
+ * Integrates data loading, filtering, search, and visualization components.
  *
- * @see tasks.md T051
+ * @see tasks.md T051, T071-T074
  */
 
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import {
   Container,
   Box,
   Typography,
-  TextField,
-  InputAdornment,
   Paper,
   Stack,
+  Skeleton,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 import { useTerpeneData } from '../hooks/useTerpeneData';
 import { useFilters } from '../hooks/useFilters';
 import { filterTerpenes } from '../services/filterService';
+import { transformToSunburstData } from '../utils/sunburstTransform';
+import { SearchBar } from '../components/filters/SearchBar';
 import { FilterControls } from '../components/filters/FilterControls';
 import { FilterModeToggle } from '../components/filters/FilterModeToggle';
+import { ViewModeToggle } from '../components/common/ViewModeToggle';
 import { TerpeneList } from '../components/visualizations/TerpeneList';
 import { WarningSnackbar } from '../components/common/WarningSnackbar';
+
+// Code splitting for visualization components (T074)
+const SunburstChart = lazy(() =>
+  import('../components/visualizations/SunburstChart').then((module) => ({
+    default: module.SunburstChart,
+  }))
+);
+const TerpeneTable = lazy(() =>
+  import('../components/visualizations/TerpeneTable').then((module) => ({
+    default: module.TerpeneTable,
+  }))
+);
 
 /**
  * Home page component
@@ -45,6 +58,7 @@ export function Home(): React.ReactElement {
     setSearchQuery,
     toggleEffect,
     toggleFilterMode,
+    setViewMode,
     hasActiveFilters,
   } = useFilters();
 
@@ -94,24 +108,16 @@ export function Home(): React.ReactElement {
         aria-label={t('pages.home.filtersLabel', 'Filter controls')}
       >
         <Stack spacing={3}>
-          {/* Search Input */}
-          <TextField
-            fullWidth
-            variant="outlined"
+          {/* Search Input (T071) */}
+          <SearchBar
+            value={filterState.searchQuery}
+            onChange={setSearchQuery}
             placeholder={t(
               'pages.home.searchPlaceholder',
               'Search terpenes by name, aroma, or effects...'
             )}
-            value={filterState.searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-            aria-label={t('pages.home.searchAriaLabel', 'Search terpenes')}
+            ariaLabel={t('pages.home.searchAriaLabel', 'Search terpenes')}
+            resultsCount={filteredTerpenes.length}
           />
 
           {/* Effect Chips */}
@@ -128,6 +134,12 @@ export function Home(): React.ReactElement {
               onChange={toggleFilterMode}
             />
           )}
+
+          {/* View Mode Toggle (T072) */}
+          <ViewModeToggle
+            mode={filterState.viewMode}
+            onChange={setViewMode}
+          />
 
           {/* Active Filters Indicator */}
           {hasActiveFilters && (
@@ -146,13 +158,44 @@ export function Home(): React.ReactElement {
 
       {/* Results */}
       <Box role="region" aria-label={t('pages.home.resultsLabel', 'Search results')}>
-        <TerpeneList
-          terpenes={filteredTerpenes}
-          isLoading={isLoading}
-          error={error}
-          warnings={warnings}
-          onRetry={retry}
-        />
+        {/* Loading State */}
+        {isLoading && (
+          <Box sx={{ textAlign: 'center', py: 8 }}>
+            <Skeleton variant="rectangular" width="100%" height={600} />
+            <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
+              {t('pages.home.loading', 'Loading terpene data...')}
+            </Typography>
+          </Box>
+        )}
+
+        {/* Error State */}
+        {error && !isLoading && (
+          <TerpeneList
+            terpenes={[]}
+            isLoading={false}
+            error={error}
+            warnings={warnings}
+            onRetry={retry}
+          />
+        )}
+
+        {/* Conditional Visualization Rendering (T073-T074) */}
+        {!isLoading && !error && (
+          <Suspense fallback={<Skeleton variant="rectangular" width="100%" height={600} />}>
+            {filterState.viewMode === 'sunburst' ? (
+              <SunburstChart
+                data={transformToSunburstData(filteredTerpenes)}
+                onSliceClick={(node) => {
+                  if (node.type === 'effect') {
+                    toggleEffect(node.name);
+                  }
+                }}
+              />
+            ) : (
+              <TerpeneTable terpenes={filteredTerpenes} />
+            )}
+          </Suspense>
+        )}
       </Box>
 
       {/* Validation Warning Snackbar (T054 - FR-015) */}

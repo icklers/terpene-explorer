@@ -21,9 +21,11 @@ import {
   Chip,
   Typography,
 } from '@mui/material';
-import { FixedSizeList as List } from 'react-window';
 import { useTranslation } from 'react-i18next';
 import type { Terpene } from '../../models/Terpene';
+
+// TODO: Re-enable virtualization with react-window after fixing import issues
+// import { FixedSizeList } from 'react-window';
 
 /**
  * Component props
@@ -116,43 +118,8 @@ export function TerpeneTable({
     );
   }
 
-  // Use virtualization for large datasets (>100 rows)
-  const useVirtualization = sortedTerpenes.length > 100;
-
-  // Row renderer for virtualization
-  const Row = ({ index, style }: { index: number; style: React.CSSProperties }) => {
-    const terpene = sortedTerpenes[index];
-
-    return (
-      <TableRow
-        key={terpene.id}
-        style={style}
-        sx={{
-          '&:hover': { backgroundColor: 'action.hover' },
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <TableCell sx={{ flex: '1 1 20%', minWidth: 150 }}>{terpene.name}</TableCell>
-        <TableCell sx={{ flex: '1 1 15%', minWidth: 100 }}>{terpene.aroma}</TableCell>
-        <TableCell sx={{ flex: '1 1 35%', minWidth: 200 }}>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-            {terpene.effects.map((effect) => (
-              <Chip
-                key={effect}
-                label={effect}
-                size="small"
-                sx={{ textTransform: 'capitalize' }}
-              />
-            ))}
-          </Box>
-        </TableCell>
-        <TableCell sx={{ flex: '1 1 30%', minWidth: 150 }}>
-          {terpene.sources.join(', ')}
-        </TableCell>
-      </TableRow>
-    );
-  };
+  // TODO: Re-enable virtualization after fixing react-window import
+  // const useVirtualization = sortedTerpenes.length > 100;
 
   return (
     <TableContainer component={Paper}>
@@ -226,43 +193,28 @@ export function TerpeneTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {useVirtualization ? (
-            <TableRow>
-              <TableCell colSpan={4} sx={{ p: 0, border: 'none' }}>
-                <List
-                  height={600}
-                  itemCount={sortedTerpenes.length}
-                  itemSize={80}
-                  width="100%"
-                >
-                  {Row}
-                </List>
+          {sortedTerpenes.map((terpene) => (
+            <TableRow
+              key={terpene.id}
+              sx={{ '&:hover': { backgroundColor: 'action.hover' } }}
+            >
+              <TableCell>{terpene.name}</TableCell>
+              <TableCell>{terpene.aroma}</TableCell>
+              <TableCell>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  {terpene.effects.map((effect) => (
+                    <Chip
+                      key={effect}
+                      label={effect}
+                      size="small"
+                      sx={{ textTransform: 'capitalize' }}
+                    />
+                  ))}
+                </Box>
               </TableCell>
+              <TableCell>{terpene.sources.join(', ')}</TableCell>
             </TableRow>
-          ) : (
-            sortedTerpenes.map((terpene) => (
-              <TableRow
-                key={terpene.id}
-                sx={{ '&:hover': { backgroundColor: 'action.hover' } }}
-              >
-                <TableCell>{terpene.name}</TableCell>
-                <TableCell>{terpene.aroma}</TableCell>
-                <TableCell>
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {terpene.effects.map((effect) => (
-                      <Chip
-                        key={effect}
-                        label={effect}
-                        size="small"
-                        sx={{ textTransform: 'capitalize' }}
-                      />
-                    ))}
-                  </Box>
-                </TableCell>
-                <TableCell>{terpene.sources.join(', ')}</TableCell>
-              </TableRow>
-            ))
-          )}
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
