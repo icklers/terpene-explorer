@@ -1,25 +1,42 @@
 name: Automated Release
 
 on:
-  push:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
     tags:
       - 'v*.*.*' # Triggers on tags like v1.0.0, v1.0.1, etc.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to create release from'
+        required: true
+        type: string
+
+permissions:
+  contents: write # Required to create a GitHub Release
+  actions: read # Required to download artifacts
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # Required to create a GitHub Release
+    if: |
+      github.event.workflow_run.conclusion == 'success' ||
+      github.event_name == 'workflow_dispatch'
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0 # Required for changelog generation
 
     - name: Download build artifacts
-      uses: actions/download-artifact@v4
+      uses: dawidd6/action-download-artifact@v11
       with:
+        workflow: ci.yml
         name: production-build
         path: dist
+        workflow_conclusion: success
         
     - name: Generate changelog
       id: changelog
@@ -27,7 +44,7 @@ jobs:
       with:
         configuration: ".github/changelog-config.json"
         commitMode: true
-        toTag: ${{ github.ref }}
+        toTag: ${{ github.event.workflow_run.head_branch || inputs.tag }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -37,5 +54,6 @@ jobs:
         files: dist/*
         body: ${{ steps.changelog.outputs.changelog }}
         generate_release_notes: false # We're using our custom changelog
+        tag_name: ${{ github.event.workflow_run.head_branch || inputs.tag }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
