@@ -31,11 +31,7 @@ export default [
     ],
   },
   {
-    files: [
-      'src/**/*.{ts,tsx}',
-      'src/__tests__/**/*.{ts,tsx}',
-      'src/__tests__/**/*.test.{ts,tsx}'
-    ],
+    files: ['src/**/*.{ts,tsx}', 'src/__tests__/**/*.{ts,tsx}', 'src/__tests__/**/*.test.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
@@ -76,16 +72,10 @@ export default [
       ...jsxA11y.configs.recommended.rules,
 
       // React Refresh
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
 
       // TypeScript specific
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
-      ],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
 
@@ -105,13 +95,7 @@ export default [
       'import-x/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling'],
-            'index',
-          ],
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index'],
           'newlines-between': 'always',
           alphabetize: {
             order: 'asc',

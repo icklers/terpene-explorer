@@ -19,9 +19,7 @@ describe('FilterModeToggle', () => {
     it('should render toggle button group', () => {
       const onChange = vi.fn();
 
-      const { container } = render(
-        <FilterModeToggle mode="any" onChange={onChange} />
-      );
+      const { container } = render(<FilterModeToggle mode="any" onChange={onChange} />);
 
       const toggleGroup = container.querySelector('.MuiToggleButtonGroup-root');
       expect(toggleGroup).toBeInTheDocument();
@@ -50,9 +48,7 @@ describe('FilterModeToggle', () => {
     it('should use Material UI ToggleButtonGroup component', () => {
       const onChange = vi.fn();
 
-      const { container } = render(
-        <FilterModeToggle mode="any" onChange={onChange} />
-      );
+      const { container } = render(<FilterModeToggle mode="any" onChange={onChange} />);
 
       expect(container.querySelector('.MuiToggleButtonGroup-root')).toBeInTheDocument();
       expect(container.querySelectorAll('.MuiToggleButton-root')).toHaveLength(2);
@@ -63,14 +59,10 @@ describe('FilterModeToggle', () => {
     it('should show ANY mode as selected when mode is "any"', () => {
       const onChange = vi.fn();
 
-      const { container } = render(
-        <FilterModeToggle mode="any" onChange={onChange} />
-      );
+      const { container } = render(<FilterModeToggle mode="any" onChange={onChange} />);
 
       const buttons = container.querySelectorAll('.MuiToggleButton-root');
-      const anyButton = Array.from(buttons).find((btn) =>
-        btn.textContent?.match(/ANY|OR/i)
-      );
+      const anyButton = Array.from(buttons).find((btn) => btn.textContent?.match(/ANY|OR/i));
 
       expect(anyButton).toHaveClass('Mui-selected');
     });
@@ -78,14 +70,10 @@ describe('FilterModeToggle', () => {
     it('should show ALL mode as selected when mode is "all"', () => {
       const onChange = vi.fn();
 
-      const { container } = render(
-        <FilterModeToggle mode="all" onChange={onChange} />
-      );
+      const { container } = render(<FilterModeToggle mode="all" onChange={onChange} />);
 
       const buttons = container.querySelectorAll('.MuiToggleButton-root');
-      const allButton = Array.from(buttons).find((btn) =>
-        btn.textContent?.match(/ALL|AND/i)
-      );
+      const allButton = Array.from(buttons).find((btn) => btn.textContent?.match(/ALL|AND/i));
 
       expect(allButton).toHaveClass('Mui-selected');
     });
@@ -93,9 +81,7 @@ describe('FilterModeToggle', () => {
     it('should have exactly one button selected at a time', () => {
       const onChange = vi.fn();
 
-      const { container } = render(
-        <FilterModeToggle mode="any" onChange={onChange} />
-      );
+      const { container } = render(<FilterModeToggle mode="any" onChange={onChange} />);
 
       const selectedButtons = container.querySelectorAll('.Mui-selected');
       expect(selectedButtons).toHaveLength(1);
@@ -208,15 +194,11 @@ describe('FilterModeToggle', () => {
     it('should show visual distinction between selected and unselected states', () => {
       const onChange = vi.fn();
 
-      const { container } = render(
-        <FilterModeToggle mode="any" onChange={onChange} />
-      );
+      const { container } = render(<FilterModeToggle mode="any" onChange={onChange} />);
 
       const buttons = container.querySelectorAll('.MuiToggleButton-root');
       const selectedButton = container.querySelector('.Mui-selected');
-      const unselectedButton = Array.from(buttons).find(
-        (btn) => !btn.classList.contains('Mui-selected')
-      );
+      const unselectedButton = Array.from(buttons).find((btn) => !btn.classList.contains('Mui-selected'));
 
       const selectedStyles = window.getComputedStyle(selectedButton!);
       const unselectedStyles = window.getComputedStyle(unselectedButton!);
@@ -242,9 +224,7 @@ describe('FilterModeToggle', () => {
     it('should display icons or visual indicators for OR/AND logic', () => {
       const onChange = vi.fn();
 
-      const { container } = render(
-        <FilterModeToggle mode="any" onChange={onChange} />
-      );
+      const { container } = render(<FilterModeToggle mode="any" onChange={onChange} />);
 
       // Should have some visual distinction (icons, colors, etc.)
       const buttons = container.querySelectorAll('.MuiToggleButton-root');
@@ -283,9 +263,7 @@ describe('FilterModeToggle', () => {
     it('should have descriptive aria-label for the toggle group', () => {
       const onChange = vi.fn();
 
-      const { container } = render(
-        <FilterModeToggle mode="any" onChange={onChange} />
-      );
+      const { container } = render(<FilterModeToggle mode="any" onChange={onChange} />);
 
       const toggleGroup = container.querySelector('.MuiToggleButtonGroup-root');
       const ariaLabel = toggleGroup?.getAttribute('aria-label');
@@ -341,9 +319,7 @@ describe('FilterModeToggle', () => {
     it('should accept custom className', () => {
       const onChange = vi.fn();
 
-      const { container } = render(
-        <FilterModeToggle mode="any" onChange={onChange} className="custom-class" />
-      );
+      const { container } = render(<FilterModeToggle mode="any" onChange={onChange} className="custom-class" />);
 
       expect(container.firstChild).toHaveClass('custom-class');
     });
@@ -403,9 +379,7 @@ describe('FilterModeToggle', () => {
     it('should handle mode prop changes', () => {
       const onChange = vi.fn();
 
-      const { rerender, container } = render(
-        <FilterModeToggle mode="any" onChange={onChange} />
-      );
+      const { rerender, container } = render(<FilterModeToggle mode="any" onChange={onChange} />);
 
       let selectedButton = container.querySelector('.Mui-selected');
       expect(selectedButton?.textContent).toMatch(/ANY|OR/i);
@@ -419,14 +393,10 @@ describe('FilterModeToggle', () => {
     it('should maintain consistent width', () => {
       const onChange = vi.fn();
 
-      const { container } = render(
-        <FilterModeToggle mode="any" onChange={onChange} />
-      );
+      const { container } = render(<FilterModeToggle mode="any" onChange={onChange} />);
 
       const buttons = container.querySelectorAll('.MuiToggleButton-root');
-      const widths = Array.from(buttons).map(
-        (btn) => btn.getBoundingClientRect().width
-      );
+      const widths = Array.from(buttons).map((btn) => btn.getBoundingClientRect().width);
 
       // Buttons should have equal or similar widths
       const minWidth = Math.min(...widths);

@@ -33,20 +33,12 @@ export interface ViewModeToggleProps {
  * @param props - Component props
  * @returns Rendered component
  */
-export function ViewModeToggle({
-  mode,
-  onChange,
-  label,
-  disabled = false,
-}: ViewModeToggleProps): React.ReactElement {
+export function ViewModeToggle({ mode, onChange, label, disabled = false }: ViewModeToggleProps): React.ReactElement {
   const { t } = useTranslation();
 
   const defaultLabel = t('viewMode.label', 'View Mode');
 
-  const handleChange = (
-    _event: React.MouseEvent<HTMLElement>,
-    newMode: 'sunburst' | 'table' | null
-  ) => {
+  const handleChange = (_event: React.MouseEvent<HTMLElement>, newMode: 'sunburst' | 'table' | null) => {
     if (newMode !== null) {
       onChange(newMode);
     }
@@ -55,12 +47,7 @@ export function ViewModeToggle({
   return (
     <Box>
       {/* Label */}
-      <Typography
-        variant="subtitle2"
-        component="label"
-        id="view-mode-label"
-        sx={{ mb: 1, display: 'block', fontWeight: 600 }}
-      >
+      <Typography variant="subtitle2" component="label" id="view-mode-label" sx={{ mb: 1, display: 'block', fontWeight: 600 }}>
         {label || defaultLabel}
       </Typography>
 
@@ -81,19 +68,11 @@ export function ViewModeToggle({
           },
         }}
       >
-        <ToggleButton
-          value="sunburst"
-          aria-label={t('viewMode.sunburst', 'Sunburst chart view')}
-          aria-pressed={mode === 'sunburst'}
-        >
+        <ToggleButton value="sunburst" aria-label={t('viewMode.sunburst', 'Sunburst chart view')} aria-pressed={mode === 'sunburst'}>
           <DonutLargeIcon sx={{ mr: 1 }} />
           {t('viewMode.sunburstLabel', 'Sunburst')}
         </ToggleButton>
-        <ToggleButton
-          value="table"
-          aria-label={t('viewMode.table', 'Table view')}
-          aria-pressed={mode === 'table'}
-        >
+        <ToggleButton value="table" aria-label={t('viewMode.table', 'Table view')} aria-pressed={mode === 'table'}>
           <TableChartIcon sx={{ mr: 1 }} />
           {t('viewMode.tableLabel', 'Table')}
         </ToggleButton>

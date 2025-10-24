@@ -36,19 +36,14 @@ export function getEffectColor(effectName: string): string {
  * @param terpeneCount - Optional terpene count
  * @returns Effect metadata
  */
-export function getEffectMetadata(
-  effectName: string,
-  terpeneCount?: number
-): Effect {
+export function getEffectMetadata(effectName: string, terpeneCount?: number): Effect {
   const normalizedName = effectName.toLowerCase().trim();
 
   // Get predefined metadata if available
   const metadata = EFFECT_METADATA[normalizedName];
 
   if (metadata) {
-    return terpeneCount !== undefined
-      ? { ...metadata, terpeneCount }
-      : metadata;
+    return terpeneCount !== undefined ? { ...metadata, terpeneCount } : metadata;
   }
 
   // Create fallback metadata
@@ -66,9 +61,7 @@ export function getEffectMetadata(
     color: generateFallbackColor(normalizedName),
   };
 
-  return terpeneCount !== undefined
-    ? { ...fallbackEffect, terpeneCount }
-    : fallbackEffect;
+  return terpeneCount !== undefined ? { ...fallbackEffect, terpeneCount } : fallbackEffect;
 }
 
 /**
@@ -87,10 +80,7 @@ export function getAllEffectColors(): Map<string, string> {
  * @param background - Background color (hex)
  * @returns True if contrast ratio meets WCAG AA
  */
-export function validateContrastRatio(
-  foreground: string,
-  background: string
-): boolean {
+export function validateContrastRatio(foreground: string, background: string): boolean {
   try {
     const fgLuminance = getRelativeLuminance(foreground);
     const bgLuminance = getRelativeLuminance(background);

@@ -17,10 +17,7 @@ import type { Terpene } from '../models/Terpene';
  * @param filterState - Current filter state
  * @returns Filtered array of terpenes
  */
-export function filterTerpenes(
-  terpenes: Terpene[],
-  filterState: FilterState
-): Terpene[] {
+export function filterTerpenes(terpenes: Terpene[], filterState: FilterState): Terpene[] {
   let filtered = [...terpenes];
 
   // Apply search query filter
@@ -32,13 +29,9 @@ export function filterTerpenes(
   // Apply effect filters
   if (filterState.selectedEffects.length > 0) {
     if (filterState.effectFilterMode === 'any') {
-      filtered = filtered.filter((terpene) =>
-        matchesAnyEffect(terpene, filterState.selectedEffects)
-      );
+      filtered = filtered.filter((terpene) => matchesAnyEffect(terpene, filterState.selectedEffects));
     } else {
-      filtered = filtered.filter((terpene) =>
-        matchesAllEffects(terpene, filterState.selectedEffects)
-      );
+      filtered = filtered.filter((terpene) => matchesAllEffects(terpene, filterState.selectedEffects));
     }
   }
 
@@ -58,11 +51,7 @@ function matchesSearchQuery(terpene: Terpene, query: string): boolean {
   const aroma = terpene.aroma.toLowerCase();
   const effects = terpene.effects.map((e) => e.toLowerCase()).join(' ');
 
-  return (
-    name.includes(query) ||
-    aroma.includes(query) ||
-    effects.includes(query)
-  );
+  return name.includes(query) || aroma.includes(query) || effects.includes(query);
 }
 
 /**

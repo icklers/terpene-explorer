@@ -10,11 +10,7 @@
 import { describe, it, expect } from 'vitest';
 import type { FilterState } from '../../../src/models/FilterState';
 import type { Terpene } from '../../../src/models/Terpene';
-import {
-  filterTerpenes,
-  matchesAnyEffect,
-  matchesAllEffects,
-} from '../../../src/services/filterService';
+import { filterTerpenes, matchesAnyEffect, matchesAllEffects } from '../../../src/services/filterService';
 
 /**
  * Sample test data
@@ -73,7 +69,7 @@ describe('filterService', () => {
       const result = filterTerpenes(mockTerpenes, filterState);
 
       expect(result).toHaveLength(1);
-  expect(result[0]!.name).toBe('Limonene');
+      expect(result[0]!.name).toBe('Limonene');
     });
 
     it('should filter by search query across name, aroma, and effects', () => {
@@ -94,13 +90,13 @@ describe('filterService', () => {
       };
       let result = filterTerpenes(terpenes, filterState);
       expect(result).toHaveLength(1);
-  expect(result[0]!.name).toBe('Alpha');
+      expect(result[0]!.name).toBe('Alpha');
 
       // Search by effect
       filterState.searchQuery = 'energizing';
       result = filterTerpenes(terpenes, filterState);
       expect(result).toHaveLength(1);
-  expect(result[0]!.name).toBe('Beta');
+      expect(result[0]!.name).toBe('Beta');
     });
 
     it('should filter by single effect with ANY mode', () => {
@@ -116,9 +112,7 @@ describe('filterService', () => {
       const result = filterTerpenes(mockTerpenes, filterState);
 
       expect(result).toHaveLength(3);
-      expect(result.map((t) => t.name)).toEqual(
-        expect.arrayContaining(['Limonene', 'Pinene', 'Caryophyllene'])
-      );
+      expect(result.map((t) => t.name)).toEqual(expect.arrayContaining(['Limonene', 'Pinene', 'Caryophyllene']));
     });
 
     it('should filter by multiple effects with ANY mode (OR logic)', () => {
@@ -151,7 +145,7 @@ describe('filterService', () => {
 
       // Only Caryophyllene has both effects
       expect(result).toHaveLength(1);
-  expect(result[0]!.name).toBe('Caryophyllene');
+      expect(result[0]!.name).toBe('Caryophyllene');
     });
 
     it('should combine search query and effect filters', () => {
@@ -168,9 +162,7 @@ describe('filterService', () => {
 
       // Matches: Limonene, Pinene, Caryophyllene (all have 'e' and anti-inflammatory)
       expect(result).toHaveLength(3);
-      expect(result.map((t) => t.name)).toEqual(
-        expect.arrayContaining(['Limonene', 'Pinene', 'Caryophyllene'])
-      );
+      expect(result.map((t) => t.name)).toEqual(expect.arrayContaining(['Limonene', 'Pinene', 'Caryophyllene']));
     });
 
     it('should return empty array when no terpenes match filters', () => {
@@ -233,7 +225,7 @@ describe('filterService', () => {
       const result = filterTerpenes(mockTerpenes, filterState);
 
       expect(result).toHaveLength(1);
-  expect(result[0]!.name).toBe('Limonene');
+      expect(result[0]!.name).toBe('Limonene');
     });
 
     it('should trim whitespace from search query', () => {
@@ -249,7 +241,7 @@ describe('filterService', () => {
       const result = filterTerpenes(mockTerpenes, filterState);
 
       expect(result).toHaveLength(1);
-  expect(result[0]!.name).toBe('Limonene');
+      expect(result[0]!.name).toBe('Limonene');
     });
   });
 
@@ -281,9 +273,7 @@ describe('filterService', () => {
 
       expect(matchesAllEffects(terpene, ['anti-inflammatory'])).toBe(true);
       expect(matchesAllEffects(terpene, ['anti-inflammatory', 'analgesic'])).toBe(true);
-      expect(
-        matchesAllEffects(terpene, ['anti-inflammatory', 'analgesic', 'gastroprotective'])
-      ).toBe(true);
+      expect(matchesAllEffects(terpene, ['anti-inflammatory', 'analgesic', 'gastroprotective'])).toBe(true);
     });
 
     it('should return false if terpene is missing any specified effect', () => {
@@ -336,7 +326,7 @@ describe('filterService', () => {
       const result = filterTerpenes(terpenes, filterState);
 
       expect(result).toHaveLength(1);
-  expect(result[0]!.name).toBe('α-Pinene');
+      expect(result[0]!.name).toBe('α-Pinene');
     });
 
     it('should handle very long effect lists', () => {
@@ -355,7 +345,7 @@ describe('filterService', () => {
       const result = filterTerpenes([terpene], filterState);
 
       expect(result).toHaveLength(1);
-  expect(result[0]!.name).toBe('ManyEffects');
+      expect(result[0]!.name).toBe('ManyEffects');
     });
 
     it('should handle duplicate effects in filter selection', () => {
@@ -372,9 +362,7 @@ describe('filterService', () => {
 
       // Should still work correctly
       expect(result).toHaveLength(3);
-      expect(result.map((t) => t.name)).toEqual(
-        expect.arrayContaining(['Limonene', 'Pinene', 'Caryophyllene'])
-      );
+      expect(result.map((t) => t.name)).toEqual(expect.arrayContaining(['Limonene', 'Pinene', 'Caryophyllene']));
     });
   });
 });

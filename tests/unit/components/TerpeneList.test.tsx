@@ -156,10 +156,7 @@ describe('TerpeneList', () => {
     });
 
     it('should display multiple warnings', () => {
-      const warnings = [
-        'Warning 1: Invalid UUID',
-        'Warning 2: Missing required field',
-      ];
+      const warnings = ['Warning 1: Invalid UUID', 'Warning 2: Missing required field'];
 
       render(<TerpeneList terpenes={mockTerpenes} warnings={warnings} />);
 
@@ -171,13 +168,7 @@ describe('TerpeneList', () => {
       const warnings = ['Test warning'];
       const onDismissWarning = vi.fn();
 
-      render(
-        <TerpeneList
-          terpenes={mockTerpenes}
-          warnings={warnings}
-          onDismissWarning={onDismissWarning}
-        />
-      );
+      render(<TerpeneList terpenes={mockTerpenes} warnings={warnings} onDismissWarning={onDismissWarning} />);
 
       const dismissButton = screen.getByRole('button', { name: /dismiss|close/i });
       dismissButton.click();
@@ -197,9 +188,7 @@ describe('TerpeneList', () => {
       const { container } = render(<TerpeneList terpenes={[]} isLoading={true} />);
 
       // Should have loading skeleton or spinner
-      const loadingElement = container.querySelector(
-        '.MuiSkeleton-root, .MuiCircularProgress-root, [role="progressbar"]'
-      );
+      const loadingElement = container.querySelector('.MuiSkeleton-root, .MuiCircularProgress-root, [role="progressbar"]');
       expect(loadingElement).toBeInTheDocument();
     });
 
@@ -223,15 +212,15 @@ describe('TerpeneList', () => {
 
       expect(screen.getByText(/3.*terpene/i)).toBeInTheDocument();
 
-        const singleTerpene = {
-          id: '1',
-          name: 'Limonene',
-          aroma: 'Citrus',
-          description: 'A citrus-scented terpene found in lemon peels',
-          effects: ['energizing', 'mood-enhancing', 'anti-inflammatory'],
-          sources: ['Lemon', 'Orange', 'Grapefruit'],
-        };
-        rerender(<TerpeneList terpenes={[singleTerpene]} />);
+      const singleTerpene = {
+        id: '1',
+        name: 'Limonene',
+        aroma: 'Citrus',
+        description: 'A citrus-scented terpene found in lemon peels',
+        effects: ['energizing', 'mood-enhancing', 'anti-inflammatory'],
+        sources: ['Lemon', 'Orange', 'Grapefruit'],
+      };
+      rerender(<TerpeneList terpenes={[singleTerpene]} />);
 
       expect(screen.getByText(/1.*terpene/i)).toBeInTheDocument();
     });
@@ -254,9 +243,7 @@ describe('TerpeneList', () => {
     it('should render items as cards or list items', () => {
       const { container } = render(<TerpeneList terpenes={mockTerpenes} />);
 
-      const items = container.querySelectorAll(
-        'li, .MuiCard-root, .MuiListItem-root, [role="listitem"]'
-      );
+      const items = container.querySelectorAll('li, .MuiCard-root, .MuiListItem-root, [role="listitem"]');
       expect(items.length).toBeGreaterThan(0);
     });
 
@@ -331,24 +318,22 @@ describe('TerpeneList', () => {
         description: 'A terpene with a very long name',
         aroma: 'Citrus',
         effects: ['energizing'],
-        sources: ['Lemon']
+        sources: ['Lemon'],
       };
 
       render(<TerpeneList terpenes={[longNameTerpene]} />);
 
-      expect(
-        screen.getByText(/Very Long Terpene Name That Might Cause Layout Issues/)
-      ).toBeInTheDocument();
+      expect(screen.getByText(/Very Long Terpene Name That Might Cause Layout Issues/)).toBeInTheDocument();
     });
 
     it('should handle terpene with many effects', () => {
       const manyEffectsTerpene = {
-          id: '1',
-          name: 'Limonene',
-          aroma: 'Citrus',
-          description: 'Test terpene',
+        id: '1',
+        name: 'Limonene',
+        aroma: 'Citrus',
+        description: 'Test terpene',
         effects: Array.from({ length: 10 }, (_, i) => `effect-${i}`),
-          sources: ['Test Source'],
+        sources: ['Test Source'],
       };
 
       render(<TerpeneList terpenes={[manyEffectsTerpene]} />);
@@ -358,12 +343,12 @@ describe('TerpeneList', () => {
 
     it('should handle terpene with no description', () => {
       const noDescTerpene = {
-          id: '1',
-          name: 'Limonene',
-          aroma: 'Citrus',
-          description: 'No description available',  // Must have a description per interface
-          effects: ['test-effect'],
-          sources: ['Test Source'],
+        id: '1',
+        name: 'Limonene',
+        aroma: 'Citrus',
+        description: 'No description available', // Must have a description per interface
+        effects: ['test-effect'],
+        sources: ['Test Source'],
       };
 
       render(<TerpeneList terpenes={[noDescTerpene]} />);
@@ -373,12 +358,12 @@ describe('TerpeneList', () => {
 
     it('should handle special characters in terpene data', () => {
       const specialCharTerpene = {
-          id: '1',
+        id: '1',
         name: 'α-Pinene',
         description: 'A terpene with α & β variants (>90% pure)',
-          aroma: 'Pine',
-          effects: ['test-effect'],
-          sources: ['Test Source'],
+        aroma: 'Pine',
+        effects: ['test-effect'],
+        sources: ['Test Source'],
       };
 
       render(<TerpeneList terpenes={[specialCharTerpene]} />);
@@ -414,7 +399,7 @@ describe('TerpeneList', () => {
         id: `${i}`,
         name: `Terpene ${i}`,
         aroma: `Aroma ${i}`,
-          description: `A test terpene with index ${i} for performance testing. This description needs to be at least 10 characters long.`,
+        description: `A test terpene with index ${i} for performance testing. This description needs to be at least 10 characters long.`,
         effects: ['effect-1'],
         sources: ['Source 1'],
       }));

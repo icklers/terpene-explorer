@@ -73,9 +73,7 @@ describe('User Story 3: Visualization Flow Integration', () => {
 
       if (result.status === 'success') {
         const searchQuery = 'citrus';
-        const filtered = result.data.filter((t) =>
-          t.aroma.toLowerCase().includes(searchQuery)
-        );
+        const filtered = result.data.filter((t) => t.aroma.toLowerCase().includes(searchQuery));
 
         expect(filtered).toHaveLength(1);
         expect(filtered).not.toBeNull();
@@ -127,9 +125,7 @@ describe('User Story 3: Visualization Flow Integration', () => {
       if (result.status === 'success') {
         // Simulate clicking on "energizing" effect
         const selectedEffect = 'energizing';
-        const filtered = result.data.filter((t) =>
-          t.effects.includes(selectedEffect)
-        );
+        const filtered = result.data.filter((t) => t.effects.includes(selectedEffect));
 
         expect(filtered).toHaveLength(2); // Limonene and Pinene
         expect(filtered.map((t) => t.name)).toContain('Limonene');
@@ -194,18 +190,14 @@ describe('User Story 3: Visualization Flow Integration', () => {
 
       if (result.status === 'success') {
         // Sort by name
-        const sortedByName = [...result.data].sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
+        const sortedByName = [...result.data].sort((a, b) => a.name.localeCompare(b.name));
 
         expect(sortedByName).toHaveLength(3);
         expect(sortedByName[0]?.name).toBe('Limonene');
         expect(sortedByName[2]?.name).toBe('Pinene');
 
         // Sort by aroma
-        const sortedByAroma = [...result.data].sort((a, b) =>
-          a.aroma.localeCompare(b.aroma)
-        );
+        const sortedByAroma = [...result.data].sort((a, b) => a.aroma.localeCompare(b.aroma));
 
         expect(sortedByAroma).toHaveLength(3);
         expect(sortedByAroma[0]?.aroma).toBe('Citrus');
@@ -269,9 +261,7 @@ describe('User Story 3: Visualization Flow Integration', () => {
 
       if (result.status === 'success') {
         const selectedEffects = ['energizing'];
-        const filtered = result.data.filter((t) =>
-          selectedEffects.some((e) => t.effects.includes(e))
-        );
+        const filtered = result.data.filter((t) => selectedEffects.some((e) => t.effects.includes(e)));
 
         expect(filtered).toHaveLength(2);
 
@@ -291,9 +281,8 @@ describe('User Story 3: Visualization Flow Integration', () => {
 
       if (result.status === 'success') {
         const searchQuery = 'pine';
-        const filtered = result.data.filter((t) =>
-          t.name.toLowerCase().includes(searchQuery) ||
-          t.aroma.toLowerCase().includes(searchQuery)
+        const filtered = result.data.filter(
+          (t) => t.name.toLowerCase().includes(searchQuery) || t.aroma.toLowerCase().includes(searchQuery)
         );
 
         expect(filtered).toHaveLength(1);

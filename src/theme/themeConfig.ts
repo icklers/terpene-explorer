@@ -24,10 +24,7 @@ export type ThemeMode = 'light' | 'dark' | 'system';
  * @param systemPreference - System color scheme preference
  * @returns Material UI theme object
  */
-export function getTheme(
-  mode: ThemeMode,
-  systemPreference: 'light' | 'dark' = 'light'
-): Theme {
+export function getTheme(mode: ThemeMode, systemPreference: 'light' | 'dark' = 'light'): Theme {
   // If system mode, use system preference
   if (mode === 'system') {
     return systemPreference === 'dark' ? darkTheme : lightTheme;
@@ -57,9 +54,7 @@ export function detectSystemPreference(): 'light' | 'dark' {
  * @param callback - Function to call when system preference changes
  * @returns Cleanup function to remove listener
  */
-export function watchSystemPreference(
-  callback: (preference: 'light' | 'dark') => void
-): () => void {
+export function watchSystemPreference(callback: (preference: 'light' | 'dark') => void): () => void {
   if (typeof window === 'undefined') {
     return () => {};
   }

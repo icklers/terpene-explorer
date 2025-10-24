@@ -32,9 +32,7 @@ export interface UseTerpeneDataResult {
  * @param dataPath - Optional custom path to data file
  * @returns Terpene data, effects, loading state, error, and retry function
  */
-export function useTerpeneData(
-  dataPath: string = '/data/terpenes.json'
-): UseTerpeneDataResult {
+export function useTerpeneData(dataPath: string = '/data/terpenes.json'): UseTerpeneDataResult {
   const [terpenes, setTerpenes] = useState<Terpene[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -59,9 +57,7 @@ export function useTerpeneData(
       }
     } catch (err) {
       setTerpenes([]);
-      setError(
-        err instanceof Error ? err : new Error('Unknown error occurred')
-      );
+      setError(err instanceof Error ? err : new Error('Unknown error occurred'));
       setWarnings(null);
     } finally {
       setIsLoading(false);

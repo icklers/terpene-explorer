@@ -41,13 +41,7 @@ describe('FilterControls', () => {
     it('should render all effect chips', () => {
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       expect(screen.getByText('Calming')).toBeInTheDocument();
       expect(screen.getByText('Energizing')).toBeInTheDocument();
@@ -57,13 +51,7 @@ describe('FilterControls', () => {
     it('should display terpene count for each effect', () => {
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       // Terpene counts should be visible (might be in tooltip or badge)
       expect(screen.getByText(/5/)).toBeInTheDocument();
@@ -74,13 +62,7 @@ describe('FilterControls', () => {
     it('should render with Material UI Chips', () => {
       const onToggle = vi.fn();
 
-      const { container } = render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      const { container } = render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       // Check for MUI Chip elements
       const chips = container.querySelectorAll('.MuiChip-root');
@@ -90,9 +72,7 @@ describe('FilterControls', () => {
     it('should handle empty effects array', () => {
       const onToggle = vi.fn();
 
-      const { container } = render(
-        <FilterControls effects={[]} selectedEffects={[]} onToggleEffect={onToggle} />
-      );
+      const { container } = render(<FilterControls effects={[]} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const chips = container.querySelectorAll('.MuiChip-root');
       expect(chips).toHaveLength(0);
@@ -104,18 +84,12 @@ describe('FilterControls', () => {
       const onToggle = vi.fn();
 
       const { container } = render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={['calming', 'energizing']}
-          onToggleEffect={onToggle}
-        />
+        <FilterControls effects={mockEffects} selectedEffects={['calming', 'energizing']} onToggleEffect={onToggle} />
       );
 
       // Check for selected chip styling
       const chips = container.querySelectorAll('.MuiChip-root');
-      const selectedChips = Array.from(chips).filter((chip) =>
-        chip.classList.contains('MuiChip-filled')
-      );
+      const selectedChips = Array.from(chips).filter((chip) => chip.classList.contains('MuiChip-filled'));
 
       expect(selectedChips.length).toBeGreaterThan(0);
     });
@@ -123,13 +97,7 @@ describe('FilterControls', () => {
     it('should show unselected state for unselected effects', () => {
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={['calming']}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={['calming']} onToggleEffect={onToggle} />);
 
       // 'energizing' and 'anti-inflammatory' should be unselected
       const energizingChip = screen.getByText('Energizing').closest('.MuiChip-root');
@@ -139,13 +107,7 @@ describe('FilterControls', () => {
     it('should apply effect color to chips', () => {
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const calmingChip = screen.getByText('Calming').closest('.MuiChip-root');
       const style = window.getComputedStyle(calmingChip!);
@@ -160,13 +122,7 @@ describe('FilterControls', () => {
       const user = userEvent.setup();
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       await user.click(screen.getByText('Calming'));
 
@@ -177,13 +133,7 @@ describe('FilterControls', () => {
       const user = userEvent.setup();
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={['calming']}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={['calming']} onToggleEffect={onToggle} />);
 
       await user.click(screen.getByText('Calming'));
 
@@ -194,13 +144,7 @@ describe('FilterControls', () => {
       const user = userEvent.setup();
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       await user.click(screen.getByText('Calming'));
       await user.click(screen.getByText('Energizing'));
@@ -216,13 +160,7 @@ describe('FilterControls', () => {
       const user = userEvent.setup();
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const chip = screen.getByText('Calming');
 
@@ -236,13 +174,7 @@ describe('FilterControls', () => {
     it('should have proper ARIA labels for screen readers', () => {
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const calmingChip = screen.getByText('Calming').closest('.MuiChip-root');
       expect(calmingChip).toHaveAttribute('role');
@@ -251,13 +183,7 @@ describe('FilterControls', () => {
     it('should indicate selected state to screen readers', () => {
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={['calming']}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={['calming']} onToggleEffect={onToggle} />);
 
       const calmingChip = screen.getByText('Calming').closest('.MuiChip-root');
       const ariaPressed = calmingChip?.getAttribute('aria-pressed');
@@ -269,13 +195,7 @@ describe('FilterControls', () => {
     it('should be keyboard navigable', () => {
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const chips = screen.getAllByRole('button');
 
@@ -288,13 +208,7 @@ describe('FilterControls', () => {
       const user = userEvent.setup();
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const chip = screen.getByText('Calming');
       chip.focus();
@@ -308,13 +222,7 @@ describe('FilterControls', () => {
       const user = userEvent.setup();
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const chip = screen.getByText('Calming');
       chip.focus();
@@ -327,13 +235,7 @@ describe('FilterControls', () => {
     it('should have descriptive text for terpene count', () => {
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       // Should have accessible text like "5 terpenes" or similar
       expect(screen.getByText(/5/)).toBeInTheDocument();
@@ -344,13 +246,7 @@ describe('FilterControls', () => {
     it('should render chips in a horizontal layout', () => {
       const onToggle = vi.fn();
 
-      const { container } = render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      const { container } = render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const wrapper = container.firstChild as HTMLElement;
       const styles = window.getComputedStyle(wrapper);
@@ -362,13 +258,7 @@ describe('FilterControls', () => {
     it('should wrap chips when space is limited', () => {
       const onToggle = vi.fn();
 
-      const { container } = render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      const { container } = render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const wrapper = container.firstChild as HTMLElement;
       const styles = window.getComputedStyle(wrapper);
@@ -380,13 +270,7 @@ describe('FilterControls', () => {
     it('should have consistent spacing between chips', () => {
       const onToggle = vi.fn();
 
-      const { container } = render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      const { container } = render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const chips = container.querySelectorAll('.MuiChip-root');
 
@@ -414,17 +298,9 @@ describe('FilterControls', () => {
 
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={longNameEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={longNameEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
-      expect(
-        screen.getByText('Very Long Effect Name That Might Cause Layout Issues')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Very Long Effect Name That Might Cause Layout Issues')).toBeInTheDocument();
     });
 
     it('should handle effects with zero terpene count', () => {
@@ -439,13 +315,7 @@ describe('FilterControls', () => {
 
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={zeroCountEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={zeroCountEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       expect(screen.getByText('Rare Effect')).toBeInTheDocument();
     });
@@ -462,13 +332,7 @@ describe('FilterControls', () => {
 
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={specialCharEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={specialCharEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       expect(screen.getByText('Anti-Inflammatory (α-variant)')).toBeInTheDocument();
     });
@@ -477,13 +341,7 @@ describe('FilterControls', () => {
       const user = userEvent.setup();
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const chip = screen.getByText('Calming');
 
@@ -504,13 +362,7 @@ describe('FilterControls', () => {
 
       const onToggle = vi.fn();
 
-      render(
-        <FilterControls
-          effects={manyEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={manyEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       expect(screen.getByText('Effect 0')).toBeInTheDocument();
       expect(screen.getByText('Effect 49')).toBeInTheDocument();
@@ -540,14 +392,7 @@ describe('FilterControls', () => {
       const onToggle = vi.fn();
       const onClear = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={['calming']}
-          onToggleEffect={onToggle}
-          onClearFilters={onClear}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={['calming']} onToggleEffect={onToggle} onClearFilters={onClear} />);
 
       const clearButton = screen.getByRole('button', { name: /clear/i });
       await user.click(clearButton);
@@ -559,14 +404,7 @@ describe('FilterControls', () => {
       const onToggle = vi.fn();
       const onClear = vi.fn();
 
-      render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-          onClearFilters={onClear}
-        />
-      );
+      render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} onClearFilters={onClear} />);
 
       const clearButton = screen.queryByRole('button', { name: /clear/i });
       expect(clearButton).not.toBeInTheDocument();
@@ -586,13 +424,7 @@ describe('FilterControls', () => {
 
       const startTime = performance.now();
 
-      render(
-        <FilterControls
-          effects={manyEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      render(<FilterControls effects={manyEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       const renderTime = performance.now() - startTime;
 
@@ -603,22 +435,10 @@ describe('FilterControls', () => {
     it('should not re-render unnecessarily', () => {
       const onToggle = vi.fn();
 
-      const { rerender } = render(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      const { rerender } = render(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       // Re-render with same props
-      rerender(
-        <FilterControls
-          effects={mockEffects}
-          selectedEffects={[]}
-          onToggleEffect={onToggle}
-        />
-      );
+      rerender(<FilterControls effects={mockEffects} selectedEffects={[]} onToggleEffect={onToggle} />);
 
       // Component should use memoization to avoid unnecessary renders
       expect(screen.getByText('Calming')).toBeInTheDocument();

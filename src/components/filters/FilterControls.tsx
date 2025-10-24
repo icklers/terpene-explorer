@@ -52,12 +52,7 @@ export function FilterControls({
     <Box>
       {/* Label with Clear Button */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-        <Typography
-          variant="subtitle2"
-          component="label"
-          id="effect-filter-label"
-          sx={{ fontWeight: 600 }}
-        >
+        <Typography variant="subtitle2" component="label" id="effect-filter-label" sx={{ fontWeight: 600 }}>
           {label || defaultLabel}
         </Typography>
 
@@ -91,18 +86,13 @@ export function FilterControls({
         ) : (
           effects.map((effect) => {
             const isSelected = selectedEffects.includes(effect.name);
-            const displayName =
-              effect.displayName.en || effect.name;
+            const displayName = effect.displayName.en || effect.name;
             const count = effect.terpeneCount;
 
             return (
               <Chip
                 key={effect.name}
-                label={
-                  count !== undefined
-                    ? `${displayName} (${count})`
-                    : displayName
-                }
+                label={count !== undefined ? `${displayName} (${count})` : displayName}
                 onClick={() => onToggleEffect(effect.name)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -124,16 +114,12 @@ export function FilterControls({
                 color={isSelected ? 'primary' : 'default'}
                 variant={isSelected ? 'filled' : 'outlined'}
                 sx={{
-                  backgroundColor: isSelected
-                    ? effect.color
-                    : 'transparent',
+                  backgroundColor: isSelected ? effect.color : 'transparent',
                   borderColor: effect.color,
                   color: isSelected ? 'white' : effect.color,
                   fontWeight: isSelected ? 600 : 400,
                   '&:hover': {
-                    backgroundColor: isSelected
-                      ? effect.color
-                      : `${effect.color}20`,
+                    backgroundColor: isSelected ? effect.color : `${effect.color}20`,
                   },
                   '&:focus-visible': {
                     outline: `2px solid ${effect.color}`,

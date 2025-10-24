@@ -31,9 +31,7 @@
         "boilingPoint": "Boiling point in degrees Celsius; null if not applicable.",
         "class": "Chemical classification (Monoterpene, Sesquiterpene, Monoterpenoid, etc.)."
       },
-      "sources": [
-        "Natural origins beyond cannabis (e.g., 'Hops', 'Lemongrass', 'Copaiba oil')."
-      ],
+      "sources": ["Natural origins beyond cannabis (e.g., 'Hops', 'Lemongrass', 'Copaiba oil')."],
       "references": [
         {
           "source": "Citation number or URL reference",

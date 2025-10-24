@@ -70,37 +70,43 @@ export function SearchBar({
   }, []);
 
   // Sanitize input: prevent XSS, trim, and convert to lowercase (T095)
-  const sanitize = useCallback((input: string): string => {
-    // Apply XSS sanitization first (NFR-SEC-001)
-    let sanitized = sanitizeSearchQuery(input);
+  const sanitize = useCallback(
+    (input: string): string => {
+      // Apply XSS sanitization first (NFR-SEC-001)
+      let sanitized = sanitizeSearchQuery(input);
 
-    // Convert to lowercase for case-insensitive search
-    sanitized = sanitized.toLowerCase();
+      // Convert to lowercase for case-insensitive search
+      sanitized = sanitized.toLowerCase();
 
-    // Apply maxLength if specified
-    if (maxLength && sanitized.length > maxLength) {
-      sanitized = sanitized.substring(0, maxLength);
-    }
+      // Apply maxLength if specified
+      if (maxLength && sanitized.length > maxLength) {
+        sanitized = sanitized.substring(0, maxLength);
+      }
 
-    return sanitized;
-  }, [maxLength]);
+      return sanitized;
+    },
+    [maxLength]
+  );
 
   // Handle input change with debouncing
-  const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
-    setLocalValue(newValue);
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = event.target.value;
+      setLocalValue(newValue);
 
-    // Clear existing timer
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
+      // Clear existing timer
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
 
-    // Set new timer
-    debounceTimerRef.current = setTimeout(() => {
-      const sanitized = sanitize(newValue);
-      onChange(sanitized);
-    }, debounceMs);
-  }, [onChange, sanitize, debounceMs]);
+      // Set new timer
+      debounceTimerRef.current = setTimeout(() => {
+        const sanitized = sanitize(newValue);
+        onChange(sanitized);
+      }, debounceMs);
+    },
+    [onChange, sanitize, debounceMs]
+  );
 
   // Handle clear button click (immediate, no debounce)
   const handleClear = useCallback(() => {
@@ -118,10 +124,7 @@ export function SearchBar({
     }
   }, [onChange]);
 
-  const defaultPlaceholder = t(
-    'search.placeholder',
-    'Search terpenes by name, aroma, or effects...'
-  );
+  const defaultPlaceholder = t('search.placeholder', 'Search terpenes by name, aroma, or effects...');
   const defaultAriaLabel = t('search.ariaLabel', 'Search for terpenes');
 
   return (
@@ -145,12 +148,7 @@ export function SearchBar({
           ),
           endAdornment: localValue && (
             <InputAdornment position="end">
-              <IconButton
-                aria-label={t('search.clear', 'Clear search')}
-                onClick={handleClear}
-                edge="end"
-                size="small"
-              >
+              <IconButton aria-label={t('search.clear', 'Clear search')} onClick={handleClear} edge="end" size="small">
                 <ClearIcon />
               </IconButton>
             </InputAdornment>

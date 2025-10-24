@@ -19,63 +19,63 @@ export const darkTheme = createTheme({
 
     // Primary colors (Indigo - professional and calming)
     primary: {
-      main: '#7986cb',      // Indigo 300 (lighter for dark bg)
-      light: '#aab6fe',     // Indigo 200
-      dark: '#3f51b5',      // Indigo 500
+      main: '#7986cb', // Indigo 300 (lighter for dark bg)
+      light: '#aab6fe', // Indigo 200
+      dark: '#3f51b5', // Indigo 500
       contrastText: 'rgba(0, 0, 0, 0.87)',
     },
 
     // Secondary colors (Teal - nature-inspired)
     secondary: {
-      main: '#4db6ac',      // Teal 300 (lighter for dark bg)
-      light: '#82e9de',     // Teal 200
-      dark: '#00897b',      // Teal 600
+      main: '#4db6ac', // Teal 300 (lighter for dark bg)
+      light: '#82e9de', // Teal 200
+      dark: '#00897b', // Teal 600
       contrastText: 'rgba(0, 0, 0, 0.87)',
     },
 
     // Error colors (Red - clear indication)
     error: {
-      main: '#f44336',      // Red 500
-      light: '#ff7961',     // Red 300
-      dark: '#d32f2f',      // Red 700
+      main: '#f44336', // Red 500
+      light: '#ff7961', // Red 300
+      dark: '#d32f2f', // Red 700
       contrastText: '#ffffff',
     },
 
     // Warning colors (Orange - attention)
     warning: {
-      main: '#ffa726',      // Orange 400
-      light: '#ffb74d',     // Orange 300
-      dark: '#f57c00',      // Orange 700
+      main: '#ffa726', // Orange 400
+      light: '#ffb74d', // Orange 300
+      dark: '#f57c00', // Orange 700
       contrastText: 'rgba(0, 0, 0, 0.87)',
     },
 
     // Info colors (Blue - informative)
     info: {
-      main: '#42a5f5',      // Blue 400
-      light: '#64b5f6',     // Blue 300
-      dark: '#1976d2',      // Blue 700
+      main: '#42a5f5', // Blue 400
+      light: '#64b5f6', // Blue 300
+      dark: '#1976d2', // Blue 700
       contrastText: 'rgba(0, 0, 0, 0.87)',
     },
 
     // Success colors (Green - positive confirmation)
     success: {
-      main: '#66bb6a',      // Green 400
-      light: '#81c784',     // Green 300
-      dark: '#388e3c',      // Green 700
+      main: '#66bb6a', // Green 400
+      light: '#81c784', // Green 300
+      dark: '#388e3c', // Green 700
       contrastText: 'rgba(0, 0, 0, 0.87)',
     },
 
     // Background colors (dark but not pure black for comfort)
     background: {
-      default: '#121212',   // Very dark grey (Material Design dark theme spec)
-      paper: '#1e1e1e',     // Slightly lighter for elevation
+      default: '#121212', // Very dark grey (Material Design dark theme spec)
+      paper: '#1e1e1e', // Slightly lighter for elevation
     },
 
     // Text colors (ensuring 4.5:1 contrast on dark backgrounds)
     text: {
-      primary: 'rgba(255, 255, 255, 0.87)',    // High emphasis
-      secondary: 'rgba(255, 255, 255, 0.60)',  // Medium emphasis
-      disabled: 'rgba(255, 255, 255, 0.38)',   // Disabled state
+      primary: 'rgba(255, 255, 255, 0.87)', // High emphasis
+      secondary: 'rgba(255, 255, 255, 0.60)', // Medium emphasis
+      disabled: 'rgba(255, 255, 255, 0.38)', // Disabled state
     },
 
     // Divider color

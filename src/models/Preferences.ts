@@ -98,10 +98,7 @@ export function isThemeState(obj: unknown): obj is ThemeState {
 
   const t = obj as Record<string, unknown>;
 
-  return (
-    ['light', 'dark', 'system'].includes(t.mode as string) &&
-    ['en', 'de'].includes(t.language as string)
-  );
+  return ['light', 'dark', 'system'].includes(t.mode as string) && ['en', 'de'].includes(t.language as string);
 }
 
 /**
@@ -115,8 +112,7 @@ export function isStoredPreferences(obj: unknown): obj is StoredPreferences {
   return (
     ['light', 'dark', 'system'].includes(p.theme as string) &&
     ['en', 'de'].includes(p.language as string) &&
-    (p.lastViewMode === undefined ||
-      ['sunburst', 'table'].includes(p.lastViewMode as string)) &&
+    (p.lastViewMode === undefined || ['sunburst', 'table'].includes(p.lastViewMode as string)) &&
     (p.filterMode === undefined || ['any', 'all'].includes(p.filterMode as string))
   );
 }

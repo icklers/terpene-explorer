@@ -36,47 +36,20 @@ interface LoadingIndicatorProps {
  * Simplified cannabis leaf shape for loading animation
  */
 const CannabisLeafPath = () => (
-  <svg
-    width="100%"
-    height="100%"
-    viewBox="0 0 100 100"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-  >
+  <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     {/* Stem */}
-    <path
-      d="M50 85 L50 50"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-    />
+    <path d="M50 85 L50 50" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
 
     {/* Center leaf */}
-    <path
-      d="M50 15 C52 20, 55 25, 50 50 C45 25, 48 20, 50 15 Z"
-      fill="currentColor"
-    />
+    <path d="M50 15 C52 20, 55 25, 50 50 C45 25, 48 20, 50 15 Z" fill="currentColor" />
 
     {/* Left leaves */}
-    <path
-      d="M50 30 C45 30, 35 35, 30 40 C35 38, 45 35, 50 35 Z"
-      fill="currentColor"
-    />
-    <path
-      d="M50 40 C43 40, 28 43, 20 50 C28 47, 43 43, 50 45 Z"
-      fill="currentColor"
-    />
+    <path d="M50 30 C45 30, 35 35, 30 40 C35 38, 45 35, 50 35 Z" fill="currentColor" />
+    <path d="M50 40 C43 40, 28 43, 20 50 C28 47, 43 43, 50 45 Z" fill="currentColor" />
 
     {/* Right leaves */}
-    <path
-      d="M50 30 C55 30, 65 35, 70 40 C65 38, 55 35, 50 35 Z"
-      fill="currentColor"
-    />
-    <path
-      d="M50 40 C57 40, 72 43, 80 50 C72 47, 57 43, 50 45 Z"
-      fill="currentColor"
-    />
+    <path d="M50 30 C55 30, 65 35, 70 40 C65 38, 55 35, 50 35 Z" fill="currentColor" />
+    <path d="M50 40 C57 40, 72 43, 80 50 C72 47, 57 43, 50 45 Z" fill="currentColor" />
   </svg>
 );
 
@@ -91,12 +64,7 @@ const CannabisLeafPath = () => (
  * <LoadingIndicator message="Loading terpene data..." />
  * ```
  */
-export const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
-  message,
-  showMessage = true,
-  size = 'medium',
-  fullHeight = true,
-}) => {
+export const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({ message, showMessage = true, size = 'medium', fullHeight = true }) => {
   const theme = useTheme();
   const { t } = useTranslation();
 

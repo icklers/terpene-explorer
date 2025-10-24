@@ -33,24 +33,12 @@ export interface FilterModeToggleProps {
  * @param props - Component props
  * @returns Rendered component
  */
-export function FilterModeToggle({
-  mode,
-  onChange,
-  label,
-  disabled = false,
-  className,
-}: FilterModeToggleProps): React.ReactElement {
+export function FilterModeToggle({ mode, onChange, label, disabled = false, className }: FilterModeToggleProps): React.ReactElement {
   const { t } = useTranslation();
 
-  const defaultLabel = t(
-    'filters.filterModeLabel',
-    'Effect Matching Mode'
-  );
+  const defaultLabel = t('filters.filterModeLabel', 'Effect Matching Mode');
 
-  const handleChange = (
-    _event: React.MouseEvent<HTMLElement>,
-    newMode: 'any' | 'all' | null
-  ) => {
+  const handleChange = (_event: React.MouseEvent<HTMLElement>, newMode: 'any' | 'all' | null) => {
     if (newMode !== null) {
       onChange(newMode);
     }
@@ -59,12 +47,7 @@ export function FilterModeToggle({
   return (
     <Box className={className}>
       {/* Label */}
-      <Typography
-        variant="subtitle2"
-        component="label"
-        id="filter-mode-label"
-        sx={{ mb: 1, display: 'block', fontWeight: 600 }}
-      >
+      <Typography variant="subtitle2" component="label" id="filter-mode-label" sx={{ mb: 1, display: 'block', fontWeight: 600 }}>
         {label || defaultLabel}
       </Typography>
 
@@ -85,43 +68,19 @@ export function FilterModeToggle({
           },
         }}
       >
-        <ToggleButton
-          value="any"
-          aria-label={t(
-            'filters.anyModeAriaLabel',
-            'Match any effect (OR logic)'
-          )}
-          aria-pressed={mode === 'any'}
-        >
+        <ToggleButton value="any" aria-label={t('filters.anyModeAriaLabel', 'Match any effect (OR logic)')} aria-pressed={mode === 'any'}>
           {t('filters.anyMode', 'Match ANY')}
         </ToggleButton>
-        <ToggleButton
-          value="all"
-          aria-label={t(
-            'filters.allModeAriaLabel',
-            'Match all effects (AND logic)'
-          )}
-          aria-pressed={mode === 'all'}
-        >
+        <ToggleButton value="all" aria-label={t('filters.allModeAriaLabel', 'Match all effects (AND logic)')} aria-pressed={mode === 'all'}>
           {t('filters.allMode', 'Match ALL')}
         </ToggleButton>
       </ToggleButtonGroup>
 
       {/* Help Text */}
-      <Typography
-        variant="caption"
-        color="text.secondary"
-        sx={{ mt: 0.5, display: 'block' }}
-      >
+      <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
         {mode === 'any'
-          ? t(
-              'filters.anyModeHelp',
-              'Show terpenes with at least one selected effect'
-            )
-          : t(
-              'filters.allModeHelp',
-              'Show terpenes with all selected effects'
-            )}
+          ? t('filters.anyModeHelp', 'Show terpenes with at least one selected effect')
+          : t('filters.allModeHelp', 'Show terpenes with all selected effects')}
       </Typography>
     </Box>
   );

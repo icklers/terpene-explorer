@@ -19,63 +19,63 @@ export const lightTheme = createTheme({
 
     // Primary colors (Indigo - professional and calming)
     primary: {
-      main: '#3f51b5',      // Indigo 500
-      light: '#757de8',     // Indigo 300
-      dark: '#002984',      // Indigo 900
+      main: '#3f51b5', // Indigo 500
+      light: '#757de8', // Indigo 300
+      dark: '#002984', // Indigo 900
       contrastText: '#ffffff',
     },
 
     // Secondary colors (Teal - nature-inspired)
     secondary: {
-      main: '#009688',      // Teal 500
-      light: '#52c7b8',     // Teal 300
-      dark: '#00675b',      // Teal 800
+      main: '#009688', // Teal 500
+      light: '#52c7b8', // Teal 300
+      dark: '#00675b', // Teal 800
       contrastText: '#ffffff',
     },
 
     // Error colors (Red - clear indication)
     error: {
-      main: '#d32f2f',      // Red 700
-      light: '#ef5350',     // Red 400
-      dark: '#c62828',      // Red 800
+      main: '#d32f2f', // Red 700
+      light: '#ef5350', // Red 400
+      dark: '#c62828', // Red 800
       contrastText: '#ffffff',
     },
 
     // Warning colors (Orange - attention)
     warning: {
-      main: '#f57c00',      // Orange 700
-      light: '#ffb74d',     // Orange 300
-      dark: '#e65100',      // Orange 900
+      main: '#f57c00', // Orange 700
+      light: '#ffb74d', // Orange 300
+      dark: '#e65100', // Orange 900
       contrastText: '#ffffff',
     },
 
     // Info colors (Blue - informative)
     info: {
-      main: '#1976d2',      // Blue 700
-      light: '#64b5f6',     // Blue 300
-      dark: '#0d47a1',      // Blue 900
+      main: '#1976d2', // Blue 700
+      light: '#64b5f6', // Blue 300
+      dark: '#0d47a1', // Blue 900
       contrastText: '#ffffff',
     },
 
     // Success colors (Green - positive confirmation)
     success: {
-      main: '#388e3c',      // Green 700
-      light: '#81c784',     // Green 300
-      dark: '#1b5e20',      // Green 900
+      main: '#388e3c', // Green 700
+      light: '#81c784', // Green 300
+      dark: '#1b5e20', // Green 900
       contrastText: '#ffffff',
     },
 
     // Background colors
     background: {
-      default: '#fafafa',   // Grey 50 - soft white
-      paper: '#ffffff',     // Pure white for cards
+      default: '#fafafa', // Grey 50 - soft white
+      paper: '#ffffff', // Pure white for cards
     },
 
     // Text colors (ensuring 4.5:1 contrast on backgrounds)
     text: {
-      primary: 'rgba(0, 0, 0, 0.87)',     // High emphasis
-      secondary: 'rgba(0, 0, 0, 0.60)',   // Medium emphasis
-      disabled: 'rgba(0, 0, 0, 0.38)',    // Disabled state
+      primary: 'rgba(0, 0, 0, 0.87)', // High emphasis
+      secondary: 'rgba(0, 0, 0, 0.60)', // Medium emphasis
+      disabled: 'rgba(0, 0, 0, 0.38)', // Disabled state
     },
 
     // Divider color

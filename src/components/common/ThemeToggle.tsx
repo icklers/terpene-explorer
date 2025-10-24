@@ -33,10 +33,7 @@ export interface ThemeToggleProps {
 export function ThemeToggle({ mode, onToggle }: ThemeToggleProps): React.ReactElement {
   const { t } = useTranslation();
 
-  const label =
-    mode === 'dark'
-      ? t('theme.switchToLight', 'Switch to light mode')
-      : t('theme.switchToDark', 'Switch to dark mode');
+  const label = mode === 'dark' ? t('theme.switchToLight', 'Switch to light mode') : t('theme.switchToDark', 'Switch to dark mode');
 
   const icon = mode === 'dark' ? <Brightness7 /> : <Brightness4 />;
 

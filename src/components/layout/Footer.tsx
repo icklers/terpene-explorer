@@ -29,10 +29,7 @@ export function Footer(): React.ReactElement {
         mt: 'auto',
         py: 3,
         px: 2,
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light'
-            ? theme.palette.grey[200]
-            : theme.palette.grey[800],
+        backgroundColor: (theme) => (theme.palette.mode === 'light' ? theme.palette.grey[200] : theme.palette.grey[800]),
         borderTop: (theme) => `1px solid ${theme.palette.divider}`,
       }}
     >
@@ -62,10 +59,7 @@ export function Footer(): React.ReactElement {
               {t('footer.accessibility', 'Accessibility')}: WCAG 2.1 Level AA
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              {t(
-                'footer.wcagDescription',
-                'Built with accessibility in mind'
-              )}
+              {t('footer.wcagDescription', 'Built with accessibility in mind')}
             </Typography>
           </Box>
         </Box>

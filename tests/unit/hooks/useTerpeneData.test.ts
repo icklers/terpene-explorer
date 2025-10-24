@@ -37,9 +37,7 @@ describe('useTerpeneData', () => {
     });
 
     it('should have empty data initially', () => {
-      vi.mocked(loadTerpeneData).mockReturnValue(
-        new Promise(() => {})
-      );
+      vi.mocked(loadTerpeneData).mockReturnValue(new Promise(() => {}));
 
       const { result } = renderHook(() => useTerpeneData());
 
@@ -117,9 +115,7 @@ describe('useTerpeneData', () => {
       });
 
       expect(result.current.effects).toHaveLength(3);
-      expect(result.current.effects.map((e) => e.name)).toEqual(
-        expect.arrayContaining(['energizing', 'mood-enhancing', 'sedative'])
-      );
+      expect(result.current.effects.map((e) => e.name)).toEqual(expect.arrayContaining(['energizing', 'mood-enhancing', 'sedative']));
     });
 
     it('should calculate terpene count for each effect', async () => {

@@ -320,9 +320,7 @@ describe('useLocalStorage', () => {
         age: number;
       }
 
-      const { result } = renderHook(() =>
-        useLocalStorage<User>('user', { name: 'John', age: 30 })
-      );
+      const { result } = renderHook(() => useLocalStorage<User>('user', { name: 'John', age: 30 }));
 
       expect(result.current[0]).toHaveProperty('name');
       expect(result.current[0]).toHaveProperty('age');

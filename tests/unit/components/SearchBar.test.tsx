@@ -31,17 +31,9 @@ describe('SearchBar', () => {
     });
 
     it('should display placeholder text', () => {
-      render(
-        <SearchBar
-          value=""
-          onChange={vi.fn()}
-          placeholder="Search terpenes..."
-        />
-      );
+      render(<SearchBar value="" onChange={vi.fn()} placeholder="Search terpenes..." />);
 
-      expect(
-        screen.getByPlaceholderText('Search terpenes...')
-      ).toBeInTheDocument();
+      expect(screen.getByPlaceholderText('Search terpenes...')).toBeInTheDocument();
     });
 
     it('should render search icon', () => {
@@ -223,13 +215,7 @@ describe('SearchBar', () => {
 
   describe('Accessibility', () => {
     it('should have proper ARIA label', () => {
-      render(
-        <SearchBar
-          value=""
-          onChange={vi.fn()}
-          ariaLabel="Search for terpenes"
-        />
-      );
+      render(<SearchBar value="" onChange={vi.fn()} ariaLabel="Search for terpenes" />);
 
       const input = screen.getByRole('textbox');
       expect(input).toHaveAccessibleName('Search for terpenes');
@@ -282,9 +268,7 @@ describe('SearchBar', () => {
     });
 
     it('should announce results count with ARIA live region', () => {
-      render(
-        <SearchBar value="test" onChange={vi.fn()} resultsCount={5} />
-      );
+      render(<SearchBar value="test" onChange={vi.fn()} resultsCount={5} />);
 
       const liveRegion = screen.getByRole('status');
       expect(liveRegion).toHaveTextContent(/5.*result/i);

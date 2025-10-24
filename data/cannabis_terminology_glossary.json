@@ -32,11 +32,7 @@
     "chemovar": {
       "definition": "Chemical variety - classification based on the plant's chemical profile (cannabinoid and terpene content) rather than physical appearance",
       "scientificAccuracy": "Emerging scientific classification system that provides more accurate prediction of effects",
-      "types": [
-        "Type I: THC-dominant, CBD <0.3%",
-        "Type II: Balanced THC:CBD ratio",
-        "Type III: CBD-dominant, THC <1%"
-      ],
+      "types": ["Type I: THC-dominant, CBD <0.3%", "Type II: Balanced THC:CBD ratio", "Type III: CBD-dominant, THC <1%"],
       "note": "More scientifically accurate than traditional indica/sativa classifications for predicting physiological effects",
       "advantage": "Based on actual chemical composition rather than morphological characteristics"
     }

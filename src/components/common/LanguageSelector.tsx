@@ -35,10 +35,7 @@ const LANGUAGES = [
  * @param props - Component props
  * @returns Rendered component
  */
-export function LanguageSelector({
-  language,
-  onChange,
-}: LanguageSelectorProps): React.ReactElement {
+export function LanguageSelector({ language, onChange }: LanguageSelectorProps): React.ReactElement {
   const { t } = useTranslation();
 
   const handleChange = (event: SelectChangeEvent<string>) => {

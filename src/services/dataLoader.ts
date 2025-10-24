@@ -55,9 +55,7 @@ export async function loadTerpeneData(filePath: string): Promise<LoadResult> {
     const response = await fetch(filePath);
 
     if (!response.ok) {
-      throw new Error(
-        `Unable to load terpene data. Please check that the file exists at ${filePath}.`
-      );
+      throw new Error(`Unable to load terpene data. Please check that the file exists at ${filePath}.`);
     }
 
     const rawText = await response.text();
@@ -73,12 +71,9 @@ export async function loadTerpeneData(filePath: string): Promise<LoadResult> {
         rawData = JSON.parse(rawText);
       }
     } catch (parseError) {
-      const errorMessage =
-        parseError instanceof Error ? parseError.message : 'Unknown parsing error';
+      const errorMessage = parseError instanceof Error ? parseError.message : 'Unknown parsing error';
 
-      throw new Error(
-        `Data format is invalid. ${isYaml ? 'YAML' : 'JSON'} parsing failed: ${errorMessage}`
-      );
+      throw new Error(`Data format is invalid. ${isYaml ? 'YAML' : 'JSON'} parsing failed: ${errorMessage}`);
     }
 
     // Step 3-4: Validate and filter
@@ -110,10 +105,7 @@ export async function loadTerpeneData(filePath: string): Promise<LoadResult> {
     };
   } catch (error) {
     // Convert any error to user-friendly Error object
-    const errorMessage =
-      error instanceof Error
-        ? error.message
-        : 'An unexpected error occurred while loading terpene data.';
+    const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred while loading terpene data.';
 
     return {
       status: 'error',
@@ -138,10 +130,7 @@ export async function loadTerpeneData(filePath: string): Promise<LoadResult> {
  *   '/data/terpenes.yaml'
  * );
  */
-export async function loadWithFallback(
-  primaryPath: string,
-  fallbackPath: string
-): Promise<LoadResult> {
+export async function loadWithFallback(primaryPath: string, fallbackPath: string): Promise<LoadResult> {
   const primaryResult = await loadTerpeneData(primaryPath);
 
   if (primaryResult.status === 'success') {

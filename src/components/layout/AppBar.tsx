@@ -7,13 +7,7 @@
  * @see tasks.md T082
  */
 
-import {
-  AppBar as MuiAppBar,
-  Toolbar,
-  Typography,
-  Box,
-  Container,
-} from '@mui/material';
+import { AppBar as MuiAppBar, Toolbar, Typography, Box, Container } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -41,12 +35,7 @@ export interface AppBarProps {
  * @param props - Component props
  * @returns Rendered component
  */
-export function AppBar({
-  themeMode,
-  onThemeToggle,
-  language,
-  onLanguageChange,
-}: AppBarProps): React.ReactElement {
+export function AppBar({ themeMode, onThemeToggle, language, onLanguageChange }: AppBarProps): React.ReactElement {
   const { t } = useTranslation();
 
   return (

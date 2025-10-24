@@ -78,9 +78,7 @@ function safeSetItem(key: string, value: string): void {
  * @param initialState - Optional initial filter state
  * @returns Filter state and update functions
  */
-export function useFilters(
-  initialState?: Partial<FilterState>
-): UseFiltersResult {
+export function useFilters(initialState?: Partial<FilterState>): UseFiltersResult {
   // Load persisted preferences (T085)
   const loadPersistedState = useCallback((): FilterState => {
     const viewMode = safeGetItem('viewMode');
@@ -88,8 +86,8 @@ export function useFilters(
 
     return {
       ...DEFAULT_FILTER_STATE,
-      viewMode: (viewMode === 'sunburst' || viewMode === 'table') ? viewMode : DEFAULT_FILTER_STATE.viewMode,
-      effectFilterMode: (filterMode === 'any' || filterMode === 'all') ? filterMode : DEFAULT_FILTER_STATE.effectFilterMode,
+      viewMode: viewMode === 'sunburst' || viewMode === 'table' ? viewMode : DEFAULT_FILTER_STATE.viewMode,
+      effectFilterMode: filterMode === 'any' || filterMode === 'all' ? filterMode : DEFAULT_FILTER_STATE.effectFilterMode,
       ...initialState,
     };
   }, [initialState]);
@@ -123,9 +121,7 @@ export function useFilters(
 
       return {
         ...prev,
-        selectedEffects: isSelected
-          ? prev.selectedEffects.filter((e) => e !== effect)
-          : [...prev.selectedEffects, effect],
+        selectedEffects: isSelected ? prev.selectedEffects.filter((e) => e !== effect) : [...prev.selectedEffects, effect],
       };
     });
   }, []);
@@ -216,10 +212,7 @@ export function useFilters(
 
   // Check if any filters are active
   const hasActiveFilters = useMemo(() => {
-    return (
-      filterState.searchQuery.trim() !== '' ||
-      filterState.selectedEffects.length > 0
-    );
+    return filterState.searchQuery.trim() !== '' || filterState.selectedEffects.length > 0;
   }, [filterState.searchQuery, filterState.selectedEffects]);
 
   return {

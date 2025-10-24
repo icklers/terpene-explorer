@@ -19,9 +19,7 @@ import './i18n/config'; // Initialize i18next
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
-  throw new Error(
-    'Failed to find the root element. Ensure your HTML file includes <div id="root"></div>'
-  );
+  throw new Error('Failed to find the root element. Ensure your HTML file includes <div id="root"></div>');
 }
 
 /**

@@ -34,12 +34,7 @@ export interface SunburstChartProps {
  * @param props - Component props
  * @returns Rendered component
  */
-export function SunburstChart({
-  data,
-  onSliceClick,
-  width = 600,
-  height = 600,
-}: SunburstChartProps): React.ReactElement {
+export function SunburstChart({ data, onSliceClick, width = 600, height = 600 }: SunburstChartProps): React.ReactElement {
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<{
     show: boolean;
@@ -76,8 +71,7 @@ export function SunburstChart({
       .sort((a, b) => (b.value || 0) - (a.value || 0));
 
     // Create partition layout
-    const partitionLayout = partition<SunburstNode>()
-      .size([2 * Math.PI, radius]);
+    const partitionLayout = partition<SunburstNode>().size([2 * Math.PI, radius]);
 
     partitionLayout(root);
 
@@ -117,22 +111,20 @@ export function SunburstChart({
           return `${d.data.name} terpene`;
         }
       })
-      .on('click', function(event, d) {
+      .on('click', function (event, d) {
         event.stopPropagation();
         onSliceClick(d.data);
       })
-      .on('keydown', function(event, d) {
+      .on('keydown', function (event, d) {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
           onSliceClick(d.data);
         }
       })
-      .on('mouseover', function(event, d) {
+      .on('mouseover', function (event, d) {
         d3.select(this).attr('fill-opacity', 1);
 
-        const content = d.data.type === 'effect'
-          ? `${d.data.name}: ${d.value} terpenes`
-          : d.data.name;
+        const content = d.data.type === 'effect' ? `${d.data.name}: ${d.value} terpenes` : d.data.name;
 
         setTooltip({
           show: true,
@@ -141,14 +133,14 @@ export function SunburstChart({
           content,
         });
       })
-      .on('mouseout', function() {
+      .on('mouseout', function () {
         d3.select(this).attr('fill-opacity', 0.8);
         setTooltip((prev) => ({ ...prev, show: false }));
       })
-      .on('focus', function() {
+      .on('focus', function () {
         d3.select(this).attr('fill-opacity', 1);
       })
-      .on('blur', function() {
+      .on('blur', function () {
         d3.select(this).attr('fill-opacity', 0.8);
       });
 
@@ -167,7 +159,7 @@ export function SunburstChart({
       .attr('pointer-events', 'none')
       .style('user-select', 'none')
       .text((d: d3.HierarchyRectangularNode<SunburstNode>) => {
-        const arcLength = (d.x1 - d.x0) * (d.y0 + d.y1) / 2;
+        const arcLength = ((d.x1 - d.x0) * (d.y0 + d.y1)) / 2;
         return arcLength > 30 ? d.data.name : '';
       });
 
@@ -175,7 +167,7 @@ export function SunburstChart({
     const pathElements = svg.selectAll('path').nodes() as SVGPathElement[];
 
     pathElements.forEach((path, index) => {
-      d3.select(path).on('keydown', function(event) {
+      d3.select(path).on('keydown', function (event) {
         if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
           event.preventDefault();
           const nextIndex = (index + 1) % pathElements.length;
@@ -189,7 +181,6 @@ export function SunburstChart({
         }
       });
     });
-
   }, [data, width, height, onSliceClick]);
 
   return (

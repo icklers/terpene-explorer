@@ -22,49 +22,27 @@ export const TerpeneSchema = z.object({
   id: z.string().uuid('ID must be a valid UUID v4'),
 
   // Name: 1-100 characters
-  name: z
-    .string()
-    .min(1, 'Name must not be empty')
-    .max(100, 'Name must not exceed 100 characters'),
+  name: z.string().min(1, 'Name must not be empty').max(100, 'Name must not exceed 100 characters'),
 
   // Description: 10-1000 characters
-  description: z
-    .string()
-    .min(10, 'Description must be at least 10 characters')
-    .max(1000, 'Description must not exceed 1000 characters'),
+  description: z.string().min(10, 'Description must be at least 10 characters').max(1000, 'Description must not exceed 1000 characters'),
 
   // Aroma: 1-100 characters
-  aroma: z
-    .string()
-    .min(1, 'Aroma must not be empty')
-    .max(100, 'Aroma must not exceed 100 characters'),
+  aroma: z.string().min(1, 'Aroma must not be empty').max(100, 'Aroma must not exceed 100 characters'),
 
   // Effects: 1-10 effect names
-  effects: z
-    .array(z.string())
-    .min(1, 'Must have at least one effect')
-    .max(10, 'Cannot have more than 10 effects'),
+  effects: z.array(z.string()).min(1, 'Must have at least one effect').max(10, 'Cannot have more than 10 effects'),
 
   // Sources: 1-20 source names
-  sources: z
-    .array(z.string())
-    .min(1, 'Must have at least one source')
-    .max(20, 'Cannot have more than 20 sources'),
+  sources: z.array(z.string()).min(1, 'Must have at least one source').max(20, 'Cannot have more than 20 sources'),
 
   // Optional: Boiling point (-200 to 300 Celsius)
-  boilingPoint: z
-    .number()
-    .min(-200, 'Boiling point must be at least -200°C')
-    .max(300, 'Boiling point must not exceed 300°C')
-    .optional(),
+  boilingPoint: z.number().min(-200, 'Boiling point must be at least -200°C').max(300, 'Boiling point must not exceed 300°C').optional(),
 
   // Optional: Molecular formula pattern
   molecularFormula: z
     .string()
-    .regex(
-      /^[A-Z][a-z]?\d*/,
-      'Molecular formula must match chemical formula pattern (e.g., C10H16)'
-    )
+    .regex(/^[A-Z][a-z]?\d*/, 'Molecular formula must match chemical formula pattern (e.g., C10H16)')
     .optional(),
 });
 
@@ -135,18 +113,14 @@ export function validateTerpeneData(data: unknown): ValidationResult {
  * @param terpene - Terpene object to validate
  * @returns Validation result with success flag and optional error
  */
-export function validateTerpene(
-  terpene: unknown
-): { success: true; data: Terpene } | { success: false; error: string } {
+export function validateTerpene(terpene: unknown): { success: true; data: Terpene } | { success: false; error: string } {
   const result = TerpeneSchema.safeParse(terpene);
 
   if (result.success) {
     return { success: true, data: result.data as Terpene };
   } else {
     const firstError = result.error.errors[0];
-    const errorMessage = firstError
-      ? `${firstError.path.join('.')}: ${firstError.message}`
-      : 'Validation failed';
+    const errorMessage = firstError ? `${firstError.path.join('.')}: ${firstError.message}` : 'Validation failed';
 
     return { success: false, error: errorMessage };
   }

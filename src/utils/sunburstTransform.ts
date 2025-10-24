@@ -74,9 +74,7 @@ export function transformToSunburstData(terpenes: Terpene[]): SunburstNode {
     const effectMetadata = getEffectMetadata(effectName, terpeneArray.length);
 
     // Sort terpenes alphabetically
-    const sortedTerpenes = terpeneArray.sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
+    const sortedTerpenes = terpeneArray.sort((a, b) => a.name.localeCompare(b.name));
 
     // Create terpene nodes
     const terpeneNodes: SunburstNode[] = sortedTerpenes.map((terpene) => ({

@@ -10,17 +10,7 @@
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Chip,
-  Alert,
-  Button,
-  Skeleton,
-  Stack,
-} from '@mui/material';
+import { Box, Card, CardContent, Typography, Chip, Alert, Button, Skeleton, Stack } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -91,12 +81,7 @@ export function TerpeneList({
         icon={<ErrorOutlineIcon />}
         action={
           onRetry && (
-            <Button
-              color="inherit"
-              size="small"
-              startIcon={<RefreshIcon />}
-              onClick={onRetry}
-            >
+            <Button color="inherit" size="small" startIcon={<RefreshIcon />} onClick={onRetry}>
               {t('common.retry', 'Retry')}
             </Button>
           )
@@ -124,17 +109,12 @@ export function TerpeneList({
           px: 2,
         }}
       >
-        <InfoOutlinedIcon
-          sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }}
-        />
+        <InfoOutlinedIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
         <Typography variant="h6" gutterBottom>
           {t('terpenes.noResults', 'No terpenes found')}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {t(
-            'terpenes.noResultsHelp',
-            'Try adjusting your filters or search query'
-          )}
+          {t('terpenes.noResultsHelp', 'Try adjusting your filters or search query')}
         </Typography>
       </Box>
     );
@@ -144,24 +124,13 @@ export function TerpeneList({
     <Box>
       {/* Validation Warnings (FR-015) */}
       {warnings && warnings.length > 0 && (
-        <Alert
-          severity="warning"
-          onClose={onDismissWarning}
-          sx={{ mb: 2 }}
-          role="alert"
-          aria-live="polite"
-        >
+        <Alert severity="warning" onClose={onDismissWarning} sx={{ mb: 2 }} role="alert" aria-live="polite">
           <Typography variant="subtitle2" fontWeight={600}>
             {t('warnings.validationIssues', 'Data validation warnings')}
           </Typography>
           <Box component="ul" sx={{ mt: 1, mb: 0, pl: 2 }}>
             {warnings.map((warning, index) => (
-              <Typography
-                key={index}
-                component="li"
-                variant="body2"
-                sx={{ mb: 0.5 }}
-              >
+              <Typography key={index} component="li" variant="body2" sx={{ mb: 0.5 }}>
                 {warning}
               </Typography>
             ))}
@@ -170,13 +139,7 @@ export function TerpeneList({
       )}
 
       {/* Result Count */}
-      <Typography
-        variant="subtitle2"
-        color="text.secondary"
-        sx={{ mb: 2 }}
-        role="status"
-        aria-live="polite"
-      >
+      <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 2 }} role="status" aria-live="polite">
         {t('terpenes.resultCount', {
           defaultValue: '{{count}} terpene(s) found',
           count: terpenes.length,
@@ -198,23 +161,13 @@ export function TerpeneList({
           >
             <CardContent>
               {/* Terpene Name */}
-              <Typography
-                variant="h6"
-                component="h3"
-                gutterBottom
-                sx={{ fontWeight: 600 }}
-              >
+              <Typography variant="h6" component="h3" gutterBottom sx={{ fontWeight: 600 }}>
                 {terpene.name}
               </Typography>
 
               {/* Aroma */}
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ mb: 1 }}
-              >
-                <strong>{t('terpenes.aroma', 'Aroma')}:</strong>{' '}
-                {terpene.aroma}
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                <strong>{t('terpenes.aroma', 'Aroma')}:</strong> {terpene.aroma}
               </Typography>
 
               {/* Description */}
@@ -226,11 +179,7 @@ export function TerpeneList({
 
               {/* Effects */}
               <Box sx={{ mb: 2 }}>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  sx={{ display: 'block', mb: 1, fontWeight: 600 }}
-                >
+                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1, fontWeight: 600 }}>
                   {t('terpenes.effects', 'Effects')}
                 </Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -251,11 +200,7 @@ export function TerpeneList({
               {/* Sources */}
               {terpene.sources && terpene.sources.length > 0 && (
                 <Box>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    sx={{ display: 'block', mb: 1, fontWeight: 600 }}
-                  >
+                  <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1, fontWeight: 600 }}>
                     {t('terpenes.sources', 'Sources')}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">

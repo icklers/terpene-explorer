@@ -30,29 +30,14 @@ export interface WarningSnackbarProps {
  * @param props - Component props
  * @returns Rendered component
  */
-export function WarningSnackbar({
-  warnings,
-  open,
-  onClose,
-  autoHideDuration = 6000,
-}: WarningSnackbarProps): React.ReactElement {
+export function WarningSnackbar({ warnings, open, onClose, autoHideDuration = 6000 }: WarningSnackbarProps): React.ReactElement {
   if (!warnings || warnings.length === 0) {
     return <></>;
   }
 
   return (
-    <Snackbar
-      open={open}
-      autoHideDuration={autoHideDuration}
-      onClose={onClose}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-    >
-      <Alert
-        onClose={onClose}
-        severity="warning"
-        variant="filled"
-        sx={{ width: '100%' }}
-      >
+    <Snackbar open={open} autoHideDuration={autoHideDuration} onClose={onClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+      <Alert onClose={onClose} severity="warning" variant="filled" sx={{ width: '100%' }}>
         {warnings.length === 1 ? (
           warnings[0]
         ) : (

@@ -35,9 +35,7 @@ describe('User Story 2: Theme & Language Preferences', () => {
         const body = document.body;
         // Material UI should apply dark theme class or data attribute
         expect(
-          body.classList.contains('dark') ||
-            body.dataset.theme === 'dark' ||
-            document.documentElement.dataset.muiColorScheme === 'dark'
+          body.classList.contains('dark') || body.dataset.theme === 'dark' || document.documentElement.dataset.muiColorScheme === 'dark'
         ).toBe(true);
       });
     });
@@ -100,9 +98,7 @@ describe('User Story 2: Theme & Language Preferences', () => {
         const body = document.body;
         // Should have either light or dark theme applied
         expect(
-          body.classList.contains('dark') ||
-            body.classList.contains('light') ||
-            document.documentElement.dataset.muiColorScheme
+          body.classList.contains('dark') || body.classList.contains('light') || document.documentElement.dataset.muiColorScheme
         ).toBeTruthy();
       });
     });

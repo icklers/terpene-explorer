@@ -127,22 +127,16 @@ describe('User Story 1: Data Flow Integration', () => {
       const selectedEffects = ['anti-inflammatory'];
 
       // Filter logic: terpenes that have anti-inflammatory effect
-      const filtered = mockTerpeneData.filter((terpene) =>
-        selectedEffects.some((effect) => terpene.effects.includes(effect))
-      );
+      const filtered = mockTerpeneData.filter((terpene) => selectedEffects.some((effect) => terpene.effects.includes(effect)));
 
       expect(filtered).toHaveLength(3); // Limonene, Pinene, Linalool
-      expect(filtered.map((t) => t.name)).toEqual(
-        expect.arrayContaining(['Limonene', 'Pinene', 'Linalool'])
-      );
+      expect(filtered.map((t) => t.name)).toEqual(expect.arrayContaining(['Limonene', 'Pinene', 'Linalool']));
     });
 
     it('should filter terpenes by multiple effects (ANY mode - OR logic)', () => {
       const selectedEffects = ['energizing', 'sedative'];
       // OR logic: terpenes that have energizing OR sedative
-      const filtered = mockTerpeneData.filter((terpene) =>
-        selectedEffects.some((effect) => terpene.effects.includes(effect))
-      );
+      const filtered = mockTerpeneData.filter((terpene) => selectedEffects.some((effect) => terpene.effects.includes(effect)));
 
       expect(filtered).toHaveLength(3); // Limonene, Myrcene, Linalool
     });
@@ -150,9 +144,7 @@ describe('User Story 1: Data Flow Integration', () => {
     it('should filter terpenes by multiple effects (ALL mode - AND logic)', () => {
       const selectedEffects = ['sedative', 'anti-inflammatory'];
       // AND logic: terpenes that have BOTH sedative AND anti-inflammatory
-      const filtered = mockTerpeneData.filter((terpene) =>
-        selectedEffects.every((effect) => terpene.effects.includes(effect))
-      );
+      const filtered = mockTerpeneData.filter((terpene) => selectedEffects.every((effect) => terpene.effects.includes(effect)));
 
       expect(filtered).toHaveLength(1); // Only Linalool
       expect(filtered[0]?.name).toBe('Linalool');
@@ -182,9 +174,7 @@ describe('User Story 1: Data Flow Integration', () => {
       // Terpenes matching search AND having the effect
       const filtered = mockTerpeneData.filter((terpene) => {
         const matchesSearch = terpene.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesEffect = selectedEffects.some((effect) =>
-          terpene.effects.includes(effect)
-        );
+        const matchesEffect = selectedEffects.some((effect) => terpene.effects.includes(effect));
         return matchesSearch && matchesEffect;
       });
 
@@ -239,9 +229,7 @@ describe('User Story 1: Data Flow Integration', () => {
 
       // 3. Apply filters
       const selectedEffects = ['anti-inflammatory'];
-      const filtered = loadResult.data.filter((terpene) =>
-        selectedEffects.some((effect) => terpene.effects.includes(effect))
-      );
+      const filtered = loadResult.data.filter((terpene) => selectedEffects.some((effect) => terpene.effects.includes(effect)));
       expect(filtered.length).toBeGreaterThan(0);
 
       // 4. Verify filtered results are ready for rendering
@@ -264,9 +252,7 @@ describe('User Story 1: Data Flow Integration', () => {
 
       // Filter with impossible criteria
       const selectedEffects = ['nonexistent-effect'];
-      const filtered = loadResult.data.filter((terpene) =>
-        selectedEffects.some((effect) => terpene.effects.includes(effect))
-      );
+      const filtered = loadResult.data.filter((terpene) => selectedEffects.some((effect) => terpene.effects.includes(effect)));
 
       expect(filtered).toHaveLength(0);
       // Should display "no results" message
@@ -285,14 +271,10 @@ describe('User Story 1: Data Flow Integration', () => {
       const selectedEffects = ['sedative', 'anti-inflammatory'];
 
       // ANY mode (OR logic) - at least one effect
-      const anyModeResults = loadResult.data.filter((terpene) =>
-        selectedEffects.some((effect) => terpene.effects.includes(effect))
-      );
+      const anyModeResults = loadResult.data.filter((terpene) => selectedEffects.some((effect) => terpene.effects.includes(effect)));
 
       // ALL mode (AND logic) - all effects
-      const allModeResults = loadResult.data.filter((terpene) =>
-        selectedEffects.every((effect) => terpene.effects.includes(effect))
-      );
+      const allModeResults = loadResult.data.filter((terpene) => selectedEffects.every((effect) => terpene.effects.includes(effect)));
 
       expect(anyModeResults.length).toBeGreaterThan(allModeResults.length);
       expect(allModeResults).toHaveLength(1); // Only Linalool has both
@@ -337,9 +319,7 @@ describe('User Story 1: Data Flow Integration', () => {
 
       const startTime = performance.now();
 
-      const filtered = largeTerpeneSet.filter((terpene) =>
-        ['effect-1'].some((effect) => terpene.effects.includes(effect))
-      );
+      const filtered = largeTerpeneSet.filter((terpene) => ['effect-1'].some((effect) => terpene.effects.includes(effect)));
 
       const filterTime = performance.now() - startTime;
 

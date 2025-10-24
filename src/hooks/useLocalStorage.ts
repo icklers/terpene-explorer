@@ -78,10 +78,7 @@ function safeRemoveItem(key: string): void {
  * @param initialValue - Initial value if no stored value exists
  * @returns Tuple of [value, setValue, removeValue]
  */
-export function useLocalStorage<T>(
-  key: string,
-  initialValue: T
-): [T, Dispatch<SetStateAction<T>>, () => void] {
+export function useLocalStorage<T>(key: string, initialValue: T): [T, Dispatch<SetStateAction<T>>, () => void] {
   // Initialize state with stored value or initial value
   const [storedValue, setStoredValue] = useState<T>(() => {
     return safeGetItem(key, initialValue);

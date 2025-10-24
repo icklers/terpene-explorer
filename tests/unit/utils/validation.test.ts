@@ -8,11 +8,7 @@
 
 import { describe, it, expect } from 'vitest';
 
-import {
-  TerpeneSchema,
-  validateTerpeneData,
-  type ValidationResult,
-} from '../../../src/utils/validation';
+import { TerpeneSchema, validateTerpeneData, type ValidationResult } from '../../../src/utils/validation';
 
 describe('TerpeneSchema', () => {
   const validTerpene = {
@@ -205,11 +201,7 @@ describe('validateTerpeneData - Graceful validation (FR-015)', () => {
   });
 
   it('should handle completely invalid dataset', () => {
-    const data = [
-      { invalid: 'data' },
-      { another: 'invalid' },
-      { totally: 'wrong' },
-    ];
+    const data = [{ invalid: 'data' }, { another: 'invalid' }, { totally: 'wrong' }];
 
     const result: ValidationResult = validateTerpeneData(data);
 
@@ -227,9 +219,7 @@ describe('validateTerpeneData - Graceful validation (FR-015)', () => {
   });
 
   it('should provide error messages with entry index', () => {
-    const data = [
-      { id: 'invalid-uuid', name: 'Test', description: 'Short', aroma: 'Test', effects: [], sources: [] },
-    ];
+    const data = [{ id: 'invalid-uuid', name: 'Test', description: 'Short', aroma: 'Test', effects: [], sources: [] }];
 
     const result: ValidationResult = validateTerpeneData(data);
 

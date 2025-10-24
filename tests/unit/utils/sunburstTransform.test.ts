@@ -10,10 +10,7 @@
 import { describe, it, expect } from 'vitest';
 
 import type { Terpene } from '../../../src/models/Terpene';
-import {
-  transformToSunburstData,
-  type SunburstNode,
-} from '../../../src/utils/sunburstTransform';
+import { transformToSunburstData, type SunburstNode } from '../../../src/utils/sunburstTransform';
 
 describe('sunburstTransform', () => {
   const mockTerpenes: Terpene[] = [
@@ -84,9 +81,7 @@ describe('sunburstTransform', () => {
     it('should group terpenes under their effects', () => {
       const result = transformToSunburstData(mockTerpenes);
 
-      const energizingNode = result.children!.find(
-        (c) => c.name === 'energizing'
-      );
+      const energizingNode = result.children!.find((c) => c.name === 'energizing');
 
       expect(energizingNode).toBeDefined();
       expect(energizingNode!.children).toBeDefined();
@@ -96,9 +91,7 @@ describe('sunburstTransform', () => {
     it('should set terpene nodes as leaf nodes with type "terpene"', () => {
       const result = transformToSunburstData(mockTerpenes);
 
-      const energizingNode = result.children!.find(
-        (c) => c.name === 'energizing'
-      );
+      const energizingNode = result.children!.find((c) => c.name === 'energizing');
       const terpeneNode = energizingNode!.children![0]!;
 
       expect(terpeneNode.type).toBe('terpene');
@@ -117,9 +110,7 @@ describe('sunburstTransform', () => {
     it('should inherit color from parent effect to terpene nodes', () => {
       const result = transformToSunburstData(mockTerpenes);
 
-      const energizingNode = result.children!.find(
-        (c) => c.name === 'energizing'
-      );
+      const energizingNode = result.children!.find((c) => c.name === 'energizing');
       const terpeneNode = energizingNode!.children![0]!;
 
       expect(terpeneNode.color).toBe(energizingNode!.color);
@@ -128,9 +119,7 @@ describe('sunburstTransform', () => {
     it('should set value to 1 for all leaf nodes (terpenes)', () => {
       const result = transformToSunburstData(mockTerpenes);
 
-      const energizingNode = result.children!.find(
-        (c) => c.name === 'energizing'
-      );
+      const energizingNode = result.children!.find((c) => c.name === 'energizing');
 
       energizingNode!.children!.forEach((terpeneNode) => {
         expect(terpeneNode.value).toBe(1);
@@ -140,9 +129,7 @@ describe('sunburstTransform', () => {
     it('should calculate aggregate value for effect nodes (sum of children)', () => {
       const result = transformToSunburstData(mockTerpenes);
 
-      const energizingNode = result.children!.find(
-        (c) => c.name === 'energizing'
-      );
+      const energizingNode = result.children!.find((c) => c.name === 'energizing');
 
       // Energizing has 2 terpenes: Limonene and Pinene
       expect(energizingNode!.value).toBe(2);
@@ -151,9 +138,7 @@ describe('sunburstTransform', () => {
     it('should include terpene ID in leaf nodes for click handling', () => {
       const result = transformToSunburstData(mockTerpenes);
 
-      const energizingNode = result.children!.find(
-        (c) => c.name === 'energizing'
-      );
+      const energizingNode = result.children!.find((c) => c.name === 'energizing');
       const terpeneNode = energizingNode!.children![0]!;
 
       expect(terpeneNode.id).toBeDefined();
@@ -163,20 +148,14 @@ describe('sunburstTransform', () => {
     it('should handle terpenes with multiple effects (appear under each)', () => {
       const result = transformToSunburstData(mockTerpenes);
 
-      const energizingNode = result.children!.find(
-        (c) => c.name === 'energizing'
-      );
+      const energizingNode = result.children!.find((c) => c.name === 'energizing');
       const sedativeNode = result.children!.find((c) => c.name === 'sedative');
 
       // Limonene appears under energizing
-      expect(
-        energizingNode!.children!.some((t) => t.name === 'Limonene')
-      ).toBe(true);
+      expect(energizingNode!.children!.some((t) => t.name === 'Limonene')).toBe(true);
 
       // Myrcene appears under sedative
-      expect(
-        sedativeNode!.children!.some((t) => t.name === 'Myrcene')
-      ).toBe(true);
+      expect(sedativeNode!.children!.some((t) => t.name === 'Myrcene')).toBe(true);
     });
 
     it('should handle empty terpene array', () => {
@@ -214,10 +193,10 @@ describe('sunburstTransform', () => {
 
       const result = transformToSunburstData([terpeneWithDuplicates]);
 
-  // Should have only one calming node
-  expect(result.children!.length).toBe(1);
-  expect(result.children![0]!.name).toBe('calming');
-  expect(result.children![0]!.children!.length).toBe(1);
+      // Should have only one calming node
+      expect(result.children!.length).toBe(1);
+      expect(result.children![0]!.name).toBe('calming');
+      expect(result.children![0]!.children!.length).toBe(1);
     });
 
     it('should sort effect nodes by terpene count (descending)', () => {
@@ -255,24 +234,21 @@ describe('sunburstTransform', () => {
 
       const result = transformToSunburstData([specialTerpene]);
 
-  const focusNode = result.children![0]!;
-  const terpeneNode = focusNode.children![0]!;
+      const focusNode = result.children![0]!;
+      const terpeneNode = focusNode.children![0]!;
 
-  expect(terpeneNode.name).toBe('α-Pinene');
+      expect(terpeneNode.name).toBe('α-Pinene');
     });
 
     it('should handle very long terpene lists (performance)', () => {
-      const largeTerpeneSet: Terpene[] = Array.from(
-        { length: 1000 },
-        (_, i) => ({
-          id: `${i}`,
-          name: `Terpene ${i}`,
-          aroma: `Aroma ${i % 10}`,
-          description: `Description ${i}`,
-          effects: [`effect-${i % 20}`],
-          sources: [`Source ${i}`],
-        })
-      );
+      const largeTerpeneSet: Terpene[] = Array.from({ length: 1000 }, (_, i) => ({
+        id: `${i}`,
+        name: `Terpene ${i}`,
+        aroma: `Aroma ${i % 10}`,
+        description: `Description ${i}`,
+        effects: [`effect-${i % 20}`],
+        sources: [`Source ${i}`],
+      }));
 
       const startTime = performance.now();
       const result = transformToSunburstData(largeTerpeneSet);

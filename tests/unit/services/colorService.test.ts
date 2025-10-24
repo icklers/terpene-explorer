@@ -10,12 +10,7 @@
 import { describe, it, expect } from 'vitest';
 
 // Import the colorService functions (will be implemented in T045)
-import {
-  getEffectColor,
-  getEffectMetadata,
-  validateContrastRatio,
-  getAllEffectColors,
-} from '../../../src/services/colorService';
+import { getEffectColor, getEffectMetadata, validateContrastRatio, getAllEffectColors } from '../../../src/services/colorService';
 
 describe('colorService', () => {
   describe('getEffectColor', () => {
@@ -321,13 +316,7 @@ describe('colorService', () => {
     });
 
     it('should distribute colors well across the color spectrum', () => {
-      const effects = [
-        'calming',
-        'energizing',
-        'anti-inflammatory',
-        'sedative',
-        'focus',
-      ];
+      const effects = ['calming', 'energizing', 'anti-inflammatory', 'sedative', 'focus'];
 
       const colors = effects.map((effect) => getEffectColor(effect));
 

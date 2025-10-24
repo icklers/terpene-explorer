@@ -7,14 +7,7 @@
  * @see tasks.md T051, T071-T074
  */
 
-import {
-  Container,
-  Box,
-  Typography,
-  Paper,
-  Stack,
-  Skeleton,
-} from '@mui/material';
+import { Container, Box, Typography, Paper, Stack, Skeleton } from '@mui/material';
 import React, { lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -50,19 +43,10 @@ export function Home(): React.ReactElement {
   const { t } = useTranslation();
 
   // Load terpene data
-  const { terpenes, effects, isLoading, error, warnings, retry } =
-    useTerpeneData();
+  const { terpenes, effects, isLoading, error, warnings, retry } = useTerpeneData();
 
   // Manage filter state
-  const {
-    filterState,
-    setSearchQuery,
-    toggleEffect,
-    toggleFilterMode,
-    setViewMode,
-    clearAllFilters,
-    hasActiveFilters,
-  } = useFilters();
+  const { filterState, setSearchQuery, toggleEffect, toggleFilterMode, setViewMode, clearAllFilters, hasActiveFilters } = useFilters();
 
   // Snackbar state for validation warnings
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
@@ -86,38 +70,22 @@ export function Home(): React.ReactElement {
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Page Header */}
       <Box sx={{ mb: 4 }}>
-        <Typography
-          variant="h3"
-          component="h1"
-          gutterBottom
-          sx={{ fontWeight: 700 }}
-        >
+        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
           {t('pages.home.title', 'Terpene Explorer')}
         </Typography>
         <Typography variant="subtitle1" color="text.secondary">
-          {t(
-            'pages.home.subtitle',
-            'Discover and filter terpenes by their effects and properties'
-          )}
+          {t('pages.home.subtitle', 'Discover and filter terpenes by their effects and properties')}
         </Typography>
       </Box>
 
       {/* Filter Controls */}
-      <Paper
-        elevation={1}
-        sx={{ p: 3, mb: 3 }}
-        role="search"
-        aria-label={t('pages.home.filtersLabel', 'Filter controls')}
-      >
+      <Paper elevation={1} sx={{ p: 3, mb: 3 }} role="search" aria-label={t('pages.home.filtersLabel', 'Filter controls')}>
         <Stack spacing={3}>
           {/* Search Input (T071) */}
           <SearchBar
             value={filterState.searchQuery}
             onChange={setSearchQuery}
-            placeholder={t(
-              'pages.home.searchPlaceholder',
-              'Search terpenes by name, aroma, or effects...'
-            )}
+            placeholder={t('pages.home.searchPlaceholder', 'Search terpenes by name, aroma, or effects...')}
             ariaLabel={t('pages.home.searchAriaLabel', 'Search terpenes')}
             resultsCount={filteredTerpenes.length}
           />
@@ -131,28 +99,14 @@ export function Home(): React.ReactElement {
           />
 
           {/* Filter Mode Toggle (only show when effects are selected) */}
-          {filterState.selectedEffects.length > 1 && (
-            <FilterModeToggle
-              mode={filterState.effectFilterMode}
-              onChange={toggleFilterMode}
-            />
-          )}
+          {filterState.selectedEffects.length > 1 && <FilterModeToggle mode={filterState.effectFilterMode} onChange={toggleFilterMode} />}
 
           {/* View Mode Toggle (T072) */}
-          <ViewModeToggle
-            mode={filterState.viewMode}
-            onChange={setViewMode}
-          />
+          <ViewModeToggle mode={filterState.viewMode} onChange={setViewMode} />
 
           {/* Active Filters Indicator */}
           {hasActiveFilters && (
-            <Typography
-              variant="caption"
-              color="primary"
-              sx={{ fontWeight: 600 }}
-              role="status"
-              aria-live="polite"
-            >
+            <Typography variant="caption" color="primary" sx={{ fontWeight: 600 }} role="status" aria-live="polite">
               {t('pages.home.filtersActive', 'Filters active')}
             </Typography>
           )}
@@ -172,15 +126,7 @@ export function Home(): React.ReactElement {
         )}
 
         {/* Error State */}
-        {error && !isLoading && (
-          <TerpeneList
-            terpenes={[]}
-            isLoading={false}
-            error={error}
-            warnings={warnings}
-            onRetry={retry}
-          />
-        )}
+        {error && !isLoading && <TerpeneList terpenes={[]} isLoading={false} error={error} warnings={warnings} onRetry={retry} />}
 
         {/* Conditional Visualization Rendering (T073-T074) */}
         {!isLoading && !error && (
@@ -202,11 +148,7 @@ export function Home(): React.ReactElement {
       </Box>
 
       {/* Validation Warning Snackbar (T054 - FR-015) */}
-      <WarningSnackbar
-        warnings={warnings}
-        open={snackbarOpen}
-        onClose={() => setSnackbarOpen(false)}
-      />
+      <WarningSnackbar warnings={warnings} open={snackbarOpen} onClose={() => setSnackbarOpen(false)} />
     </Container>
   );
 }

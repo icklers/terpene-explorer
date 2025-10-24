@@ -31,22 +31,10 @@
         "percentage": "<5%"
       }
     ],
-    "dominantTerpenes": [
-      "Myrcene",
-      "Limonene",
-      "Caryophyllene"
-    ],
+    "dominantTerpenes": ["Myrcene", "Limonene", "Caryophyllene"],
     "totalTerpenes": "~1.0%",
-    "effects": [
-      "Relaxing",
-      "Euphoric",
-      "Sleepy"
-    ],
-    "aromas": [
-      "Earthy",
-      "Spicy-herbal",
-      "Lemon"
-    ]
+    "effects": ["Relaxing", "Euphoric", "Sleepy"],
+    "aromas": ["Earthy", "Spicy-herbal", "Lemon"]
   },
   {
     "cultivar": "Blue Dream",
@@ -80,23 +68,10 @@
         "percentage": "moderate"
       }
     ],
-    "dominantTerpenes": [
-      "Myrcene",
-      "Caryophyllene",
-      "Pinene"
-    ],
+    "dominantTerpenes": ["Myrcene", "Caryophyllene", "Pinene"],
     "totalTerpenes": "moderate-high",
-    "effects": [
-      "Balanced",
-      "Cerebral stimulation",
-      "Body relaxation"
-    ],
-    "aromas": [
-      "Herbal",
-      "Musky",
-      "Blueberry",
-      "Pine"
-    ]
+    "effects": ["Balanced", "Cerebral stimulation", "Body relaxation"],
+    "aromas": ["Herbal", "Musky", "Blueberry", "Pine"]
   },
   {
     "cultivar": "Jack Herer",
@@ -140,25 +115,10 @@
         "percentage": "~19% normalized"
       }
     ],
-    "dominantTerpenes": [
-      "Terpinolene",
-      "Myrcene",
-      "Caryophyllene",
-      "Pinene"
-    ],
+    "dominantTerpenes": ["Terpinolene", "Myrcene", "Caryophyllene", "Pinene"],
     "totalTerpenes": "high",
-    "effects": [
-      "Cerebral",
-      "Energizing",
-      "Uplifting",
-      "Creative"
-    ],
-    "aromas": [
-      "Woody",
-      "Citrus",
-      "Spicy",
-      "Pine"
-    ]
+    "effects": ["Cerebral", "Energizing", "Uplifting", "Creative"],
+    "aromas": ["Woody", "Citrus", "Spicy", "Pine"]
   },
   {
     "cultivar": "Sour Diesel",
@@ -197,25 +157,10 @@
         "percentage": "minor"
       }
     ],
-    "dominantTerpenes": [
-      "Caryophyllene",
-      "Limonene",
-      "Myrcene"
-    ],
+    "dominantTerpenes": ["Caryophyllene", "Limonene", "Myrcene"],
     "totalTerpenes": "moderate-high",
-    "effects": [
-      "Energizing",
-      "Uplifting",
-      "Creative",
-      "Cerebral"
-    ],
-    "aromas": [
-      "Diesel",
-      "Pungent",
-      "Skunky",
-      "Citrus",
-      "Spice"
-    ]
+    "effects": ["Energizing", "Uplifting", "Creative", "Cerebral"],
+    "aromas": ["Diesel", "Pungent", "Skunky", "Citrus", "Spice"]
   },
   {
     "cultivar": "Granddaddy Purple",
@@ -259,24 +204,10 @@
         "percentage": "minor"
       }
     ],
-    "dominantTerpenes": [
-      "Myrcene",
-      "Caryophyllene",
-      "Pinene"
-    ],
+    "dominantTerpenes": ["Myrcene", "Caryophyllene", "Pinene"],
     "totalTerpenes": "moderate",
-    "effects": [
-      "Deeply relaxing",
-      "Sedative",
-      "Euphoric",
-      "Pain relief"
-    ],
-    "aromas": [
-      "Sweet",
-      "Grape",
-      "Berry",
-      "Earthy"
-    ]
+    "effects": ["Deeply relaxing", "Sedative", "Euphoric", "Pain relief"],
+    "aromas": ["Sweet", "Grape", "Berry", "Earthy"]
   },
   {
     "cultivar": "Northern Lights",
@@ -310,24 +241,10 @@
         "percentage": "minor"
       }
     ],
-    "dominantTerpenes": [
-      "Myrcene",
-      "Caryophyllene",
-      "Limonene"
-    ],
+    "dominantTerpenes": ["Myrcene", "Caryophyllene", "Limonene"],
     "totalTerpenes": "high",
-    "effects": [
-      "Relaxing",
-      "Sedative",
-      "Pain relief",
-      "Sleep aid"
-    ],
-    "aromas": [
-      "Earthy",
-      "Sweet",
-      "Spicy",
-      "Pine"
-    ]
+    "effects": ["Relaxing", "Sedative", "Pain relief", "Sleep aid"],
+    "aromas": ["Earthy", "Sweet", "Spicy", "Pine"]
   },
   {
     "cultivar": "White Widow",
@@ -366,24 +283,10 @@
         "percentage": "minor"
       }
     ],
-    "dominantTerpenes": [
-      "Myrcene",
-      "Caryophyllene",
-      "Limonene"
-    ],
+    "dominantTerpenes": ["Myrcene", "Caryophyllene", "Limonene"],
     "totalTerpenes": "moderate",
-    "effects": [
-      "Energetic",
-      "Euphoric",
-      "Creative",
-      "Balanced"
-    ],
-    "aromas": [
-      "Earthy",
-      "Woody",
-      "Pine",
-      "Spicy-herbal"
-    ]
+    "effects": ["Energetic", "Euphoric", "Creative", "Balanced"],
+    "aromas": ["Earthy", "Woody", "Pine", "Spicy-herbal"]
   },
   {
     "cultivar": "Girl Scout Cookies",
@@ -437,26 +340,10 @@
         "percentage": "trace"
       }
     ],
-    "dominantTerpenes": [
-      "Caryophyllene",
-      "Limonene",
-      "Linalool",
-      "Myrcene"
-    ],
+    "dominantTerpenes": ["Caryophyllene", "Limonene", "Linalool", "Myrcene"],
     "totalTerpenes": "moderate-high",
-    "effects": [
-      "Euphoric",
-      "Relaxing",
-      "Happy",
-      "Creative"
-    ],
-    "aromas": [
-      "Sweet",
-      "Earthy",
-      "Pungent",
-      "Cookie-like",
-      "Vanilla"
-    ]
+    "effects": ["Euphoric", "Relaxing", "Happy", "Creative"],
+    "aromas": ["Sweet", "Earthy", "Pungent", "Cookie-like", "Vanilla"]
   },
   {
     "cultivar": "AK-47",
@@ -490,25 +377,9 @@
         "percentage": "minor"
       }
     ],
-    "dominantTerpenes": [
-      "Pinene",
-      "Myrcene",
-      "Caryophyllene"
-    ],
+    "dominantTerpenes": ["Pinene", "Myrcene", "Caryophyllene"],
     "totalTerpenes": "moderate",
-    "effects": [
-      "Alert",
-      "Creative",
-      "Energetic",
-      "Euphoric",
-      "Uplifting"
-    ],
-    "aromas": [
-      "Earthy",
-      "Pungent",
-      "Spicy",
-      "Citrus",
-      "Sweet"
-    ]
+    "effects": ["Alert", "Creative", "Energetic", "Euphoric", "Uplifting"],
+    "aromas": ["Earthy", "Pungent", "Spicy", "Citrus", "Sweet"]
   }
 ]

@@ -52,11 +52,7 @@ type SortColumn = 'name' | 'aroma' | 'sources' | 'effects';
  * @param props - Component props
  * @returns Rendered component
  */
-export function TerpeneTable({
-  terpenes,
-  initialSortBy = 'name',
-  initialSortDirection = 'asc',
-}: TerpeneTableProps): React.ReactElement {
+export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDirection = 'asc' }: TerpeneTableProps): React.ReactElement {
   const { t } = useTranslation();
   const [sortBy, setSortBy] = useState<SortColumn>(initialSortBy);
   const [sortDirection, setSortDirection] = useState<SortDirection>(initialSortDirection);
@@ -132,13 +128,7 @@ export function TerpeneTable({
                 active={sortBy === 'name'}
                 direction={sortBy === 'name' ? sortDirection : 'asc'}
                 onClick={() => handleSort('name')}
-                aria-sort={
-                  sortBy === 'name'
-                    ? sortDirection === 'asc'
-                      ? 'ascending'
-                      : 'descending'
-                    : undefined
-                }
+                aria-sort={sortBy === 'name' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
               >
                 {t('table.name', 'Name')}
               </TableSortLabel>
@@ -148,13 +138,7 @@ export function TerpeneTable({
                 active={sortBy === 'aroma'}
                 direction={sortBy === 'aroma' ? sortDirection : 'asc'}
                 onClick={() => handleSort('aroma')}
-                aria-sort={
-                  sortBy === 'aroma'
-                    ? sortDirection === 'asc'
-                      ? 'ascending'
-                      : 'descending'
-                    : undefined
-                }
+                aria-sort={sortBy === 'aroma' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
               >
                 {t('table.aroma', 'Aroma')}
               </TableSortLabel>
@@ -164,13 +148,7 @@ export function TerpeneTable({
                 active={sortBy === 'effects'}
                 direction={sortBy === 'effects' ? sortDirection : 'asc'}
                 onClick={() => handleSort('effects')}
-                aria-sort={
-                  sortBy === 'effects'
-                    ? sortDirection === 'asc'
-                      ? 'ascending'
-                      : 'descending'
-                    : undefined
-                }
+                aria-sort={sortBy === 'effects' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
               >
                 {t('table.effects', 'Effects')}
               </TableSortLabel>
@@ -180,13 +158,7 @@ export function TerpeneTable({
                 active={sortBy === 'sources'}
                 direction={sortBy === 'sources' ? sortDirection : 'asc'}
                 onClick={() => handleSort('sources')}
-                aria-sort={
-                  sortBy === 'sources'
-                    ? sortDirection === 'asc'
-                      ? 'ascending'
-                      : 'descending'
-                    : undefined
-                }
+                aria-sort={sortBy === 'sources' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
               >
                 {t('table.sources', 'Sources')}
               </TableSortLabel>
@@ -195,21 +167,13 @@ export function TerpeneTable({
         </TableHead>
         <TableBody>
           {sortedTerpenes.map((terpene) => (
-            <TableRow
-              key={terpene.id}
-              sx={{ '&:hover': { backgroundColor: 'action.hover' } }}
-            >
+            <TableRow key={terpene.id} sx={{ '&:hover': { backgroundColor: 'action.hover' } }}>
               <TableCell>{terpene.name}</TableCell>
               <TableCell>{terpene.aroma}</TableCell>
               <TableCell>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                   {terpene.effects.map((effect) => (
-                    <Chip
-                      key={effect}
-                      label={effect}
-                      size="small"
-                      sx={{ textTransform: 'capitalize' }}
-                    />
+                    <Chip key={effect} label={effect} size="small" sx={{ textTransform: 'capitalize' }} />
                   ))}
                 </Box>
               </TableCell>

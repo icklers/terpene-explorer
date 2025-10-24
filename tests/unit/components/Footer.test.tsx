@@ -56,10 +56,8 @@ describe('Footer', () => {
       render(<Footer />);
 
       // Should either have text or a link
-      const hasAccessibilityText =
-        screen.queryByText(/accessibility/i) !== null;
-      const hasAccessibilityLink =
-        screen.queryByRole('link', { name: /accessibility/i }) !== null;
+      const hasAccessibilityText = screen.queryByText(/accessibility/i) !== null;
+      const hasAccessibilityLink = screen.queryByRole('link', { name: /accessibility/i }) !== null;
 
       expect(hasAccessibilityText || hasAccessibilityLink).toBe(true);
     });

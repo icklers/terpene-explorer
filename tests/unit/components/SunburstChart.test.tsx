@@ -33,9 +33,7 @@ describe('SunburstChart', () => {
         type: 'effect',
         color: '#2196F3',
         value: 1,
-        children: [
-          { name: 'Myrcene', type: 'terpene', id: '2', color: '#2196F3', value: 1 },
-        ],
+        children: [{ name: 'Myrcene', type: 'terpene', id: '2', color: '#2196F3', value: 1 }],
       },
     ],
   };
@@ -68,7 +66,7 @@ describe('SunburstChart', () => {
       render(<SunburstChart data={mockData} onSliceClick={vi.fn()} />);
 
       const paths = document.querySelectorAll('path');
-      const colors = Array.from(paths).map(p => p.getAttribute('fill'));
+      const colors = Array.from(paths).map((p) => p.getAttribute('fill'));
 
       expect(colors).toContain('#4CAF50');
       expect(colors).toContain('#2196F3');
@@ -189,9 +187,7 @@ describe('SunburstChart', () => {
     it('should handle single node', () => {
       const singleNode: SunburstNode = {
         name: 'Terpenes',
-        children: [
-          { name: 'Test', type: 'effect', color: '#000', value: 1, children: [] },
-        ],
+        children: [{ name: 'Test', type: 'effect', color: '#000', value: 1, children: [] }],
       };
 
       render(<SunburstChart data={singleNode} onSliceClick={vi.fn()} />);

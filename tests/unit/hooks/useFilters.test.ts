@@ -133,9 +133,7 @@ describe('useFilters', () => {
       });
 
       expect(result.current.filterState.selectedEffects).toHaveLength(3);
-      expect(result.current.filterState.selectedEffects).toEqual(
-        expect.arrayContaining(['energizing', 'calming', 'anti-inflammatory'])
-      );
+      expect(result.current.filterState.selectedEffects).toEqual(expect.arrayContaining(['energizing', 'calming', 'anti-inflammatory']));
     });
 
     it('should clear all selected effects', () => {
@@ -164,9 +162,7 @@ describe('useFilters', () => {
         result.current.toggleEffect('energizing'); // Toggle on again
       });
 
-      const energizingCount = result.current.filterState.selectedEffects.filter(
-        (e) => e === 'energizing'
-      ).length;
+      const energizingCount = result.current.filterState.selectedEffects.filter((e) => e === 'energizing').length;
 
       expect(energizingCount).toBe(1);
     });

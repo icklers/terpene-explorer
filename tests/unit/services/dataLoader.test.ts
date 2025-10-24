@@ -188,9 +188,7 @@ describe('dataLoader service', () => {
         // All entries should pass validation
         result.data.forEach((terpene) => {
           // Check UUID format
-          expect(terpene.id).toMatch(
-            /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-          );
+          expect(terpene.id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
           // Check required fields
           expect(terpene.name.length).toBeGreaterThan(0);
           expect(terpene.description.length).toBeGreaterThanOrEqual(10);
@@ -205,9 +203,7 @@ describe('dataLoader service', () => {
 
       if (result.status === 'success' && result.warnings) {
         // Warnings should indicate how many entries were skipped
-        const hasCountWarning = result.warnings.some((w) =>
-          w.match(/\d+ .* skipped|invalid/)
-        );
+        const hasCountWarning = result.warnings.some((w) => w.match(/\d+ .* skipped|invalid/));
         // If there are warnings, at least one should mention a count
         if (result.warnings.length > 0) {
           expect(hasCountWarning).toBe(true);

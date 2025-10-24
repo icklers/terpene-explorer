@@ -73,12 +73,7 @@ export const App: React.FC = () => {
         {/* App Layout */}
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           {/* App Bar with Theme & Language Controls (T087) */}
-          <AppBar
-            themeMode={themeMode}
-            onThemeToggle={toggleTheme}
-            language={language}
-            onLanguageChange={handleLanguageChange}
-          />
+          <AppBar themeMode={themeMode} onThemeToggle={toggleTheme} language={language} onLanguageChange={handleLanguageChange} />
 
           {/* Main Content with Suspense for i18n loading */}
           <Box sx={{ flex: 1 }}>

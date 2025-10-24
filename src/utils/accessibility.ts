@@ -39,15 +39,9 @@ export function generateTerpeneAriaLabel(terpene: Terpene): string {
   const effectsList = formatList(terpene.effects);
   const sourcesList = formatList(terpene.sources);
 
-  const effectText =
-    terpene.effects.length === 1
-      ? `${effectsList} effect`
-      : `${effectsList} effects`;
+  const effectText = terpene.effects.length === 1 ? `${effectsList} effect` : `${effectsList} effects`;
 
-  const sourceText =
-    terpene.sources.length === 1
-      ? `found in ${sourcesList}`
-      : `found in ${sourcesList}`;
+  const sourceText = terpene.sources.length === 1 ? `found in ${sourcesList}` : `found in ${sourcesList}`;
 
   return `${terpene.name}, a ${terpene.aroma}-scented terpene with ${effectText}, ${sourceText}`;
 }
@@ -62,17 +56,11 @@ export function generateTerpeneAriaLabel(terpene: Terpene): string {
  * @example
  * "Calming effect, 5 terpenes"
  */
-export function generateEffectAriaLabel(
-  effect: Effect,
-  language: 'en' | 'de' = 'en'
-): string {
+export function generateEffectAriaLabel(effect: Effect, language: 'en' | 'de' = 'en'): string {
   const displayName = effect.displayName[language];
 
   if (effect.terpeneCount !== undefined) {
-    const countText =
-      effect.terpeneCount === 1
-        ? `1 terpene`
-        : `${effect.terpeneCount} terpenes`;
+    const countText = effect.terpeneCount === 1 ? `1 terpene` : `${effect.terpeneCount} terpenes`;
 
     return `${displayName} effect, ${countText}`;
   }
@@ -121,10 +109,7 @@ type AnnouncementType = 'filter' | 'search' | 'viewChange' | 'error' | 'success'
  * announceLiveRegion('filter', { count: 5, action: 'filtered' })
  * // => "Filtered results: 5 terpenes found"
  */
-export function announceLiveRegion(
-  type: AnnouncementType,
-  data: Record<string, unknown>
-): string {
+export function announceLiveRegion(type: AnnouncementType, data: Record<string, unknown>): string {
   const count = data.count as number;
   const query = data.query as string;
   const mode = data.mode as string;
@@ -192,9 +177,7 @@ export function trapFocus(container: HTMLElement): FocusTrap {
   let lastFocusable: HTMLElement | null = null;
 
   const updateFocusableElements = () => {
-    const elements = Array.from(
-      container.querySelectorAll<HTMLElement>(focusableSelectors)
-    );
+    const elements = Array.from(container.querySelectorAll<HTMLElement>(focusableSelectors));
 
     firstFocusable = elements[0] || null;
     lastFocusable = elements[elements.length - 1] || null;
@@ -279,10 +262,7 @@ export function setupSkipNavigation(targetId: string): () => void {
  * @param message - Message to announce
  * @param priority - 'polite' (default) or 'assertive'
  */
-export function announceToScreenReader(
-  message: string,
-  priority: 'polite' | 'assertive' = 'polite'
-): void {
+export function announceToScreenReader(message: string, priority: 'polite' | 'assertive' = 'polite'): void {
   const announcement = document.createElement('div');
   announcement.setAttribute('aria-live', priority);
   announcement.setAttribute('aria-atomic', 'true');

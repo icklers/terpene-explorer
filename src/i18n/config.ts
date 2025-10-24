@@ -43,9 +43,9 @@ i18n
     detection: {
       // Order of language detection methods
       order: [
-        'localStorage',      // Check localStorage first (FR-014)
-        'navigator',         // Then browser language
-        'htmlTag',           // Then HTML lang attribute
+        'localStorage', // Check localStorage first (FR-014)
+        'navigator', // Then browser language
+        'htmlTag', // Then HTML lang attribute
       ],
 
       // Cache user language preference

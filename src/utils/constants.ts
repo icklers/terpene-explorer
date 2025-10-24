@@ -20,42 +20,42 @@ import type { Effect } from '../models/Effect';
  */
 export const EFFECT_COLORS: Record<string, string> = {
   // Calming & Sedative (Cool blues and purples)
-  'calming': '#5C6BC0', // Indigo 400
-  'sedative': '#7E57C2', // Deep Purple 400
-  'anxiolytic': '#42A5F5', // Blue 400
+  calming: '#5C6BC0', // Indigo 400
+  sedative: '#7E57C2', // Deep Purple 400
+  anxiolytic: '#42A5F5', // Blue 400
   'muscle-relaxant': '#26C6DA', // Cyan 400
-  'anticonvulsant': '#66BB6A', // Green 400
+  anticonvulsant: '#66BB6A', // Green 400
 
   // Energizing & Uplifting (Warm oranges and yellows)
-  'energizing': '#FFA726', // Orange 400
+  energizing: '#FFA726', // Orange 400
   'mood-enhancing': '#FFCA28', // Amber 400
   'anti-stress': '#FDD835', // Yellow 600
-  'uplifting': '#F57C00', // Orange 700
-  'focus': '#FF7043', // Deep Orange 400
+  uplifting: '#F57C00', // Orange 700
+  focus: '#FF7043', // Deep Orange 400
 
   // Anti-inflammatory & Analgesic (Earth tones)
   'anti-inflammatory': '#8D6E63', // Brown 400
-  'analgesic': '#A1887F', // Brown 300
+  analgesic: '#A1887F', // Brown 300
   'pain-relief': '#D7CCC8', // Brown 100 (adjusted for contrast)
-  'neuroprotective': '#BCAAA4', // Brown 200
+  neuroprotective: '#BCAAA4', // Brown 200
 
   // Cognitive & Memory (Teals and greens)
   'memory-retention': '#26A69A', // Teal 400
-  'bronchodilator': '#66BB6A', // Green 400
-  'antioxidant': '#9CCC65', // Light Green 400
+  bronchodilator: '#66BB6A', // Green 400
+  antioxidant: '#9CCC65', // Light Green 400
 
   // Antimicrobial & Immune (Purples and pinks)
-  'antimicrobial': '#AB47BC', // Purple 400
-  'antibacterial': '#BA68C8', // Purple 300
-  'antiviral': '#EC407A', // Pink 400
-  'antifungal': '#F06292', // Pink 300
+  antimicrobial: '#AB47BC', // Purple 400
+  antibacterial: '#BA68C8', // Purple 300
+  antiviral: '#EC407A', // Pink 400
+  antifungal: '#F06292', // Pink 300
 
   // Digestive & Metabolic (Warm earth tones)
   'appetite-suppressant': '#FF8A65', // Deep Orange 300
-  'decongestant': '#FFB74D', // Orange 300
+  decongestant: '#FFB74D', // Orange 300
 
   // Default fallback color (neutral gray)
-  'default': '#78909C', // Blue Grey 400
+  default: '#78909C', // Blue Grey 400
 };
 
 /**
@@ -65,17 +65,17 @@ export const EFFECT_COLORS: Record<string, string> = {
  * for all known effect categories.
  */
 export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
-  'calming': {
+  calming: {
     name: 'calming',
     displayName: { en: 'Calming', de: 'Beruhigend' },
     color: EFFECT_COLORS['calming']!,
   },
-  'sedative': {
+  sedative: {
     name: 'sedative',
     displayName: { en: 'Sedative', de: 'Beruhigungsmittel' },
     color: EFFECT_COLORS['sedative']!,
   },
-  'anxiolytic': {
+  anxiolytic: {
     name: 'anxiolytic',
     displayName: { en: 'Anti-Anxiety', de: 'Angstlösend' },
     color: EFFECT_COLORS['anxiolytic']!,
@@ -85,12 +85,12 @@ export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
     displayName: { en: 'Muscle Relaxant', de: 'Muskelentspannend' },
     color: EFFECT_COLORS['muscle-relaxant']!,
   },
-  'anticonvulsant': {
+  anticonvulsant: {
     name: 'anticonvulsant',
     displayName: { en: 'Anticonvulsant', de: 'Krampflösend' },
     color: EFFECT_COLORS['anticonvulsant']!,
   },
-  'energizing': {
+  energizing: {
     name: 'energizing',
     displayName: { en: 'Energizing', de: 'Energetisierend' },
     color: EFFECT_COLORS['energizing']!,
@@ -105,12 +105,12 @@ export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
     displayName: { en: 'Anti-Stress', de: 'Anti-Stress' },
     color: EFFECT_COLORS['anti-stress']!,
   },
-  'uplifting': {
+  uplifting: {
     name: 'uplifting',
     displayName: { en: 'Uplifting', de: 'Aufmunternd' },
     color: EFFECT_COLORS['uplifting']!,
   },
-  'focus': {
+  focus: {
     name: 'focus',
     displayName: { en: 'Focus', de: 'Fokus' },
     color: EFFECT_COLORS['focus']!,
@@ -120,7 +120,7 @@ export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
     displayName: { en: 'Anti-Inflammatory', de: 'Entzündungshemmend' },
     color: EFFECT_COLORS['anti-inflammatory']!,
   },
-  'analgesic': {
+  analgesic: {
     name: 'analgesic',
     displayName: { en: 'Pain Relief', de: 'Schmerzlindernd' },
     color: EFFECT_COLORS['analgesic']!,
@@ -130,7 +130,7 @@ export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
     displayName: { en: 'Pain Relief', de: 'Schmerzlinderung' },
     color: EFFECT_COLORS['pain-relief']!,
   },
-  'neuroprotective': {
+  neuroprotective: {
     name: 'neuroprotective',
     displayName: { en: 'Neuroprotective', de: 'Neuroprotektiv' },
     color: EFFECT_COLORS['neuroprotective']!,
@@ -140,32 +140,32 @@ export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
     displayName: { en: 'Memory Enhancement', de: 'Gedächtnisverbessernd' },
     color: EFFECT_COLORS['memory-retention']!,
   },
-  'bronchodilator': {
+  bronchodilator: {
     name: 'bronchodilator',
     displayName: { en: 'Bronchodilator', de: 'Bronchienerweiternd' },
     color: EFFECT_COLORS['bronchodilator']!,
   },
-  'antioxidant': {
+  antioxidant: {
     name: 'antioxidant',
     displayName: { en: 'Antioxidant', de: 'Antioxidans' },
     color: EFFECT_COLORS['antioxidant']!,
   },
-  'antimicrobial': {
+  antimicrobial: {
     name: 'antimicrobial',
     displayName: { en: 'Antimicrobial', de: 'Antimikrobiell' },
     color: EFFECT_COLORS['antimicrobial']!,
   },
-  'antibacterial': {
+  antibacterial: {
     name: 'antibacterial',
     displayName: { en: 'Antibacterial', de: 'Antibakteriell' },
     color: EFFECT_COLORS['antibacterial']!,
   },
-  'antiviral': {
+  antiviral: {
     name: 'antiviral',
     displayName: { en: 'Antiviral', de: 'Antiviral' },
     color: EFFECT_COLORS['antiviral']!,
   },
-  'antifungal': {
+  antifungal: {
     name: 'antifungal',
     displayName: { en: 'Antifungal', de: 'Antimykotisch' },
     color: EFFECT_COLORS['antifungal']!,
@@ -175,7 +175,7 @@ export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
     displayName: { en: 'Appetite Suppressant', de: 'Appetitzügler' },
     color: EFFECT_COLORS['appetite-suppressant']!,
   },
-  'decongestant': {
+  decongestant: {
     name: 'decongestant',
     displayName: { en: 'Decongestant', de: 'Abschwellend' },
     color: EFFECT_COLORS['decongestant']!,

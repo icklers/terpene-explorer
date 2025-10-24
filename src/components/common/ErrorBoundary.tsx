@@ -111,8 +111,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <AlertTitle>Something went wrong</AlertTitle>
 
             <Box sx={{ mb: 2 }}>
-              We're sorry, but something unexpected happened. The application
-              encountered an error and couldn't continue.
+              We're sorry, but something unexpected happened. The application encountered an error and couldn't continue.
             </Box>
 
             {/* Show error message in development mode */}
@@ -129,9 +128,7 @@ export class ErrorBoundary extends Component<Props, State> {
                   cursor: 'pointer',
                 }}
               >
-                <summary style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
-                  Error Details (Development Mode)
-                </summary>
+                <summary style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>Error Details (Development Mode)</summary>
                 <Box component="pre" sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
                   {error.toString()}
                   {errorInfo && errorInfo.componentStack}
@@ -140,12 +137,7 @@ export class ErrorBoundary extends Component<Props, State> {
             )}
 
             <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<RefreshIcon />}
-                onClick={this.handleReload}
-              >
+              <Button variant="contained" color="primary" startIcon={<RefreshIcon />} onClick={this.handleReload}>
                 Reload Application
               </Button>
 
