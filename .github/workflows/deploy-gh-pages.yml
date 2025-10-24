@@ -40,6 +40,12 @@ jobs:
           path: dist
           workflow_conclusion: success
           
+      - name: 🔧 Configure headers
+        run: |
+          cp public/_headers dist/
+          # Ensure proper base path in all html files
+          find dist -type f -name "*.html" -exec sed -i 's|<head>|<head><base href="/terpene-explorer/">|' {} +
+          
       - name: 📋 List build contents
         run: ls -la dist/
       

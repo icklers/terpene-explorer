@@ -42,23 +42,29 @@ jobs:
       - name: 🚀 Deploy to Azure Static Web Apps
         id: deploy
         uses: Azure/static-web-apps-deploy@v1
+        env:
+          DEPLOYMENT_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_GROUND_04EB9DE03 }}
         with:
           # Required
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_GROUND_04EB9DE03 }}
-          app_location: "dist" # The location of your built app files
-          skip_app_build: true # Skip build since we already have built files
-          skip_api_build: true # Skip API build since we don't have an API
+          azure_static_web_apps_api_token: ${{ env.DEPLOYMENT_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           
-          # Optional configurations (commented out to use Azure portal defaults)
-          # output_location: "" # Use Azure portal configuration
-          # api_location: "" # Use Azure portal configuration
-          # app_build_command: "" # Use Azure portal configuration
-          # api_build_command: "" # Use Azure portal configuration
+          # App configuration
+          app_location: "/"
+          output_location: "dist"
+          # Static Web App configuration
+          config_file_location: "."  # Look for staticwebapp.config.json in root
+          routes_location: "."  # Look for staticwebapp.config.json in root
           
           # Deployment specific
-          action: "upload" # Required: specify upload action for deployment
-          deployment_environment: production # Use 'production' for main branch
-          production_branch: main # Consider this the production branch
+          action: "upload"
+          deployment_environment: production
+          production_branch: main
+          
+          # Skip unnecessary features
+          skip_api_build: true
+          skip_app_build: true
+          is_static_export: true
         env:
           # Add any environment variables your app needs at runtime
           VITE_APP_VERSION: ${{ github.event.workflow_run.head_branch || github.ref_name }}

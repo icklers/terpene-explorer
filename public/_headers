@@ -1,0 +1,11 @@
+{
+  "headers": {
+    "/*": {
+      "Content-Security-Policy": "default-src 'self' https://icklers.github.io/terpene-explorer/; script-src 'self' 'unsafe-inline' https://icklers.github.io/terpene-explorer/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://icklers.github.io/terpene-explorer/; font-src 'self' https://fonts.gstatic.com data: https://icklers.github.io/terpene-explorer/; img-src 'self' data: https: https://icklers.github.io/terpene-explorer/; connect-src 'self' https://icklers.github.io/terpene-explorer/; frame-ancestors 'none'; base-uri 'self' https://icklers.github.io/terpene-explorer/; form-action 'self'; upgrade-insecure-requests",
+      "X-Content-Type-Options": "nosniff",
+      "X-Frame-Options": "DENY",
+      "X-XSS-Protection": "1; mode=block",
+      "Referrer-Policy": "strict-origin-when-cross-origin"
+    }
+  }
+}

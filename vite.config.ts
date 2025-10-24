@@ -8,26 +8,48 @@ import type { Plugin } from 'vite';
  *
  * Adds CSP headers to HTML for security (T094 - NFR-SEC-001)
  */
-function cspPlugin(): Plugin {
+function generateSecurityHeaders(base: string): Record<string, string> {
+  const baseUri = base === '/' ? "'self'" : `'self' ${base}`;
   return {
-    name: 'html-csp',
-    transformIndexHtml(html) {
-      // Add CSP meta tag to HTML
-      const cspMeta = `
-    <meta http-equiv="Content-Security-Policy" content="
-      default-src 'self';
-      script-src 'self' 'unsafe-inline';
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      font-src 'self' https://fonts.gstatic.com data:;
-      img-src 'self' data: https:;
-      connect-src 'self';
-      frame-ancestors 'none';
-      base-uri 'self';
-      form-action 'self';
-      upgrade-insecure-requests;
-    ">`;
+    'Content-Security-Policy': [
+      `default-src 'self' ${base}`,
+      "script-src 'self' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com data:",
+      "img-src 'self' data: https:",
+      "connect-src 'self'",
+      "frame-ancestors 'none'",
+      `base-uri ${baseUri}`,
+      "form-action 'self'",
+      'upgrade-insecure-requests',
+    ].join('; '),
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'X-XSS-Protection': '1; mode=block',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+  };
+}
 
-      return html.replace('<head>', `<head>${cspMeta}`);
+function securityHeadersPlugin(): Plugin {
+  return {
+    name: 'security-headers',
+    configureServer(server) {
+      server.middlewares.use((_req, res, next) => {
+        const headers = generateSecurityHeaders('/');
+        Object.entries(headers).forEach(([key, value]) => {
+          res.setHeader(key, value);
+        });
+        next();
+      });
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use((_req, res, next) => {
+        const headers = generateSecurityHeaders('/');
+        Object.entries(headers).forEach(([key, value]) => {
+          res.setHeader(key, value);
+        });
+        next();
+      });
     },
   };
 }
@@ -40,7 +62,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
-      cspPlugin(), // Add CSP headers (T094)
+      securityHeadersPlugin(), // Add security headers
     ],
     base: env.VITE_APP_BASE || '/',
     resolve: {
