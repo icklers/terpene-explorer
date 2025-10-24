@@ -8,6 +8,10 @@ package-lock.json
 yarn.lock
 *.env
 
+# Configuration files
+.vscode/
+.eslintignore
+
 # Ignore selected spec markdown files where multiple top-level headings are expected
 specs/**/checklists/*.md
 specs/**/contracts/*.md

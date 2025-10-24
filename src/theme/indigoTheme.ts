@@ -12,71 +12,70 @@ import { createTheme } from '@mui/material/styles';
 /**
  * Dark theme configuration
  * Optimized for low-light viewing with high contrast
- * 🌿 Theme for Cannabis Terpene Database: Rich Forest Green Primary & Vibrant Orange Secondary
  */
 export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
 
-    // Primary colors (Rich Forest Green - Botanical, Natural, Main Identity)
+    // Primary colors (Indigo - professional and calming)
     primary: {
-      main: '#4caf50', // Rich Forest Green 500 (Chosen)
-      light: '#81c784', // Green 300
-      dark: '#388e3c', // Green 700
-      contrastText: '#ffffff', // White text for contrast (WCAG AA Pass)
+      main: '#7986cb',      // Indigo 300 (lighter for dark bg)
+      light: '#aab6fe',     // Indigo 200
+      dark: '#3f51b5',      // Indigo 500
+      contrastText: 'rgba(0, 0, 0, 0.87)',
     },
 
-    // Secondary colors (Vibrant Orange - High Contrast, Focus/Highlight elements)
+    // Secondary colors (Teal - nature-inspired)
     secondary: {
-      main: '#ffb300', // Vibrant Orange (Chosen) - Contrast 14.61:1 on #121212
-      light: '#ffb74d', // Orange 300
-      dark: '#e69900', // Custom darker Orange
-      contrastText: 'rgba(0, 0, 0, 0.87)', // Dark text required for contrast (WCAG AA Pass)
+      main: '#4db6ac',      // Teal 300 (lighter for dark bg)
+      light: '#82e9de',     // Teal 200
+      dark: '#00897b',      // Teal 600
+      contrastText: 'rgba(0, 0, 0, 0.87)',
     },
 
     // Error colors (Red - clear indication)
     error: {
-      main: '#f44336', // Red 500
-      light: '#ff7961', // Red 300
-      dark: '#d32f2f', // Red 700
+      main: '#f44336',      // Red 500
+      light: '#ff7961',     // Red 300
+      dark: '#d32f2f',      // Red 700
       contrastText: '#ffffff',
     },
 
-    // Warning colors (Orange - attention) - Using a slightly different shade to differentiate from secondary
+    // Warning colors (Orange - attention)
     warning: {
-      main: '#ff9800', // Orange 500
-      light: '#ffb74d', // Orange 300
-      dark: '#f57c00', // Orange 700
+      main: '#ffa726',      // Orange 400
+      light: '#ffb74d',     // Orange 300
+      dark: '#f57c00',      // Orange 700
       contrastText: 'rgba(0, 0, 0, 0.87)',
     },
 
     // Info colors (Blue - informative)
     info: {
-      main: '#29b6f6', // Light Blue 400
-      light: '#4fc3f7', // Light Blue 300
-      dark: '#0288d1', // Light Blue 700
+      main: '#42a5f5',      // Blue 400
+      light: '#64b5f6',     // Blue 300
+      dark: '#1976d2',      // Blue 700
       contrastText: 'rgba(0, 0, 0, 0.87)',
     },
 
     // Success colors (Green - positive confirmation)
     success: {
-      main: '#4caf50', // Same as Primary main for cohesive brand success messaging
-      light: '#81c784',
-      dark: '#388e3c',
-      contrastText: '#ffffff',
+      main: '#66bb6a',      // Green 400
+      light: '#81c784',     // Green 300
+      dark: '#388e3c',      // Green 700
+      contrastText: 'rgba(0, 0, 0, 0.87)',
     },
 
     // Background colors (dark but not pure black for comfort)
     background: {
-      default: '#121212', // Very dark grey (Material Design dark theme spec)
-      paper: '#1e1e1e', // Slightly lighter for elevation
+      default: '#121212',   // Very dark grey (Material Design dark theme spec)
+      paper: '#1e1e1e',     // Slightly lighter for elevation
     },
 
     // Text colors (ensuring 4.5:1 contrast on dark backgrounds)
     text: {
-      primary: 'rgba(255, 255, 255, 0.87)', // High emphasis
-      secondary: 'rgba(255, 255, 255, 0.60)', // Medium emphasis
-      disabled: 'rgba(255, 255, 255, 0.38)', // Disabled state
+      primary: 'rgba(255, 255, 255, 0.87)',    // High emphasis
+      secondary: 'rgba(255, 255, 255, 0.60)',  // Medium emphasis
+      disabled: 'rgba(255, 255, 255, 0.38)',   // Disabled state
     },
 
     // Divider color
@@ -93,7 +92,7 @@ export const darkTheme = createTheme({
     },
   },
 
-  // Typography and Component overrides remain unchanged
+  // Typography (same as light theme for consistency)
   typography: {
     fontFamily: [
       '-apple-system',
@@ -152,6 +151,7 @@ export const darkTheme = createTheme({
     },
   },
 
+  // Component overrides for dark mode accessibility
   components: {
     // Button - ensure focus visibility on dark background
     MuiButton: {
@@ -161,8 +161,7 @@ export const darkTheme = createTheme({
           borderRadius: 8,
           '&:focus-visible': {
             outline: '3px solid',
-            // Using primary.main for focus color
-            outlineColor: '#4caf50',
+            outlineColor: '#7986cb',
             outlineOffset: '2px',
           },
         },
@@ -177,8 +176,7 @@ export const darkTheme = createTheme({
           fontWeight: 500,
           '&:focus-visible': {
             outline: '2px solid',
-            // Using primary.main for focus color
-            outlineColor: '#4caf50',
+            outlineColor: '#7986cb',
             outlineOffset: '2px',
           },
         },
@@ -195,8 +193,7 @@ export const darkTheme = createTheme({
           '& .MuiOutlinedInput-root': {
             '&:focus-within': {
               outline: '2px solid',
-              // Using primary.main for focus color
-              outlineColor: '#4caf50',
+              outlineColor: '#7986cb',
               outlineOffset: '2px',
             },
           },
@@ -210,8 +207,7 @@ export const darkTheme = createTheme({
         root: {
           '&:focus-visible': {
             outline: '2px solid',
-            // Using primary.main for focus color
-            outlineColor: '#4caf50',
+            outlineColor: '#7986cb',
             outlineOffset: '-2px',
           },
         },
@@ -224,8 +220,7 @@ export const darkTheme = createTheme({
         root: {
           '&:focus-visible': {
             outline: '2px solid',
-            // Using primary.main for focus color
-            outlineColor: '#4caf50',
+            outlineColor: '#7986cb',
             outlineOffset: '2px',
             borderRadius: 4,
           },
