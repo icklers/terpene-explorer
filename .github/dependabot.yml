@@ -1,7 +1,7 @@
 version: 2
 updates:
-  # pnpm/npm dependencies (source code)
-  - package-ecosystem: "pnpm"
+  # npm dependencies (source code)
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
