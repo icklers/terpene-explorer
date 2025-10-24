@@ -1,7 +1,19 @@
 {
   "$schema": "https://json.schemastore.org/staticwebapp.config.json",
   "trailingSlash": "never",
-
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "/assets/*", 
+      "/data/*",
+      "*.js",
+      "*.css", 
+      "*.json",
+      "*.png",
+      "*.ico",
+      "*.svg"
+    ]
+  },
   "routes": [
     {
       "route": "/assets/*.js",
