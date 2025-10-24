@@ -1,9 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN
@@ -11,6 +12,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read # needed to download artifacts
 
 # Allow one concurrent deployment
 concurrency:
@@ -20,17 +22,23 @@ concurrency:
 jobs:
   deploy:
     name: 🚀 Deploy to GitHub Pages
+    # Only run if CI workflow was successful
+    if: |
+      github.event.workflow_run.conclusion == 'success' ||
+      github.event_name == 'workflow_dispatch'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     
     steps:
-      - name: � Download build artifacts
-        uses: actions/download-artifact@v4
+      - name: 📥 Download build artifacts
+        uses: dawidd6/action-download-artifact@v11
         with:
+          workflow: ci.yml
           name: production-build
           path: dist
+          workflow_conclusion: success
           
       - name: 📋 List build contents
         run: ls -la dist/

@@ -1,9 +1,10 @@
 name: Deploy to Azure Static Web Apps
 
 on:
-  push:
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
 
 # Allow one concurrent deployment
@@ -11,26 +12,35 @@ concurrency:
   group: "azure-deploy"
   cancel-in-progress: true
 
+permissions:
+  actions: read # needed to download artifacts from other workflows
+
 jobs:
   deploy:
     name: 🚀 Deploy to Azure Static Web Apps
+    # Only run if CI workflow was successful
+    if: |
+      github.event.workflow_run.conclusion == 'success' ||
+      github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     
     steps:
       - name: 📥 Download build artifacts
-        uses: actions/download-artifact@v5
+        uses: dawidd6/action-download-artifact@v11
         with:
+          workflow: ci.yml
           name: production-build
           path: dist
-          
+          workflow_conclusion: success
+
       - name: 📋 List build contents
         run: ls -la dist/
-      
+
       - name: 🚀 Deploy to Azure Static Web Apps
         id: deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-           AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets. AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_GROUND_04EB9DE03 }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_GROUND_04EB9DE03 }}
           # The following values should match your Azure Static Web App configuration
           app_location: "dist" # The location of your built app files
           skip_app_build: true # Skip build since we already have built files
