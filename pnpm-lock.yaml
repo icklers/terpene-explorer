@@ -141,6 +141,9 @@ importers:
       eslint-plugin-react-hooks:
         specifier: ^5.1.0
         version: 5.2.0(eslint@9.38.0)
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.24
+        version: 0.4.24(eslint@9.38.0)
       jsdom:
         specifier: ^25.0.1
         version: 25.0.1
@@ -1702,6 +1705,11 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
+
+  eslint-plugin-react-refresh@0.4.24:
+    resolution: {integrity: sha512-nLHIW7TEq3aLrEYWpVaJ1dRgFR+wLDPN8e8FpYAql/bMV2oBEfC37K0gLEGgv9fy66juNShSMV8OkTqzltcG/w==}
+    peerDependencies:
+      eslint: '>=8.40'
 
   eslint-plugin-react@7.37.5:
     resolution: {integrity: sha512-Qteup0SqU15kdocexFNAJMvCJEfa2xUKNV4CC1xsVMrIIqEy3SQ/rqyxCWNzfrd3/ldy6HMlD2e0JDVpDg2qIA==}
@@ -4475,6 +4483,10 @@ snapshots:
       string.prototype.includes: 2.0.1
 
   eslint-plugin-react-hooks@5.2.0(eslint@9.38.0):
+    dependencies:
+      eslint: 9.38.0
+
+  eslint-plugin-react-refresh@0.4.24(eslint@9.38.0):
     dependencies:
       eslint: 9.38.0
 
