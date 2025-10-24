@@ -60,6 +60,9 @@ importers:
       '@playwright/test':
         specifier: ^1.49.1
         version: 1.56.1
+      '@testing-library/dom':
+        specifier: ^10.4.1
+        version: 10.4.1
       '@testing-library/jest-dom':
         specifier: ^6.6.3
         version: 6.9.1
