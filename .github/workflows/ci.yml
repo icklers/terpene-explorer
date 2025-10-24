@@ -38,19 +38,30 @@ jobs:
           node-version: 24
           cache: 'pnpm'
 
-      # Cache build dependencies
-      - name: 📦 Cache build dependencies
+      # Cache dependencies
+      - name: 📦 Cache dependencies
         uses: actions/cache@v4
         with:
           path: |
-            node_modules/.vite
-            node_modules/.cache
-            ~/.cache/Cypress
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-build-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+            **/node_modules
+            ~/.pnpm-store
+            ~/.cache/pnpm
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      # Cache build artifacts
+      - name: 📦 Cache build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            .vite
+            dist
+            .swc
+            coverage
+          key: ${{ runner.os }}-build-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-build-${{ hashFiles('**/pnpm-lock.yaml') }}-
-            ${{ runner.os }}-build-
       
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -60,10 +71,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            .tsbuildinfo
+            **/*.tsbuildinfo
+            node_modules/.cache/typescript
             node_modules/.cache/tsbuildinfo
-          key: ${{ runner.os }}-tsbuild-${{ hashFiles('**.[jt]s', '**.[jt]sx', '**/tsconfig.json') }}
+          key: ${{ runner.os }}-tsbuild-${{ hashFiles('**/tsconfig*.json') }}-${{ hashFiles('**/*.ts', '**/*.tsx') }}
           restore-keys: |
+            ${{ runner.os }}-tsbuild-${{ hashFiles('**/tsconfig*.json') }}-
             ${{ runner.os }}-tsbuild-
       
       - name: 🔎 Type check
