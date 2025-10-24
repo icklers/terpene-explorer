@@ -19,6 +19,7 @@ yarn.lock
 # Configuration files
 .vscode/
 .eslintignore
+staticwebapp.config.json
 
 # Ignore spec markdown files
 specs/**/*.md
