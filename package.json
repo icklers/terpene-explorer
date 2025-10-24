@@ -1,5 +1,5 @@
 {
-  "name": "interactive-terpene-map",
+  "name": "terpene-explorer",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -33,6 +33,10 @@
     "clean": "rm -rf dist node_modules/.vite",
     "clean:all": "rm -rf dist node_modules",
     "prepare": "husky install || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/icklers/terpene-explorer.git"
   },
   "dependencies": {
     "@emotion/react": "^11.13.5",
