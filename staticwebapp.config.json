@@ -1,9 +1,22 @@
 {
+  "trailingSlash": "never",
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif,ico}", "/*.{css,scss,js,png,jpg,gif,ico,map,txt}"]
+    "exclude": ["/images/*.{png,jpg,gif,ico}", "/*.{css,scss,js,png,jpg,gif,ico,map,txt}", "/static/*", "/data/*", "/manifest.json"]
   },
   "routes": [
+    {
+      "route": "/static/*",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "route": "/data/*",
+      "headers": {
+        "cache-control": "public, max-age=3600"
+      }
+    },
     {
       "route": "/*",
       "serve": "/index.html",
@@ -16,7 +29,9 @@
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "X-XSS-Protection": "1; mode=block",
-    "Referrer-Policy": "strict-origin-when-cross-origin"
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Permissions-Policy": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
   },
   "mimeTypes": {
     ".json": "application/json",

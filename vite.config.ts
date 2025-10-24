@@ -21,7 +21,7 @@ function generateSecurityHeaders(base: string): Record<string, string> {
       "frame-ancestors 'none'",
       `base-uri ${baseUri}`,
       "form-action 'self'",
-      'upgrade-insecure-requests'
+      'upgrade-insecure-requests',
     ].join('; '),
     'X-Content-Type-Options': 'nosniff',
     'X-Frame-Options': 'DENY',
