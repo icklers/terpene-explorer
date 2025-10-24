@@ -18,6 +18,7 @@ import { detectSystemPreference, watchSystemPreference } from './theme/themeConf
 import { globalAccessibilityStyles } from './theme/themeConfig';
 import type { StoredPreferences } from './models/Preferences';
 import { PREFERENCES_STORAGE_KEY } from './models/Preferences';
+import { Home } from './pages/Home';
 
 /**
  * Load stored preferences from localStorage
@@ -91,25 +92,7 @@ export const App: React.FC = () => {
 
         {/* App content with Suspense for i18n loading */}
         <Suspense fallback={<LoadingIndicator message="Loading application..." />}>
-          {/* Placeholder for main content */}
-          {/* This will be replaced with actual components in Phase 3 */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              minHeight: '100vh',
-              padding: '2rem',
-              textAlign: 'center',
-            }}
-          >
-            <h1>Interactive Terpene Map</h1>
-            <p>Application bootstrap complete. Ready for component implementation.</p>
-            <p style={{ fontSize: '0.875rem', color: 'gray', marginTop: '1rem' }}>
-              Current theme: {effectiveMode} | Language: {i18n.language}
-            </p>
-          </div>
+          <Home />
         </Suspense>
       </ThemeProvider>
     </ErrorBoundary>
