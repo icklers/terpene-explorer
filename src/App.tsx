@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { LoadingIndicator } from './components/common/LoadingIndicator';
 import { AppBar } from './components/layout/AppBar';
+import { Footer } from './components/layout/Footer';
 import { Home } from './pages/Home';
 import { lightTheme, darkTheme } from './theme/themeConfig';
 import { globalAccessibilityStyles } from './theme/themeConfig';
@@ -80,9 +81,14 @@ export const App: React.FC = () => {
           />
 
           {/* Main Content with Suspense for i18n loading */}
-          <Suspense fallback={<LoadingIndicator message="Loading application..." />}>
-            <Home />
-          </Suspense>
+          <Box sx={{ flex: 1 }}>
+            <Suspense fallback={<LoadingIndicator message="Loading application..." />}>
+              <Home />
+            </Suspense>
+          </Box>
+
+          {/* Footer (T089) */}
+          <Footer />
         </Box>
       </ThemeProvider>
     </ErrorBoundary>

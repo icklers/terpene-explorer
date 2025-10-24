@@ -12,6 +12,7 @@ import { TextField, InputAdornment, IconButton, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useTranslation } from 'react-i18next';
+import { sanitizeSearchQuery } from '../../utils/sanitize';
 
 /**
  * Component props
@@ -67,9 +68,13 @@ export function SearchBar({
     };
   }, []);
 
-  // Sanitize input: trim and convert to lowercase
+  // Sanitize input: prevent XSS, trim, and convert to lowercase (T095)
   const sanitize = useCallback((input: string): string => {
-    let sanitized = input.trim().toLowerCase();
+    // Apply XSS sanitization first (NFR-SEC-001)
+    let sanitized = sanitizeSearchQuery(input);
+
+    // Convert to lowercase for case-insensitive search
+    sanitized = sanitized.toLowerCase();
 
     // Apply maxLength if specified
     if (maxLength && sanitized.length > maxLength) {
