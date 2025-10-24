@@ -4,29 +4,12 @@
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": [
-      "/assets/**",
-      "/data/**", 
+      "/assets/*",
+      "/data/*",
       "/manifest.json",
       "/favicon.ico",
       "/favicon.svg",
-      "*.js",
-      "*.mjs",
-      "*.css",
-      "*.json",
-      "*.png",
-      "*.jpg",
-      "*.jpeg",
-      "*.gif",
-      "*.ico",
-      "*.svg",
-      "*.woff",
-      "*.woff2",
-      "*.ttf",
-      "*.eot",
-      "*.map",
-      "*.txt",
-      "*.yaml",
-      "*.yml"
+      "/*.{js,mjs,css,json,png,jpg,jpeg,gif,ico,svg,woff,woff2,ttf,eot,map,txt,yaml,yml}"
     ]
   },
   "routes": [
