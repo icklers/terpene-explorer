@@ -18,14 +18,14 @@
     {
       "route": "/assets/*.js",
       "headers": {
-        "Content-Type": "text/javascript; charset=utf-8",
+        "Content-Type": "text/javascript",
         "Cache-Control": "public, max-age=31536000, immutable"
       }
     },
     {
-      "route": "/assets/*.css",
+      "route": "/assets/*.css", 
       "headers": {
-        "Content-Type": "text/css; charset=utf-8",
+        "Content-Type": "text/css",
         "Cache-Control": "public, max-age=31536000, immutable"
       }
     },
@@ -38,21 +38,21 @@
     {
       "route": "/*.js",
       "headers": {
-        "Content-Type": "text/javascript; charset=utf-8",
-        "Cache-Control": "public, max-age=3600, immutable"
+        "Content-Type": "text/javascript",
+        "Cache-Control": "public, max-age=31536000, immutable"
       }
     },
     {
       "route": "/*.mjs",
       "headers": {
-        "Content-Type": "text/javascript; charset=utf-8",
+        "Content-Type": "text/javascript",
         "Cache-Control": "public, max-age=31536000, immutable"
       }
     },
     {
       "route": "/*.css",
       "headers": {
-        "Content-Type": "text/css; charset=utf-8",
+        "Content-Type": "text/css",
         "Cache-Control": "public, max-age=31536000, immutable"
       }
     },
@@ -112,18 +112,18 @@
     "Permissions-Policy": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
   },
   "mimeTypes": {
-    ".js": "text/javascript; charset=utf-8",
-    ".mjs": "text/javascript; charset=utf-8",
-    ".json": "application/json; charset=utf-8",
-    ".css": "text/css; charset=utf-8",
-    ".map": "application/json; charset=utf-8",
+    ".js": "text/javascript",
+    ".mjs": "text/javascript", 
+    ".json": "application/json",
+    ".css": "text/css",
+    ".map": "application/json",
     ".svg": "image/svg+xml",
     ".png": "image/png",
     ".jpg": "image/jpeg",
     ".jpeg": "image/jpeg",
     ".gif": "image/gif",
     ".ico": "image/x-icon",
-    ".txt": "text/plain; charset=utf-8",
+    ".txt": "text/plain",
     ".woff": "font/woff",
     ".woff2": "font/woff2",
     ".ttf": "font/ttf",
