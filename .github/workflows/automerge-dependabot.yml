@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Evaluate PR (semver & branch-protection)
         id: evaluate
-        uses: actions/github-script@v6
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -155,7 +155,7 @@ jobs:
 
       - name: Skip and comment if not safe
         if: steps.evaluate.outputs.willAutoMerge != 'true'
-        uses: actions/github-script@v6
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -177,14 +177,14 @@ jobs:
 
       - name: Enable auto-merge for safe Dependabot PRs
         if: steps.evaluate.outputs.willAutoMerge == 'true'
-        uses: peter-evans/enable-pull-request-automerge@v2
+        uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           merge-method: squash
 
       - name: Comment when auto-merge enabled
         if: steps.evaluate.outputs.willAutoMerge == 'true'
-        uses: actions/github-script@v6
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -214,7 +214,7 @@ jobs:
     steps:
       - name: Check PR qualifies for auto-merge
         id: check
-        uses: actions/github-script@v6
+        uses: actions/github-script@v8
         with:
           script: |
             const core = require('@actions/core');
@@ -239,14 +239,14 @@ jobs:
 
       - name: Enable GitHub auto-merge
         if: steps.check.outputs.should == 'true'
-        uses: peter-evans/enable-pull-request-automerge@v2
+        uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           merge-method: squash
 
       - name: Comment when auto-merge enabled
         if: steps.check.outputs.should == 'true'
-        uses: actions/github-script@v6
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
