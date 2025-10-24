@@ -54,6 +54,18 @@ jobs:
           ls -la dist/assets/ || echo "No assets directory"
           echo "=== Checking index.html ==="
           head -20 dist/index.html
+          echo "=== Checking for staticwebapp.config.json ==="
+          ls -la staticwebapp.config.json || echo "No config in root"
+          ls -la dist/staticwebapp.config.json || echo "No config in dist"
+
+      - name: 📋 Ensure config file is in root
+        run: |
+          if [ -f "dist/staticwebapp.config.json" ]; then
+            cp dist/staticwebapp.config.json ./
+            echo "Copied staticwebapp.config.json from dist to root"
+          fi
+          echo "Config file contents:"
+          cat staticwebapp.config.json | head -20
 
       - name: Build And Deploy
         id: builddeploy
@@ -64,11 +76,11 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
+          app_location: "dist" # Point to pre-built files
           skip_api_build: true # Set to true to skip building APIs - optional
           skip_app_build: true # Set to true to skip building app - optional
-          output_location: "dist" # Built app content directory - optional
-          config_file_location: "" # Location of staticwebapp.config.json - optional
+          output_location: "" # Already built, no additional output
+          config_file_location: "" # Look in app_location (dist)
           # deployment_environment: Production
           production_branch: main
           ###### End of Repository/Build Configurations ######
