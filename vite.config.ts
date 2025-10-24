@@ -34,7 +34,7 @@ function securityHeadersPlugin(): Plugin {
   return {
     name: 'security-headers',
     configureServer(server) {
-      server.middlewares.use((req, res, next) => {
+      server.middlewares.use((_req, res, next) => {
         const headers = generateSecurityHeaders('/');
         Object.entries(headers).forEach(([key, value]) => {
           res.setHeader(key, value);
@@ -43,7 +43,7 @@ function securityHeadersPlugin(): Plugin {
       });
     },
     configurePreviewServer(server) {
-      server.middlewares.use((req, res, next) => {
+      server.middlewares.use((_req, res, next) => {
         const headers = generateSecurityHeaders('/');
         Object.entries(headers).forEach(([key, value]) => {
           res.setHeader(key, value);
