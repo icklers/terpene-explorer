@@ -14,6 +14,8 @@ concurrency:
 
 permissions:
   actions: read # needed to download artifacts from other workflows
+  id-token: write # needed for OIDC
+  contents: read # needed for actions/checkout
 
 jobs:
   deploy:
@@ -38,23 +40,21 @@ jobs:
 
       - name: 📋 List build contents
         run: ls -la dist/
-
+      
       - name: 🚀 Deploy to Azure Static Web Apps
         id: deploy
         uses: Azure/static-web-apps-deploy@v1
-        env:
-          DEPLOYMENT_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_GROUND_04EB9DE03 }}
         with:
-          # Required
-          azure_static_web_apps_api_token: ${{ env.DEPLOYMENT_TOKEN }}
+          # Required - both tokens are needed for deployment
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_GROUND_04EB9DE03 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          
           # App configuration
           app_location: "/"
           output_location: "dist"
           # Static Web App configuration
-          config_file_location: "."  # Look for staticwebapp.config.json in root
-          routes_location: "."  # Look for staticwebapp.config.json in root
+          config_file_location: ""  # Look for staticwebapp.config.json in root
+          # Routes configuration
+          # routes_location: "."  # Look for routes.json in root
           
           # Deployment specific
           action: "upload"
