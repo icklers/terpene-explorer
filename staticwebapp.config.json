@@ -4,17 +4,38 @@
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": [
-      "/assets/*", 
+      "/assets/*",
       "/data/*",
       "*.js",
-      "*.css", 
+      "*.css",
       "*.json",
       "*.png",
-      "*.ico",
-      "*.svg"
+      "*.svg",
+      "*.ico"
     ]
   },
   "routes": [
+    {
+      "route": "/data/terpenes.json",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=300"
+      }
+    },
+    {
+      "route": "/manifest.json",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=3600"
+      }
+    },
+    {
+      "route": "/favicon.svg",
+      "headers": {
+        "Content-Type": "image/svg+xml",
+        "Cache-Control": "public, max-age=86400"
+      }
+    },
     {
       "route": "/assets/*.js",
       "headers": {
@@ -23,7 +44,7 @@
       }
     },
     {
-      "route": "/assets/*.css", 
+      "route": "/assets/*.css",
       "headers": {
         "Content-Type": "text/css",
         "Cache-Control": "public, max-age=31536000, immutable"
@@ -38,15 +59,7 @@
     {
       "route": "/*.js",
       "headers": {
-        "Content-Type": "text/javascript",
-        "Cache-Control": "public, max-age=31536000, immutable"
-      }
-    },
-    {
-      "route": "/*.mjs",
-      "headers": {
-        "Content-Type": "text/javascript",
-        "Cache-Control": "public, max-age=31536000, immutable"
+        "Content-Type": "text/javascript"
       }
     },
     {
@@ -57,42 +70,15 @@
       }
     },
     {
-      "route": "/manifest.json",
+      "route": "/*.json",
       "headers": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Cache-Control": "public, max-age=3600"
+        "Content-Type": "application/json; charset=utf-8"
       }
     },
     {
-      "route": "/data/*.json",
+      "route": "/",
       "headers": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Cache-Control": "public, max-age=3600"
-      }
-    },
-    {
-      "route": "/data/*.yaml",
-      "headers": {
-        "Content-Type": "application/yaml; charset=utf-8",
-        "Cache-Control": "public, max-age=3600"
-      }
-    },
-    {
-      "route": "/data/*",
-      "headers": {
-        "Cache-Control": "public, max-age=3600"
-      }
-    },
-    {
-      "route": "/*.{woff,woff2,ttf,eot}",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      }
-    },
-    {
-      "route": "/*.{png,jpg,jpeg,gif,ico,svg}",
-      "headers": {
-        "Cache-Control": "public, max-age=86400"
+        "Cache-Control": "no-cache, must-revalidate"
       }
     },
     {
@@ -132,7 +118,8 @@
 
   "responseOverrides": {
     "404": {
-      "rewrite": "/index.html"
+      "rewrite": "/index.html",
+      "statusCode": 200
     }
   }
 }

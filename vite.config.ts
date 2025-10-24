@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
+import fs from 'fs';
 import type { Plugin } from 'vite';
 
 /**
@@ -54,6 +55,32 @@ function securityHeadersPlugin(): Plugin {
   };
 }
 
+/**
+ * Copy Azure SWA config and create 404.html
+ */
+function azureSwaPlugin(): Plugin {
+  return {
+    name: 'azure-swa-config',
+    writeBundle() {
+      // Copy staticwebapp.config.json to dist
+      const configPath = path.resolve('staticwebapp.config.json');
+      const distConfigPath = path.resolve('dist/staticwebapp.config.json');
+      if (fs.existsSync(configPath)) {
+        fs.copyFileSync(configPath, distConfigPath);
+        console.log('✅ Copied staticwebapp.config.json to dist/');
+      }
+
+      // Create 404.html as a copy of index.html for SPA routing
+      const indexPath = path.resolve('dist/index.html');
+      const notFoundPath = path.resolve('dist/404.html');
+      if (fs.existsSync(indexPath)) {
+        fs.copyFileSync(indexPath, notFoundPath);
+        console.log('✅ Created 404.html for SPA routing');
+      }
+    },
+  };
+}
+
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   // Load env file based on mode
@@ -63,6 +90,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       securityHeadersPlugin(), // Add security headers
+      azureSwaPlugin(), // Copy Azure SWA config and create 404.html
     ],
     base: env.VITE_APP_BASE || '/',
     resolve: {
@@ -84,7 +112,9 @@ export default defineConfig(({ mode }) => {
       },
       // Performance budgets
       chunkSizeWarningLimit: 500, // 500KB warning threshold
+      copyPublicDir: true,
     },
+    publicDir: 'public',
     server: {
       port: 5173,
       open: true,
