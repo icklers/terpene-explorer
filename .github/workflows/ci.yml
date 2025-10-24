@@ -163,6 +163,8 @@ jobs:
           start_time=$SECONDS
           NODE_ENV=production MODE=github-pages pnpm run build
           mv dist dist-gh-pages
+          # Copy 404.html for GitHub Pages
+          cp dist-gh-pages/index.html dist-gh-pages/404.html
           end_time=$SECONDS
           build_time=$((end_time - start_time))
           echo "build_time=$build_time" >> $GITHUB_OUTPUT
@@ -176,6 +178,8 @@ jobs:
         run: |
           start_time=$SECONDS
           NODE_ENV=production MODE=azure-swa pnpm run build
+          # Copy SWA config into the build
+          cp staticwebapp.config.json dist/
           end_time=$SECONDS
           build_time=$((end_time - start_time))
           echo "swa_build_time=$build_time" >> $GITHUB_OUTPUT
