@@ -38,7 +38,6 @@ export function useTerpeneData(
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [warnings, setWarnings] = useState<string[] | null>(null);
-  const [retryCount, setRetryCount] = useState(0);
 
   // Load data function
   const loadData = useCallback(async () => {
@@ -75,7 +74,6 @@ export function useTerpeneData(
 
   // Retry function
   const retry = useCallback(() => {
-    setRetryCount((prev) => prev + 1);
     loadData();
   }, [loadData]);
 

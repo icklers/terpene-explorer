@@ -25,6 +25,7 @@ import { filterTerpenes } from '../services/filterService';
 import { FilterControls } from '../components/filters/FilterControls';
 import { FilterModeToggle } from '../components/filters/FilterModeToggle';
 import { TerpeneList } from '../components/visualizations/TerpeneList';
+import { WarningSnackbar } from '../components/common/WarningSnackbar';
 
 /**
  * Home page component
@@ -46,6 +47,16 @@ export function Home(): React.ReactElement {
     toggleFilterMode,
     hasActiveFilters,
   } = useFilters();
+
+  // Snackbar state for validation warnings
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+
+  // Show snackbar when warnings appear
+  React.useEffect(() => {
+    if (warnings && warnings.length > 0) {
+      setSnackbarOpen(true);
+    }
+  }, [warnings]);
 
   // Apply filters to terpenes
   const filteredTerpenes = React.useMemo(() => {
@@ -143,6 +154,13 @@ export function Home(): React.ReactElement {
           onRetry={retry}
         />
       </Box>
+
+      {/* Validation Warning Snackbar (T054 - FR-015) */}
+      <WarningSnackbar
+        warnings={warnings}
+        open={snackbarOpen}
+        onClose={() => setSnackbarOpen(false)}
+      />
     </Container>
   );
 }
