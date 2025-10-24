@@ -2,6 +2,6 @@
   "default": true,
   "MD024": false,
   "MD013": {
-    "line_length": 160
+    "line_length": 140
   }
 }

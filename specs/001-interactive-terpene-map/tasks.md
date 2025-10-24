@@ -278,6 +278,7 @@
 5. **Refactor if needed** - tests still passing after refactor
 
 **Within Each User Story**:
+
 - Tests before implementation (TDD red-green-refactor)
 - Services before hooks
 - Hooks before components
@@ -371,6 +372,7 @@ With multiple developers:
 - **Phase 6 (Polish)**: 24 tasks (Production readiness) - 4 coverage + 4 E2E + 16 polish
 
 **Test Task Breakdown**:
+
 - Unit tests (services): 5 tasks
 - Unit tests (hooks): 6 tasks
 - Unit tests (utils): 3 tasks
@@ -386,6 +388,7 @@ With multiple developers:
 **Suggested MVP Scope**: Phases 1, 2, and 3 (User Story 1) = 56 tasks for core filtering functionality with full test coverage
 
 **Independent Test Criteria**:
+
 - **US1**: Write tests (fail) → Implement → Tests pass → Load app, select effects, toggle AND/OR, verify correct filtering
 - **US3**: Write tests (fail) → Implement → Tests pass → Switch views, click sunburst slice, search by text, sort table
 - **US2**: Write tests (fail) → Implement → Tests pass → Toggle theme, switch language, reload browser, verify persistence
@@ -395,6 +398,7 @@ With multiple developers:
 ## TDD Compliance Notes
 
 ✅ **Constitution Principle V Compliance**:
+
 - All features accompanied by appropriate tests
 - Unit tests for all services, hooks, and utilities
 - Integration tests for data flow and component interactions
@@ -404,12 +408,14 @@ With multiple developers:
 - Tests run in CI/CD before merging (enforced via package.json)
 
 ✅ **Test-First Ordering**:
+
 - Every user story begins with test tasks
 - Tests must fail before implementation
 - Implementation tasks reference which test they make pass
 - Clear checkpoints: "tests failing" → "tests passing"
 
 ✅ **Coverage Target**:
+
 - T102-T104: Explicit verification of ≥80% coverage
 - T105: Enforcement via build scripts (fail if <80%)
 
