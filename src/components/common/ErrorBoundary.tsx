@@ -111,7 +111,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <AlertTitle>Something went wrong</AlertTitle>
 
             <Box sx={{ mb: 2 }}>
-              We're sorry, but something unexpected happened. The application encountered an error and couldn't continue.
+              We&apos;re sorry, but something unexpected happened. The application encountered an error and couldn&apos;t continue.
             </Box>
 
             {/* Show error message in development mode */}

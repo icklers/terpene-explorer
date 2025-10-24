@@ -218,7 +218,7 @@
 
 ### Additional Data and Configuration
 
-- [ ] T097 [P] Create sample terpenes.yaml file in data/ directory for alternative format testing
+- [ ] T097 [P] (SKIP IMPLEMENTATION) Create sample terpenes.yaml file in data/ directory for alternative format testing
 - [x] T098 [P] Update package.json with proper scripts (dev, build, preview, test, lint, format)
 
 ### Performance Testing

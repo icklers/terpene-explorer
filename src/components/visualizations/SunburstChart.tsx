@@ -67,7 +67,7 @@ export function SunburstChart({ data, onSliceClick, width = 600, height = 600 }:
 
     // Create hierarchy
     const root = hierarchy(data)
-      .sum((d: any) => d.value || 0)
+      .sum((d) => d.value || 0)
       .sort((a, b) => (b.value || 0) - (a.value || 0));
 
     // Create partition layout

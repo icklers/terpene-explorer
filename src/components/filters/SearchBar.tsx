@@ -7,6 +7,8 @@
  * @see tasks.md T063
  */
 
+import type { Timer } from 'node:timers';
+
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import { TextField, InputAdornment, IconButton, Box } from '@mui/material';
@@ -52,7 +54,7 @@ export function SearchBar({
 }: SearchBarProps): React.ReactElement {
   const { t } = useTranslation();
   const [localValue, setLocalValue] = useState(value);
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimerRef = useRef<Timer | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Sync localValue when external value changes
