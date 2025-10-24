@@ -3,6 +3,14 @@ node_modules/
 dist/
 build/
 
+coverage
+playwright-report
+*.lock
+package-lock.json
+pnpm-lock.yaml
+.cache
+
+
 # Lockfiles / env
 package-lock.json
 yarn.lock
@@ -12,17 +20,5 @@ yarn.lock
 .vscode/
 .eslintignore
 
-# Ignore selected spec markdown files where multiple top-level headings are expected
-specs/**/checklists/*.md
-specs/**/contracts/*.md
-specs/**/data-model.md
+# Ignore spec markdown files
 specs/**/*.md
-node_modules
-dist
-coverage
-playwright-report
-*.lock
-package-lock.json
-pnpm-lock.yaml
-.cache
-build

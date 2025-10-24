@@ -3,83 +3,62 @@
  *
  * Root application component that sets up providers and global layout.
  * Integrates Material UI theming, i18n, and error handling.
+ * Phase 5: Theme and language preference management with persistence.
  *
- * @see plan.md - Phase 2 application bootstrap
+ * @see tasks.md T086, T087
  */
 
-import { useState, useEffect, Suspense } from 'react';
-import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
+import { useEffect, Suspense } from 'react';
+import { CssBaseline, GlobalStyles, ThemeProvider, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { LoadingIndicator } from './components/common/LoadingIndicator';
-import { lightTheme, darkTheme } from './theme/themeConfig';
-import { detectSystemPreference, watchSystemPreference } from './theme/themeConfig';
-import { globalAccessibilityStyles } from './theme/themeConfig';
-import type { StoredPreferences } from './models/Preferences';
-import { PREFERENCES_STORAGE_KEY } from './models/Preferences';
+import { AppBar } from './components/layout/AppBar';
 import { Home } from './pages/Home';
-
-/**
- * Load stored preferences from localStorage
- */
-function loadPreferences(): StoredPreferences {
-  try {
-    const stored = localStorage.getItem(PREFERENCES_STORAGE_KEY);
-    if (stored) {
-      return JSON.parse(stored) as StoredPreferences;
-    }
-  } catch (error) {
-    console.warn('Failed to load preferences from localStorage:', error);
-  }
-
-  // Default preferences
-  return {
-    theme: 'system',
-    language: 'en',
-  };
-}
+import { lightTheme, darkTheme } from './theme/themeConfig';
+import { globalAccessibilityStyles } from './theme/themeConfig';
+import { useTheme } from './hooks/useTheme';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 /**
  * Main App Component
  *
  * Sets up the application with:
- * - Material UI CssVarsProvider for theming
+ * - Material UI ThemeProvider for theming
  * - i18next for internationalization
  * - ErrorBoundary for error handling
  * - Global accessibility styles
- * - System preference detection
+ * - Theme and language persistence (T083-T088)
  */
 export const App: React.FC = () => {
   const { i18n } = useTranslation();
-  const [preferences] = useState<StoredPreferences>(loadPreferences);
-  // TODO: setPreferences will be used in Phase 3 for theme/language toggles
-  const [systemPreference, setSystemPreference] = useState<'light' | 'dark'>(
-    detectSystemPreference()
-  );
 
-  // Initialize language from preferences
+  // Theme management with localStorage persistence (T083, T086)
+  const { mode: themeMode, toggleMode: toggleTheme } = useTheme();
+
+  // Language management with localStorage persistence (T084)
+  const [language, setLanguage] = useLocalStorage<string>('language', 'en');
+
+  // Sync i18next with stored language preference
   useEffect(() => {
-    if (preferences.language && i18n.language !== preferences.language) {
-      i18n.changeLanguage(preferences.language);
+    if (language && i18n.language !== language) {
+      i18n.changeLanguage(language).catch((error) => {
+        console.warn('Failed to change language:', error);
+      });
     }
-  }, [preferences.language, i18n]);
+  }, [language, i18n]);
 
-  // Watch for system preference changes
-  useEffect(() => {
-    const cleanup = watchSystemPreference((newPreference) => {
-      setSystemPreference(newPreference);
+  // Handle language change
+  const handleLanguageChange = (newLanguage: string) => {
+    setLanguage(newLanguage);
+    i18n.changeLanguage(newLanguage).catch((error) => {
+      console.warn('Failed to change language:', error);
     });
-
-    return cleanup;
-  }, []);
-
-  // Determine effective theme mode
-  const effectiveMode: 'light' | 'dark' =
-    preferences.theme === 'system' ? systemPreference : preferences.theme;
+  };
 
   // Get the appropriate theme based on mode
-  const currentTheme = effectiveMode === 'dark' ? darkTheme : lightTheme;
+  const currentTheme = themeMode === 'dark' ? darkTheme : lightTheme;
 
   return (
     <ErrorBoundary>
@@ -90,10 +69,21 @@ export const App: React.FC = () => {
         {/* Global accessibility styles */}
         <GlobalStyles styles={globalAccessibilityStyles} />
 
-        {/* App content with Suspense for i18n loading */}
-        <Suspense fallback={<LoadingIndicator message="Loading application..." />}>
-          <Home />
-        </Suspense>
+        {/* App Layout */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          {/* App Bar with Theme & Language Controls (T087) */}
+          <AppBar
+            themeMode={themeMode}
+            onThemeToggle={toggleTheme}
+            language={language}
+            onLanguageChange={handleLanguageChange}
+          />
+
+          {/* Main Content with Suspense for i18n loading */}
+          <Suspense fallback={<LoadingIndicator message="Loading application..." />}>
+            <Home />
+          </Suspense>
+        </Box>
       </ThemeProvider>
     </ErrorBoundary>
   );

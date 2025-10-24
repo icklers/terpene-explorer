@@ -3,8 +3,9 @@
  *
  * Custom hook for managing filter state including AND/OR toggle (FR-013).
  * Provides functions for updating search, effects, mode, and view settings.
+ * T085: Adds localStorage persistence for viewMode and filterMode.
  *
- * @see tasks.md T047
+ * @see tasks.md T047, T085
  */
 
 import { useState, useCallback, useMemo } from 'react';
@@ -43,6 +44,34 @@ const DEFAULT_FILTER_STATE: FilterState = {
 };
 
 /**
+ * Safely read from localStorage
+ *
+ * @param key - Storage key
+ * @returns Stored value or null
+ */
+function safeGetItem(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Safely write to localStorage
+ *
+ * @param key - Storage key
+ * @param value - Value to store
+ */
+function safeSetItem(key: string, value: string): void {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // Safari private mode or quota exceeded - fail silently (T088)
+  }
+}
+
+/**
  * Custom hook for managing filter state
  *
  * @param initialState - Optional initial filter state
@@ -51,10 +80,20 @@ const DEFAULT_FILTER_STATE: FilterState = {
 export function useFilters(
   initialState?: Partial<FilterState>
 ): UseFiltersResult {
-  const [filterState, setFilterState] = useState<FilterState>({
-    ...DEFAULT_FILTER_STATE,
-    ...initialState,
-  });
+  // Load persisted preferences (T085)
+  const loadPersistedState = useCallback((): FilterState => {
+    const viewMode = safeGetItem('viewMode');
+    const filterMode = safeGetItem('filterMode');
+
+    return {
+      ...DEFAULT_FILTER_STATE,
+      viewMode: (viewMode === 'sunburst' || viewMode === 'table') ? viewMode : DEFAULT_FILTER_STATE.viewMode,
+      effectFilterMode: (filterMode === 'any' || filterMode === 'all') ? filterMode : DEFAULT_FILTER_STATE.effectFilterMode,
+      ...initialState,
+    };
+  }, [initialState]);
+
+  const [filterState, setFilterState] = useState<FilterState>(loadPersistedState);
 
   // Update search query
   const setSearchQuery = useCallback((query: string) => {
@@ -98,28 +137,34 @@ export function useFilters(
     }));
   }, []);
 
-  // Toggle between ANY and ALL modes
+  // Toggle between ANY and ALL modes (T085: persist to localStorage)
   const toggleFilterMode = useCallback(() => {
-    setFilterState((prev) => ({
-      ...prev,
-      effectFilterMode: prev.effectFilterMode === 'any' ? 'all' : 'any',
-    }));
+    setFilterState((prev) => {
+      const newMode = prev.effectFilterMode === 'any' ? 'all' : 'any';
+      safeSetItem('filterMode', newMode);
+      return {
+        ...prev,
+        effectFilterMode: newMode,
+      };
+    });
   }, []);
 
-  // Set specific filter mode
+  // Set specific filter mode (T085: persist to localStorage)
   const setFilterMode = useCallback((mode: 'any' | 'all') => {
     setFilterState((prev) => ({
       ...prev,
       effectFilterMode: mode,
     }));
+    safeSetItem('filterMode', mode);
   }, []);
 
-  // Set view mode
+  // Set view mode (T085: persist to localStorage)
   const setViewMode = useCallback((mode: 'sunburst' | 'table') => {
     setFilterState((prev) => ({
       ...prev,
       viewMode: mode,
     }));
+    safeSetItem('viewMode', mode);
   }, []);
 
   // Set sort column

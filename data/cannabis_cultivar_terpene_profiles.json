@@ -1,0 +1,514 @@
+[
+  {
+    "cultivar": "OG Kush",
+    "type": "Hybrid (Indica-dominant)",
+    "thcRange": "18-21%",
+    "cbdRange": "0.06-0.69%",
+    "terpeneProfile": [
+      {
+        "terpene": "Beta-Myrcene",
+        "concentration": "0.326-0.35 mg/g",
+        "percentage": "32.6%"
+      },
+      {
+        "terpene": "D-Limonene",
+        "concentration": "0.249-0.28 mg/g",
+        "percentage": "24.9%"
+      },
+      {
+        "terpene": "Beta-Caryophyllene",
+        "concentration": "0.211-0.25 mg/g",
+        "percentage": "21.1%"
+      },
+      {
+        "terpene": "Alpha-Pinene",
+        "concentration": "minor",
+        "percentage": "<5%"
+      },
+      {
+        "terpene": "Beta-Pinene",
+        "concentration": "minor",
+        "percentage": "<5%"
+      }
+    ],
+    "dominantTerpenes": [
+      "Myrcene",
+      "Limonene",
+      "Caryophyllene"
+    ],
+    "totalTerpenes": "~1.0%",
+    "effects": [
+      "Relaxing",
+      "Euphoric",
+      "Sleepy"
+    ],
+    "aromas": [
+      "Earthy",
+      "Spicy-herbal",
+      "Lemon"
+    ]
+  },
+  {
+    "cultivar": "Blue Dream",
+    "type": "Hybrid (Sativa-dominant)",
+    "thcRange": "18-22%",
+    "cbdRange": "0.1-2%",
+    "terpeneProfile": [
+      {
+        "terpene": "Beta-Myrcene",
+        "concentration": "dominant",
+        "percentage": "highest"
+      },
+      {
+        "terpene": "Beta-Caryophyllene",
+        "concentration": "high",
+        "percentage": "second"
+      },
+      {
+        "terpene": "Alpha-Pinene",
+        "concentration": "high",
+        "percentage": "third"
+      },
+      {
+        "terpene": "Beta-Pinene",
+        "concentration": "moderate",
+        "percentage": "moderate"
+      },
+      {
+        "terpene": "D-Limonene",
+        "concentration": "moderate",
+        "percentage": "moderate"
+      }
+    ],
+    "dominantTerpenes": [
+      "Myrcene",
+      "Caryophyllene",
+      "Pinene"
+    ],
+    "totalTerpenes": "moderate-high",
+    "effects": [
+      "Balanced",
+      "Cerebral stimulation",
+      "Body relaxation"
+    ],
+    "aromas": [
+      "Herbal",
+      "Musky",
+      "Blueberry",
+      "Pine"
+    ]
+  },
+  {
+    "cultivar": "Jack Herer",
+    "type": "Sativa-dominant",
+    "thcRange": "19-21%",
+    "cbdRange": "0.76-0.96%",
+    "terpeneProfile": [
+      {
+        "terpene": "Terpinolene",
+        "concentration": "0.29-36%",
+        "percentage": "34-36% (dominant)"
+      },
+      {
+        "terpene": "Beta-Myrcene",
+        "concentration": "0.694 mg/g",
+        "percentage": "~69% normalized"
+      },
+      {
+        "terpene": "Beta-Caryophyllene",
+        "concentration": "0.464 mg/g",
+        "percentage": "~46% normalized"
+      },
+      {
+        "terpene": "Alpha-Pinene",
+        "concentration": "0.442 mg/g",
+        "percentage": "~44% normalized"
+      },
+      {
+        "terpene": "Beta-Pinene",
+        "concentration": "0.267 mg/g",
+        "percentage": "~27% normalized"
+      },
+      {
+        "terpene": "D-Limonene",
+        "concentration": "0.180 mg/g",
+        "percentage": "~18% normalized"
+      },
+      {
+        "terpene": "Alpha-Humulene",
+        "concentration": "0.195 mg/g",
+        "percentage": "~19% normalized"
+      }
+    ],
+    "dominantTerpenes": [
+      "Terpinolene",
+      "Myrcene",
+      "Caryophyllene",
+      "Pinene"
+    ],
+    "totalTerpenes": "high",
+    "effects": [
+      "Cerebral",
+      "Energizing",
+      "Uplifting",
+      "Creative"
+    ],
+    "aromas": [
+      "Woody",
+      "Citrus",
+      "Spicy",
+      "Pine"
+    ]
+  },
+  {
+    "cultivar": "Sour Diesel",
+    "type": "Sativa-dominant",
+    "thcRange": "18-22%",
+    "cbdRange": "0.1-2%",
+    "terpeneProfile": [
+      {
+        "terpene": "Beta-Caryophyllene",
+        "concentration": "dominant",
+        "percentage": "highest"
+      },
+      {
+        "terpene": "D-Limonene",
+        "concentration": "high",
+        "percentage": "second"
+      },
+      {
+        "terpene": "Beta-Myrcene",
+        "concentration": "high",
+        "percentage": "third"
+      },
+      {
+        "terpene": "Alpha-Pinene",
+        "concentration": "moderate",
+        "percentage": "moderate"
+      },
+      {
+        "terpene": "Beta-Pinene",
+        "concentration": "moderate",
+        "percentage": "moderate"
+      },
+      {
+        "terpene": "Camphene",
+        "concentration": "minor",
+        "percentage": "minor"
+      }
+    ],
+    "dominantTerpenes": [
+      "Caryophyllene",
+      "Limonene",
+      "Myrcene"
+    ],
+    "totalTerpenes": "moderate-high",
+    "effects": [
+      "Energizing",
+      "Uplifting",
+      "Creative",
+      "Cerebral"
+    ],
+    "aromas": [
+      "Diesel",
+      "Pungent",
+      "Skunky",
+      "Citrus",
+      "Spice"
+    ]
+  },
+  {
+    "cultivar": "Granddaddy Purple",
+    "type": "Indica",
+    "thcRange": "17-23%",
+    "cbdRange": "<1%",
+    "terpeneProfile": [
+      {
+        "terpene": "Beta-Myrcene",
+        "concentration": "dominant",
+        "percentage": "highest"
+      },
+      {
+        "terpene": "Beta-Caryophyllene",
+        "concentration": "high",
+        "percentage": "second"
+      },
+      {
+        "terpene": "Alpha-Pinene",
+        "concentration": "moderate",
+        "percentage": "moderate"
+      },
+      {
+        "terpene": "Linalool",
+        "concentration": "moderate",
+        "percentage": "moderate"
+      },
+      {
+        "terpene": "D-Limonene",
+        "concentration": "minor",
+        "percentage": "minor"
+      },
+      {
+        "terpene": "Alpha-Humulene",
+        "concentration": "minor",
+        "percentage": "minor"
+      },
+      {
+        "terpene": "Beta-Pinene",
+        "concentration": "minor",
+        "percentage": "minor"
+      }
+    ],
+    "dominantTerpenes": [
+      "Myrcene",
+      "Caryophyllene",
+      "Pinene"
+    ],
+    "totalTerpenes": "moderate",
+    "effects": [
+      "Deeply relaxing",
+      "Sedative",
+      "Euphoric",
+      "Pain relief"
+    ],
+    "aromas": [
+      "Sweet",
+      "Grape",
+      "Berry",
+      "Earthy"
+    ]
+  },
+  {
+    "cultivar": "Northern Lights",
+    "type": "Indica",
+    "thcRange": "18-22%",
+    "cbdRange": "0.1-0.5%",
+    "terpeneProfile": [
+      {
+        "terpene": "Beta-Myrcene",
+        "concentration": "50-60%",
+        "percentage": "dominant (50-60% of total)"
+      },
+      {
+        "terpene": "Beta-Caryophyllene",
+        "concentration": "20-30%",
+        "percentage": "20-30% of total"
+      },
+      {
+        "terpene": "D-Limonene",
+        "concentration": "5-10%",
+        "percentage": "5-10% of total"
+      },
+      {
+        "terpene": "Terpinolene",
+        "concentration": "present",
+        "percentage": "minor"
+      },
+      {
+        "terpene": "Alpha-Pinene",
+        "concentration": "minor",
+        "percentage": "minor"
+      }
+    ],
+    "dominantTerpenes": [
+      "Myrcene",
+      "Caryophyllene",
+      "Limonene"
+    ],
+    "totalTerpenes": "high",
+    "effects": [
+      "Relaxing",
+      "Sedative",
+      "Pain relief",
+      "Sleep aid"
+    ],
+    "aromas": [
+      "Earthy",
+      "Sweet",
+      "Spicy",
+      "Pine"
+    ]
+  },
+  {
+    "cultivar": "White Widow",
+    "type": "Hybrid (balanced)",
+    "thcRange": "18-25%",
+    "cbdRange": "0.1-0.2%",
+    "terpeneProfile": [
+      {
+        "terpene": "Beta-Myrcene",
+        "concentration": "dominant",
+        "percentage": "highest"
+      },
+      {
+        "terpene": "Beta-Caryophyllene",
+        "concentration": "high",
+        "percentage": "second"
+      },
+      {
+        "terpene": "D-Limonene",
+        "concentration": "moderate",
+        "percentage": "moderate"
+      },
+      {
+        "terpene": "Alpha-Pinene",
+        "concentration": "moderate",
+        "percentage": "moderate"
+      },
+      {
+        "terpene": "Beta-Pinene",
+        "concentration": "minor",
+        "percentage": "minor"
+      },
+      {
+        "terpene": "Linalool",
+        "concentration": "minor",
+        "percentage": "minor"
+      }
+    ],
+    "dominantTerpenes": [
+      "Myrcene",
+      "Caryophyllene",
+      "Limonene"
+    ],
+    "totalTerpenes": "moderate",
+    "effects": [
+      "Energetic",
+      "Euphoric",
+      "Creative",
+      "Balanced"
+    ],
+    "aromas": [
+      "Earthy",
+      "Woody",
+      "Pine",
+      "Spicy-herbal"
+    ]
+  },
+  {
+    "cultivar": "Girl Scout Cookies",
+    "type": "Hybrid (Indica-dominant)",
+    "thcRange": "19-28%",
+    "cbdRange": "<1%",
+    "terpeneProfile": [
+      {
+        "terpene": "Beta-Caryophyllene",
+        "concentration": "dominant",
+        "percentage": "highest"
+      },
+      {
+        "terpene": "D-Limonene",
+        "concentration": "high",
+        "percentage": "second"
+      },
+      {
+        "terpene": "Linalool",
+        "concentration": "moderate",
+        "percentage": "third"
+      },
+      {
+        "terpene": "Beta-Myrcene",
+        "concentration": "moderate",
+        "percentage": "moderate"
+      },
+      {
+        "terpene": "Alpha-Pinene",
+        "concentration": "minor",
+        "percentage": "minor"
+      },
+      {
+        "terpene": "Terpinolene",
+        "concentration": "minor",
+        "percentage": "minor"
+      },
+      {
+        "terpene": "Alpha-Humulene",
+        "concentration": "minor",
+        "percentage": "minor"
+      },
+      {
+        "terpene": "Beta-Ocimene",
+        "concentration": "trace",
+        "percentage": "trace"
+      },
+      {
+        "terpene": "Alpha-Bisabolol",
+        "concentration": "trace",
+        "percentage": "trace"
+      }
+    ],
+    "dominantTerpenes": [
+      "Caryophyllene",
+      "Limonene",
+      "Linalool",
+      "Myrcene"
+    ],
+    "totalTerpenes": "moderate-high",
+    "effects": [
+      "Euphoric",
+      "Relaxing",
+      "Happy",
+      "Creative"
+    ],
+    "aromas": [
+      "Sweet",
+      "Earthy",
+      "Pungent",
+      "Cookie-like",
+      "Vanilla"
+    ]
+  },
+  {
+    "cultivar": "AK-47",
+    "type": "Sativa-dominant Hybrid",
+    "thcRange": "19-21%",
+    "cbdRange": "<1%",
+    "terpeneProfile": [
+      {
+        "terpene": "Alpha-Pinene",
+        "concentration": "high",
+        "percentage": "high"
+      },
+      {
+        "terpene": "Beta-Myrcene",
+        "concentration": "high",
+        "percentage": "high"
+      },
+      {
+        "terpene": "Beta-Caryophyllene",
+        "concentration": "moderate",
+        "percentage": "moderate"
+      },
+      {
+        "terpene": "D-Limonene",
+        "concentration": "moderate",
+        "percentage": "moderate"
+      },
+      {
+        "terpene": "Beta-Pinene",
+        "concentration": "minor",
+        "percentage": "minor"
+      }
+    ],
+    "dominantTerpenes": [
+      "Pinene",
+      "Myrcene",
+      "Caryophyllene"
+    ],
+    "totalTerpenes": "moderate",
+    "effects": [
+      "Alert",
+      "Creative",
+      "Energetic",
+      "Euphoric",
+      "Uplifting"
+    ],
+    "aromas": [
+      "Earthy",
+      "Pungent",
+      "Spicy",
+      "Citrus",
+      "Sweet"
+    ]
+  }
+]
