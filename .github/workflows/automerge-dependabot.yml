@@ -7,8 +7,10 @@ name: Auto-merge Dependabot PRs (secure + patch)
 # Safety: only enable auto-merge if the target branch protection contains required checks (validate/test by default)
 
 on:
-  pull_request_target:
-    types: [opened, reopened, synchronize, labeled]
+  # disabled for now
+  # pull_request_target:
+  #   types: [opened, reopened, synchronize, labeled]
+  workflow_dispatch:
 
 permissions:
   contents: read
