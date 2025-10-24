@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import type { Plugin } from 'vite';
@@ -33,50 +33,56 @@ function cspPlugin(): Plugin {
 }
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [
-    react(),
-    cspPlugin(), // Add CSP headers (T094)
-  ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-  build: {
-    target: 'es2022',
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'mui-vendor': ['@mui/material', '@mui/icons-material'],
-          'd3-vendor': ['d3-hierarchy', 'd3-scale', 'd3-shape'],
-          'i18n-vendor': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
-        },
+export default defineConfig(({ mode }) => {
+  // Load env file based on mode
+  const env = loadEnv(mode, process.cwd(), '');
+
+  return {
+    plugins: [
+      react(),
+      cspPlugin(), // Add CSP headers (T094)
+    ],
+    base: env.VITE_APP_BASE || '/',
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
       },
     },
-    // Performance budgets
-    chunkSizeWarningLimit: 500, // 500KB warning threshold
-  },
-  server: {
-    port: 5173,
-    open: true,
-    // Add security headers in dev mode
-    headers: {
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
-      'Referrer-Policy': 'strict-origin-when-cross-origin',
+    build: {
+      target: 'es2022',
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom'],
+            'mui-vendor': ['@mui/material', '@mui/icons-material'],
+            'd3-vendor': ['d3-hierarchy', 'd3-scale', 'd3-shape'],
+            'i18n-vendor': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+          },
+        },
+      },
+      // Performance budgets
+      chunkSizeWarningLimit: 500, // 500KB warning threshold
     },
-  },
-  preview: {
-    port: 4173,
-    // Add security headers in preview mode
-    headers: {
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
-      'Referrer-Policy': 'strict-origin-when-cross-origin',
+    server: {
+      port: 5173,
+      open: true,
+      // Add security headers in dev mode
+      headers: {
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY',
+        'X-XSS-Protection': '1; mode=block',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
+      },
     },
-  },
+    preview: {
+      port: 4173,
+      // Add security headers in preview mode
+      headers: {
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY',
+        'X-XSS-Protection': '1; mode=block',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
+      },
+    },
+  };
 });
