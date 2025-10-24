@@ -76,7 +76,6 @@ jobs:
           # Add any environment variables your app needs at runtime
           VITE_APP_VERSION: ${{ github.event.workflow_run.head_branch || github.ref_name }}
           VITE_APP_BASE: /
-          VITE_APP_PUBLIC_URL: https://terpene.ickler.io
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
