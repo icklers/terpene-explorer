@@ -39,7 +39,13 @@ jobs:
           workflow_conclusion: success
 
       - name: 📋 List build contents
-        run: ls -la dist/
+        run: |
+          echo "=== Build contents ==="
+          ls -la dist/
+          echo "=== Assets directory ==="
+          ls -la dist/assets/ || echo "No assets directory"
+          echo "=== Checking index.html ==="
+          head -20 dist/index.html
 
       - name: Build And Deploy
         id: builddeploy
@@ -54,7 +60,7 @@ jobs:
           skip_api_build: true # Set to true to skip building APIs - optional
           skip_app_build: true # Set to true to skip building app - optional
           output_location: "dist" # Built app content directory - optional
-          # config_file_location: "" # Location of staticwebapp.config.json - optional
+          config_file_location: "" # Location of staticwebapp.config.json - optional
           # deployment_environment: Production
           production_branch: main
           ###### End of Repository/Build Configurations ######

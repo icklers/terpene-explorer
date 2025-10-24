@@ -157,21 +157,21 @@ jobs:
           echo "VITE_COMMIT_SHA=$GITHUB_SHA" >> .env.production
           echo "VITE_VERSION=${GITHUB_REF#refs/*/}" >> .env.production
       
-      - name: 🏗 Build for GitHub Pages
-        id: build-gh
-        run: |
-          start_time=$SECONDS
-          NODE_ENV=production MODE=github-pages pnpm run build
-          mv dist dist-gh-pages
-          # Copy 404.html for GitHub Pages
-          cp dist-gh-pages/index.html dist-gh-pages/404.html
-          end_time=$SECONDS
-          build_time=$((end_time - start_time))
-          echo "build_time=$build_time" >> $GITHUB_OUTPUT
-          build_size=$(du -sh dist-gh-pages | cut -f1)
-          echo "build_size=$build_size" >> $GITHUB_OUTPUT
-          chunk_count=$(find dist-gh-pages/assets -type f | wc -l)
-          echo "chunk_count=$chunk_count" >> $GITHUB_OUTPUT
+      # - name: 🏗 Build for GitHub Pages
+      #   id: build-gh
+      #   run: |
+      #     start_time=$SECONDS
+      #     NODE_ENV=production MODE=github-pages pnpm run build
+      #     mv dist dist-gh-pages
+      #     # Copy 404.html for GitHub Pages
+      #     cp dist-gh-pages/index.html dist-gh-pages/404.html
+      #     end_time=$SECONDS
+      #     build_time=$((end_time - start_time))
+      #     echo "build_time=$build_time" >> $GITHUB_OUTPUT
+      #     build_size=$(du -sh dist-gh-pages | cut -f1)
+      #     echo "build_size=$build_size" >> $GITHUB_OUTPUT
+      #     chunk_count=$(find dist-gh-pages/assets -type f | wc -l)
+      #     echo "chunk_count=$chunk_count" >> $GITHUB_OUTPUT
 
       - name: 🏗 Build for Azure SWA
         id: build-swa
@@ -194,18 +194,18 @@ jobs:
       - name: 📊 Report Build Stats
         run: |
           echo "### Build Performance Report 📊" >> $GITHUB_STEP_SUMMARY
-          echo "| Metric | GitHub Pages | Azure SWA |" >> $GITHUB_STEP_SUMMARY
-          echo "| --- | --- | --- |" >> $GITHUB_STEP_SUMMARY
-          echo "| Build Time | ${{ steps.build-gh.outputs.build_time }}s | ${{ steps.build-swa.outputs.swa_build_time }}s |" >> $GITHUB_STEP_SUMMARY
-          echo "| Build Size | ${{ steps.build-gh.outputs.build_size }} | ${{ steps.build-swa.outputs.swa_build_size }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Chunk Count | ${{ steps.build-gh.outputs.chunk_count }} | ${{ steps.build-swa.outputs.swa_chunk_count }} |" >> $GITHUB_STEP_SUMMARY
-          
-      - name: 📦 Upload GitHub Pages build
-        uses: actions/upload-artifact@v4
-        with:
-          name: github-pages-build
-          path: dist-gh-pages/
-          retention-days: 7
+          echo "| Metric | Azure SWA |" >> $GITHUB_STEP_SUMMARY
+          echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build Time | ${{ steps.build-swa.outputs.swa_build_time }}s |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build Size | ${{ steps.build-swa.outputs.swa_build_size }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Chunk Count | ${{ steps.build-swa.outputs.swa_chunk_count }} |" >> $GITHUB_STEP_SUMMARY
+
+      # - name: 📦 Upload GitHub Pages build
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: github-pages-build
+      #     path: dist-gh-pages/
+      #     retention-days: 7
 
       - name: 📦 Upload Azure SWA build
         uses: actions/upload-artifact@v4
