@@ -1,0 +1,24 @@
+# Node / build artifacts
+node_modules/
+dist/
+build/
+
+coverage
+playwright-report
+*.lock
+package-lock.json
+pnpm-lock.yaml
+.cache
+
+
+# Lockfiles / env
+package-lock.json
+yarn.lock
+*.env
+
+# Configuration files
+.vscode/
+.eslintignore
+
+# Ignore spec markdown files
+specs/**/*.md

@@ -1,0 +1,106 @@
+{
+  "app": {
+    "title": "Interactive Terpene Map",
+    "tagline": "Explore the aromatic world of terpenes",
+    "loading": "Loading terpene data...",
+    "error": "Error"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "skipToMain": "Skip to main content"
+  },
+  "theme": {
+    "light": "Light mode",
+    "dark": "Dark mode",
+    "system": "System preference",
+    "toggle": "Toggle theme"
+  },
+  "language": {
+    "english": "English",
+    "german": "German",
+    "toggle": "Change language"
+  },
+  "view": {
+    "sunburst": "Sunburst chart",
+    "table": "Table view",
+    "toggle": "Switch view mode",
+    "switchedTo": "Switched to {{mode}} view"
+  },
+  "filter": {
+    "title": "Filter by Effects",
+    "clear": "Clear all filters",
+    "clearSingle": "Clear filter",
+    "mode": "Filter mode",
+    "any": "Match ANY effect (OR)",
+    "all": "Match ALL effects (AND)",
+    "selected": "{{count}} effect selected",
+    "selected_other": "{{count}} effects selected",
+    "noResults": "No terpenes found matching your filters",
+    "resultsCount": "{{count}} terpene found",
+    "resultsCount_other": "{{count}} terpenes found"
+  },
+  "search": {
+    "placeholder": "Search terpenes by name, aroma, or effects...",
+    "label": "Search terpenes",
+    "clear": "Clear search",
+    "noResults": "No results found for \"{{query}}\"",
+    "resultsCount": "{{count}} result for \"{{query}}\"",
+    "resultsCount_other": "{{count}} results for \"{{query}}\""
+  },
+  "terpene": {
+    "name": "Name",
+    "aroma": "Aroma",
+    "description": "Description",
+    "effects": "Effects",
+    "sources": "Sources",
+    "boilingPoint": "Boiling Point",
+    "molecularFormula": "Molecular Formula",
+    "viewDetails": "View details",
+    "celsius": "°C"
+  },
+  "table": {
+    "sortBy": "Sort by {{column}}",
+    "sortAscending": "Sort ascending",
+    "sortDescending": "Sort descending",
+    "rowsPerPage": "Rows per page",
+    "of": "of"
+  },
+  "error": {
+    "loadFailed": "Unable to load terpene data. Please check your connection and try again.",
+    "parseFailed": "Data format is invalid. Please contact support.",
+    "validationFailed": "Some terpene data is incomplete. Showing available entries.",
+    "noData": "No terpene data available. Please add terpene data to the data/ directory and refresh the page.",
+    "retry": "Try again",
+    "close": "Close"
+  },
+  "validation": {
+    "invalidEntries": "{{count}} terpene entry was skipped due to invalid data.",
+    "invalidEntries_other": "{{count}} terpene entries were skipped due to invalid data.",
+    "dismiss": "Dismiss"
+  },
+  "empty": {
+    "title": "No Terpenes Available",
+    "description": "No terpene data found. Please add terpene data to the data/ directory.",
+    "instruction": "Add a terpenes.json or terpenes.yaml file to the /data directory and refresh the page."
+  },
+  "loading": {
+    "indicator": "Loading...",
+    "pleaseWait": "Please wait while we load the data"
+  },
+  "accessibility": {
+    "terpeneLabel": "{{name}}, a {{aroma}}-scented terpene with {{effects}} effects, found in {{sources}}",
+    "effectLabel": "{{name}} effect, {{count}} terpene",
+    "effectLabel_other": "{{name}} effect, {{count}} terpenes",
+    "effectSelected": "{{name}} effect selected",
+    "effectDeselected": "{{name}} effect deselected",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mainContent": "Main content"
+  },
+  "footer": {
+    "madeWith": "Made with",
+    "by": "by",
+    "license": "License"
+  }
+}

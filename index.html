@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>Interactive Terpene Map - Explore the Aromatic World of Terpenes</title>
+    <meta
+      name="title"
+      content="Interactive Terpene Map - Explore the Aromatic World of Terpenes"
+    />
+    <meta
+      name="description"
+      content="Discover and explore terpenes through interactive visualizations. Filter by effects, search by aroma, and learn about natural sources. Supports dark mode and multiple languages."
+    />
+    <meta name="keywords" content="terpenes, cannabis, aromatherapy, essential oils, effects, interactive map, data visualization" />
+    <meta name="author" content="Terpene Map Team" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://terpene-map.example.com/" />
+    <meta property="og:title" content="Interactive Terpene Map" />
+    <meta
+      property="og:description"
+      content="Explore the aromatic world of terpenes through interactive visualizations."
+    />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://terpene-map.example.com/" />
+    <meta property="twitter:title" content="Interactive Terpene Map" />
+    <meta
+      property="twitter:description"
+      content="Explore the aromatic world of terpenes through interactive visualizations."
+    />
+    <meta property="twitter:image" content="/og-image.png" />
+
+    <!-- Accessibility & SEO -->
+    <meta name="theme-color" content="#3f51b5" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Preconnect to improve performance (if using external resources) -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" /> -->
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <!-- Note: X-Frame-Options should be set via HTTP headers, not meta tags -->
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow" />
+
+    <!-- Language Alternatives -->
+    <link rel="alternate" hreflang="en" href="https://terpene-map.example.com/en" />
+    <link rel="alternate" hreflang="de" href="https://terpene-map.example.com/de" />
+
+    <style>
+      /* Loading screen styles - prevent flash of unstyled content */
+      #root {
+        min-height: 100vh;
+      }
+
+      /* Loading indicator shown before React hydrates */
+      .initial-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        color: #3f51b5;
+      }
+
+      .initial-loading-content {
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .initial-loading h1 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+
+      .initial-loading p {
+        margin: 0;
+        font-size: 1rem;
+        color: #666;
+      }
+
+      /* Pulsing animation for loading */
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      .initial-loading-spinner {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 1rem;
+        border: 4px solid #e0e0e0;
+        border-top-color: #3f51b5;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Respect reduced motion preference */
+      @media (prefers-reduced-motion: reduce) {
+        .initial-loading-spinner {
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+      }
+
+      /* Dark mode support for initial loading screen */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #121212;
+          color: #ffffff;
+        }
+
+        .initial-loading {
+          color: #7986cb;
+        }
+
+        .initial-loading p {
+          color: #aaa;
+        }
+
+        .initial-loading-spinner {
+          border-color: #333;
+          border-top-color: #7986cb;
+        }
+      }
+
+      /* Remove default margin */
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Skip to main content link for screen readers -->
+    <a href="#main-content" class="sr-only" style="
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    ">
+      Skip to main content
+    </a>
+
+    <!-- React root element -->
+    <div id="root">
+      <!-- Initial loading screen (shown before React hydrates) -->
+      <div class="initial-loading">
+        <div class="initial-loading-content">
+          <div class="initial-loading-spinner" role="status" aria-label="Loading"></div>
+          <h1>Interactive Terpene Map</h1>
+          <p>Loading application...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main application script -->
+    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Noscript fallback -->
+    <noscript>
+      <div style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 2rem;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      ">
+        <div>
+          <h1>JavaScript Required</h1>
+          <p>
+            This application requires JavaScript to run. Please enable JavaScript
+            in your browser settings and reload the page.
+          </p>
+        </div>
+      </div>
+    </noscript>
+  </body>
+</html>

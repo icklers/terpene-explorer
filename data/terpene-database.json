@@ -1,0 +1,867 @@
+{
+  "terpene_database_schema": {
+    "version": "1.0.0",
+    "created": "2025-10-24",
+    "description": "Comprehensive Cannabis Terpene Database with harmonized isomer notation, clinical plausibility validation, and tiered categorization.",
+    "categorization_tiers": {
+      "Core": "High-prevalence, clinically and chemically well-defined terpenes observed consistently across multiple cultivars. Examples: Beta-Myrcene, Beta-Caryophyllene, D-Limonene, Linalool, Alpha- & Beta-Pinene, Alpha-Humulene, Terpinolene.",
+      "Secondary": "Terpenes with moderate prevalence, contributing to aroma or therapeutic nuance, but less consistently dominant. Examples: Nerolidol, Alpha-Bisabolol, Eucalyptol, Borneol, Caryophyllene Oxide, Delta-3-Carene, Ocimene, Geraniol.",
+      "Minor": "Low-prevalence or emerging terpenes with limited cannabis-specific data or primarily known from external botanical evidence. Examples: Beta-Elemene, Bergamotene, Cedrene, Fenchone, Geranyl Acetate, Valencene, Farnesene."
+    },
+    "schema_fields": {
+      "id": "Unique stable terpene identifier (e.g., terp-001)",
+      "name": "Primary terpene name including optical or structural designation (e.g., 'D-Limonene', 'Alpha-Bisabolol')",
+      "isomerOf": "If the compound is an isomer variant, specify its parent compound ('Limonene'); null if not applicable.",
+      "isomerType": "Type of isomerism – 'Optical', 'Positional', 'Structural', or null if not relevant.",
+      "category": "Categorization tier: 'Core', 'Secondary', or 'Minor'.",
+      "aroma": "Comma-separated sensory descriptors (e.g., 'Citrus, sweet, pine, spicy').",
+      "taste": "Flavor descriptors relevant to cultivar taste expression.",
+      "description": "Literature-based terpene summary including key pharmacological and aromachemical roles.",
+      "effects": [
+        "List of empirically supported primary physiological or psychoactive effects (e.g., 'Sedative', 'Anti-stress', 'Anxiolytic'). Each effect must be clinically plausible based on validated evidence."
+      ],
+      "therapeuticProperties": [
+        "List of recognized therapeutic pharmacological actions (e.g., 'Anti-inflammatory', 'Neuroprotective', 'Analgesic')."
+      ],
+      "notableDifferences": "summarized differences supported by data e.g., 'Only known CB2 agonist among terpenes', or 'D-form uplifting vs L-form mildly sedating.'",
+      "concentrationRange": "Typical concentration range in cannabis dry flower, expressed in mg/g or normalized %. If not available, 'trace-minor' or null.",
+      "molecularData": {
+        "molecularFormula": "Standard chemical formula, e.g., 'C10H16'.",
+        "molecularWeight": "Molecular weight in atomic mass units (g/mol).",
+        "boilingPoint": "Boiling point in degrees Celsius; null if not applicable.",
+        "class": "Chemical classification (Monoterpene, Sesquiterpene, Monoterpenoid, etc.)."
+      },
+      "sources": ["Natural origins beyond cannabis (e.g., 'Hops', 'Lemongrass', 'Copaiba oil')."],
+      "references": [
+        {
+          "source": "Citation number or URL reference",
+          "type": "Peer-reviewed study, industry lab report, or botanical data"
+        }
+      ],
+      "researchTier": {
+        "dataQuality": "Excellent, Good, Moderate, or Limited (based on evidence)",
+        "evidenceSummary": "Short statement summarizing dataset scope and quality (e.g., 'Observed in >95% cannabis cultivars with multiple GC-MS validations')."
+      }
+    },
+    "implementation_guidelines": {
+      "isomer_handling": "Maintain unique entries only for distinct chemotaxonomic or pharmacologically relevant isomers. Apparent aromatic variants without distinct biological profiles remain merged.",
+      "effect_validation": "All terpene effects will trace to validated cannabinoid-terpene synergy research (entourage effect, in vitro, or in vivo evidence as of Q3 2025). Unsupported claims are marked 'Unconfirmed'.",
+      "update_policy": "Semi-annual evidence review and harmonization of concentration ranges, supported by newly published GC-MS cannabis terpene profiling data."
+    },
+    "entries": [
+      {
+        "id": "terp-001",
+        "name": "D-Limonene",
+        "isomerOf": "Limonene",
+        "isomerType": "Optical (Enantiomer)",
+        "category": "Core",
+        "description": "Citrus terpene responsible for uplifting and anti-stress properties; D-isomer found abundantly in citrus-scented cultivars.",
+        "aroma": "Citrus, Lemon, Orange",
+        "taste": "Bright citrus with slight sweetness",
+        "effects": ["Mood-enhancing", "Anti-stress", "Energizing"],
+        "therapeuticProperties": ["Antidepressant", "Anti-inflammatory", "Anxiolytic"],
+        "notableDifferences": "D-form boosts serotonin; L-form mildly sedating; synergy observed with Beta-Caryophyllene in anxiolytic pathways.",
+        "concentrationRange": "0.003–1.613 mg/g",
+        "molecularData": {
+          "molecularFormula": "C10H16",
+          "molecularWeight": 136,
+          "boilingPoint": 176,
+          "class": "Monoterpene"
+        },
+        "sources": ["Lemon peel", "Orange rind", "Cannabis"],
+        "references": [
+          { "source": "PubMed 35278524", "type": "Peer-reviewed" },
+          { "source": "Leafly 2024 Analysis", "type": "Industry report" }
+        ],
+        "researchTier": {
+          "dataQuality": "Excellent",
+          "evidenceSummary": "Confirmed across multiple chemovars with therapeutic validation."
+        }
+      },
+      {
+        "id": "terp-002",
+        "name": "Beta-Myrcene",
+        "isomerOf": "Myrcene",
+        "isomerType": "Positional",
+        "category": "Core",
+        "description": "The most abundant terpene in many cannabis varieties. Known for its sedative effects and ability to enhance THC absorption.",
+        "aroma": "Earthy, Musky, Fruity, Cloves",
+        "taste": "Herbal, earthy with fruity notes",
+        "effects": ["Sedative", "Relaxing", "Muscle relaxant", "Analgesic", "Couch-lock"],
+        "therapeuticProperties": ["Analgesic", "Anti-inflammatory", "Sedative", "Muscle relaxant", "Antioxidant"],
+        "notableDifferences": "Over 0.5% typically produces 'couch-lock' effect",
+        "concentrationRange": "0.003-1.32 mg/g",
+        "molecularData": {
+          "molecularFormula": "C10H16",
+          "molecularWeight": 136,
+          "boilingPoint": 167,
+          "class": "Monoterpene"
+        },
+        "sources": ["Mangos", "Hops", "Thyme", "Lemongrass", "Bay leaves"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Excellent",
+          "evidenceSummary": "Extensive neuroprotective and analgesic research"
+        }
+      },
+      {
+        "id": "terp-003",
+        "name": "Alpha-Pinene",
+        "isomerOf": "Pinene",
+        "isomerType": "Structural",
+        "category": "Core",
+        "description": "Most common pinene isomer with pine aroma. Known for memory enhancement and alertness.",
+        "aroma": "Pine, Fresh, Turpentine",
+        "taste": "Sharp pine, woody",
+        "effects": ["Alertness", "Memory-enhancement", "Focus", "Energizing", "Bronchodilator"],
+        "therapeuticProperties": ["Anti-inflammatory", "Bronchodilator", "Memory aid", "Antiseptic", "Gastroprotective"],
+        "notableDifferences": "Alpha-pinene counters some THC memory impairments.",
+        "concentrationRange": "0.002–1.558 mg/g",
+        "molecularData": {
+          "molecularFormula": "C10H16",
+          "molecularWeight": 136,
+          "boilingPoint": 155,
+          "class": "Monoterpene"
+        },
+        "sources": ["Pine needles", "Rosemary", "Basil", "Dill", "Parsley"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Excellent",
+          "evidenceSummary": "Widely documented cognitive enhanced terpene."
+        }
+      },
+      {
+        "id": "terp-004",
+        "name": "Beta-Pinene",
+        "isomerOf": "Pinene",
+        "isomerType": "Structural",
+        "category": "Core",
+        "description": "Mirror isomer of alpha-pinene with woody, camphoraceous scent. More relaxing than alpha-pinene.",
+        "aroma": "Woody, Pine, Camphor, Dill",
+        "taste": "Woody with spicy edge",
+        "effects": ["Relaxing", "Stress reduction", "Bronchodilator", "Anti-inflammatory"],
+        "therapeuticProperties": ["Anti-inflammatory", "Bronchodilator", "Antiseptic", "Mood regulation"],
+        "concentrationRange": "0.001–0.546 mg/g",
+        "molecularData": {
+          "molecularFormula": "C10H16",
+          "molecularWeight": 136,
+          "boilingPoint": 166,
+          "class": "Monoterpene"
+        },
+        "sources": ["Pine trees", "Conifers", "Dill", "Parsley"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Good",
+          "evidenceSummary": "Documented calming terpene, prevalent in cannabis."
+        }
+      },
+      {
+        "id": "terp-005",
+        "name": "Beta-Caryophyllene",
+        "isomerOf": "Caryophyllene",
+        "isomerType": "Structural",
+        "category": "Core",
+        "description": "Unique terpene acting as a cannabinoid by binding to CB2 receptors; potent anti-inflammatory.",
+        "aroma": "Spicy, Woody, Peppery, Cloves",
+        "taste": "Peppery with sweet undertones",
+        "effects": ["Anti-inflammatory", "Analgesic", "Stress relief", "Neuroprotective"],
+        "therapeuticProperties": ["Anti-inflammatory", "Analgesic", "Gastroprotective", "Neuroprotective", "CB2 agonist"],
+        "notableDifferences": "Only terpene known to directly bind CB2 receptors.",
+        "concentrationRange": "0.051–5.872 mg/g",
+        "molecularData": {
+          "molecularFormula": "C15H24",
+          "molecularWeight": 204,
+          "boilingPoint": 130,
+          "class": "Sesquiterpene"
+        },
+        "sources": ["Black pepper", "Cloves", "Hops", "Rosemary", "Copaiba"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Excellent",
+          "evidenceSummary": "Widespread presence, with confirmed cannabinoid action."
+        }
+      },
+      {
+        "id": "terp-006",
+        "name": "Alpha-Humulene",
+        "isomerOf": "Caryophyllene/Humulene",
+        "isomerType": "Structural",
+        "category": "Core",
+        "description": "Also called humulene; has appetite suppressant and anti-inflammatory properties.",
+        "aroma": "Earthy, Woody, Spicy, Herbal, Hoppy",
+        "taste": "Hoppy, earthy with spice",
+        "effects": ["Appetite suppressant", "Anti-inflammatory", "Antibacterial", "Sedative"],
+        "therapeuticProperties": ["Anti-inflammatory", "Antibacterial", "Antitumor", "Appetite suppressant"],
+        "concentrationRange": "0.017–2.119 mg/g",
+        "molecularData": {
+          "molecularFormula": "C15H24",
+          "molecularWeight": 204,
+          "boilingPoint": 106.5,
+          "class": "Sesquiterpene"
+        },
+        "sources": ["Hops", "Coriander", "Cloves", "Basil", "Ginseng"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Excellent",
+          "evidenceSummary": "Well characterized and pharmacologically validated."
+        }
+      },
+      {
+        "id": "terp-007",
+        "name": "Terpinolene",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Core",
+        "description": "Complex terpene with fresh, piney, floral aroma; sedative and antioxidant properties.",
+        "aroma": "Herbal, Pine, Floral, Citrus",
+        "taste": "Herbal with citrus and pine notes",
+        "effects": ["Sedative", "Antioxidant", "Antibacterial"],
+        "therapeuticProperties": ["Sedative", "Antioxidant", "Antibacterial"],
+        "concentrationRange": "Trace to 68.01% (normalized; typically minor)",
+        "molecularData": {
+          "molecularFormula": "C10H16",
+          "molecularWeight": 136,
+          "boilingPoint": 186,
+          "class": "Monoterpene"
+        },
+        "sources": ["Lilacs", "Nutmeg", "Tea tree", "Cumin", "Apples"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Good",
+          "evidenceSummary": "Dominant in sativa-dominant cultivars like Jack Herer."
+        }
+      },
+      {
+        "id": "terp-008",
+        "name": "Linalool",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Core",
+        "description": "Floral monoterpene with calming, anxiolytic, and sedative properties. Major contributor to relaxing strains.",
+        "aroma": "Floral, Lavender, Citrus",
+        "taste": "Floral with sweet notes",
+        "effects": ["Calming", "Anti-anxiety", "Analgesic", "Sedative", "Anticonvulsant"],
+        "therapeuticProperties": ["Anxiolytic", "Sedative", "Analgesic", "Anti-epileptic", "Anesthetic"],
+        "notableDifferences": "Acts on GABA receptors; anti-inflammatory",
+        "concentrationRange": "0.003–1.948 mg/g",
+        "molecularData": {
+          "molecularFormula": "C10H18O",
+          "molecularWeight": 154,
+          "boilingPoint": 198,
+          "class": "Monoterpenoid"
+        },
+        "sources": ["Lavender", "Mint", "Coriander", "Rosewood"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Excellent",
+          "evidenceSummary": "Clinically validated anxiolytic and sedative."
+        }
+      },
+      {
+        "id": "terp-009",
+        "name": "Caryophyllene Oxide",
+        "isomerOf": "Caryophyllene",
+        "isomerType": "Oxidized derivative",
+        "category": "Secondary",
+        "description": "Oxidized form of beta-caryophyllene. Known antifungal and analgesic; dogs detect this to identify cannabis.",
+        "aroma": "Woody, Spicy, Dry",
+        "taste": "Spicy with dry finish",
+        "effects": ["Analgesic", "Antifungal", "Anti-inflammatory"],
+        "therapeuticProperties": ["Antifungal", "Analgesic", "Anti-inflammatory", "Anticancer"],
+        "notableDifferences": "Dogs use this compound to find cannabis.",
+        "concentrationRange": "0.017–1.504 mg/g",
+        "molecularData": {
+          "molecularFormula": "C15H24O",
+          "molecularWeight": 220,
+          "boilingPoint": 257,
+          "class": "Sesquiterpenoid"
+        },
+        "sources": ["Eucalyptus", "Cannabis (aged)", "Lemon balm"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Good",
+          "evidenceSummary": "Analgesic and antifungal, prominent in aged cannabis."
+        }
+      },
+      {
+        "id": "terp-010",
+        "name": "Alpha-Bisabolol",
+        "isomerOf": "Bisabolol",
+        "isomerType": "Optical",
+        "category": "Secondary",
+        "description": "Floral sesquiterpene from chamomile with anti-inflammatory, soothing, and skin-healing properties; occasional in cannabis.",
+        "aroma": "Floral, Sweet, Chamomile, Vanilla",
+        "taste": "Floral, delicate, sweet",
+        "effects": ["Calming", "Anti-inflammatory", "Antimicrobial", "Analgesic", "Soothing"],
+        "therapeuticProperties": ["Anti-inflammatory", "Antimicrobial", "Wound healing", "Analgesic", "Neuroprotective"],
+        "notableDifferences": "Neuroprotective effects documented.",
+        "concentrationRange": "Trace–0.5%",
+        "molecularData": {
+          "molecularFormula": "C15H26O",
+          "molecularWeight": 222,
+          "boilingPoint": 315,
+          "class": "Sesquiterpenoid"
+        },
+        "sources": ["Chamomile", "Candeia tree", "Cannabis"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Good",
+          "evidenceSummary": "Neuroprotective and anti-inflammatory."
+        }
+      },
+      {
+        "id": "terp-011",
+        "name": "Borneol",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Secondary",
+        "description": "Minty, camphor-like monoterpenoid with analgesic and sedative properties. Enhances absorption of drugs.",
+        "aroma": "Minty, Camphor, Woody, Cooling",
+        "taste": "Menthol-like, woody",
+        "effects": ["Analgesic", "Sedative", "Anti-inflammatory", "Antiviral", "Antispasmodic"],
+        "therapeuticProperties": ["Analgesic", "Anti-inflammatory", "Antioxidant", "Sedative", "Antiviral", "Neuroprotective"],
+        "notableDifferences": "Acts on TRPM8, TRPV3, and TRPA1 receptors; enhances drug absorption across blood-brain barrier.",
+        "concentrationRange": "Trace–0.73 mg/g",
+        "molecularData": {
+          "molecularFormula": "C10H18O",
+          "molecularWeight": 154,
+          "boilingPoint": 212,
+          "class": "Monoterpenoid"
+        },
+        "sources": ["Rosemary", "Mint", "Camphor", "Ginger", "Cannabis"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Good",
+          "evidenceSummary": "Crosses blood-brain barrier; multi-receptor action."
+        }
+      },
+      {
+        "id": "terp-012",
+        "name": "Eucalyptol",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Secondary",
+        "description": "Minty, cooling monoterpenoid with powerful respiratory and antimicrobial benefits; a secondary but pharmacologically significant terpene in cannabis.",
+        "aroma": "Minty, Cooling, Eucalyptus, Fresh",
+        "taste": "Mint, cooling, spicy",
+        "effects": ["Anti-inflammatory", "Bronchodilator", "Antimicrobial", "Analgesic", "Cognitive enhancement"],
+        "therapeuticProperties": ["Anti-inflammatory", "Bronchodilator", "Antimicrobial", "Analgesic", "Mucolytic", "Neuroprotective"],
+        "notableDifferences": "Sativa strains ~5%, indicas ~1%.",
+        "concentrationRange": "0.01–0.22 mg/g",
+        "molecularData": {
+          "molecularFormula": "C10H18O",
+          "molecularWeight": 154,
+          "boilingPoint": 176,
+          "class": "Monoterpenoid"
+        },
+        "sources": ["Eucalyptus", "Tea tree", "Cannabis"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Good",
+          "evidenceSummary": "Potent, variable based on chemotype."
+        }
+      },
+      {
+        "id": "terp-013",
+        "name": "Nerolidol",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Secondary",
+        "description": "Woody, floral sesquiterpenoid with sedative and antimicrobial properties. Enhances skin absorption.",
+        "aroma": "Woody, Floral, Citrus",
+        "taste": "Woody with floral hints",
+        "effects": ["Sedative", "Antiparasitic", "Antimicrobial", "Anti-inflammatory"],
+        "therapeuticProperties": ["Antiparasitic", "Antimicrobial", "Sedative", "Antifungal", "Anti-inflammatory"],
+        "notableDifferences": "Trans-nerolidol is most common isomer; enhances transdermal absorption.",
+        "concentrationRange": "trace–0.98 mg/g",
+        "molecularData": {
+          "molecularFormula": "C15H26O",
+          "molecularWeight": 222,
+          "boilingPoint": 276,
+          "class": "Sesquiterpenoid"
+        },
+        "sources": ["Jasmine", "Tea tree", "Ginger", "Lavender", "Cannabis"],
+        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Good",
+          "evidenceSummary": "Well documented sedative and antimicrobial."
+        }
+      },
+      {
+        "id": "terp-014",
+        "name": "Phytol",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Secondary",
+        "description": "Floral diterpenoid, degradation product of chlorophyll with sedative and immune-modulating properties.",
+        "aroma": "Floral, Balsamic, Grassy, Green",
+        "taste": "Floral with grassy notes",
+        "effects": ["Sedative", "Relaxing", "Immune-modulating", "Anxiolytic"],
+        "therapeuticProperties": ["Sedative", "Antioxidant", "Immune-modulating", "Neuroprotective"],
+        "concentrationRange": "trace-minor (increases with storage/aging)",
+        "molecularData": {
+          "molecularFormula": "C20H40O",
+          "molecularWeight": 296,
+          "boilingPoint": 203,
+          "class": "Diterpenoid"
+        },
+        "sources": ["Green tea", "Cannabis"],
+        "references": [{ "source": "Scientific studies on chlorophyll-related diterpenoids", "type": "Botanical research" }],
+        "researchTier": {
+          "dataQuality": "Moderate",
+          "evidenceSummary": "Limited cannabis-specific data."
+        }
+      },
+      {
+        "id": "terp-015",
+        "name": "Delta-3-Carene",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Secondary",
+        "description": "Sweet, pungent monoterpene that may dry mucous membranes; anti-inflammatory and bone-healing effects.",
+        "aroma": "Sweet, Woody, Cedar, Pine",
+        "taste": "Sweet with cedar tones",
+        "effects": ["Mildly sedative", "Anti-inflammatory", "Bone positive effects"],
+        "therapeuticProperties": ["Anti-inflammatory", "Bone regeneration"],
+        "concentrationRange": "trace–45.96% (strain-dependent)",
+        "molecularData": {
+          "molecularFormula": "C10H16",
+          "molecularWeight": 136,
+          "boilingPoint": 171,
+          "class": "Monoterpene"
+        },
+        "sources": ["Pine", "Rosemary", "Cannabis"],
+        "references": [{ "source": "PMCID PMC35278524", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Good",
+          "evidenceSummary": "Common terpene with demonstrated anti-inflammatory potential."
+        }
+      },
+      {
+        "id": "terp-016",
+        "name": "Isopulegol",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Minor",
+        "description": "Minty monoterpenoid with calming, anticonvulsant, and anti-anxiety properties; chemical precursor to menthol.",
+        "aroma": "Minty, Herbal, Fresh",
+        "taste": "Minty, fresh",
+        "effects": ["Calming", "Anticonvulsant", "Anti-anxiety", "Gastroprotective"],
+        "therapeuticProperties": ["Anticonvulsant", "Anxiolytic", "Anti-inflammatory", "Gastroprotective", "Analgesic"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C10H18O",
+          "molecularWeight": 154,
+          "boilingPoint": 212,
+          "class": "Monoterpenoid"
+        },
+        "sources": ["Mint", "Lemongrass", "Eucalyptus", "Cannabis"],
+        "references": [{ "source": "Journal of Natural Products", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Sparse cannabis-specific data; known medicinal potential."
+        }
+      },
+      {
+        "id": "terp-017",
+        "name": "Ocimene",
+        "isomerOf": null,
+        "isomerType": "Structural",
+        "category": "Secondary",
+        "description": "Sweet, herbal monoterpene with antiviral, antifungal, and decongestant properties.",
+        "aroma": "Sweet, Herbal, Woody",
+        "taste": "Sweet, tropical",
+        "effects": ["Uplifting", "Antiviral", "Antifungal", "Decongestant"],
+        "therapeuticProperties": ["Antiviral", "Antifungal", "Antiseptic", "Decongestant"],
+        "concentrationRange": "trace–83.29% (strain-dependent)",
+        "molecularData": {
+          "molecularFormula": "C10H16",
+          "molecularWeight": 136,
+          "boilingPoint": 66,
+          "class": "Monoterpene"
+        },
+        "sources": ["Mint", "Parsley", "Basil", "Orchids", "Cannabis"],
+        "references": [{ "source": "Phytochemistry Reports", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Moderate",
+          "evidenceSummary": "Moderate research on antimicrobial properties."
+        }
+      },
+      {
+        "id": "terp-018",
+        "name": "Sabinene",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Minor",
+        "description": "Spicy, woody monoterpene; used in small quantities for antioxidant and antimicrobial properties.",
+        "aroma": "Spicy, Woody, Peppery",
+        "taste": "Spicy, woody, slightly citrusy",
+        "effects": ["Antioxidant", "Energizing", "Digestive Aid", "Anti-bacterial"],
+        "therapeuticProperties": ["Antioxidant", "Anti-bacterial", "Digestive"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C10H16",
+          "molecularWeight": 136,
+          "boilingPoint": 163,
+          "class": "Monoterpene"
+        },
+        "sources": ["Oak moss", "Spruce", "Black pepper", "Pumpkin", "Cannabis"],
+        "references": [{ "source": "Journal of Essential Oil Research", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Sparse modern cannabis quantification."
+        }
+      },
+      {
+        "id": "terp-019",
+        "name": "Camphene",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Minor",
+        "description": "Woody, coniferous monoterpene with mild stimulant and anti-inflammatory effects.",
+        "aroma": "Earthy, Coniferous, Pine",
+        "taste": "Woodsy, camphor, herbal",
+        "effects": ["Mild stimulant", "Cardiovascular support", "Antioxidant"],
+        "therapeuticProperties": ["Anti-inflammatory", "Antioxidant", "Lipid metabolism"],
+        "concentrationRange": "trace–0.09 mg/g",
+        "molecularData": {
+          "molecularFormula": "C10H16",
+          "molecularWeight": 136,
+          "boilingPoint": 159,
+          "class": "Monoterpene"
+        },
+        "sources": ["Ginger", "Rosemary", "Citronella", "Cannabis"],
+        "references": [{ "source": "Journal of Chromatography", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Minor component in modern cannabis tests."
+        }
+      },
+      {
+        "id": "terp-020",
+        "name": "Phellandrene",
+        "isomerOf": null,
+        "isomerType": "Structural",
+        "category": "Minor",
+        "description": "Citrus, minty monoterpene with stimulating and decongestant properties.",
+        "aroma": "Citrus, Mint, Peppermint",
+        "taste": "Citrus, slightly minty",
+        "effects": ["Stimulating", "Decongestant"],
+        "therapeuticProperties": ["Antihyperalgesic", "Gastroprotective"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C10H16",
+          "molecularWeight": 136,
+          "boilingPoint": 171,
+          "class": "Monoterpene"
+        },
+        "sources": ["Dill", "Eucalyptus", "Parsley", "Cannabis"],
+        "references": [{ "source": "Phytomedicine Reviews", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Present as trace compound in most analyses."
+        }
+      },
+      {
+        "id": "terp-021",
+        "name": "Geraniol",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Secondary",
+        "description": "Rose-scented monoterpenoid with neuroprotective and antioxidant effects. Found in sweet, floral cannabis varieties.",
+        "aroma": "Rose, Floral, Sweet, Citrus",
+        "taste": "Floral, sweet, delicate",
+        "effects": ["Antioxidant", "Neuroprotective", "Mood-lifting", "Uplifting"],
+        "therapeuticProperties": ["Antioxidant", "Neuroprotective", "Antimicrobial", "Antidiabetic"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C10H18O",
+          "molecularWeight": 154,
+          "boilingPoint": 230,
+          "class": "Monoterpenoid"
+        },
+        "sources": ["Geraniums", "Roses", "Lemon", "Citronella", "Cannabis"],
+        "references": [{ "source": "Frontiers in Plant Science", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Moderate",
+          "evidenceSummary": "Sweet/floral hybrids high in geraniol."
+        }
+      },
+      {
+        "id": "terp-022",
+        "name": "Farnesene",
+        "isomerOf": null,
+        "isomerType": "Structural",
+        "category": "Minor",
+        "description": "Green apple, herbal sesquiterpene with calming and anti-spasmodic effects.",
+        "aroma": "Green apple, Herbal, Woody, Fruity",
+        "taste": "Apple, sweet, woody",
+        "effects": ["Calming", "Anti-spasmodic", "Sedative", "Stress-relief"],
+        "therapeuticProperties": ["Anti-inflammatory", "Antifungal", "Antibacterial", "Muscle relaxant"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C15H24",
+          "molecularWeight": 204,
+          "boilingPoint": 260,
+          "class": "Sesquiterpene"
+        },
+        "sources": ["Apples", "Oranges", "Turmeric", "Ginger", "Cannabis"],
+        "references": [{ "source": "International Journal of Molecular Sciences", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Moderate",
+          "evidenceSummary": "Calming strains show elevated farnesene."
+        }
+      },
+      {
+        "id": "terp-023",
+        "name": "Valencene",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Minor",
+        "description": "Sweet, citrus-flavored sesquiterpene with mood-stabilizing and anti-inflammatory properties.",
+        "aroma": "Sweet, Orange, Citrus, Woody",
+        "taste": "Citrus, sweet, tangy",
+        "effects": ["Mood stabilizing", "Anti-inflammatory"],
+        "therapeuticProperties": ["Anti-inflammatory", "Antioxidant", "Anti-anxiety"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C15H24",
+          "molecularWeight": 204,
+          "boilingPoint": 252,
+          "class": "Sesquiterpene"
+        },
+        "sources": ["Valencia oranges", "Tangerines", "Grapefruits", "Cannabis"],
+        "references": [{ "source": "Foods Journal", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Moderate",
+          "evidenceSummary": "Prevalent in citrus-heavy cultivars."
+        }
+      },
+      {
+        "id": "terp-024",
+        "name": "Cedrene",
+        "isomerOf": null,
+        "isomerType": "Structural",
+        "category": "Minor",
+        "description": "Woody, cedar-scented sesquiterpene found in low concentrations; associated with grounding and anti-fungal properties.",
+        "aroma": "Woody, Cedar, Sweet",
+        "taste": "Cedar, woody, slightly sweet",
+        "effects": ["Grounding", "Anti-inflammatory"],
+        "therapeuticProperties": ["Anti-inflammatory", "Antifungal", "Insecticidal"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C15H24",
+          "molecularWeight": 204,
+          "boilingPoint": 262,
+          "class": "Sesquiterpene"
+        },
+        "sources": ["Cedar", "Juniper", "Cannabis"],
+        "references": [{ "source": "Natural Product Reports", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Very rarely high in any cannabis chemotype."
+        }
+      },
+      {
+        "id": "terp-025",
+        "name": "Bergamotene",
+        "isomerOf": null,
+        "isomerType": "Structural",
+        "category": "Minor",
+        "description": "Citrus, spicy sesquiterpene found in small concentrations; occasionally reported in specialized aromatic cannabis.",
+        "aroma": "Citrus, Spicy, Herbaceous, Woody",
+        "taste": "Citrus with spice",
+        "effects": ["Balancing", "Stress relief"],
+        "therapeuticProperties": ["Anxiolytic", "Analgesic", "Anti-inflammatory"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C15H24",
+          "molecularWeight": 204,
+          "boilingPoint": 248,
+          "class": "Sesquiterpene"
+        },
+        "sources": ["Citrus", "Black pepper", "Cannabis"],
+        "references": [{ "source": "International Journal of Molecular Sciences", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Rare outside of select citrus-dominant chemotypes."
+        }
+      },
+      {
+        "id": "terp-026",
+        "name": "Geranyl Acetate",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Minor",
+        "description": "Fruity, floral ester providing mood balancing and anti-anxiety effects. Enhances complexity of scent bouquet.",
+        "aroma": "Fruity, Floral, Sweet",
+        "taste": "Fruity, floral",
+        "effects": ["Mood balancing", "Anti-anxiety"],
+        "therapeuticProperties": ["Anxiolytic", "Antimicrobial", "Anti-inflammatory"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C12H20O2",
+          "molecularWeight": 196,
+          "boilingPoint": 242,
+          "class": "Monoterpenoid (Ester)"
+        },
+        "sources": ["Lemongrass", "Geraniums", "Cannabis"],
+        "references": [{ "source": "Journal of Agricultural and Food Chemistry", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Detected as a trace component in floral cultivars."
+        }
+      },
+      {
+        "id": "terp-027",
+        "name": "Beta-Elemene",
+        "isomerOf": null,
+        "isomerType": "Structural",
+        "category": "Minor",
+        "description": "Herbal, spicy sesquiterpene with anticancer and anti-inflammatory properties; rare in cannabis.",
+        "aroma": "Herbal, Spicy, Woody",
+        "taste": "Herbal, spicy",
+        "effects": ["Anticancer", "Anti-inflammatory", "Antioxidant"],
+        "therapeuticProperties": ["Anticancer", "Anti-inflammatory", "Antioxidant", "Antitumor"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C15H24",
+          "molecularWeight": 204,
+          "boilingPoint": 254,
+          "class": "Sesquiterpene"
+        },
+        "sources": ["Turmeric", "Atractylodes", "Cannabis"],
+        "references": [{ "source": "Chinese Medicine Journal", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Sparse evidence in cannabis; more from traditional medicine."
+        }
+      },
+      {
+        "id": "terp-028",
+        "name": "Fenchone",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Minor",
+        "description": "Minty, camphorous terpene with anti-inflammatory, analgesic, and antioxidant properties.",
+        "aroma": "Minty, Camphorous, Earthy",
+        "taste": "Camphor-like with menthol notes",
+        "effects": ["Anti-inflammatory", "Analgesic", "Antioxidant"],
+        "therapeuticProperties": ["Anti-inflammatory", "Analgesic", "Antioxidant", "Antimicrobial"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C10H16O",
+          "molecularWeight": 152,
+          "boilingPoint": 193,
+          "class": "Monoterpenoid (Ketone)"
+        },
+        "sources": ["Fennel", "Basil", "Rosemary", "Cannabis"],
+        "references": [{ "source": "Phytotherapy Research", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Limited cannabis-specific data, evidenced anti-inflammatory."
+        }
+      },
+      {
+        "id": "terp-029",
+        "name": "Beta-Elemene",
+        "isomerOf": null,
+        "isomerType": "Structural",
+        "category": "Minor",
+        "description": "Herbal, spicy sesquiterpene studied for anticancer and anti-inflammatory properties; rare in cannabis.",
+        "aroma": "Herbal, Spicy, Woody",
+        "taste": "Herbal with spice",
+        "effects": ["Anticancer", "Anti-inflammatory", "Antioxidant"],
+        "therapeuticProperties": ["Anticancer", "Anti-inflammatory", "Antioxidant", "Antitumor"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C15H24",
+          "molecularWeight": 204,
+          "boilingPoint": 254,
+          "class": "Sesquiterpene"
+        },
+        "sources": ["Chinese medicinal plants", "Cannabis"],
+        "references": [{ "source": "Chinese Journal of Cancer Research", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Rare; mostly studied outside cannabis."
+        }
+      },
+      {
+        "id": "terp-030",
+        "name": "Bergamotene",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Minor",
+        "description": "Citrus, spicy sesquiterpene with balancing effects on serotonin and GABA pathways.",
+        "aroma": "Citrus, Spicy, Herbaceous",
+        "taste": "Citrus with spice",
+        "effects": ["Balancing", "Stress relief", "Mood regulation"],
+        "therapeuticProperties": ["Anxiolytic", "Analgesic", "Anti-inflammatory"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C15H24",
+          "molecularWeight": 204,
+          "boilingPoint": 248,
+          "class": "Sesquiterpene"
+        },
+        "sources": ["Citrus", "Black pepper"],
+        "references": [{ "source": "Journal of Neuroscience", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Very limited cannabis-specific data."
+        }
+      },
+      {
+        "id": "terp-031",
+        "name": "Cedrene",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Minor",
+        "description": "Woody, cedar-scented sesquiterpene with grounding and anti-inflammatory properties.",
+        "aroma": "Woody, Cedar",
+        "taste": "Cedar wood",
+        "effects": ["Grounding", "Anti-inflammatory"],
+        "therapeuticProperties": ["Anti-inflammatory", "Antifungal"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C15H24",
+          "molecularWeight": 204,
+          "boilingPoint": 262,
+          "class": "Sesquiterpene"
+        },
+        "sources": ["Cedar", "Juniper"],
+        "references": [{ "source": "Natural Product Research", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Rare and under-researched."
+        }
+      },
+      {
+        "id": "terp-032",
+        "name": "Geranyl Acetate",
+        "isomerOf": null,
+        "isomerType": null,
+        "category": "Minor",
+        "description": "Fruity, floral ester with mood-balancing and anti-anxiety effects.",
+        "aroma": "Fruity, Floral",
+        "taste": "Sweet, floral",
+        "effects": ["Mood balancing", "Anti-anxiety"],
+        "therapeuticProperties": ["Anxiolytic", "Antimicrobial", "Anti-inflammatory"],
+        "concentrationRange": "trace-minor",
+        "molecularData": {
+          "molecularFormula": "C12H20O2",
+          "molecularWeight": 196,
+          "boilingPoint": 242,
+          "class": "Monoterpenoid (Ester)"
+        },
+        "sources": ["Lemongrass", "Geranium"],
+        "references": [{ "source": "Phytochemistry Letters", "type": "Peer-reviewed" }],
+        "researchTier": {
+          "dataQuality": "Limited",
+          "evidenceSummary": "Limited cannabis data."
+        }
+      }
+    ]
+  }
+}

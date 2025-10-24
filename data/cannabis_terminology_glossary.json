@@ -1,0 +1,69 @@
+{
+  "terminology": {
+    "cultivar": {
+      "definition": "Short for 'Cultivated Variety' - a group of cannabis plants that have been selectively bred and cultivated by humans to express specific characteristics and traits",
+      "scientificAccuracy": "Botanically correct term for cannabis varieties",
+      "characteristics": [
+        "Result of intentional human breeding and selection",
+        "Exhibits distinctive, stable, and reproducible traits",
+        "Maintained through cloning (vegetative propagation) or stabilized seed breeding",
+        "Examples: 'Blue Dream', 'OG Kush', 'Jack Herer'"
+      ],
+      "reproduction": "Offspring are genetically identical replicas when reproduced by cloning or vegetative cuts. For seed-based cultivars, requires several generations of backcrossing for stable offspring",
+      "usageNote": "This is the scientifically accurate term and is increasingly used in the cannabis industry to replace the colloquial 'strain'"
+    },
+    "strain": {
+      "definition": "Commonly used colloquial term in cannabis community to describe different varieties, but technically incorrect from a botanical perspective",
+      "scientificAccuracy": "Not botanically accurate - 'strain' is properly used in microbiology/virology for bacteria, viruses, and fungi, not plants",
+      "relationship": "Often used interchangeably with 'cultivar' in popular cannabis culture, though 'cultivar' is more scientifically precise",
+      "note": "While widely understood and still commonly used, the industry is shifting toward using 'cultivar' for botanical accuracy and scientific legitimacy",
+      "whyIncorrect": "In biology, 'strain' refers to genetic variants of microorganisms (bacteria, viruses, fungi), not plants"
+    },
+    "variety": {
+      "definition": "A taxonomic rank below species - refers to natural adaptations of cannabis due to environmental factors without human intervention",
+      "scientificAccuracy": "Botanically correct but refers to natural variants, not human-cultivated ones",
+      "characteristics": [
+        "Natural adaptation without human intervention",
+        "Result of environmental factors (climate, soil, geography)",
+        "Examples: Cannabis sativa var. indica (morphological 'indica'), Cannabis sativa var. afghanica (morphological 'sativa')"
+      ],
+      "distinction": "Varieties occur naturally through environmental adaptation; cultivars are intentionally created by humans through selective breeding"
+    },
+    "chemovar": {
+      "definition": "Chemical variety - classification based on the plant's chemical profile (cannabinoid and terpene content) rather than physical appearance",
+      "scientificAccuracy": "Emerging scientific classification system that provides more accurate prediction of effects",
+      "types": ["Type I: THC-dominant, CBD <0.3%", "Type II: Balanced THC:CBD ratio", "Type III: CBD-dominant, THC <1%"],
+      "note": "More scientifically accurate than traditional indica/sativa classifications for predicting physiological effects",
+      "advantage": "Based on actual chemical composition rather than morphological characteristics"
+    }
+  },
+  "recommended_terminology": {
+    "use_cultivar_instead_of_strain": "For botanical accuracy and scientific precision",
+    "reasoning": [
+      "Cultivar is the correct horticultural term for plants",
+      "Strain is reserved for microorganisms in scientific nomenclature",
+      "Industry is moving toward more precise, scientific language",
+      "Better reflects the human cultivation and breeding process",
+      "Provides legitimacy and professionalism to the cannabis industry"
+    ]
+  },
+  "historical_context": {
+    "1753": "Carl Linnaeus classified all cannabis as Cannabis sativa L. in Species Plantarum",
+    "1785": "Jean-Baptiste Lamarck proposed two distinct species: C. sativa (hemp) and C. indica (intoxicating)",
+    "1980s": "Dr. Loran C. Anderson published morphological classification distinguishing indica/sativa based on physical structure",
+    "1985": "Term 'strain' entered common cannabis lexicon",
+    "2010s-2020s": "Industry shift toward using 'cultivar' and 'chemovar' for scientific accuracy and legitimacy"
+  },
+  "key_differences": {
+    "strain_vs_cultivar": {
+      "strain": "Informal, colloquial term; scientifically incorrect for plants",
+      "cultivar": "Formal, botanical term; scientifically accurate",
+      "practical_difference": "Both refer to the same concept in cannabis culture, but 'cultivar' is more accurate"
+    },
+    "cultivar_vs_variety": {
+      "cultivar": "Human-created through selective breeding",
+      "variety": "Naturally occurring through environmental adaptation",
+      "example": "'OG Kush' is a cultivar (human-bred), while 'indica' and 'sativa' are varieties (natural morphological variants)"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+version: 2
+updates:
+  # pnpm/npm dependencies (source code)
+  - package-ecosystem: "pnpm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "04:00"
+    open-pull-requests-limit: 5
+    # Label with our existing conventions so PR labeler and workflows pick it up
+    labels:
+      - "dependencies"
+      - "dependabot"
+    # Group related updates to reduce noise where helpful
+    groups:
+      development-dependencies:
+        patterns:
+          - "@testing-library/*"
+          - "@types/*"
+          - "vitest"
+          - "playwright"
+          - "@playwright/*"
+      production-dependencies:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "d3*"
+          - "js-yaml"
+
+  # GitHub Actions used by workflows
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:00"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "ci"
+
+  # Optional: monitor Docker (none used currently) or other ecosystems if added later

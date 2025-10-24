@@ -1,0 +1,106 @@
+{
+  "app": {
+    "title": "Interaktive Terpen-Karte",
+    "tagline": "Entdecke die aromatische Welt der Terpene",
+    "loading": "Terpen-Daten werden geladen...",
+    "error": "Fehler"
+  },
+  "navigation": {
+    "home": "Start",
+    "about": "Über",
+    "skipToMain": "Zum Hauptinhalt springen"
+  },
+  "theme": {
+    "light": "Heller Modus",
+    "dark": "Dunkler Modus",
+    "system": "Systempräferenz",
+    "toggle": "Design wechseln"
+  },
+  "language": {
+    "english": "Englisch",
+    "german": "Deutsch",
+    "toggle": "Sprache ändern"
+  },
+  "view": {
+    "sunburst": "Sunburst-Diagramm",
+    "table": "Tabellenansicht",
+    "toggle": "Ansichtsmodus wechseln",
+    "switchedTo": "Zu {{mode}}-Ansicht gewechselt"
+  },
+  "filter": {
+    "title": "Nach Wirkungen filtern",
+    "clear": "Alle Filter löschen",
+    "clearSingle": "Filter löschen",
+    "mode": "Filtermodus",
+    "any": "BELIEBIGE Wirkung (ODER)",
+    "all": "ALLE Wirkungen (UND)",
+    "selected": "{{count}} Wirkung ausgewählt",
+    "selected_other": "{{count}} Wirkungen ausgewählt",
+    "noResults": "Keine Terpene entsprechen Ihren Filtern",
+    "resultsCount": "{{count}} Terpen gefunden",
+    "resultsCount_other": "{{count}} Terpene gefunden"
+  },
+  "search": {
+    "placeholder": "Terpene nach Name, Aroma oder Wirkungen suchen...",
+    "label": "Terpene suchen",
+    "clear": "Suche löschen",
+    "noResults": "Keine Ergebnisse für \"{{query}}\" gefunden",
+    "resultsCount": "{{count}} Ergebnis für \"{{query}}\"",
+    "resultsCount_other": "{{count}} Ergebnisse für \"{{query}}\""
+  },
+  "terpene": {
+    "name": "Name",
+    "aroma": "Aroma",
+    "description": "Beschreibung",
+    "effects": "Wirkungen",
+    "sources": "Quellen",
+    "boilingPoint": "Siedepunkt",
+    "molecularFormula": "Summenformel",
+    "viewDetails": "Details anzeigen",
+    "celsius": "°C"
+  },
+  "table": {
+    "sortBy": "Sortieren nach {{column}}",
+    "sortAscending": "Aufsteigend sortieren",
+    "sortDescending": "Absteigend sortieren",
+    "rowsPerPage": "Zeilen pro Seite",
+    "of": "von"
+  },
+  "error": {
+    "loadFailed": "Terpen-Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+    "parseFailed": "Das Datenformat ist ungültig. Bitte kontaktieren Sie den Support.",
+    "validationFailed": "Einige Terpen-Daten sind unvollständig. Verfügbare Einträge werden angezeigt.",
+    "noData": "Keine Terpen-Daten verfügbar. Bitte fügen Sie Terpen-Daten zum data/-Verzeichnis hinzu und aktualisieren Sie die Seite.",
+    "retry": "Erneut versuchen",
+    "close": "Schließen"
+  },
+  "validation": {
+    "invalidEntries": "{{count}} Terpen-Eintrag wurde aufgrund ungültiger Daten übersprungen.",
+    "invalidEntries_other": "{{count}} Terpen-Einträge wurden aufgrund ungültiger Daten übersprungen.",
+    "dismiss": "Verwerfen"
+  },
+  "empty": {
+    "title": "Keine Terpene verfügbar",
+    "description": "Keine Terpen-Daten gefunden. Bitte fügen Sie Terpen-Daten zum data/-Verzeichnis hinzu.",
+    "instruction": "Fügen Sie eine terpenes.json- oder terpenes.yaml-Datei zum /data-Verzeichnis hinzu und aktualisieren Sie die Seite."
+  },
+  "loading": {
+    "indicator": "Lädt...",
+    "pleaseWait": "Bitte warten Sie, während wir die Daten laden"
+  },
+  "accessibility": {
+    "terpeneLabel": "{{name}}, ein Terpen mit {{aroma}}-Duft und {{effects}}-Wirkungen, gefunden in {{sources}}",
+    "effectLabel": "{{name}}-Wirkung, {{count}} Terpen",
+    "effectLabel_other": "{{name}}-Wirkung, {{count}} Terpene",
+    "effectSelected": "{{name}}-Wirkung ausgewählt",
+    "effectDeselected": "{{name}}-Wirkung abgewählt",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "mainContent": "Hauptinhalt"
+  },
+  "footer": {
+    "madeWith": "Erstellt mit",
+    "by": "von",
+    "license": "Lizenz"
+  }
+}
