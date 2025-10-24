@@ -1,0 +1,177 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  # Allow manual trigger
+  workflow_dispatch:
+
+env:
+  # Enable build time tracking
+  TIMING: "1"
+  # Enable dependency cache debugging
+  DEBUG: "1"
+
+# Ensure we don't have multiple workflows running at once
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: 🔍 Validate
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v5
+      
+      - name: 📥 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      # Cache build dependencies
+      - name: 📦 Cache build dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules/.vite
+            node_modules/.cache
+            ~/.cache/Cypress
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-build-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ hashFiles('**/pnpm-lock.yaml') }}-
+            ${{ runner.os }}-build-
+      
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Cache TypeScript incremental builds
+      - name: 📦 Cache TypeScript
+        uses: actions/cache@v4
+        with:
+          path: |
+            .tsbuildinfo
+            node_modules/.cache/tsbuildinfo
+          key: ${{ runner.os }}-tsbuild-${{ hashFiles('**.[jt]s', '**.[jt]sx', '**/tsconfig.json') }}
+          restore-keys: |
+            ${{ runner.os }}-tsbuild-
+      
+      - name: 🔎 Type check
+        run: pnpm run type-check
+      
+      - name: 🧪 Lint
+        run: pnpm run lint
+      
+      - name: 💅 Check formatting
+        run: pnpm run format:check
+      
+      - name: 🧬 Run unit tests
+        run: pnpm run test:run
+        
+  e2e:
+    name: 🎭 E2E Tests
+    runs-on: ubuntu-latest
+    needs: validate
+    
+    steps:
+      - uses: actions/checkout@v5
+      
+      - name: 📥 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
+      
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: 🎭 Install Playwright
+        run: pnpm exec playwright install --with-deps
+      
+      - name: 🎭 Run Playwright tests
+        run: pnpm run test:e2e
+      
+      - name: 📊 Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+  build:
+    name: 🏗 Build
+    runs-on: ubuntu-latest
+    needs: [validate, e2e]
+    
+    steps:
+      - uses: actions/checkout@v5
+      
+      - name: 📥 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
+      
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: 🔧 Create production env
+        run: |
+          echo "VITE_BUILD_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> .env.production
+          echo "VITE_COMMIT_SHA=$GITHUB_SHA" >> .env.production
+          echo "VITE_VERSION=${GITHUB_REF#refs/*/}" >> .env.production
+      
+      - name: 🏗 Build
+        id: build
+        run: |
+          start_time=$SECONDS
+          pnpm run build
+          end_time=$SECONDS
+          build_time=$((end_time - start_time))
+          echo "build_time=$build_time" >> $GITHUB_OUTPUT
+          # Get build size
+          build_size=$(du -sh dist | cut -f1)
+          echo "build_size=$build_size" >> $GITHUB_OUTPUT
+          # Get chunk count
+          chunk_count=$(find dist/assets -type f | wc -l)
+          echo "chunk_count=$chunk_count" >> $GITHUB_OUTPUT
+      
+      - name: 📝 Create 404.html
+        run: cp dist/index.html dist/404.html
+      
+      - name: 📊 Report Build Stats
+        run: |
+          echo "### Build Performance Report 📊" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build Time | ${{ steps.build.outputs.build_time }}s |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build Size | ${{ steps.build.outputs.build_size }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Chunk Count | ${{ steps.build.outputs.chunk_count }} |" >> $GITHUB_STEP_SUMMARY
+          
+      - name: 📦 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-build
+          path: dist/
+          retention-days: 7

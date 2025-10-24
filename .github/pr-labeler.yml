@@ -1,0 +1,39 @@
+# Add 'feature' label to any PR with branch starting with 'feature/'
+feature:
+  - 'feature/*'
+  - 'feat/*'
+
+# Add 'bug' label to any PR with branch starting with 'fix/'
+bug:
+  - 'fix/*'
+  - 'bugfix/*'
+  - 'bug/*'
+
+# Add 'dependencies' label when package files change
+dependencies:
+  - 'package.json'
+  - 'pnpm-lock.yaml'
+
+# Add 'documentation' label for docs changes
+documentation:
+  - 'docs/**/*'
+  - 'README.md'
+  - '**/*.md'
+  - 'specs/**/*'
+
+# Add 'test' label for test changes
+test:
+  - '**/test/**/*'
+  - '**/*.test.*'
+  - '**/tests/**/*'
+  - '**/e2e/**/*'
+  - 'playwright/**/*'
+
+# Add 'ci' label for workflow changes
+ci:
+  - '.github/**/*'
+
+# Add 'performance' label for specific areas
+performance:
+  - '**/perf/**/*'
+  - 'src/**/performance/**/*'
