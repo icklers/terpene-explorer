@@ -59,6 +59,7 @@ export function Home(): React.ReactElement {
     toggleEffect,
     toggleFilterMode,
     setViewMode,
+    clearAllFilters,
     hasActiveFilters,
   } = useFilters();
 
@@ -125,6 +126,7 @@ export function Home(): React.ReactElement {
             effects={effects}
             selectedEffects={filterState.selectedEffects}
             onToggleEffect={toggleEffect}
+            onClearFilters={clearAllFilters}
           />
 
           {/* Filter Mode Toggle (only show when effects are selected) */}

@@ -517,6 +517,62 @@ describe('FilterControls', () => {
     });
   });
 
+  describe('Clear Filters Button (UAT)', () => {
+    it('should render a clear filters button when filters are active', () => {
+      const onToggle = vi.fn();
+      const onClear = vi.fn();
+
+      render(
+        <FilterControls
+          effects={mockEffects}
+          selectedEffects={['calming', 'energizing']}
+          onToggleEffect={onToggle}
+          onClearFilters={onClear}
+        />
+      );
+
+      const clearButton = screen.getByRole('button', { name: /clear/i });
+      expect(clearButton).toBeInTheDocument();
+    });
+
+    it('should call onClearFilters when clear button is clicked', async () => {
+      const user = userEvent.setup();
+      const onToggle = vi.fn();
+      const onClear = vi.fn();
+
+      render(
+        <FilterControls
+          effects={mockEffects}
+          selectedEffects={['calming']}
+          onToggleEffect={onToggle}
+          onClearFilters={onClear}
+        />
+      );
+
+      const clearButton = screen.getByRole('button', { name: /clear/i });
+      await user.click(clearButton);
+
+      expect(onClear).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not render clear button when no effects are selected', () => {
+      const onToggle = vi.fn();
+      const onClear = vi.fn();
+
+      render(
+        <FilterControls
+          effects={mockEffects}
+          selectedEffects={[]}
+          onToggleEffect={onToggle}
+          onClearFilters={onClear}
+        />
+      );
+
+      const clearButton = screen.queryByRole('button', { name: /clear/i });
+      expect(clearButton).not.toBeInTheDocument();
+    });
+  });
+
   describe('Performance', () => {
     it('should render large effect lists efficiently', () => {
       const manyEffects = Array.from({ length: 100 }, (_, i) => ({

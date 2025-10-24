@@ -21,7 +21,7 @@ describe('useFilters', () => {
       expect(result.current.filterState.searchQuery).toBe('');
       expect(result.current.filterState.selectedEffects).toEqual([]);
       expect(result.current.filterState.effectFilterMode).toBe('any');
-      expect(result.current.filterState.viewMode).toBe('sunburst');
+      expect(result.current.filterState.viewMode).toBe('table'); // UAT: Default should be table view
       expect(result.current.filterState.sortBy).toBe('name');
       expect(result.current.filterState.sortDirection).toBe('asc');
     });

@@ -8,8 +8,9 @@
  */
 
 import React from 'react';
-import { Box, Chip, Typography } from '@mui/material';
+import { Box, Chip, Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import ClearIcon from '@mui/icons-material/Clear';
 import type { Effect } from '../../models/Effect';
 
 /**
@@ -22,6 +23,8 @@ export interface FilterControlsProps {
   selectedEffects: string[];
   /** Callback when effect is toggled */
   onToggleEffect: (effect: string) => void;
+  /** Callback when clear filters button is clicked (UAT) */
+  onClearFilters?: () => void;
   /** Optional label */
   label?: string;
 }
@@ -36,23 +39,39 @@ export function FilterControls({
   effects,
   selectedEffects,
   onToggleEffect,
+  onClearFilters,
   label,
 }: FilterControlsProps): React.ReactElement {
   const { t } = useTranslation();
 
   const defaultLabel = t('filters.effectsLabel', 'Filter by Effects');
+  const hasSelection = selectedEffects.length > 0;
 
   return (
     <Box>
-      {/* Label */}
-      <Typography
-        variant="subtitle2"
-        component="label"
-        id="effect-filter-label"
-        sx={{ mb: 1, display: 'block', fontWeight: 600 }}
-      >
-        {label || defaultLabel}
-      </Typography>
+      {/* Label with Clear Button */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+        <Typography
+          variant="subtitle2"
+          component="label"
+          id="effect-filter-label"
+          sx={{ fontWeight: 600 }}
+        >
+          {label || defaultLabel}
+        </Typography>
+
+        {/* Clear Filters Button (UAT) - Only show when effects are selected */}
+        {hasSelection && onClearFilters && (
+          <Button
+            size="small"
+            startIcon={<ClearIcon />}
+            onClick={onClearFilters}
+            aria-label={t('filters.clearFilters', 'Clear all filters')}
+          >
+            {t('filters.clear', 'Clear')}
+          </Button>
+        )}
+      </Box>
 
       {/* Effect Chips */}
       <Box

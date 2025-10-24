@@ -31,12 +31,13 @@ export interface UseFiltersResult {
 
 /**
  * Default filter state
+ * UAT: Default view mode changed to 'table' for better UX
  */
 const DEFAULT_FILTER_STATE: FilterState = {
   searchQuery: '',
   selectedEffects: [],
   effectFilterMode: 'any',
-  viewMode: 'sunburst',
+  viewMode: 'table',
   sortBy: 'name',
   sortDirection: 'asc',
 };
