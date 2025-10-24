@@ -99,7 +99,7 @@ describe('sunburstTransform', () => {
       const energizingNode = result.children!.find(
         (c) => c.name === 'energizing'
       );
-      const terpeneNode = energizingNode!.children![0];
+      const terpeneNode = energizingNode!.children![0]!;
 
       expect(terpeneNode.type).toBe('terpene');
       expect(terpeneNode.children).toBeUndefined();
@@ -120,7 +120,7 @@ describe('sunburstTransform', () => {
       const energizingNode = result.children!.find(
         (c) => c.name === 'energizing'
       );
-      const terpeneNode = energizingNode!.children![0];
+      const terpeneNode = energizingNode!.children![0]!;
 
       expect(terpeneNode.color).toBe(energizingNode!.color);
     });
@@ -154,7 +154,7 @@ describe('sunburstTransform', () => {
       const energizingNode = result.children!.find(
         (c) => c.name === 'energizing'
       );
-      const terpeneNode = energizingNode!.children![0];
+      const terpeneNode = energizingNode!.children![0]!;
 
       expect(terpeneNode.id).toBeDefined();
       expect(['1', '3']).toContain(terpeneNode.id); // Limonene or Pinene
@@ -214,10 +214,10 @@ describe('sunburstTransform', () => {
 
       const result = transformToSunburstData([terpeneWithDuplicates]);
 
-      // Should have only one calming node
-      expect(result.children!.length).toBe(1);
-      expect(result.children![0].name).toBe('calming');
-      expect(result.children![0].children!.length).toBe(1);
+  // Should have only one calming node
+  expect(result.children!.length).toBe(1);
+  expect(result.children![0]!.name).toBe('calming');
+  expect(result.children![0]!.children!.length).toBe(1);
     });
 
     it('should sort effect nodes by terpene count (descending)', () => {
@@ -225,8 +225,8 @@ describe('sunburstTransform', () => {
 
       // Verify that effects are sorted by count
       for (let i = 0; i < result.children!.length - 1; i++) {
-        const currentCount = result.children![i].value || 0;
-        const nextCount = result.children![i + 1].value || 0;
+        const currentCount = result.children![i]!.value || 0;
+        const nextCount = result.children![i + 1]!.value || 0;
         expect(currentCount).toBeGreaterThanOrEqual(nextCount);
       }
     });
@@ -255,10 +255,10 @@ describe('sunburstTransform', () => {
 
       const result = transformToSunburstData([specialTerpene]);
 
-      const focusNode = result.children![0];
-      const terpeneNode = focusNode.children![0];
+  const focusNode = result.children![0]!;
+  const terpeneNode = focusNode.children![0]!;
 
-      expect(terpeneNode.name).toBe('α-Pinene');
+  expect(terpeneNode.name).toBe('α-Pinene');
     });
 
     it('should handle very long terpene lists (performance)', () => {

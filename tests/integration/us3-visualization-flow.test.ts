@@ -78,7 +78,8 @@ describe('User Story 3: Visualization Flow Integration', () => {
         );
 
         expect(filtered).toHaveLength(1);
-        expect(filtered[0].name).toBe('Limonene');
+        expect(filtered).not.toBeNull();
+        expect(filtered[0]?.name).toBe('Limonene');
       }
     });
 
@@ -197,15 +198,17 @@ describe('User Story 3: Visualization Flow Integration', () => {
           a.name.localeCompare(b.name)
         );
 
-        expect(sortedByName[0].name).toBe('Limonene');
-        expect(sortedByName[2].name).toBe('Pinene');
+        expect(sortedByName).toHaveLength(3);
+        expect(sortedByName[0]?.name).toBe('Limonene');
+        expect(sortedByName[2]?.name).toBe('Pinene');
 
         // Sort by aroma
         const sortedByAroma = [...result.data].sort((a, b) =>
           a.aroma.localeCompare(b.aroma)
         );
 
-        expect(sortedByAroma[0].aroma).toBe('Citrus');
+        expect(sortedByAroma).toHaveLength(3);
+        expect(sortedByAroma[0]?.aroma).toBe('Citrus');
       }
     });
 
@@ -294,7 +297,8 @@ describe('User Story 3: Visualization Flow Integration', () => {
         );
 
         expect(filtered).toHaveLength(1);
-        expect(filtered[0].name).toBe('Pinene');
+        expect(filtered).not.toBeNull();
+        expect(filtered[0]?.name).toBe('Pinene');
       }
     });
   });

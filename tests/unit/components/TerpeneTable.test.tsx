@@ -81,7 +81,7 @@ describe('TerpeneTable', () => {
       render(<TerpeneTable terpenes={mockTerpenes} />);
 
       const rows = screen.getAllByRole('row').slice(1); // Skip header
-      const names = rows.map(row => within(row).getAllByRole('cell')[0].textContent);
+        const names = rows.map(row => within(row).getAllByRole('cell')[0]!.textContent);
 
       expect(names).toEqual(['Limonene', 'Myrcene', 'Pinene']);
     });
@@ -95,7 +95,7 @@ describe('TerpeneTable', () => {
       await user.click(nameHeader);
 
       const rows = screen.getAllByRole('row').slice(1);
-      const names = rows.map(row => within(row).getAllByRole('cell')[0].textContent);
+        const names = rows.map(row => within(row).getAllByRole('cell')[0]!.textContent);
 
       expect(names).toEqual(['Pinene', 'Myrcene', 'Limonene']);
     });
@@ -125,7 +125,7 @@ describe('TerpeneTable', () => {
 
       // Should be back to ascending
       const rows = screen.getAllByRole('row').slice(1);
-      const names = rows.map(row => within(row).getAllByRole('cell')[0].textContent);
+        const names = rows.map(row => within(row).getAllByRole('cell')[0]!.textContent);
 
       expect(names).toEqual(['Limonene', 'Myrcene', 'Pinene']);
     });
@@ -218,7 +218,7 @@ describe('TerpeneTable', () => {
       render(<TerpeneTable terpenes={mockTerpenes} />);
 
       const limoneneRow = screen.getByText('Limonene').closest('tr');
-      const effectsCell = within(limoneneRow!).getAllByRole('cell')[2];
+        const effectsCell = within(limoneneRow!).getAllByRole('cell')[2]!;
 
       expect(effectsCell.textContent).toContain('energizing');
       expect(effectsCell.textContent).toContain('mood-enhancing');
@@ -228,7 +228,7 @@ describe('TerpeneTable', () => {
       render(<TerpeneTable terpenes={mockTerpenes} />);
 
       const limoneneRow = screen.getByText('Limonene').closest('tr');
-      const sourcesCell = within(limoneneRow!).getAllByRole('cell')[3];
+        const sourcesCell = within(limoneneRow!).getAllByRole('cell')[3]!;
 
       expect(sourcesCell.textContent).toContain('Lemon');
       expect(sourcesCell.textContent).toContain('Orange');

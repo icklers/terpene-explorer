@@ -89,8 +89,12 @@ describe('SunburstChart', () => {
 
       render(<SunburstChart data={mockData} onSliceClick={onSliceClick} />);
 
-      const paths = document.querySelectorAll('path');
-      await user.click(paths[1]); // Click first effect slice
+      // Find path elements with data-name attribute
+      const paths = document.querySelectorAll('path[data-name]');
+      expect(paths.length).toBeGreaterThan(0);
+      const pathElement = paths[1] as SVGPathElement;
+      expect(pathElement).toBeDefined();
+      await user.click(pathElement); // Click first effect slice
 
       expect(onSliceClick).toHaveBeenCalledTimes(1);
     });
@@ -113,8 +117,12 @@ describe('SunburstChart', () => {
 
       render(<SunburstChart data={mockData} onSliceClick={vi.fn()} />);
 
-      const paths = document.querySelectorAll('path');
-      await user.hover(paths[1]);
+      // Find path elements with data-name attribute
+      const paths = document.querySelectorAll('path[data-name]');
+      expect(paths.length).toBeGreaterThan(0);
+      const pathElement = paths[1] as SVGPathElement;
+      expect(pathElement).toBeDefined();
+      await user.hover(pathElement);
 
       // Tooltip should appear
       const tooltip = await screen.findByRole('tooltip');

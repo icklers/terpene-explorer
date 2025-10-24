@@ -23,6 +23,8 @@ export interface FilterModeToggleProps {
   label?: string;
   /** Disabled state */
   disabled?: boolean;
+  /** Additional CSS class */
+  className?: string;
 }
 
 /**
@@ -36,6 +38,7 @@ export function FilterModeToggle({
   onChange,
   label,
   disabled = false,
+  className,
 }: FilterModeToggleProps): React.ReactElement {
   const { t } = useTranslation();
 
@@ -54,7 +57,7 @@ export function FilterModeToggle({
   };
 
   return (
-    <Box>
+    <Box className={className}>
       {/* Label */}
       <Typography
         variant="subtitle2"
