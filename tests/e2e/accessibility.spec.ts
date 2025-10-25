@@ -21,9 +21,7 @@ test.describe('Accessibility Compliance', () => {
 
   test('should not have automatically detectable accessibility issues on home page', async ({ page }) => {
     // Run axe accessibility scan
-    const accessibilityScanResults = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze();
+    const accessibilityScanResults = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
 
     // Assert no violations
     expect(accessibilityScanResults.violations).toEqual([]);
@@ -129,9 +127,7 @@ test.describe('Accessibility Compliance', () => {
     await page.waitForTimeout(500);
 
     // Run axe scan on sunburst view
-    const accessibilityScanResults = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa'])
-      .analyze();
+    const accessibilityScanResults = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
   });
@@ -165,15 +161,10 @@ test.describe('Accessibility Compliance', () => {
     await page.waitForTimeout(500);
 
     // Run axe scan focusing on color contrast
-    const accessibilityScanResults = await new AxeBuilder({ page })
-      .withTags(['wcag2aa'])
-      .include('body')
-      .analyze();
+    const accessibilityScanResults = await new AxeBuilder({ page }).withTags(['wcag2aa']).include('body').analyze();
 
     // Filter for color contrast violations
-    const contrastViolations = accessibilityScanResults.violations.filter(
-      (v) => v.id === 'color-contrast'
-    );
+    const contrastViolations = accessibilityScanResults.violations.filter((v) => v.id === 'color-contrast');
 
     expect(contrastViolations).toHaveLength(0);
   });
@@ -188,15 +179,10 @@ test.describe('Accessibility Compliance', () => {
     await page.waitForTimeout(500);
 
     // Run axe scan focusing on color contrast
-    const accessibilityScanResults = await new AxeBuilder({ page })
-      .withTags(['wcag2aa'])
-      .include('body')
-      .analyze();
+    const accessibilityScanResults = await new AxeBuilder({ page }).withTags(['wcag2aa']).include('body').analyze();
 
     // Filter for color contrast violations
-    const contrastViolations = accessibilityScanResults.violations.filter(
-      (v) => v.id === 'color-contrast'
-    );
+    const contrastViolations = accessibilityScanResults.violations.filter((v) => v.id === 'color-contrast');
 
     expect(contrastViolations).toHaveLength(0);
   });
@@ -212,9 +198,7 @@ test.describe('Accessibility Compliance', () => {
     await expect(emptyState).toBeVisible();
 
     // Run axe scan on error state
-    const accessibilityScanResults = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa'])
-      .analyze();
+    const accessibilityScanResults = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
   });
@@ -248,13 +232,7 @@ test.describe('Accessibility Compliance', () => {
   test('should support screen reader navigation', async ({ page }) => {
     // Verify landmarks for screen reader navigation
     const landmarks = await page.evaluate(() => {
-      const selectors = [
-        '[role="banner"]',
-        '[role="navigation"]',
-        '[role="main"]',
-        '[role="search"]',
-        '[role="contentinfo"]',
-      ];
+      const selectors = ['[role="banner"]', '[role="navigation"]', '[role="main"]', '[role="search"]', '[role="contentinfo"]'];
 
       return selectors.map((selector) => ({
         selector,
@@ -284,9 +262,7 @@ test.describe('Accessibility Compliance', () => {
     await page.waitForTimeout(500);
 
     // Run comprehensive accessibility scan
-    const accessibilityScanResults = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze();
+    const accessibilityScanResults = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
   });

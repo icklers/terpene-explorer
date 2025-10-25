@@ -33,9 +33,7 @@ test.describe('User Story 2: Theme and Language', () => {
 
   test('should toggle between light and dark themes', async ({ page }) => {
     // Get initial theme (light mode by default)
-    const initialBg = await page.locator('body').evaluate((el) =>
-      window.getComputedStyle(el).backgroundColor
-    );
+    const initialBg = await page.locator('body').evaluate((el) => window.getComputedStyle(el).backgroundColor);
 
     // Click theme toggle
     const themeToggle = page.locator('button[aria-label*="theme" i]').first();
@@ -45,9 +43,7 @@ test.describe('User Story 2: Theme and Language', () => {
     await page.waitForTimeout(300);
 
     // Verify background color changed
-    const newBg = await page.locator('body').evaluate((el) =>
-      window.getComputedStyle(el).backgroundColor
-    );
+    const newBg = await page.locator('body').evaluate((el) => window.getComputedStyle(el).backgroundColor);
 
     expect(initialBg).not.toBe(newBg);
 
@@ -55,9 +51,7 @@ test.describe('User Story 2: Theme and Language', () => {
     await themeToggle.click();
     await page.waitForTimeout(300);
 
-    const finalBg = await page.locator('body').evaluate((el) =>
-      window.getComputedStyle(el).backgroundColor
-    );
+    const finalBg = await page.locator('body').evaluate((el) => window.getComputedStyle(el).backgroundColor);
 
     // Should be back to initial color (approximately)
     expect(finalBg).toBe(initialBg);
@@ -139,9 +133,7 @@ test.describe('User Story 2: Theme and Language', () => {
     await page.waitForTimeout(300);
 
     // Store current background color
-    const darkBg = await page.locator('body').evaluate((el) =>
-      window.getComputedStyle(el).backgroundColor
-    );
+    const darkBg = await page.locator('body').evaluate((el) => window.getComputedStyle(el).backgroundColor);
 
     // Navigate around the app (filter, search, etc.)
     const searchInput = page.locator('input[placeholder*="Search"]');
@@ -149,9 +141,7 @@ test.describe('User Story 2: Theme and Language', () => {
     await page.waitForTimeout(500);
 
     // Verify theme is still dark
-    const stillDarkBg = await page.locator('body').evaluate((el) =>
-      window.getComputedStyle(el).backgroundColor
-    );
+    const stillDarkBg = await page.locator('body').evaluate((el) => window.getComputedStyle(el).backgroundColor);
 
     expect(stillDarkBg).toBe(darkBg);
   });
@@ -166,9 +156,7 @@ test.describe('User Story 2: Theme and Language', () => {
     // Paper components should have dark background
     const paper = page.locator('[class*="MuiPaper"]').first();
     if (await paper.isVisible()) {
-      const paperBg = await paper.evaluate((el) =>
-        window.getComputedStyle(el).backgroundColor
-      );
+      const paperBg = await paper.evaluate((el) => window.getComputedStyle(el).backgroundColor);
       // Dark theme should have darker background
       expect(paperBg).toBeTruthy();
     }

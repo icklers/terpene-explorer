@@ -12,32 +12,32 @@ All colors must meet WCAG 2.1 Level AA contrast requirements of **4.5:1** agains
 
 The following colors are used for effect chips and must be verified against both light and dark backgrounds:
 
-| Effect | Color Code | Material Color | Status |
-|--------|------------|----------------|---------|
-| Calming | `#5C6BC0` | Indigo 400 | ✓ To verify in DevTools |
-| Sedative | `#7E57C2` | Deep Purple 400 | ✓ To verify in DevTools |
-| Anxiolytic | `#42A5F5` | Blue 400 | ✓ To verify in DevTools |
-| Muscle Relaxant | `#26C6DA` | Cyan 400 | ✓ To verify in DevTools |
-| Anticonvulsant | `#66BB6A` | Green 400 | ✓ To verify in DevTools |
-| Energizing | `#FFA726` | Orange 400 | ✓ To verify in DevTools |
-| Mood Enhancing | `#FFCA28` | Amber 400 | ✓ To verify in DevTools |
-| Anti-Stress | `#FDD835` | Yellow 600 | ✓ To verify in DevTools |
-| Uplifting | `#F57C00` | Orange 700 | ✓ To verify in DevTools |
-| Focus | `#FF7043` | Deep Orange 400 | ✓ To verify in DevTools |
-| Anti-Inflammatory | `#8D6E63` | Brown 400 | ✓ To verify in DevTools |
-| Analgesic | `#A1887F` | Brown 300 | ✓ To verify in DevTools |
-| Pain Relief | `#D7CCC8` | Brown 100 | ✓ To verify in DevTools |
-| Neuroprotective | `#BCAAA4` | Brown 200 | ✓ To verify in DevTools |
-| Memory Retention | `#26A69A` | Teal 400 | ✓ To verify in DevTools |
-| Bronchodilator | `#66BB6A` | Green 400 | ✓ To verify in DevTools |
-| Antioxidant | `#9CCC65` | Light Green 400 | ✓ To verify in DevTools |
-| Antimicrobial | `#AB47BC` | Purple 400 | ✓ To verify in DevTools |
-| Antibacterial | `#BA68C8` | Purple 300 | ✓ To verify in DevTools |
-| Antiviral | `#EC407A` | Pink 400 | ✓ To verify in DevTools |
-| Antifungal | `#F06292` | Pink 300 | ✓ To verify in DevTools |
-| Appetite Suppressant | `#FF8A65` | Deep Orange 300 | ✓ To verify in DevTools |
-| Decongestant | `#FFB74D` | Orange 300 | ✓ To verify in DevTools |
-| Default | `#78909C` | Blue Grey 400 | ✓ To verify in DevTools |
+| Effect               | Color Code | Material Color  | Status                  |
+| -------------------- | ---------- | --------------- | ----------------------- |
+| Calming              | `#5C6BC0`  | Indigo 400      | ✓ To verify in DevTools |
+| Sedative             | `#7E57C2`  | Deep Purple 400 | ✓ To verify in DevTools |
+| Anxiolytic           | `#42A5F5`  | Blue 400        | ✓ To verify in DevTools |
+| Muscle Relaxant      | `#26C6DA`  | Cyan 400        | ✓ To verify in DevTools |
+| Anticonvulsant       | `#66BB6A`  | Green 400       | ✓ To verify in DevTools |
+| Energizing           | `#FFA726`  | Orange 400      | ✓ To verify in DevTools |
+| Mood Enhancing       | `#FFCA28`  | Amber 400       | ✓ To verify in DevTools |
+| Anti-Stress          | `#FDD835`  | Yellow 600      | ✓ To verify in DevTools |
+| Uplifting            | `#F57C00`  | Orange 700      | ✓ To verify in DevTools |
+| Focus                | `#FF7043`  | Deep Orange 400 | ✓ To verify in DevTools |
+| Anti-Inflammatory    | `#8D6E63`  | Brown 400       | ✓ To verify in DevTools |
+| Analgesic            | `#A1887F`  | Brown 300       | ✓ To verify in DevTools |
+| Pain Relief          | `#D7CCC8`  | Brown 100       | ✓ To verify in DevTools |
+| Neuroprotective      | `#BCAAA4`  | Brown 200       | ✓ To verify in DevTools |
+| Memory Retention     | `#26A69A`  | Teal 400        | ✓ To verify in DevTools |
+| Bronchodilator       | `#66BB6A`  | Green 400       | ✓ To verify in DevTools |
+| Antioxidant          | `#9CCC65`  | Light Green 400 | ✓ To verify in DevTools |
+| Antimicrobial        | `#AB47BC`  | Purple 400      | ✓ To verify in DevTools |
+| Antibacterial        | `#BA68C8`  | Purple 300      | ✓ To verify in DevTools |
+| Antiviral            | `#EC407A`  | Pink 400        | ✓ To verify in DevTools |
+| Antifungal           | `#F06292`  | Pink 300        | ✓ To verify in DevTools |
+| Appetite Suppressant | `#FF8A65`  | Deep Orange 300 | ✓ To verify in DevTools |
+| Decongestant         | `#FFB74D`  | Orange 300      | ✓ To verify in DevTools |
+| Default              | `#78909C`  | Blue Grey 400   | ✓ To verify in DevTools |
 
 ### How to Verify Contrast in Browser DevTools
 
