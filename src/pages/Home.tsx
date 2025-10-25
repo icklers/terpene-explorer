@@ -169,7 +169,9 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
               transition: 'transform 0.3s',
             }}
             aria-expanded={filtersExpanded}
-            aria-label={filtersExpanded ? t('pages.home.collapseFilters', 'Collapse filters') : t('pages.home.expandFilters', 'Expand filters')}
+            aria-label={
+              filtersExpanded ? t('pages.home.collapseFilters', 'Collapse filters') : t('pages.home.expandFilters', 'Expand filters')
+            }
           >
             <ExpandMoreIcon />
           </IconButton>
@@ -182,20 +184,21 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
               {/* Search is now in header (Phase 5: T039) - Removed from here */}
 
               {/* Effect Chips */}
-          <FilterControls
-            effects={effects}
-            selectedEffects={filterState.selectedEffects}
-            onToggleEffect={toggleEffect}
-            onClearFilters={clearAllFilters}
-            resultsCount={filteredTerpenes.length}
-          />
+              <FilterControls
+                effects={effects}
+                selectedEffects={filterState.selectedEffects}
+                onToggleEffect={toggleEffect}
+                onClearFilters={clearAllFilters}
+                resultsCount={filteredTerpenes.length}
+              />
 
-          {/* Filter Mode Toggle (only show when effects are selected) */}
-          {filterState.selectedEffects.length > 1 && <FilterModeToggle mode={filterState.effectFilterMode} onChange={toggleFilterMode} />}
+              {/* Filter Mode Toggle (only show when effects are selected) */}
+              {filterState.selectedEffects.length > 1 && (
+                <FilterModeToggle mode={filterState.effectFilterMode} onChange={toggleFilterMode} />
+              )}
 
-          {/* View Mode Toggle (T072) */}
-          <ViewModeToggle mode={filterState.viewMode} onChange={setViewMode} />
-
+              {/* View Mode Toggle (T072) */}
+              <ViewModeToggle mode={filterState.viewMode} onChange={setViewMode} />
             </Stack>
           </Box>
         </Collapse>
