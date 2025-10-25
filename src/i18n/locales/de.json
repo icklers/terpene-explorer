@@ -59,6 +59,20 @@
     "viewDetails": "Details anzeigen",
     "celsius": "°C"
   },
+  "terpeneDetails": {
+    "fields": {
+      "effects": "Wirkungen",
+      "taste": "Geschmack",
+      "description": "Beschreibung",
+      "therapeuticProperties": "Therapeutische Eigenschaften",
+      "notableDifferences": "Bemerkenswerte Unterschiede",
+      "boilingPoint": "Siedepunkt",
+      "sources": "Natürliche Quellen"
+    },
+    "close": "Schließen",
+    "notAvailable": "Nicht verfügbar",
+    "celsius": "°C"
+  },
   "table": {
     "sortBy": "Sortieren nach {{column}}",
     "sortAscending": "Aufsteigend sortieren",
@@ -70,6 +84,7 @@
     "loadFailed": "Terpen-Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
     "parseFailed": "Das Datenformat ist ungültig. Bitte kontaktieren Sie den Support.",
     "validationFailed": "Einige Terpen-Daten sind unvollständig. Verfügbare Einträge werden angezeigt.",
+    "dataFormatError": "Datenformatfehler. Bitte öffnen Sie ein Issue auf GitHub: https://github.com/icklers/terpene-explorer/issues",
     "noData": "Keine Terpen-Daten verfügbar. Bitte fügen Sie Terpen-Daten zum data/-Verzeichnis hinzu und aktualisieren Sie die Seite.",
     "retry": "Erneut versuchen",
     "close": "Schließen"

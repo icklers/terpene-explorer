@@ -59,6 +59,20 @@
     "viewDetails": "View details",
     "celsius": "°C"
   },
+  "terpeneDetails": {
+    "fields": {
+      "effects": "Effects",
+      "taste": "Taste",
+      "description": "Description",
+      "therapeuticProperties": "Therapeutic Properties",
+      "notableDifferences": "Notable Differences",
+      "boilingPoint": "Boiling Point",
+      "sources": "Natural Sources"
+    },
+    "close": "Close",
+    "notAvailable": "Not available",
+    "celsius": "°C"
+  },
   "table": {
     "sortBy": "Sort by {{column}}",
     "sortAscending": "Sort ascending",
@@ -70,6 +84,7 @@
     "loadFailed": "Unable to load terpene data. Please check your connection and try again.",
     "parseFailed": "Data format is invalid. Please contact support.",
     "validationFailed": "Some terpene data is incomplete. Showing available entries.",
+    "dataFormatError": "Data format error. Please open an issue on GitHub: https://github.com/icklers/terpene-explorer/issues",
     "noData": "No terpene data available. Please add terpene data to the data/ directory and refresh the page.",
     "retry": "Try again",
     "close": "Close"

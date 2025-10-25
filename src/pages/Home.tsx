@@ -7,7 +7,8 @@
  * @see tasks.md T051, T071-T074
  */
 
-import { Container, Box, Typography, Paper, Stack, Skeleton } from '@mui/material';
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
+import { Container, Box, Typography, Paper, Stack, Skeleton, Collapse, IconButton } from '@mui/material';
 import React, { lazy, Suspense, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -15,10 +16,10 @@ import { ViewModeToggle } from '../components/common/ViewModeToggle';
 import { WarningSnackbar } from '../components/common/WarningSnackbar';
 import { FilterControls } from '../components/filters/FilterControls';
 import { FilterModeToggle } from '../components/filters/FilterModeToggle';
-import { SearchBar } from '../components/filters/SearchBar';
 import { TerpeneList } from '../components/visualizations/TerpeneList';
 import { useFilters } from '../hooks/useFilters';
 import { useTerpeneData } from '../hooks/useTerpeneData';
+import { useTerpeneDatabase } from '../hooks/useTerpeneDatabase';
 import { filterTerpenes } from '../services/filterService';
 import { transformToSunburstData } from '../utils/sunburstTransform';
 
@@ -35,21 +36,70 @@ const TerpeneTable = lazy(() =>
 );
 
 /**
+ * Home page component props (Phase 5: T037)
+ */
+export interface HomeProps {
+  /** Search query from header SearchBar */
+  searchQuery: string;
+}
+
+/**
  * Home page component
  *
+ * @param props - Component props
  * @returns Rendered component
  */
-export function Home(): React.ReactElement {
+export function Home({ searchQuery }: HomeProps): React.ReactElement {
   const { t } = useTranslation();
 
-  // Load terpene data
-  const { terpenes, effects, isLoading, error, warnings, retry } = useTerpeneData();
+  // Load old terpene data (for sunburst view)
+  const { terpenes: oldTerpenes, effects: oldEffects, isLoading: oldLoading, error: oldError, warnings, retry } = useTerpeneData();
 
-  // Manage filter state
-  const { filterState, setSearchQuery, toggleEffect, toggleFilterMode, setViewMode, clearAllFilters, hasActiveFilters } = useFilters();
+  // Load new terpene data (for table view) - T011e
+  const { terpenes: newTerpenes, loading: newLoading, error: newError } = useTerpeneDatabase();
+
+  // Manage filter state (search query now comes from header - Phase 5: T037)
+  const { filterState, toggleEffect, toggleFilterMode, setViewMode, clearAllFilters, hasActiveFilters } = useFilters();
+  const isTableView = filterState.viewMode === 'table';
+
+  // Use new data for table view, old data for sunburst
+  const terpenes = isTableView ? (newTerpenes as unknown as typeof oldTerpenes) : oldTerpenes;
+  const isLoading = isTableView ? newLoading : oldLoading;
+  const error = isTableView ? newError : oldError;
+
+  // Extract effects from current data source
+  const effects = React.useMemo(() => {
+    if (isTableView && newTerpenes.length > 0) {
+      // Extract effects from new data
+      const effectCounts = new Map<string, number>();
+      newTerpenes.forEach((terpene) => {
+        terpene.effects.forEach((effect) => {
+          effectCounts.set(effect, (effectCounts.get(effect) || 0) + 1);
+        });
+      });
+
+      // Convert to Effect objects matching the Effect interface
+      // IMPORTANT: Keep 'name' as original effect name (not kebab-case) for filter matching
+      return Array.from(effectCounts.entries())
+        .map(([effectName, count]) => ({
+          name: effectName, // Keep original name for filter matching
+          displayName: {
+            en: effectName,
+            de: effectName, // Use English name as fallback for German
+          },
+          color: '#4caf50', // Default primary green
+          terpeneCount: count,
+        }))
+        .sort((a, b) => a.displayName.en.localeCompare(b.displayName.en));
+    }
+    return oldEffects;
+  }, [isTableView, newTerpenes, oldEffects]);
 
   // Snackbar state for validation warnings
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+
+  // Collapsible filters state (collapsed by default)
+  const [filtersExpanded, setFiltersExpanded] = React.useState(false);
 
   // Ref for visualization container (T091 - Focus management)
   const visualizationRef = useRef<HTMLDivElement>(null);
@@ -69,65 +119,89 @@ export function Home(): React.ReactElement {
     }
   }, [filterState.viewMode, isLoading, error]);
 
-  // Apply filters to terpenes
+  // Apply filters to terpenes (use activeFilterState with search from header - Phase 5: T037)
   const filteredTerpenes = React.useMemo(() => {
     if (isLoading || error) {
       return [];
     }
-    return filterTerpenes(terpenes, filterState);
-  }, [terpenes, filterState, isLoading, error]);
+    // Merge search query from header with filter state
+    const activeFilterState = { ...filterState, searchQuery };
+    return filterTerpenes(terpenes, activeFilterState);
+  }, [terpenes, filterState, searchQuery, isLoading, error]);
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Page Header */}
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
+        {/* <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
           {t('pages.home.title', 'Terpene Explorer')}
-        </Typography>
+        </Typography> */}
         <Typography variant="subtitle1" color="text.secondary">
           {t('pages.home.subtitle', 'Discover and filter terpenes by their effects and properties')}
         </Typography>
       </Box>
 
       {/* Filter Controls */}
-      <Paper elevation={1} sx={{ p: 3, mb: 3 }} role="search" aria-label={t('pages.home.filtersLabel', 'Filter controls')}>
-        {/* Heading for accessibility (T092) */}
-        <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
-          {t('pages.home.filtersHeading', 'Filters')}
-        </Typography>
+      <Paper elevation={1} sx={{ mb: 3 }} role="search" aria-label={t('pages.home.filtersLabel', 'Filter controls')}>
+        {/* Collapsible Header */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            p: 2,
+            cursor: 'pointer',
+            '&:hover': { backgroundColor: 'action.hover' },
+          }}
+          onClick={() => setFiltersExpanded(!filtersExpanded)}
+        >
+          <Typography variant="h5" component="h2" sx={{ fontWeight: 600 }}>
+            {t('pages.home.filtersHeading', 'Filters')}
+            {hasActiveFilters && (
+              <Typography component="span" variant="caption" color="primary" sx={{ ml: 2, fontWeight: 600 }}>
+                ({t('pages.home.filtersActive', 'Active')})
+              </Typography>
+            )}
+          </Typography>
+          <IconButton
+            sx={{
+              transform: filtersExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+              transition: 'transform 0.3s',
+            }}
+            aria-expanded={filtersExpanded}
+            aria-label={
+              filtersExpanded ? t('pages.home.collapseFilters', 'Collapse filters') : t('pages.home.expandFilters', 'Expand filters')
+            }
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </Box>
 
-        <Stack spacing={3}>
-          {/* Search Input (T071) */}
-          <SearchBar
-            value={filterState.searchQuery}
-            onChange={setSearchQuery}
-            placeholder={t('pages.home.searchPlaceholder', 'Search terpenes by name, aroma, or effects...')}
-            ariaLabel={t('pages.home.searchAriaLabel', 'Search terpenes')}
-            resultsCount={filteredTerpenes.length}
-          />
+        {/* Collapsible Content */}
+        <Collapse in={filtersExpanded}>
+          <Box sx={{ p: 3, pt: 0 }}>
+            <Stack spacing={3}>
+              {/* Search is now in header (Phase 5: T039) - Removed from here */}
 
-          {/* Effect Chips */}
-          <FilterControls
-            effects={effects}
-            selectedEffects={filterState.selectedEffects}
-            onToggleEffect={toggleEffect}
-            onClearFilters={clearAllFilters}
-            resultsCount={filteredTerpenes.length}
-          />
+              {/* Effect Chips */}
+              <FilterControls
+                effects={effects}
+                selectedEffects={filterState.selectedEffects}
+                onToggleEffect={toggleEffect}
+                onClearFilters={clearAllFilters}
+                resultsCount={filteredTerpenes.length}
+              />
 
-          {/* Filter Mode Toggle (only show when effects are selected) */}
-          {filterState.selectedEffects.length > 1 && <FilterModeToggle mode={filterState.effectFilterMode} onChange={toggleFilterMode} />}
+              {/* Filter Mode Toggle (only show when effects are selected) */}
+              {filterState.selectedEffects.length > 1 && (
+                <FilterModeToggle mode={filterState.effectFilterMode} onChange={toggleFilterMode} />
+              )}
 
-          {/* View Mode Toggle (T072) */}
-          <ViewModeToggle mode={filterState.viewMode} onChange={setViewMode} />
-
-          {/* Active Filters Indicator */}
-          {hasActiveFilters && (
-            <Typography variant="caption" color="primary" sx={{ fontWeight: 600 }} role="status" aria-live="polite">
-              {t('pages.home.filtersActive', 'Filters active')}
-            </Typography>
-          )}
-        </Stack>
+              {/* View Mode Toggle (T072) */}
+              <ViewModeToggle mode={filterState.viewMode} onChange={setViewMode} />
+            </Stack>
+          </Box>
+        </Collapse>
       </Paper>
 
       {/* Results */}
@@ -164,6 +238,7 @@ export function Home(): React.ReactElement {
                 }}
               />
             ) : (
+              // T011e: Pass filtered terpenes from new data source
               <TerpeneTable terpenes={filteredTerpenes} />
             )}
           </Suspense>

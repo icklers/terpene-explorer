@@ -23,7 +23,9 @@ import {
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { TerpeneDetailModal } from './TerpeneDetailModal';
 import type { Terpene } from '../../models/Terpene';
+import type { Terpene as NewTerpene } from '../../types/terpene';
 
 // TODO: Re-enable virtualization with react-window after fixing import issues
 // import { FixedSizeList } from 'react-window';
@@ -34,8 +36,8 @@ import type { Terpene } from '../../models/Terpene';
 export interface TerpeneTableProps {
   /** Terpenes to display */
   terpenes: Terpene[];
-  /** Initial sort column */
-  initialSortBy?: 'name' | 'aroma' | 'sources' | 'effects';
+  /** Initial sort column (Phase 4: T029 - sources removed) */
+  initialSortBy?: 'name' | 'aroma' | 'effects';
   /** Initial sort direction */
   initialSortDirection?: 'asc' | 'desc';
 }
@@ -44,7 +46,7 @@ export interface TerpeneTableProps {
  * Sort direction type
  */
 type SortDirection = 'asc' | 'desc';
-type SortColumn = 'name' | 'aroma' | 'sources' | 'effects';
+type SortColumn = 'name' | 'aroma' | 'effects'; // Phase 4: T029 - sources removed
 
 /**
  * TerpeneTable component
@@ -56,6 +58,10 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
   const { t } = useTranslation();
   const [sortBy, setSortBy] = useState<SortColumn>(initialSortBy);
   const [sortDirection, setSortDirection] = useState<SortDirection>(initialSortDirection);
+
+  // State for detail modal (T020)
+  const [selectedTerpene, setSelectedTerpene] = useState<NewTerpene | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // Handle sort
   const handleSort = (column: SortColumn) => {
@@ -69,7 +75,29 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
     }
   };
 
-  // Sort terpenes
+  // Handle row click to open detail modal (T019, T022)
+  const handleRowClick = (terpene: Terpene) => {
+    // Type adapter: convert to NewTerpene format for modal
+    const newTerpene: NewTerpene = terpene as unknown as NewTerpene;
+    setSelectedTerpene(newTerpene);
+    setModalOpen(true);
+  };
+
+  // Handle modal close
+  const handleModalClose = () => {
+    setModalOpen(false);
+    // Keep selectedTerpene for potential re-open animation
+  };
+
+  // Handle keyboard navigation (T021)
+  const handleRowKeyDown = (event: React.KeyboardEvent, terpene: Terpene) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleRowClick(terpene);
+    }
+  };
+
+  // Sort terpenes (Phase 4: T029 - sources case removed)
   const sortedTerpenes = useMemo(() => {
     const sorted = [...terpenes].sort((a, b) => {
       let aValue: string;
@@ -83,10 +111,6 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
         case 'aroma':
           aValue = a.aroma;
           bValue = b.aroma;
-          break;
-        case 'sources':
-          aValue = a.sources.join(', ');
-          bValue = b.sources.join(', ');
           break;
         case 'effects':
           aValue = a.effects.join(', ');
@@ -153,21 +177,24 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                 {t('table.effects', 'Effects')}
               </TableSortLabel>
             </TableCell>
-            <TableCell>
-              <TableSortLabel
-                active={sortBy === 'sources'}
-                direction={sortBy === 'sources' ? sortDirection : 'asc'}
-                onClick={() => handleSort('sources')}
-                aria-sort={sortBy === 'sources' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
-              >
-                {t('table.sources', 'Sources')}
-              </TableSortLabel>
-            </TableCell>
+            {/* Sources column removed (Phase 4: T029) - Available in detail modal */}
           </TableRow>
         </TableHead>
         <TableBody>
           {sortedTerpenes.map((terpene) => (
-            <TableRow key={terpene.id} sx={{ '&:hover': { backgroundColor: 'action.hover' } }}>
+            <TableRow
+              key={terpene.id}
+              onClick={() => handleRowClick(terpene)}
+              onKeyDown={(e) => handleRowKeyDown(e, terpene)}
+              tabIndex={0}
+              role="button"
+              aria-label={t('table.viewDetailsFor', { name: terpene.name, defaultValue: `View details for ${terpene.name}` })}
+              sx={{
+                cursor: 'pointer',
+                '&:hover': { backgroundColor: 'action.hover' },
+                '&:focus': { backgroundColor: 'action.focus', outline: '2px solid primary.main', outlineOffset: '-2px' },
+              }}
+            >
               <TableCell>{terpene.name}</TableCell>
               <TableCell>{terpene.aroma}</TableCell>
               <TableCell>
@@ -177,11 +204,13 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                   ))}
                 </Box>
               </TableCell>
-              <TableCell>{terpene.sources.join(', ')}</TableCell>
+              {/* Sources cell removed (Phase 4: T029) - Available in detail modal */}
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      {/* Detail Modal (T022) */}
+      <TerpeneDetailModal open={modalOpen} terpene={selectedTerpene} onClose={handleModalClose} />
     </TableContainer>
   );
 }
