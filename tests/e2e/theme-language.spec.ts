@@ -90,7 +90,7 @@ test.describe('User Story 2: Theme and Language', () => {
       await page.waitForTimeout(300);
 
       // Select German
-      const germanOption = page.locator('text=Deutsch, text=German, text=DE').first();
+      const germanOption = page.locator('text=Deutsch').or(page.locator('text=German')).or(page.locator('text=DE')).first();
       if (await germanOption.isVisible()) {
         await germanOption.click();
       }
