@@ -2,7 +2,8 @@ import { z } from 'zod';
 
 // Nested schemas (bottom-up approach)
 const MolecularDataSchema = z.object({
-  molecularFormula: z.string().regex(/^C\d+H\d+O?\d*$/),
+  // Allow common element-token style formulas like C10H16O2 or C10H16
+  molecularFormula: z.string().regex(/^([A-Z][a-z]?\d*)+$/),
   molecularWeight: z.number().positive(),
   boilingPoint: z.number().min(-273).nullable(),
   class: z.string().min(1),
@@ -20,10 +21,12 @@ const ResearchTierSchema = z.object({
 
 // Main Terpene schema
 const TerpeneSchema = z.object({
-  id: z.string().min(1), // Accept any non-empty string ID (UUID or terp-XXX format)
+  // IDs in the database use UUIDs; validate explicitly for safety
+  id: z.string().uuid(),
   name: z.string().min(1),
   isomerOf: z.string().nullable(),
-  isomerType: z.string().nullable(), // Accept any isomer type string (flexible for variations)
+  // Constrain isomer types to a known set for data consistency
+  isomerType: z.enum(['Optical', 'Optical (Enantiomer)', 'Positional', 'Structural', 'Oxidized derivative']).nullable(),
   category: z.enum(['Core', 'Secondary', 'Minor']),
   aroma: z.string().min(1),
   taste: z.string().min(1),
