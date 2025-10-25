@@ -1,7 +1,7 @@
 {
   "app": {
-    "title": "Interactive Terpene Map",
-    "tagline": "Explore the aromatic world of terpenes",
+    "title": "Terpene Explorer",
+    "tagline": "Discover the aromatic world of terpenes",
     "loading": "Loading terpene data...",
     "error": "Error"
   },
