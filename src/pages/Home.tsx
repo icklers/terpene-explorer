@@ -7,8 +7,8 @@
  * @see tasks.md T051, T071-T074
  */
 
-import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { Container, Box, Typography, Paper, Stack, Skeleton, Collapse, IconButton } from '@mui/material';
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import React, { lazy, Suspense, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -16,9 +16,11 @@ import { ViewModeToggle } from '../components/common/ViewModeToggle';
 import { WarningSnackbar } from '../components/common/WarningSnackbar';
 import { FilterControls } from '../components/filters/FilterControls';
 import { FilterModeToggle } from '../components/filters/FilterModeToggle';
+import { SearchBar } from '../components/filters/SearchBar';
 import { TerpeneList } from '../components/visualizations/TerpeneList';
 import { useFilters } from '../hooks/useFilters';
 import { useTerpeneData } from '../hooks/useTerpeneData';
+import { toLegacyArray } from '../utils/terpeneAdapter';
 import { useTerpeneDatabase } from '../hooks/useTerpeneDatabase';
 import { filterTerpenes } from '../services/filterService';
 import { transformToSunburstData } from '../utils/sunburstTransform';
@@ -36,20 +38,11 @@ const TerpeneTable = lazy(() =>
 );
 
 /**
- * Home page component props (Phase 5: T037)
- */
-export interface HomeProps {
-  /** Search query from header SearchBar */
-  searchQuery: string;
-}
-
-/**
  * Home page component
  *
- * @param props - Component props
  * @returns Rendered component
  */
-export function Home({ searchQuery }: HomeProps): React.ReactElement {
+export function Home(): React.ReactElement {
   const { t } = useTranslation();
 
   // Load old terpene data (for sunburst view)
@@ -58,12 +51,13 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
   // Load new terpene data (for table view) - T011e
   const { terpenes: newTerpenes, loading: newLoading, error: newError } = useTerpeneDatabase();
 
-  // Manage filter state (search query now comes from header - Phase 5: T037)
-  const { filterState, toggleEffect, toggleFilterMode, setViewMode, clearAllFilters, hasActiveFilters } = useFilters();
+  // Determine which data source to use based on view mode
+  const { filterState, setSearchQuery, toggleEffect, toggleFilterMode, setViewMode, clearAllFilters, hasActiveFilters } = useFilters();
   const isTableView = filterState.viewMode === 'table';
 
   // Use new data for table view, old data for sunburst
-  const terpenes = isTableView ? (newTerpenes as unknown as typeof oldTerpenes) : oldTerpenes;
+  // Convert new schema to legacy model for existing UI components
+  const terpenes = isTableView ? toLegacyArray(newTerpenes) : oldTerpenes;
   const isLoading = isTableView ? newLoading : oldLoading;
   const error = isTableView ? newError : oldError;
 
@@ -119,15 +113,13 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
     }
   }, [filterState.viewMode, isLoading, error]);
 
-  // Apply filters to terpenes (use activeFilterState with search from header - Phase 5: T037)
+  // Apply filters to terpenes
   const filteredTerpenes = React.useMemo(() => {
     if (isLoading || error) {
       return [];
     }
-    // Merge search query from header with filter state
-    const activeFilterState = { ...filterState, searchQuery };
-    return filterTerpenes(terpenes, activeFilterState);
-  }, [terpenes, filterState, searchQuery, isLoading, error]);
+    return filterTerpenes(terpenes, filterState);
+  }, [terpenes, filterState, isLoading, error]);
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -169,9 +161,7 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
               transition: 'transform 0.3s',
             }}
             aria-expanded={filtersExpanded}
-            aria-label={
-              filtersExpanded ? t('pages.home.collapseFilters', 'Collapse filters') : t('pages.home.expandFilters', 'Expand filters')
-            }
+            aria-label={filtersExpanded ? t('pages.home.collapseFilters', 'Collapse filters') : t('pages.home.expandFilters', 'Expand filters')}
           >
             <ExpandMoreIcon />
           </IconButton>
@@ -181,24 +171,30 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
         <Collapse in={filtersExpanded}>
           <Box sx={{ p: 3, pt: 0 }}>
             <Stack spacing={3}>
-              {/* Search is now in header (Phase 5: T039) - Removed from here */}
+          {/* Search Input (T071) */}
+          <SearchBar
+            value={filterState.searchQuery}
+            onChange={setSearchQuery}
+            placeholder={t('pages.home.searchPlaceholder', 'Search terpenes by name, aroma, or effects...')}
+            ariaLabel={t('pages.home.searchAriaLabel', 'Search terpenes')}
+            resultsCount={filteredTerpenes.length}
+          />
 
-              {/* Effect Chips */}
-              <FilterControls
-                effects={effects}
-                selectedEffects={filterState.selectedEffects}
-                onToggleEffect={toggleEffect}
-                onClearFilters={clearAllFilters}
-                resultsCount={filteredTerpenes.length}
-              />
+          {/* Effect Chips */}
+          <FilterControls
+            effects={effects}
+            selectedEffects={filterState.selectedEffects}
+            onToggleEffect={toggleEffect}
+            onClearFilters={clearAllFilters}
+            resultsCount={filteredTerpenes.length}
+          />
 
-              {/* Filter Mode Toggle (only show when effects are selected) */}
-              {filterState.selectedEffects.length > 1 && (
-                <FilterModeToggle mode={filterState.effectFilterMode} onChange={toggleFilterMode} />
-              )}
+          {/* Filter Mode Toggle (only show when effects are selected) */}
+          {filterState.selectedEffects.length > 1 && <FilterModeToggle mode={filterState.effectFilterMode} onChange={toggleFilterMode} />}
 
-              {/* View Mode Toggle (T072) */}
-              <ViewModeToggle mode={filterState.viewMode} onChange={setViewMode} />
+          {/* View Mode Toggle (T072) */}
+          <ViewModeToggle mode={filterState.viewMode} onChange={setViewMode} />
+
             </Stack>
           </Box>
         </Collapse>

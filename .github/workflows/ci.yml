@@ -156,22 +156,15 @@ jobs:
           echo "VITE_BUILD_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> .env.production
           echo "VITE_COMMIT_SHA=$GITHUB_SHA" >> .env.production
           echo "VITE_VERSION=${GITHUB_REF#refs/*/}" >> .env.production
-      
-      # - name: 🏗 Build for GitHub Pages
-      #   id: build-gh
-      #   run: |
-      #     start_time=$SECONDS
-      #     NODE_ENV=production MODE=github-pages pnpm run build
-      #     mv dist dist-gh-pages
-      #     # Copy 404.html for GitHub Pages
-      #     cp dist-gh-pages/index.html dist-gh-pages/404.html
-      #     end_time=$SECONDS
-      #     build_time=$((end_time - start_time))
-      #     echo "build_time=$build_time" >> $GITHUB_OUTPUT
-      #     build_size=$(du -sh dist-gh-pages | cut -f1)
-      #     echo "build_size=$build_size" >> $GITHUB_OUTPUT
-      #     chunk_count=$(find dist-gh-pages/assets -type f | wc -l)
-      #     echo "chunk_count=$chunk_count" >> $GITHUB_OUTPUT
+
+      - name: Inject JSON data
+        run: | 
+          echo "Injecting terpene database into public/data/terpene-database.json"
+          cp data/terpene-database.json public/data/terpene-database.json
+          echo "Injecting cannabis_terminology_glossary.json into public/data/cannabis_terminology_glossary.json"
+          cp data/cannabis_terminology_glossary.json public/data/cannabis_terminology_glossary.json
+          echo "Injecting cannabis_cultivar_terpene_profiles.json into public/data/cannabis_cultivar_terpene_profiles.json"
+          cp data/cannabis_cultivar_terpene_profiles.json public/data/cannabis_cultivar_terpene_profiles.json
 
       - name: 🏗 Build for Azure SWA
         id: build-swa
