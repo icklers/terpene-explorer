@@ -48,7 +48,7 @@ This is a frontend-only web application with `src/` at repository root per plan.
 - [X] T008 Create data service with validation in src/services/terpeneData.ts (loadTerpeneDatabase function)
 - [X] T009 [P] Add i18n translation files: src/i18n/locales/en/terpene-details.json with field labels and error message
 - [X] T010 [P] Add i18n translation files: src/i18n/locales/de/terpene-details.json with field labels and error message
-- [ ] T011 Create React hook for data loading in src/hooks/useTerpeneData.ts
+- [X] T011 Create React hook for data loading in src/hooks/useTerpeneDatabase.ts (new hook to avoid breaking existing functionality)
 
 **Checkpoint**: Foundation ready - data can be loaded and validated. User story implementation can now begin in parallel.
 
