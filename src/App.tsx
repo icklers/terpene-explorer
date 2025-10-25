@@ -9,7 +9,7 @@
  */
 
 import { CssBaseline, GlobalStyles, ThemeProvider, Box } from '@mui/material';
-import { useEffect, Suspense } from 'react';
+import { useEffect, Suspense, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ErrorBoundary } from './components/common/ErrorBoundary';
@@ -40,6 +40,9 @@ export const App: React.FC = () => {
 
   // Language management with localStorage persistence (T084)
   const [language, setLanguage] = useLocalStorage<string>('language', 'en');
+
+  // Search state management (Phase 5: T037 - Header Search)
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Sync i18next with stored language preference
   useEffect(() => {
@@ -72,13 +75,20 @@ export const App: React.FC = () => {
 
         {/* App Layout */}
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-          {/* App Bar with Theme & Language Controls (T087) */}
-          <AppBar themeMode={themeMode} onThemeToggle={toggleTheme} language={language} onLanguageChange={handleLanguageChange} />
+          {/* App Bar with Theme, Language & Search Controls (T087, Phase 5: T036) */}
+          <AppBar
+            themeMode={themeMode}
+            onThemeToggle={toggleTheme}
+            language={language}
+            onLanguageChange={handleLanguageChange}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+          />
 
           {/* Main Content with Suspense for i18n loading */}
           <Box sx={{ flex: 1 }}>
             <Suspense fallback={<LoadingIndicator message="Loading application..." />}>
-              <Home />
+              <Home searchQuery={searchQuery} />
             </Suspense>
           </Box>
 

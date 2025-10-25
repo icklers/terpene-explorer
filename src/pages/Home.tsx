@@ -16,7 +16,6 @@ import { ViewModeToggle } from '../components/common/ViewModeToggle';
 import { WarningSnackbar } from '../components/common/WarningSnackbar';
 import { FilterControls } from '../components/filters/FilterControls';
 import { FilterModeToggle } from '../components/filters/FilterModeToggle';
-import { SearchBar } from '../components/filters/SearchBar';
 import { TerpeneList } from '../components/visualizations/TerpeneList';
 import { useFilters } from '../hooks/useFilters';
 import { useTerpeneData } from '../hooks/useTerpeneData';
@@ -37,11 +36,20 @@ const TerpeneTable = lazy(() =>
 );
 
 /**
+ * Home page component props (Phase 5: T037)
+ */
+export interface HomeProps {
+  /** Search query from header SearchBar */
+  searchQuery: string;
+}
+
+/**
  * Home page component
  *
+ * @param props - Component props
  * @returns Rendered component
  */
-export function Home(): React.ReactElement {
+export function Home({ searchQuery }: HomeProps): React.ReactElement {
   const { t } = useTranslation();
 
   // Load old terpene data (for sunburst view)
@@ -50,9 +58,12 @@ export function Home(): React.ReactElement {
   // Load new terpene data (for table view) - T011e
   const { terpenes: newTerpenes, loading: newLoading, error: newError } = useTerpeneDatabase();
 
-  // Determine which data source to use based on view mode
-  const { filterState, setSearchQuery, toggleEffect, toggleFilterMode, setViewMode, clearAllFilters, hasActiveFilters } = useFilters();
+  // Manage filter state (search query now comes from header - Phase 5: T037)
+  const { filterState, toggleEffect, toggleFilterMode, setViewMode, clearAllFilters, hasActiveFilters } = useFilters();
   const isTableView = filterState.viewMode === 'table';
+
+  // Use search query from header (Phase 5: T037)
+  const activeFilterState = { ...filterState, searchQuery };
 
   // Use new data for table view, old data for sunburst
   const terpenes = isTableView ? (newTerpenes as any) : oldTerpenes;
@@ -111,13 +122,13 @@ export function Home(): React.ReactElement {
     }
   }, [filterState.viewMode, isLoading, error]);
 
-  // Apply filters to terpenes
+  // Apply filters to terpenes (use activeFilterState with search from header - Phase 5: T037)
   const filteredTerpenes = React.useMemo(() => {
     if (isLoading || error) {
       return [];
     }
-    return filterTerpenes(terpenes, filterState);
-  }, [terpenes, filterState, isLoading, error]);
+    return filterTerpenes(terpenes, activeFilterState);
+  }, [terpenes, activeFilterState, isLoading, error]);
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -169,16 +180,9 @@ export function Home(): React.ReactElement {
         <Collapse in={filtersExpanded}>
           <Box sx={{ p: 3, pt: 0 }}>
             <Stack spacing={3}>
-          {/* Search Input (T071) */}
-          <SearchBar
-            value={filterState.searchQuery}
-            onChange={setSearchQuery}
-            placeholder={t('pages.home.searchPlaceholder', 'Search terpenes by name, aroma, or effects...')}
-            ariaLabel={t('pages.home.searchAriaLabel', 'Search terpenes')}
-            resultsCount={filteredTerpenes.length}
-          />
+              {/* Search is now in header (Phase 5: T039) - Removed from here */}
 
-          {/* Effect Chips */}
+              {/* Effect Chips */}
           <FilterControls
             effects={effects}
             selectedEffects={filterState.selectedEffects}
