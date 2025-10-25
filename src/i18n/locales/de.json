@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Interaktive Terpen-Karte",
+    "title": "Terpen Explorer",
     "tagline": "Entdecke die aromatische Welt der Terpene",
     "loading": "Terpen-Daten werden geladen...",
     "error": "Fehler"
