@@ -23,8 +23,8 @@ import {
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import type { Terpene } from '../../models/Terpene';
 import { TerpeneDetailModal } from './TerpeneDetailModal';
+import type { Terpene } from '../../models/Terpene';
 import type { Terpene as NewTerpene } from '../../types/terpene';
 
 // TODO: Re-enable virtualization with react-window after fixing import issues

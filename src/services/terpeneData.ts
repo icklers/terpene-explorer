@@ -1,5 +1,5 @@
-import { TerpeneDatabaseSchema, type Terpene } from '../utils/terpeneSchema';
 import type { SearchOptions } from '../types/terpene';
+import { TerpeneDatabaseSchema, type Terpene } from '../utils/terpeneSchema';
 
 /**
  * Loads and validates the terpene database from static JSON file.

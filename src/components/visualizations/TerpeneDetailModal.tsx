@@ -8,7 +8,6 @@
  * @see specs/002-terpene-data-model/spec.md - FR-004
  */
 
-import React from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -21,7 +20,9 @@ import {
   Box,
   Stack,
 } from '@mui/material';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import type { TerpeneDetailModalProps } from '../../types/terpene';
 
 /**

@@ -7,8 +7,8 @@
  * @see tasks.md T051, T071-T074
  */
 
-import { Container, Box, Typography, Paper, Stack, Skeleton, Collapse, IconButton } from '@mui/material';
 import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
+import { Container, Box, Typography, Paper, Stack, Skeleton, Collapse, IconButton } from '@mui/material';
 import React, { lazy, Suspense, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -62,11 +62,8 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
   const { filterState, toggleEffect, toggleFilterMode, setViewMode, clearAllFilters, hasActiveFilters } = useFilters();
   const isTableView = filterState.viewMode === 'table';
 
-  // Use search query from header (Phase 5: T037)
-  const activeFilterState = { ...filterState, searchQuery };
-
   // Use new data for table view, old data for sunburst
-  const terpenes = isTableView ? (newTerpenes as any) : oldTerpenes;
+  const terpenes = isTableView ? (newTerpenes as unknown as typeof oldTerpenes) : oldTerpenes;
   const isLoading = isTableView ? newLoading : oldLoading;
   const error = isTableView ? newError : oldError;
 
@@ -127,8 +124,10 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
     if (isLoading || error) {
       return [];
     }
+    // Merge search query from header with filter state
+    const activeFilterState = { ...filterState, searchQuery };
     return filterTerpenes(terpenes, activeFilterState);
-  }, [terpenes, activeFilterState, isLoading, error]);
+  }, [terpenes, filterState, searchQuery, isLoading, error]);
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>

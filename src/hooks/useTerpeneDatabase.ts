@@ -11,6 +11,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+
 import { loadTerpeneDatabase } from '../services/terpeneData';
 import type { Terpene, UseTerpeneDataResult } from '../types/terpene';
 
