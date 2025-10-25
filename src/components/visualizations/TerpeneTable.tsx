@@ -36,8 +36,8 @@ import type { Terpene as NewTerpene } from '../../types/terpene';
 export interface TerpeneTableProps {
   /** Terpenes to display */
   terpenes: Terpene[];
-  /** Initial sort column */
-  initialSortBy?: 'name' | 'aroma' | 'sources' | 'effects';
+  /** Initial sort column (Phase 4: T029 - sources removed) */
+  initialSortBy?: 'name' | 'aroma' | 'effects';
   /** Initial sort direction */
   initialSortDirection?: 'asc' | 'desc';
 }
@@ -46,7 +46,7 @@ export interface TerpeneTableProps {
  * Sort direction type
  */
 type SortDirection = 'asc' | 'desc';
-type SortColumn = 'name' | 'aroma' | 'sources' | 'effects';
+type SortColumn = 'name' | 'aroma' | 'effects'; // Phase 4: T029 - sources removed
 
 /**
  * TerpeneTable component
@@ -97,7 +97,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
     }
   };
 
-  // Sort terpenes
+  // Sort terpenes (Phase 4: T029 - sources case removed)
   const sortedTerpenes = useMemo(() => {
     const sorted = [...terpenes].sort((a, b) => {
       let aValue: string;
@@ -111,10 +111,6 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
         case 'aroma':
           aValue = a.aroma;
           bValue = b.aroma;
-          break;
-        case 'sources':
-          aValue = a.sources.join(', ');
-          bValue = b.sources.join(', ');
           break;
         case 'effects':
           aValue = a.effects.join(', ');
@@ -181,16 +177,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                 {t('table.effects', 'Effects')}
               </TableSortLabel>
             </TableCell>
-            <TableCell>
-              <TableSortLabel
-                active={sortBy === 'sources'}
-                direction={sortBy === 'sources' ? sortDirection : 'asc'}
-                onClick={() => handleSort('sources')}
-                aria-sort={sortBy === 'sources' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
-              >
-                {t('table.sources', 'Sources')}
-              </TableSortLabel>
-            </TableCell>
+            {/* Sources column removed (Phase 4: T029) - Available in detail modal */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -217,7 +204,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                   ))}
                 </Box>
               </TableCell>
-              <TableCell>{terpene.sources.join(', ')}</TableCell>
+              {/* Sources cell removed (Phase 4: T029) - Available in detail modal */}
             </TableRow>
           ))}
         </TableBody>
