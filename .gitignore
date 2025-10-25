@@ -43,3 +43,7 @@ test-results/
 gha-creds-*.json
 *.tmp
 *.temp
+
+# Miscellaneous
+backups/
+.cache/
