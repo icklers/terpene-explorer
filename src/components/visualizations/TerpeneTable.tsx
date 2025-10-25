@@ -77,8 +77,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
 
   // Handle row click to open detail modal (T019, T022)
   const handleRowClick = (terpene: Terpene) => {
-    // Convert old Terpene model to new Terpene type
-    // This is a temporary adapter until full migration
+    // Type adapter: convert to NewTerpene format for modal
     const newTerpene: NewTerpene = terpene as unknown as NewTerpene;
     setSelectedTerpene(newTerpene);
     setModalOpen(true);

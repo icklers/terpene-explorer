@@ -20,10 +20,10 @@ const ResearchTierSchema = z.object({
 
 // Main Terpene schema
 const TerpeneSchema = z.object({
-  id: z.string().regex(/^terp-\d{3}$/),
+  id: z.string().min(1), // Accept any non-empty string ID (UUID or terp-XXX format)
   name: z.string().min(1),
   isomerOf: z.string().nullable(),
-  isomerType: z.enum(['Optical', 'Positional', 'Structural']).nullable(),
+  isomerType: z.string().nullable(), // Accept any isomer type string (flexible for variations)
   category: z.enum(['Core', 'Secondary', 'Minor']),
   aroma: z.string().min(1),
   taste: z.string().min(1),

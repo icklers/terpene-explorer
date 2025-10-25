@@ -9,7 +9,10 @@ import type { SearchOptions } from '../types/terpene';
 export async function loadTerpeneDatabase(): Promise<Terpene[]> {
   try {
     // Dynamic import for code splitting
-    const data = await import('../../data/terpene-database.json');
+    const rawData = await import('../../data/terpene-database.json');
+
+    // Extract the actual database from the terpene_database_schema wrapper
+    const data = rawData.default?.terpene_database_schema || rawData.terpene_database_schema || rawData;
 
     // Validate entire database
     const validated = TerpeneDatabaseSchema.parse(data);
