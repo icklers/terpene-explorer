@@ -73,13 +73,13 @@ This is a frontend-only web application with `src/` at repository root per plan.
 
 ### Implementation for User Story 1
 
-- [ ] T018 [P] [US1] Create TerpeneDetailModal controlled component in src/components/visualizations/TerpeneDetailModal.tsx with all 7 fields in specified order
-- [ ] T019 [P] [US1] Update TerpeneTable component to add onClick handler to rows in src/components/visualizations/TerpeneTable.tsx
-- [ ] T020 [US1] Add state management for selected terpene and modal open state in src/components/visualizations/TerpeneTable.tsx
-- [ ] T021 [US1] Add keyboard navigation support (Enter/Space keys) to table rows in src/components/visualizations/TerpeneTable.tsx
-- [ ] T022 [US1] Integrate TerpeneDetailModal with table click handler in src/components/visualizations/TerpeneTable.tsx
-- [ ] T023 [US1] Add graceful handling for missing/null optional fields in modal (hide sections or show "Not available")
-- [ ] T024 [US1] Verify modal uses keepMounted prop for in-place content updates (controlled component pattern)
+- [X] T018 [P] [US1] Create TerpeneDetailModal controlled component in src/components/visualizations/TerpeneDetailModal.tsx with all 7 fields in specified order
+- [X] T019 [P] [US1] Update TerpeneTable component to add onClick handler to rows in src/components/visualizations/TerpeneTable.tsx
+- [X] T020 [US1] Add state management for selected terpene and modal open state in src/components/visualizations/TerpeneTable.tsx
+- [X] T021 [US1] Add keyboard navigation support (Enter/Space keys) to table rows in src/components/visualizations/TerpeneTable.tsx
+- [X] T022 [US1] Integrate TerpeneDetailModal with table click handler in src/components/visualizations/TerpeneTable.tsx
+- [X] T023 [US1] Add graceful handling for missing/null optional fields in modal (hide sections or show "Not available")
+- [X] T024 [US1] Verify modal uses keepMounted prop for in-place content updates (controlled component pattern)
 - [ ] T025 [US1] Test modal behavior with rapid row clicks (content updates without close/reopen)
 
 **Checkpoint**: User Story 1 is fully functional. Users can view detailed terpene information by clicking table rows. Test independently before proceeding.
