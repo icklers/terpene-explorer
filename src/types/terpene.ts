@@ -5,6 +5,8 @@ import type {
   MolecularData as MolecularDataType,
   Reference as ReferenceType,
   ResearchTier as ResearchTierType,
+  Effect as EffectType,
+  TherapeuticProperty as TherapeuticPropertyType,
 } from '../utils/terpeneSchema';
 
 // Re-export types
@@ -13,6 +15,8 @@ export type TerpeneDatabase = TerpeneDatabaseType;
 export type MolecularData = MolecularDataType;
 export type Reference = ReferenceType;
 export type ResearchTier = ResearchTierType;
+export type Effect = EffectType;
+export type TherapeuticProperty = TherapeuticPropertyType;
 
 // UI-specific interfaces
 export interface TerpeneDetailModalProps {
