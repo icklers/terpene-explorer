@@ -1,11 +1,18 @@
-// Re-export types from schema
-export type {
-  Terpene,
-  TerpeneDatabase,
-  MolecularData,
-  Reference,
-  ResearchTier,
+// Import types from schema first
+import type {
+  Terpene as TerpeneType,
+  TerpeneDatabase as TerpeneDatabaseType,
+  MolecularData as MolecularDataType,
+  Reference as ReferenceType,
+  ResearchTier as ResearchTierType,
 } from '../utils/terpeneSchema';
+
+// Re-export types
+export type Terpene = TerpeneType;
+export type TerpeneDatabase = TerpeneDatabaseType;
+export type MolecularData = MolecularDataType;
+export type Reference = ReferenceType;
+export type ResearchTier = ResearchTierType;
 
 // UI-specific interfaces
 export interface TerpeneDetailModalProps {
