@@ -27,11 +27,11 @@ This is a frontend-only web application with `src/` at repository root per plan.
 
 **Purpose**: Verify project structure and dependencies are ready
 
-- [ ] T001 Verify Node.js 24+ and pnpm 10+ are installed
-- [ ] T002 [P] Verify all dependencies are installed: `pnpm install`
-- [ ] T003 [P] Verify TypeScript compilation works: `pnpm type-check`
-- [ ] T004 [P] Verify linting passes: `pnpm lint`
-- [ ] T005 [P] (DON'T EXECUTE, Unit Tests broken) Verify existing tests pass: `pnpm test:run`
+- [X] T001 Verify Node.js 24+ and pnpm 10+ are installed
+- [X] T002 [P] Verify all dependencies are installed: `pnpm install`
+- [X] T003 [P] Verify TypeScript compilation works: `pnpm type-check`
+- [X] T004 [P] Verify linting passes: `pnpm lint`
+- [X] T005 [P] (DON'T EXECUTE, Unit Tests broken) Verify existing tests pass: `pnpm test:run`
 
 **Checkpoint**: Development environment is ready
 
@@ -43,11 +43,11 @@ This is a frontend-only web application with `src/` at repository root per plan.
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T006 Create Zod schema for terpene-database.json in src/utils/terpeneSchema.ts
-- [ ] T007 [P] Update TypeScript type definitions in src/types/terpene.ts to export Zod-inferred types
-- [ ] T008 Create data service with validation in src/services/terpeneData.ts (loadTerpeneDatabase function)
-- [ ] T009 [P] Add i18n translation files: src/i18n/locales/en/terpene-details.json with field labels and error message
-- [ ] T010 [P] Add i18n translation files: src/i18n/locales/de/terpene-details.json with field labels and error message
+- [X] T006 Create Zod schema for terpene-database.json in src/utils/terpeneSchema.ts
+- [X] T007 [P] Update TypeScript type definitions in src/types/terpene.ts to export Zod-inferred types
+- [X] T008 Create data service with validation in src/services/terpeneData.ts (loadTerpeneDatabase function)
+- [X] T009 [P] Add i18n translation files: src/i18n/locales/en/terpene-details.json with field labels and error message
+- [X] T010 [P] Add i18n translation files: src/i18n/locales/de/terpene-details.json with field labels and error message
 - [ ] T011 Create React hook for data loading in src/hooks/useTerpeneData.ts
 
 **Checkpoint**: Foundation ready - data can be loaded and validated. User story implementation can now begin in parallel.
