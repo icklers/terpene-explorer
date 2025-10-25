@@ -50,13 +50,7 @@ const TerpeneDatabaseSchema = z.object({
 });
 
 // Export schemas
-export {
-  TerpeneSchema,
-  TerpeneDatabaseSchema,
-  MolecularDataSchema,
-  ReferenceSchema,
-  ResearchTierSchema,
-};
+export { TerpeneSchema, TerpeneDatabaseSchema, MolecularDataSchema, ReferenceSchema, ResearchTierSchema };
 
 // Export inferred types
 export type Terpene = z.infer<typeof TerpeneSchema>;

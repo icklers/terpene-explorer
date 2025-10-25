@@ -8,18 +8,7 @@
  * @see specs/002-terpene-data-model/spec.md - FR-004
  */
 
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Typography,
-  Chip,
-  Divider,
-  Box,
-  Stack,
-} from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Chip, Divider, Box, Stack } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -42,11 +31,7 @@ import type { TerpeneDetailModalProps } from '../../types/terpene';
  * @param props.terpene - Terpene to display (null when closed)
  * @param props.onClose - Callback when user closes modal
  */
-export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({
-  open,
-  terpene,
-  onClose,
-}) => {
+export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({ open, terpene, onClose }) => {
   const { t } = useTranslation();
 
   // IMPORTANT: Don't return null - modal must remain mounted for in-place updates

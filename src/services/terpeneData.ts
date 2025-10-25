@@ -21,9 +21,7 @@ export async function loadTerpeneDatabase(): Promise<Terpene[]> {
   } catch (error) {
     console.error('Failed to load terpene database:', error);
     // Specific error message per clarification (2025-10-25)
-    throw new Error(
-      'Data format error. Please open an issue on GitHub: https://github.com/icklers/terpene-explorer/issues'
-    );
+    throw new Error('Data format error. Please open an issue on GitHub: https://github.com/icklers/terpene-explorer/issues');
   }
 }
 
@@ -33,10 +31,7 @@ export async function loadTerpeneDatabase(): Promise<Terpene[]> {
  * @param id - Terpene ID (e.g., "terp-001")
  * @returns Terpene object if found, undefined otherwise
  */
-export function getTerpeneById(
-  terpenes: Terpene[],
-  id: string
-): Terpene | undefined {
+export function getTerpeneById(terpenes: Terpene[], id: string): Terpene | undefined {
   return terpenes.find((t) => t.id === id);
 }
 
@@ -47,37 +42,20 @@ export function getTerpeneById(
  * @param options - Optional search configuration
  * @returns Filtered array of terpenes matching query
  */
-export function searchTerpenes(
-  terpenes: Terpene[],
-  query: string,
-  options?: SearchOptions
-): Terpene[] {
+export function searchTerpenes(terpenes: Terpene[], query: string, options?: SearchOptions): Terpene[] {
   if (!query.trim()) return terpenes;
 
-  const normalizedQuery = options?.caseSensitive
-    ? query
-    : query.toLowerCase();
+  const normalizedQuery = options?.caseSensitive ? query : query.toLowerCase();
 
-  const searchFields = options?.fields || [
-    'name',
-    'aroma',
-    'effects',
-    'therapeuticProperties',
-  ];
+  const searchFields = options?.fields || ['name', 'aroma', 'effects', 'therapeuticProperties'];
 
   return terpenes.filter((terpene) => {
     return searchFields.some((field) => {
       if (field === 'effects' || field === 'therapeuticProperties') {
-        return terpene[field].some((item) =>
-          (options?.caseSensitive ? item : item.toLowerCase()).includes(
-            normalizedQuery
-          )
-        );
+        return terpene[field].some((item) => (options?.caseSensitive ? item : item.toLowerCase()).includes(normalizedQuery));
       }
       const value = terpene[field];
-      return (options?.caseSensitive ? value : value.toLowerCase()).includes(
-        normalizedQuery
-      );
+      return (options?.caseSensitive ? value : value.toLowerCase()).includes(normalizedQuery);
     });
   });
 }
@@ -88,10 +66,7 @@ export function searchTerpenes(
  * @param category - Category to filter by
  * @returns Filtered array of terpenes in specified category
  */
-export function filterByCategory(
-  terpenes: Terpene[],
-  category: 'Core' | 'Secondary' | 'Minor'
-): Terpene[] {
+export function filterByCategory(terpenes: Terpene[], category: 'Core' | 'Secondary' | 'Minor'): Terpene[] {
   return terpenes.filter((t) => t.category === category);
 }
 
@@ -102,11 +77,7 @@ export function filterByCategory(
  * @param direction - Sort direction
  * @returns New sorted array (does not mutate original)
  */
-export function sortTerpenes(
-  terpenes: Terpene[],
-  sortBy: 'name' | 'category' | 'aroma',
-  direction: 'asc' | 'desc'
-): Terpene[] {
+export function sortTerpenes(terpenes: Terpene[], sortBy: 'name' | 'category' | 'aroma', direction: 'asc' | 'desc'): Terpene[] {
   const sorted = [...terpenes].sort((a, b) => {
     const aValue = a[sortBy];
     const bValue = b[sortBy];
