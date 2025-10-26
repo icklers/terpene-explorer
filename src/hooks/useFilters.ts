@@ -11,6 +11,7 @@
 import { useState, useCallback, useMemo } from 'react';
 
 import type { FilterState } from '../models/FilterState';
+import { getCategoryForEffect, getEffectsInCategories } from '../services/filterService';
 
 /**
  * Hook return type
@@ -122,9 +123,37 @@ export function useFilters(initialState?: Partial<FilterState>): UseFiltersResul
     setFilterState((prev) => {
       const isSelected = prev.selectedEffects.includes(effect);
 
+      // Determine category for this effect and update categoryFilters accordingly
+      const categoryId = getCategoryForEffect(effect);
+
+      let nextSelectedEffects: string[];
+      let nextCategoryFilters = [...prev.categoryFilters];
+
+      if (isSelected) {
+        // Deselect effect
+        nextSelectedEffects = prev.selectedEffects.filter((e) => e !== effect);
+
+        // If effect's category exists and no other selected effects remain in that category, remove the category
+        if (categoryId) {
+          const stillHasInCategory = nextSelectedEffects.some((e) => getCategoryForEffect(e) === categoryId);
+          if (!stillHasInCategory) {
+            nextCategoryFilters = nextCategoryFilters.filter((c) => c !== categoryId);
+          }
+        }
+      } else {
+        // Select effect
+        nextSelectedEffects = [...prev.selectedEffects, effect];
+
+        // Ensure category is selected when an effect from it is selected
+        if (categoryId && !nextCategoryFilters.includes(categoryId)) {
+          nextCategoryFilters.push(categoryId);
+        }
+      }
+
       return {
         ...prev,
-        selectedEffects: isSelected ? prev.selectedEffects.filter((e) => e !== effect) : [...prev.selectedEffects, effect],
+        selectedEffects: nextSelectedEffects,
+        categoryFilters: nextCategoryFilters,
       };
     });
   }, []);
@@ -228,9 +257,29 @@ export function useFilters(initialState?: Partial<FilterState>): UseFiltersResul
     setFilterState((prev) => {
       const isSelected = prev.categoryFilters.includes(category);
 
+      // When selecting a category, also select all effects that belong to it.
+      // When deselecting, remove effects that belong to that category.
+      const effectsInCategory = getEffectsInCategories([category]);
+
+      let nextSelectedEffects = [...prev.selectedEffects];
+      const nextCategoryFilters = isSelected ? prev.categoryFilters.filter((c) => c !== category) : [...prev.categoryFilters, category];
+
+      if (isSelected) {
+        // Deselecting category: remove its effects from selectedEffects
+        nextSelectedEffects = nextSelectedEffects.filter((e) => !effectsInCategory.includes(e));
+      } else {
+        // Selecting category: add all effects in that category (avoid duplicates)
+        effectsInCategory.forEach((eff) => {
+          if (!nextSelectedEffects.includes(eff)) {
+            nextSelectedEffects.push(eff);
+          }
+        });
+      }
+
       return {
         ...prev,
-        categoryFilters: isSelected ? prev.categoryFilters.filter((c) => c !== category) : [...prev.categoryFilters, category],
+        categoryFilters: nextCategoryFilters,
+        selectedEffects: nextSelectedEffects,
       };
     });
   }, []);
