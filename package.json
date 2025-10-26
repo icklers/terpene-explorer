@@ -32,7 +32,8 @@
     "type-check": "tsc --noEmit",
     "validate": "pnpm run type-check && pnpm run lint && pnpm run format:check && pnpm run test:run",
     "clean": "rm -rf dist node_modules/.vite",
-    "clean:all": "rm -rf dist node_modules"
+    "clean:all": "rm -rf dist node_modules",
+    "copy-and-validate-data": "cp data/terpene-database.json public/data/terpene-database.json && node scripts/validateDatabase.js"
   },
   "repository": {
     "type": "git",

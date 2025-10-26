@@ -26,6 +26,7 @@ import { useTranslation } from 'react-i18next';
 import { TerpeneDetailModal } from './TerpeneDetailModal';
 import type { Terpene } from '../../models/Terpene';
 import type { Terpene as NewTerpene } from '../../types/terpene';
+import { toNewTerpene } from '../../utils/terpeneAdapter';
 
 // TODO: Re-enable virtualization with react-window after fixing import issues
 // import { FixedSizeList } from 'react-window';
@@ -36,8 +37,8 @@ import type { Terpene as NewTerpene } from '../../types/terpene';
 export interface TerpeneTableProps {
   /** Terpenes to display */
   terpenes: Terpene[];
-  /** Initial sort column (Phase 4: T029 - sources removed) */
-  initialSortBy?: 'name' | 'aroma' | 'effects';
+  /** Initial sort column */
+  initialSortBy?: 'name' | 'aroma' | 'sources' | 'effects';
   /** Initial sort direction */
   initialSortDirection?: 'asc' | 'desc';
 }
@@ -46,7 +47,7 @@ export interface TerpeneTableProps {
  * Sort direction type
  */
 type SortDirection = 'asc' | 'desc';
-type SortColumn = 'name' | 'aroma' | 'effects'; // Phase 4: T029 - sources removed
+type SortColumn = 'name' | 'aroma' | 'sources' | 'effects';
 
 /**
  * TerpeneTable component
@@ -77,8 +78,8 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
 
   // Handle row click to open detail modal (T019, T022)
   const handleRowClick = (terpene: Terpene) => {
-    // Type adapter: convert to NewTerpene format for modal
-    const newTerpene: NewTerpene = terpene as unknown as NewTerpene;
+    // Convert legacy model to the new terpene shape for the detail modal
+    const newTerpene = toNewTerpene(terpene);
     setSelectedTerpene(newTerpene);
     setModalOpen(true);
   };
@@ -97,7 +98,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
     }
   };
 
-  // Sort terpenes (Phase 4: T029 - sources case removed)
+  // Sort terpenes
   const sortedTerpenes = useMemo(() => {
     const sorted = [...terpenes].sort((a, b) => {
       let aValue: string;
@@ -111,6 +112,10 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
         case 'aroma':
           aValue = a.aroma;
           bValue = b.aroma;
+          break;
+        case 'sources':
+          aValue = a.sources.join(', ');
+          bValue = b.sources.join(', ');
           break;
         case 'effects':
           aValue = a.effects.join(', ');
@@ -177,7 +182,16 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                 {t('table.effects', 'Effects')}
               </TableSortLabel>
             </TableCell>
-            {/* Sources column removed (Phase 4: T029) - Available in detail modal */}
+            <TableCell>
+              <TableSortLabel
+                active={sortBy === 'sources'}
+                direction={sortBy === 'sources' ? sortDirection : 'asc'}
+                onClick={() => handleSort('sources')}
+                aria-sort={sortBy === 'sources' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
+              >
+                {t('table.sources', 'Sources')}
+              </TableSortLabel>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -204,7 +218,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                   ))}
                 </Box>
               </TableCell>
-              {/* Sources cell removed (Phase 4: T029) - Available in detail modal */}
+              <TableCell>{terpene.sources.join(', ')}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -32,7 +32,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "include": ["src"],
+  "include": ["src", "scripts"],
   "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.spec.ts", "src/**/*.spec.tsx", "tests", "node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
