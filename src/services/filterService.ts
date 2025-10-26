@@ -10,8 +10,25 @@
 import type { FilterState } from '../models/FilterState';
 import type { Terpene } from '../models/Terpene';
 
-// Use CATEGORY_DEFINITIONS from a single source of truth
-import { CATEGORY_DEFINITIONS } from '../utils/categoryUIConfig';
+// Define category mappings inline for now (TBD: refactor to separate file)
+const CATEGORY_DEFINITIONS = {
+  mood: {
+    name: 'Mood & Energy',
+    effects: ['Energizing', 'Mood enhancing', 'Mood stabilizing', 'Uplifting'],
+  },
+  cognitive: {
+    name: 'Cognitive & Mental Enhancement',
+    effects: ['Alertness', 'Cognitive enhancement', 'Focus', 'Memory-enhancement'],
+  },
+  relaxation: {
+    name: 'Relaxation & Anxiety Management',
+    effects: ['Anxiety relief', 'Relaxing', 'Sedative', 'Stress relief', 'Couch-lock'],
+  },
+  physical: {
+    name: 'Physical & Physiological Management',
+    effects: ['Anti-inflammatory', 'Appetite suppressant', 'Breathing support', 'Muscle relaxant', 'Pain relief', 'Seizure related'],
+  },
+};
 
 /**
  * Filter terpenes based on filter state
@@ -127,7 +144,7 @@ export function getCategoryForEffect(effect: string): string | undefined {
 
   for (const key of Object.keys(CATEGORY_DEFINITIONS)) {
     const def = CATEGORY_DEFINITIONS[key as keyof typeof CATEGORY_DEFINITIONS];
-    if (def.effects.some((e) => e.toLowerCase() === name)) {
+    if (def && def.effects && def.effects.some((e) => e.toLowerCase() === name)) {
       return key;
     }
   }
