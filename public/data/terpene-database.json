@@ -190,7 +190,7 @@
         "description": "Also called humulene; has appetite suppressant and anti-inflammatory properties.",
         "aroma": "Earthy, Woody, Spicy, Herbal, Hoppy",
         "taste": "Hoppy, earthy with spice",
-        "effects": ["Appetite suppressant", "Anti-inflammatory", "Antibacterial", "Sedative"],
+        "effects": ["Appetite suppressant", "Anti-inflammatory", "Sedative"],
         "therapeuticProperties": ["Anti-inflammatory", "Antibacterial", "Anticancer", "Appetite suppressant"],
         "concentrationRange": "0.017-2.119 mg/g",
         "molecularData": {
@@ -215,7 +215,7 @@
         "description": "Complex terpene with fresh, piney, floral aroma; sedative and antioxidant properties.",
         "aroma": "Herbal, Pine, Floral, Citrus",
         "taste": "Herbal with citrus and pine notes",
-        "effects": ["Sedative", "Antibacterial"],
+        "effects": ["Sedative"],
         "therapeuticProperties": ["Sedative", "Antioxidant", "Antibacterial"],
         "concentrationRange": "Trace to 68.01% (normalized; typically minor)",
         "molecularData": {
@@ -240,7 +240,7 @@
         "description": "Floral monoterpene with calming, anxiolytic, and sedative properties. Major contributor to relaxing strains.",
         "aroma": "Floral, Lavender, Citrus",
         "taste": "Floral with sweet notes",
-        "effects": ["Relaxing", "Calming", "Pain relief", "Sedative", "Seizure related"],
+        "effects": ["Relaxing", "Anxiety relief", "Pain relief", "Sedative", "Seizure related"],
         "therapeuticProperties": ["Anxiolytic", "Sedative", "Analgesic", "Anti-epileptic", "Anesthetic"],
         "notableDifferences": "Acts on GABA receptors; anti-inflammatory",
         "concentrationRange": "0.003-1.948 mg/g",
@@ -292,7 +292,7 @@
         "description": "Floral sesquiterpene from chamomile with anti-inflammatory, soothing, and skin-healing properties; occasional in cannabis.",
         "aroma": "Floral, Sweet, Chamomile, Vanilla",
         "taste": "Floral, delicate, sweet",
-        "effects": ["Relaxing", "Anti-inflammatory", "Antimicrobial", "Pain relief"],
+        "effects": ["Relaxing", "Anti-inflammatory", "Pain relief"],
         "therapeuticProperties": ["Anti-inflammatory", "Antimicrobial", "Wound healing", "Analgesic", "Neuroprotective"],
         "notableDifferences": "Neuroprotective effects documented.",
         "concentrationRange": "Trace-0.5%",
@@ -352,7 +352,7 @@
         "description": "Minty, cooling monoterpenoid with powerful respiratory and antimicrobial benefits; a secondary but pharmacologically significant terpene in cannabis.",
         "aroma": "Minty, Cooling, Eucalyptus, Fresh",
         "taste": "Mint, cooling, spicy",
-        "effects": ["Anti-inflammatory", "Antimicrobial", "Breathing support", "Pain relief", "Cognitive enhancement"],
+        "effects": ["Anti-inflammatory", "Breathing support", "Pain relief", "Cognitive enhancement"],
         "therapeuticProperties": ["Anti-inflammatory", "Bronchodilator", "Antimicrobial", "Analgesic", "Mucolytic", "Neuroprotective"],
         "notableDifferences": "Sativa strains ~5%, indicas ~1%.",
         "concentrationRange": "0.01-0.22 mg/g",
@@ -378,7 +378,7 @@
         "description": "Woody, floral sesquiterpenoid with sedative and antimicrobial properties. Enhances skin absorption.",
         "aroma": "Woody, Floral, Citrus",
         "taste": "Woody with floral hints",
-        "effects": ["Sedative", "Antiparasitic", "Antimicrobial", "Anti-inflammatory"],
+        "effects": ["Sedative", "Anti-inflammatory"],
         "therapeuticProperties": ["Antiparasitic", "Antimicrobial", "Sedative", "Antifungal", "Anti-inflammatory"],
         "notableDifferences": "Trans-nerolidol is most common isomer; enhances transdermal absorption.",
         "concentrationRange": "trace-0.98 mg/g",
@@ -404,7 +404,7 @@
         "description": "Floral diterpenoid, degradation product of chlorophyll with sedative and immune-modulating properties.",
         "aroma": "Floral, Balsamic, Grassy, Green",
         "taste": "Floral with grassy notes",
-        "effects": ["Sedative", "Relaxing", "Immune-modulating", "Calming"],
+        "effects": ["Sedative", "Relaxing", "Anxiety relief"],
         "therapeuticProperties": ["Sedative", "Antioxidant", "Immune-modulating", "Neuroprotective"],
         "concentrationRange": "trace-minor (increases with storage/aging)",
         "molecularData": {
@@ -454,7 +454,7 @@
         "description": "Minty monoterpenoid with calming, anticonvulsant, and anti-anxiety properties; chemical precursor to menthol.",
         "aroma": "Minty, Herbal, Fresh",
         "taste": "Minty, fresh",
-        "effects": ["Relaxing", "Seizure related", "Calming"],
+        "effects": ["Relaxing", "Seizure related", "Anxiety relief"],
         "therapeuticProperties": ["Anticonvulsant", "Anxiolytic", "Anti-inflammatory", "Gastroprotective", "Analgesic"],
         "concentrationRange": "trace-minor",
         "molecularData": {
@@ -479,7 +479,7 @@
         "description": "Sweet, herbal monoterpene with antiviral, antifungal, and decongestant properties.",
         "aroma": "Sweet, Herbal, Woody",
         "taste": "Sweet, tropical",
-        "effects": ["Uplifting", "Antiviral", "Antifungal", "Decongestant"],
+        "effects": ["Uplifting"],
         "therapeuticProperties": ["Antiviral", "Antifungal", "Antiseptic", "Decongestant"],
         "concentrationRange": "trace-83.29% (strain-dependent)",
         "molecularData": {
@@ -654,7 +654,7 @@
         "description": "Woody, cedar-scented sesquiterpene found in low concentrations; associated with grounding and anti-fungal properties.",
         "aroma": "Woody, Cedar, Sweet",
         "taste": "Cedar, woody, slightly sweet",
-        "effects": ["Grounding", "Anti-inflammatory"],
+        "effects": ["Mood stabilizing", "Anti-inflammatory"],
         "therapeuticProperties": ["Anti-inflammatory", "Antifungal", "Insecticidal"],
         "concentrationRange": "trace-minor",
         "molecularData": {
@@ -679,7 +679,7 @@
         "description": "Citrus, spicy sesquiterpene found in small concentrations; occasionally reported in specialized aromatic cannabis. Balancing effects on serotonin and GABA pathways.",
         "aroma": "Citrus, Spicy, Herbaceous, Woody",
         "taste": "Citrus with spice",
-        "effects": ["Balancing", "Stress relief", "Mood stabilizing"],
+        "effects": ["Stress relief", "Mood stabilizing"],
         "therapeuticProperties": ["Anxiolytic", "Analgesic", "Anti-inflammatory"],
         "concentrationRange": "trace-minor",
         "molecularData": {
@@ -729,7 +729,7 @@
         "description": "Minty, camphorous terpene with anti-inflammatory, analgesic, and antioxidant properties.",
         "aroma": "Minty, Camphorous, Earthy",
         "taste": "Camphor-like with menthol notes",
-        "effects": ["Anti-inflammatory", "Analgesic", "Antioxidant"],
+        "effects": ["Anti-inflammatory", "Pain relief"],
         "therapeuticProperties": ["Anti-inflammatory", "Analgesic", "Antioxidant", "Antimicrobial"],
         "concentrationRange": "trace-minor",
         "molecularData": {
@@ -754,7 +754,7 @@
         "description": "Fruity, floral ester with mood-balancing and anti-anxiety effects.",
         "aroma": "Fruity, Floral",
         "taste": "Sweet, floral",
-        "effects": ["Mood stabilizing", "Calming"],
+        "effects": ["Mood stabilizing", "Anxiety relief"],
         "therapeuticProperties": ["Anxiolytic", "Antimicrobial", "Anti-inflammatory"],
         "concentrationRange": "trace-minor",
         "molecularData": {
@@ -773,6 +773,23 @@
           "evidenceSummary": "Limited cannabis data."
         }
       }
-    ]
+    ],
+    "effectCategories": [
+      { "id": "cognitive", "name": "Cognitive & Mental", "displayOrder": 1, "description": "Placeholder for cognitive and mental effects" },
+      {
+        "id": "relaxation",
+        "name": "Relaxation & Anxiety",
+        "displayOrder": 2,
+        "description": "Placeholder for relaxation and anxiety effects"
+      },
+      {
+        "id": "physical",
+        "name": "Physical & Physiological",
+        "displayOrder": 3,
+        "description": "Placeholder for physical and physiological effects"
+      },
+      { "id": "mood", "name": "Mood & Energy", "displayOrder": 4, "description": "Placeholder for mood and energy effects" }
+    ],
+    "effectCategoryMapping": {}
   }
 }

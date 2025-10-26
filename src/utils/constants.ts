@@ -182,7 +182,7 @@ export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
   'appetite suppressant': {
     name: 'appetite suppressant',
     displayName: { en: 'Appetite Suppressant', de: 'Appetitzügler' },
-    color: EFFECT_COLORS['appetite-suppressant'] || EFFECT_COLORS['default']!,
+    color: EFFECT_COLORS['appetite suppressant'] || EFFECT_COLORS['default']!,
   },
   decongestant: {
     name: 'decongestant',
@@ -195,8 +195,8 @@ export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
     displayName: { en: 'Relaxing', de: 'Entspannend' },
     color: EFFECT_COLORS['sedative']!, // Share color with sedative
   },
-  'couch-lock': {
-    name: 'couch-lock',
+  'Couch-lock': {
+    name: 'Couch-lock',
     displayName: { en: 'Couch-lock', de: 'Couchfesselung' },
     color: EFFECT_COLORS['sedative']!, // Share color with sedative
   },

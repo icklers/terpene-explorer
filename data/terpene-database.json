@@ -773,6 +773,23 @@
           "evidenceSummary": "Limited cannabis data."
         }
       }
-    ]
+    ],
+    "effectCategories": [
+      { "id": "cognitive", "name": "Cognitive & Mental", "displayOrder": 1, "description": "Placeholder for cognitive and mental effects" },
+      {
+        "id": "relaxation",
+        "name": "Relaxation & Anxiety",
+        "displayOrder": 2,
+        "description": "Placeholder for relaxation and anxiety effects"
+      },
+      {
+        "id": "physical",
+        "name": "Physical & Physiological",
+        "displayOrder": 3,
+        "description": "Placeholder for physical and physiological effects"
+      },
+      { "id": "mood", "name": "Mood & Energy", "displayOrder": 4, "description": "Placeholder for mood and energy effects" }
+    ],
+    "effectCategoryMapping": {}
   }
 }

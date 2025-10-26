@@ -7,8 +7,8 @@
  * @see tasks.md T051, T071-T074
  */
 
-import { Container, Box, Typography, Paper, Stack, Skeleton, Collapse, IconButton } from '@mui/material';
 import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
+import { Container, Box, Typography, Paper, Stack, Skeleton, Collapse, IconButton } from '@mui/material';
 import React, { lazy, Suspense, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -20,10 +20,10 @@ import { SearchBar } from '../components/filters/SearchBar';
 import { TerpeneList } from '../components/visualizations/TerpeneList';
 import { useFilters } from '../hooks/useFilters';
 import { useTerpeneData } from '../hooks/useTerpeneData';
-import { toLegacyArray } from '../utils/terpeneAdapter';
 import { useTerpeneDatabase } from '../hooks/useTerpeneDatabase';
 import { filterTerpenes } from '../services/filterService';
 import { transformToSunburstData } from '../utils/sunburstTransform';
+import { toLegacyArray } from '../utils/terpeneAdapter';
 
 // Code splitting for visualization components (T074)
 const SunburstChart = lazy(() =>
@@ -42,7 +42,11 @@ const TerpeneTable = lazy(() =>
  *
  * @returns Rendered component
  */
-export function Home(): React.ReactElement {
+export interface HomeProps {
+  searchQuery: string;
+}
+
+export function Home({ searchQuery }: HomeProps): React.ReactElement {
   const { t } = useTranslation();
 
   // Load old terpene data (for sunburst view)
@@ -121,6 +125,12 @@ export function Home(): React.ReactElement {
     return filterTerpenes(terpenes, filterState);
   }, [terpenes, filterState, isLoading, error]);
 
+  // Apply search query to filter terpenes
+  const searchedTerpenes = React.useMemo(() => {
+    if (!searchQuery) return filteredTerpenes;
+    return filteredTerpenes.filter((terpene) => terpene.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  }, [searchQuery, filteredTerpenes]);
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Page Header */}
@@ -179,7 +189,7 @@ export function Home(): React.ReactElement {
                 onChange={setSearchQuery}
                 placeholder={t('pages.home.searchPlaceholder', 'Search terpenes by name, aroma, or effects...')}
                 ariaLabel={t('pages.home.searchAriaLabel', 'Search terpenes')}
-                resultsCount={filteredTerpenes.length}
+                resultsCount={searchedTerpenes.length}
               />
 
               {/* Effect Chips */}
@@ -188,7 +198,7 @@ export function Home(): React.ReactElement {
                 selectedEffects={filterState.selectedEffects}
                 onToggleEffect={toggleEffect}
                 onClearFilters={clearAllFilters}
-                resultsCount={filteredTerpenes.length}
+                resultsCount={searchedTerpenes.length}
               />
 
               {/* Filter Mode Toggle (only show when effects are selected) */}
@@ -229,7 +239,7 @@ export function Home(): React.ReactElement {
           <Suspense fallback={<Skeleton variant="rectangular" width="100%" height={600} />}>
             {filterState.viewMode === 'sunburst' ? (
               <SunburstChart
-                data={transformToSunburstData(filteredTerpenes)}
+                data={transformToSunburstData(searchedTerpenes)}
                 onSliceClick={(node) => {
                   if (node.type === 'effect') {
                     toggleEffect(node.name);
@@ -238,7 +248,7 @@ export function Home(): React.ReactElement {
               />
             ) : (
               // T011e: Pass filtered terpenes from new data source
-              <TerpeneTable terpenes={filteredTerpenes} />
+              <TerpeneTable terpenes={searchedTerpenes} />
             )}
           </Suspense>
         )}
