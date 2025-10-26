@@ -35,3 +35,7 @@ CLAUDE.md
 
 # Ignore Gemini files
 .gemini/
+
+# Ignore OpenCode files
+.opencode/**/*.md
+.opencode/*.md
