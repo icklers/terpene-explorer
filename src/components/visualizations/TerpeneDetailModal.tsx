@@ -9,9 +9,12 @@
  */
 
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Chip, Divider, Box, Stack } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { getEffectColor } from '../../services/colorService';
+import { getCategoryForEffect } from '../../services/filterService';
 import type { TerpeneDetailModalProps } from '../../types/terpene';
 
 /**
@@ -33,9 +36,7 @@ import type { TerpeneDetailModalProps } from '../../types/terpene';
  */
 export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({ open, terpene, onClose }) => {
   const { t } = useTranslation();
-
-  // IMPORTANT: Don't return null - modal must remain mounted for in-place updates
-  // When terpene is null, Dialog's open=false will hide it (per clarification 2025-10-25)
+  const theme = useTheme();
 
   return (
     <Dialog
@@ -45,7 +46,6 @@ export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({ open, te
       fullWidth
       aria-labelledby="terpene-detail-title"
       aria-describedby="terpene-detail-description"
-      // Keep modal mounted for smooth content transitions (clarification 2025-10-25)
       keepMounted
     >
       {terpene && (
@@ -58,10 +58,29 @@ export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({ open, te
               <Typography variant="h6" gutterBottom>
                 {t('terpeneDetails.fields.effects')}
               </Typography>
+
               <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                {terpene.effects.map((effect: string) => (
-                  <Chip key={effect} label={effect} color="primary" size="small" />
-                ))}
+                {terpene.effects.map((effect: string) => {
+                  const categoryPalette = (theme.palette as unknown as { category?: Record<string, string> }).category;
+                  const categoryId = getCategoryForEffect(effect);
+                  const categoryColor =
+                    categoryId && categoryPalette && categoryPalette[categoryId] ? categoryPalette[categoryId] : getEffectColor(effect);
+                  const contrastText = theme.palette.getContrastText ? theme.palette.getContrastText(categoryColor) : '#ffffff';
+
+                  return (
+                    <Chip
+                      key={effect}
+                      label={effect}
+                      size="small"
+                      sx={{
+                        backgroundColor: categoryColor,
+                        color: contrastText,
+                        borderColor: categoryColor,
+                        fontWeight: 500,
+                      }}
+                    />
+                  );
+                })}
               </Stack>
             </Box>
 
