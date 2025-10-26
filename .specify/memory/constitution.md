@@ -30,7 +30,7 @@ Sync Impact Report:
   - Implement core application per /speckit.tasks
 -->
 
-# Interactive Terpene Map Constitution
+# Terpene Explorer Constitution
 
 ## Core Principles
 

@@ -1,4 +1,4 @@
-# terpene-map-claude Development Guidelines
+# Terpene Explorer Development Guidelines
 
 Auto-generated from all feature plans. Last updated: 2025-10-23
 
@@ -21,7 +21,7 @@ tests/
 
 ## Commands
 
-npm test && npm run lint
+pnpm run format && pnpm run lint:fix && pnpm run build
 
 ## Code Style
 
