@@ -9,11 +9,13 @@
 
 import ClearIcon from '@mui/icons-material/Clear';
 import { Box, Chip, Typography, Button } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CategoryTabs } from './CategoryTabs';
 import type { Effect } from '../../models/Effect';
+import { getCategoryForEffect } from '../../services/filterService';
 
 /**
  * Component props
@@ -54,6 +56,9 @@ export function FilterControls({
   resultsCount,
 }: FilterControlsProps): React.ReactElement {
   const { t } = useTranslation();
+
+  // Theme for category palette access
+  const theme = useTheme();
 
   const defaultLabel = t('filters.effectsLabel', 'Filter by Effects');
   const hasSelection = selectedEffects.length > 0;
@@ -109,6 +114,12 @@ export function FilterControls({
             const isSelected = selectedEffects.includes(effect.name);
             const displayName = effect.displayName.en || effect.name;
             const count = effect.terpeneCount;
+            // Determine category color from theme (fallback to effect.color)
+            const categoryId = getCategoryForEffect(effect.name);
+            // Safely access extended category palette without using `any`
+            const categoryPalette = (theme.palette as unknown as { category?: Record<string, string> }).category;
+            const categoryColor = categoryId && categoryPalette && categoryPalette[categoryId] ? categoryPalette[categoryId] : effect.color;
+            const contrastText = theme.palette.getContrastText(categoryColor);
 
             return (
               <Chip
@@ -135,15 +146,16 @@ export function FilterControls({
                 color={isSelected ? 'primary' : 'default'}
                 variant={isSelected ? 'filled' : 'outlined'}
                 sx={{
-                  backgroundColor: isSelected ? effect.color : 'transparent',
-                  borderColor: effect.color,
-                  color: isSelected ? 'white' : effect.color,
+                  // Use category-derived color to style chips
+                  backgroundColor: isSelected ? categoryColor : 'transparent',
+                  borderColor: categoryColor,
+                  color: isSelected ? contrastText : categoryColor,
                   fontWeight: isSelected ? 600 : 400,
                   '&:hover': {
-                    backgroundColor: isSelected ? effect.color : `${effect.color}20`,
+                    backgroundColor: isSelected ? categoryColor : `${categoryColor}20`,
                   },
                   '&:focus-visible': {
-                    outline: `2px solid ${effect.color}`,
+                    outline: `2px solid ${categoryColor}`,
                     outlineOffset: 2,
                   },
                 }}

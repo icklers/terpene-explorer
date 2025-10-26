@@ -140,11 +140,11 @@ The foundation is ready. Remaining tasks (mostly tests and polish) are tracked i
 
 ### Implementation for User Story 3
 
-- [ ] T032 [P] [US3] Apply category color to effect chips in CategoryFilterGroup.tsx using theme.palette.category[categoryId]
-- [ ] T033 [P] [US3] Implement outlined variant for unselected chips with category border color
-- [ ] T034 [P] [US3] Implement filled variant for selected chips with category background color
-- [ ] T035 [US3] Add hover state styling for effect chips with category color variations
-- [ ] T036 [US3] Verify effect chip colors persist across theme changes (light/dark mode)
+- [x] T032 [P] [US3] Apply category color to effect chips in CategoryFilterGroup.tsx using theme.palette.category[categoryId]
+- [x] T033 [P] [US3] Implement outlined variant for unselected chips with category border color
+- [x] T034 [P] [US3] Implement filled variant for selected chips with category background color
+- [x] T035 [US3] Add hover state styling for effect chips with category color variations
+- [x] T036 [US3] Verify effect chip colors persist across theme changes (light/dark mode)
 
 ### Unit Tests for User Story 3
 

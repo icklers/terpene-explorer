@@ -7,8 +7,8 @@
  * @see specs/003-categorized-effect-filters
  */
 
-import React from 'react';
 import { Box, Button, useTheme } from '@mui/material';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CATEGORY_UI_CONFIG, CATEGORY_DEFINITIONS } from '../../utils/categoryUIConfig';
@@ -41,7 +41,9 @@ export function CategoryTabs({ selectedCategories, onCategoryToggle, label }: Ca
       .map(([categoryId, category]) => {
         const config = CATEGORY_UI_CONFIG[categoryId as keyof typeof CATEGORY_UI_CONFIG];
         const isSelected = selectedCategories.includes(categoryId);
-        const categoryColor = (theme.palette as any).category?.[categoryId] || theme.palette.primary.main;
+        // Safely access extended category palette without using `any`
+        const categoryPalette = (theme.palette as unknown as { category?: Record<string, string> }).category;
+        const categoryColor = categoryPalette?.[categoryId] || theme.palette.primary.main;
 
         return {
           id: categoryId,
