@@ -23,3 +23,19 @@ staticwebapp.config.json
 
 # Ignore spec markdown files
 specs/**/*.md
+
+# Ignore GitHub prompts and instructions
+.github/prompts/
+.github/instructions/
+.github/copilot-instructions.md
+
+# Ignore Claude files
+.claude/
+CLAUDE.md
+
+# Ignore Gemini files
+.gemini/
+
+# Ignore OpenCode files
+.opencode/**/*.md
+.opencode/*.md

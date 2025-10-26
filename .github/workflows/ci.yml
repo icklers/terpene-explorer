@@ -156,22 +156,9 @@ jobs:
           echo "VITE_BUILD_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> .env.production
           echo "VITE_COMMIT_SHA=$GITHUB_SHA" >> .env.production
           echo "VITE_VERSION=${GITHUB_REF#refs/*/}" >> .env.production
-      
-      # - name: 🏗 Build for GitHub Pages
-      #   id: build-gh
-      #   run: |
-      #     start_time=$SECONDS
-      #     NODE_ENV=production MODE=github-pages pnpm run build
-      #     mv dist dist-gh-pages
-      #     # Copy 404.html for GitHub Pages
-      #     cp dist-gh-pages/index.html dist-gh-pages/404.html
-      #     end_time=$SECONDS
-      #     build_time=$((end_time - start_time))
-      #     echo "build_time=$build_time" >> $GITHUB_OUTPUT
-      #     build_size=$(du -sh dist-gh-pages | cut -f1)
-      #     echo "build_size=$build_size" >> $GITHUB_OUTPUT
-      #     chunk_count=$(find dist-gh-pages/assets -type f | wc -l)
-      #     echo "chunk_count=$chunk_count" >> $GITHUB_OUTPUT
+
+      - name: Validate and copy data files
+        run: pnpm run copy-and-validate-data
 
       - name: 🏗 Build for Azure SWA
         id: build-swa
