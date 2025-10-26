@@ -70,8 +70,14 @@
         },
         "sources": ["Lemon peel", "Orange rind"],
         "references": [
-          { "source": "PubMed 35278524", "type": "Peer-reviewed" },
-          { "source": "Leafly 2024 Analysis", "type": "Industry report" }
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          },
+          {
+            "source": "Leafly 2024 Analysis",
+            "type": "Industry report"
+          }
         ],
         "researchTier": {
           "dataQuality": "Excellent",
@@ -98,7 +104,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Mangos", "Hops", "Thyme", "Lemongrass", "Bay leaves"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Excellent",
           "evidenceSummary": "Extensive neuroprotective and analgesic research"
@@ -124,7 +135,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Pine needles", "Rosemary", "Basil", "Dill", "Parsley"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Excellent",
           "evidenceSummary": "Widely documented cognitive enhanced terpene."
@@ -149,7 +165,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Pine trees", "Conifers", "Dill", "Parsley"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Documented calming terpene, prevalent in cannabis."
@@ -175,7 +196,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Black pepper", "Cloves", "Hops", "Rosemary", "Copaiba"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Excellent",
           "evidenceSummary": "Widespread presence, with confirmed cannabinoid action."
@@ -200,7 +226,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Hops", "Coriander", "Cloves", "Basil", "Ginseng"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Excellent",
           "evidenceSummary": "Well characterized and pharmacologically validated."
@@ -225,7 +256,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Lilacs", "Nutmeg", "Tea tree", "Cumin", "Apples"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Dominant in sativa-dominant cultivars like Jack Herer."
@@ -251,7 +287,12 @@
           "class": "Monoterpenoid"
         },
         "sources": ["Lavender", "Mint", "Coriander", "Rosewood"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Excellent",
           "evidenceSummary": "Clinically validated anxiolytic and sedative."
@@ -277,7 +318,12 @@
           "class": "Sesquiterpenoid"
         },
         "sources": ["Eucalyptus", "Cannabis (aged)", "Lemon balm"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Analgesic and antifungal, prominent in aged cannabis."
@@ -303,7 +349,12 @@
           "class": "Sesquiterpenoid"
         },
         "sources": ["Chamomile", "Candeia tree"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Neuroprotective and anti-inflammatory."
@@ -337,7 +388,12 @@
           "class": "Monoterpenoid"
         },
         "sources": ["Rosemary", "Mint", "Camphor", "Ginger"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Crosses blood-brain barrier; multi-receptor action."
@@ -363,7 +419,12 @@
           "class": "Monoterpenoid"
         },
         "sources": ["Eucalyptus", "Tea tree"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Potent, variable based on chemotype."
@@ -389,7 +450,12 @@
           "class": "Sesquiterpenoid"
         },
         "sources": ["Jasmine", "Tea tree", "Ginger", "Lavender"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Well documented sedative and antimicrobial."
@@ -414,7 +480,12 @@
           "class": "Diterpenoid"
         },
         "sources": ["Green tea"],
-        "references": [{ "source": "Scientific studies on chlorophyll-related diterpenoids", "type": "Botanical research" }],
+        "references": [
+          {
+            "source": "Scientific studies on chlorophyll-related diterpenoids",
+            "type": "Botanical research"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Moderate",
           "evidenceSummary": "Limited cannabis-specific data."
@@ -439,7 +510,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Pine", "Rosemary"],
-        "references": [{ "source": "PMCID PMC35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PMCID PMC35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Common terpene with demonstrated anti-inflammatory potential."
@@ -464,7 +540,12 @@
           "class": "Monoterpenoid"
         },
         "sources": ["Mint", "Lemongrass", "Eucalyptus"],
-        "references": [{ "source": "Journal of Natural Products", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Journal of Natural Products",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Sparse cannabis-specific data; known medicinal potential."
@@ -489,7 +570,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Mint", "Parsley", "Basil", "Orchids"],
-        "references": [{ "source": "Phytochemistry Reports", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Phytochemistry Reports",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Moderate",
           "evidenceSummary": "Moderate research on antimicrobial properties."
@@ -514,7 +600,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Oak moss", "Spruce", "Black pepper", "Pumpkin"],
-        "references": [{ "source": "Journal of Essential Oil Research", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Journal of Essential Oil Research",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Sparse modern cannabis quantification."
@@ -539,7 +630,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Ginger", "Rosemary", "Citronella"],
-        "references": [{ "source": "Journal of Chromatography", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Journal of Chromatography",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Minor component in modern cannabis tests."
@@ -564,7 +660,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Dill", "Eucalyptus", "Parsley"],
-        "references": [{ "source": "Phytomedicine Reviews", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Phytomedicine Reviews",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Present as trace compound in most analyses."
@@ -589,7 +690,12 @@
           "class": "Monoterpenoid"
         },
         "sources": ["Geraniums", "Roses", "Lemon", "Citronella"],
-        "references": [{ "source": "Frontiers in Plant Science", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Frontiers in Plant Science",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Moderate",
           "evidenceSummary": "Sweet/floral hybrids high in geraniol."
@@ -614,7 +720,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Apples", "Oranges", "Turmeric", "Ginger"],
-        "references": [{ "source": "International Journal of Molecular Sciences", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "International Journal of Molecular Sciences",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Moderate",
           "evidenceSummary": "Calming strains show elevated farnesene."
@@ -639,7 +750,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Valencia oranges", "Tangerines", "Grapefruits"],
-        "references": [{ "source": "Foods Journal", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Foods Journal",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Moderate",
           "evidenceSummary": "Prevalent in citrus-heavy cultivars."
@@ -664,7 +780,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Cedar", "Juniper"],
-        "references": [{ "source": "Natural Product Reports", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Natural Product Reports",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Very rarely high in any cannabis chemotype."
@@ -689,7 +810,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Citrus", "Black pepper"],
-        "references": [{ "source": "International Journal of Molecular Sciences", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "International Journal of Molecular Sciences",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Rare outside of select citrus-dominant chemotypes."
@@ -714,7 +840,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Turmeric", "Atractylodes", "Chinese medicinal plants"],
-        "references": [{ "source": "Chinese Medicine Journal", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Chinese Medicine Journal",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Sparse evidence in cannabis; more from traditional medicine."
@@ -739,7 +870,12 @@
           "class": "Monoterpenoid (Ketone)"
         },
         "sources": ["Fennel", "Basil", "Rosemary"],
-        "references": [{ "source": "Phytotherapy Research", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Phytotherapy Research",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Limited cannabis-specific data, evidenced anti-inflammatory."
@@ -765,8 +901,14 @@
         },
         "sources": ["Lemongrass", "Geranium"],
         "references": [
-          { "source": "Phytochemistry Letters", "type": "Peer-reviewed" },
-          { "source": "Journal of Agricultural and Food Chemistry", "type": "Peer-reviewed" }
+          {
+            "source": "Phytochemistry Letters",
+            "type": "Peer-reviewed"
+          },
+          {
+            "source": "Journal of Agricultural and Food Chemistry",
+            "type": "Peer-reviewed"
+          }
         ],
         "researchTier": {
           "dataQuality": "Limited",
@@ -775,21 +917,51 @@
       }
     ],
     "effectCategories": [
-      { "id": "cognitive", "name": "Cognitive & Mental", "displayOrder": 1, "description": "Placeholder for cognitive and mental effects" },
+      {
+        "id": "mood",
+        "name": "Mood & Energy",
+        "displayOrder": 1,
+        "description": "Daytime energizing effects that enhance mood, motivation, and vitality"
+      },
+      {
+        "id": "cognitive",
+        "name": "Cognitive & Mental Enhancement",
+        "displayOrder": 2,
+        "description": "Daytime cognitive effects that support focus, alertness, and mental clarity"
+      },
       {
         "id": "relaxation",
-        "name": "Relaxation & Anxiety",
-        "displayOrder": 2,
-        "description": "Placeholder for relaxation and anxiety effects"
+        "name": "Relaxation & Anxiety Management",
+        "displayOrder": 3,
+        "description": "Evening/nighttime effects that promote relaxation, stress relief, and calm"
       },
       {
         "id": "physical",
-        "name": "Physical & Physiological",
-        "displayOrder": 3,
-        "description": "Placeholder for physical and physiological effects"
-      },
-      { "id": "mood", "name": "Mood & Energy", "displayOrder": 4, "description": "Placeholder for mood and energy effects" }
+        "name": "Physical & Physiological Management",
+        "displayOrder": 4,
+        "description": "Therapeutic physical effects that address pain, inflammation, and bodily functions"
+      }
     ],
-    "effectCategoryMapping": {}
+    "effectCategoryMapping": {
+      "Energizing": "mood",
+      "Mood enhancing": "mood",
+      "Mood stabilizing": "mood",
+      "Uplifting": "mood",
+      "Alertness": "cognitive",
+      "Cognitive enhancement": "cognitive",
+      "Focus": "cognitive",
+      "Memory-enhancement": "cognitive",
+      "Anxiety relief": "relaxation",
+      "Relaxing": "relaxation",
+      "Sedative": "relaxation",
+      "Stress relief": "relaxation",
+      "Couch-lock": "relaxation",
+      "Anti-inflammatory": "physical",
+      "Appetite suppressant": "physical",
+      "Breathing support": "physical",
+      "Muscle relaxant": "physical",
+      "Pain relief": "physical",
+      "Seizure related": "physical"
+    }
   }
 }

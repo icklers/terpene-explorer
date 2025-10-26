@@ -10,6 +10,9 @@
 import type { FilterState } from '../models/FilterState';
 import type { Terpene } from '../models/Terpene';
 
+// Use CATEGORY_DEFINITIONS from a single source of truth
+import { CATEGORY_DEFINITIONS } from '../utils/categoryUIConfig';
+
 /**
  * Filter terpenes based on filter state
  *
@@ -24,6 +27,16 @@ export function filterTerpenes(terpenes: Terpene[], filterState: FilterState): T
   if (filterState.searchQuery && filterState.searchQuery.trim()) {
     const query = filterState.searchQuery.trim().toLowerCase();
     filtered = filtered.filter((terpene) => matchesSearchQuery(terpene, query));
+  }
+
+  // Apply category filters first (if any)
+  if (filterState.categoryFilters.length > 0) {
+    // Get all effects that belong to the selected categories
+    const categoryEffects = getEffectsInCategories(filterState.categoryFilters);
+    // Apply category filtering as an additional layer
+    if (categoryEffects.length > 0) {
+      filtered = filtered.filter((terpene) => matchesAnyEffect(terpene, categoryEffects));
+    }
   }
 
   // Apply effect filters
@@ -84,4 +97,40 @@ export function matchesAllEffects(terpene: Terpene, effects: string[]): boolean 
   }
 
   return effects.every((effect) => terpene.effects.includes(effect));
+}
+
+/**
+ * Get all effect names that belong to specified categories
+ *
+ * @param categories - Array of category IDs
+ * @returns Array of effect names that belong to these categories
+ */
+export function getEffectsInCategories(categories: string[]): string[] {
+  const allEffects = new Set<string>();
+
+  categories.forEach((category) => {
+    const categoryDef = CATEGORY_DEFINITIONS[category as keyof typeof CATEGORY_DEFINITIONS];
+    if (categoryDef) {
+      categoryDef.effects.forEach((effect) => allEffects.add(effect));
+    }
+  });
+
+  return Array.from(allEffects);
+}
+
+/**
+ * Get category id for a given effect name.
+ * Returns the category key (mood|cognitive|relaxation|physical) or undefined if not found.
+ */
+export function getCategoryForEffect(effect: string): string | undefined {
+  const name = effect.trim().toLowerCase();
+
+  for (const key of Object.keys(CATEGORY_DEFINITIONS)) {
+    const def = CATEGORY_DEFINITIONS[key as keyof typeof CATEGORY_DEFINITIONS];
+    if (def.effects.some((e) => e.toLowerCase() === name)) {
+      return key;
+    }
+  }
+
+  return undefined;
 }
