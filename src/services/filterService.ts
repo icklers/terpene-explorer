@@ -143,8 +143,8 @@ export function getCategoryForEffect(effect: string): string | undefined {
   const name = effect.trim().toLowerCase();
 
   for (const key of Object.keys(CATEGORY_DEFINITIONS)) {
-    const def = CATEGORY_DEFINITIONS[key as keyof typeof CATEGORY_DEFINITIONS];
-    if (def && def.effects && def.effects.some((e) => e.toLowerCase() === name)) {
+    const def = CATEGORY_DEFINITIONS[key as keyof typeof CATEGORY_DEFINITIONS]!;
+    if (def.effects.some((e) => e.toLowerCase() === name)) {
       return key;
     }
   }
