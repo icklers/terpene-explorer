@@ -23,10 +23,10 @@
 
 **Purpose**: Project initialization and verification of prerequisites
 
-- [ ] T001 Verify database schema includes effectCategories and effectCategoryMapping in data/terpene-database.json
-- [ ] T002 Verify Zod schemas exported from src/utils/terpeneSchema.ts (EffectCategory, EffectCategoryMapping types)
-- [ ] T003 [P] Run pnpm type-check to ensure TypeScript compilation passes
-- [ ] T004 [P] Verify Material UI 6.3+ and Emotion 11.13+ are available in package.json
+- [x] T001 Verify database schema includes effectCategories and effectCategoryMapping in data/terpene-database.json
+- [x] T002 Verify Zod schemas exported from src/utils/terpeneSchema.ts (EffectCategory, EffectCategoryMapping types)
+- [x] T003 [P] Run pnpm type-check to ensure TypeScript compilation passes
+- [x] T004 [P] Verify Material UI 6.3+ and Emotion 11.13+ are available in package.json
 
 ---
 
@@ -36,15 +36,15 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 Create CATEGORY_UI_CONFIG constant in src/utils/categoryUIConfig.ts with emoticons, fallback letters, and ARIA labels for all 4 categories
-- [ ] T006 [P] Add category color tokens to src/theme/lightTheme.ts (category.mood, category.cognitive, category.relaxation, category.physical)
-- [ ] T007 [P] Add category color tokens to src/theme/darkTheme.ts with appropriate contrast for dark mode
-- [ ] T008 Extend TypeScript theme types in src/theme/themeConfig.ts to include category palette interface
-- [ ] T009 Add categoryFilters field to FilterState interface in src/models/FilterState.ts (type: EffectCategoryId[])
-- [ ] T010 Update useFilters hook in src/hooks/useFilters.ts to initialize categoryFilters as empty array in localStorage
-- [ ] T011 Create applyEffectFilters function in src/services/filterService.ts with OR/AND logic for category and effect filters
-- [ ] T012 Create syncCategoryFilters function in src/services/filterService.ts to auto-deselect categories when effects cleared
-- [ ] T013 [P] Run pnpm type-check to verify all foundational changes compile without errors
+- [x] T005 Create CATEGORY_UI_CONFIG constant in src/utils/categoryUIConfig.ts with emoticons, fallback letters, and ARIA labels for all 4 categories
+- [x] T006 [P] Add category color tokens to src/theme/lightTheme.ts (category.mood, category.cognitive, category.relaxation, category.physical)
+- [x] T007 [P] Add category color tokens to src/theme/darkTheme.ts with appropriate contrast for dark mode
+- [x] T008 Extend TypeScript theme types in src/theme/themeConfig.ts to include category palette interface
+- [x] T009 Add categoryFilters field to FilterState interface in src/models/FilterState.ts (type: EffectCategoryId[])
+- [x] T010 Update useFilters hook in src/hooks/useFilters.ts to initialize categoryFilters as empty array in localStorage
+- [x] T011 Create applyEffectFilters function in src/services/filterService.ts with OR/AND logic for category and effect filters
+- [x] T012 Create syncCategoryFilters function in src/services/filterService.ts to auto-deselect categories when effects cleared
+- [x] T013 [P] Run pnpm type-check to verify all foundational changes compile without errors
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -58,20 +58,20 @@
 
 ### Implementation for User Story 1
 
-- [ ] T014 [P] [US1] Create CategoryEmoticon component in src/components/filters/CategoryEmoticon.tsx with canvas-based emoticon detection and fallback letter rendering
-- [ ] T015 [P] [US1] Create CategoryFilterGroup component skeleton in src/components/filters/CategoryFilterGroup.tsx (desktop layout only, no accordion yet)
-- [ ] T016 [US1] Implement category header rendering in CategoryFilterGroup.tsx with emoticon, category name, and checkbox (non-functional for US1)
-- [ ] T017 [US1] Implement effect chips grid layout in CategoryFilterGroup.tsx displaying effects for each category
-- [ ] T018 [US1] Modify FilterControls component in src/components/filters/FilterControls.tsx to load effectCategories from database
-- [ ] T019 [US1] Render CategoryFilterGroup components in FilterControls.tsx sorted by displayOrder with dividers between categories
-- [ ] T020 [US1] Add visual spacing/dividers between category groups in FilterControls.tsx (per FR-009)
+- [x] T014 [P] [US1] Create CategoryEmoticon component in src/components/filters/CategoryEmoticon.tsx with canvas-based emoticon detection and fallback letter rendering
+- [x] T015 [P] [US1] Create CategoryFilterGroup component skeleton in src/components/filters/CategoryFilterGroup.tsx (desktop layout only, no accordion yet)
+- [x] T016 [P] [US1] Implement category header rendering in CategoryFilterGroup.tsx with emoticon, category name, and checkbox (non-functional for US1)
+- [x] T017 [P] [US1] Implement effect chips grid layout in CategoryFilterGroup.tsx displaying effects for each category
+- [x] T018 [P] [US1] Modify FilterControls component in src/components/filters/FilterControls.tsx to load effectCategories from database
+- [x] T019 [P] [US1] Render CategoryFilterGroup components in FilterControls.tsx sorted by displayOrder with dividers between categories
+- [x] T020 [P] [US1] Add visual spacing/dividers between category groups in FilterControls.tsx (per FR-009)
 
 ### E2E Tests for User Story 1
 
 - [ ] T021 [P] [US1] Create E2E test in tests/e2e/filter-categories.spec.ts to verify 4 categories render in correct order
 - [ ] T022 [P] [US1] Add E2E test case to verify emoticons display or fallback letters render correctly
 - [ ] T023 [P] [US1] Add E2E test case to verify effects are grouped correctly (4 mood, 4 cognitive, 5 relaxation, 6 physical)
-- [ ] T024 [P] [US1] Add E2E test case to verify category display order: Mood → Cognitive → Relaxation → Physical
+- [ ] T024 [P] [US1] Add E2E test case to verify category display order: **Mood → Cognitive → Relaxation → Physical**
 
 **Checkpoint**: At this point, User Story 1 should be fully functional - users can see categorized effects with emoticons (no filtering yet)
 
@@ -85,10 +85,10 @@
 
 ### Implementation for User Story 2
 
-- [ ] T025 [P] [US2] Apply category background color to category headers in CategoryFilterGroup.tsx using theme.palette.category[categoryId]
-- [ ] T026 [P] [US2] Add color coding to category dividers/borders in FilterControls.tsx using category theme tokens
-- [ ] T027 [US2] Style CategoryEmoticon fallback circles with category colors and contrasting text using theme.palette.getContrastText()
-- [ ] T028 [US2] Verify category colors adapt correctly when switching between light and dark themes
+- [x] T025 [P] [US2] Apply category background color to category headers in CategoryFilterGroup.tsx using theme.palette.category[categoryId]
+- [x] T026 [P] [US2] Add color coding to category dividers/borders in FilterControls.tsx using category theme tokens  
+- [x] T027 [US2] Style CategoryEmoticon fallback circles with category colors and contrasting text using theme.palette.getContrastText()
+- [x] T028 [US2] Verify category colors adapt correctly when switching between light and dark themes
 
 ### Accessibility Tests for User Story 2
 

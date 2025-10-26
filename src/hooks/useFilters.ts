@@ -27,6 +27,8 @@ export interface UseFiltersResult {
   setSortBy: (column: FilterState['sortBy']) => void;
   setSortDirection: (direction: 'asc' | 'desc') => void;
   handleSort: (column: FilterState['sortBy']) => void;
+  toggleCategoryFilter: (category: string) => void;
+  clearCategoryFilters: () => void;
   clearAllFilters: () => void;
   hasActiveFilters: boolean;
 }
@@ -42,6 +44,7 @@ const DEFAULT_FILTER_STATE: FilterState = {
   viewMode: 'table',
   sortBy: 'name',
   sortDirection: 'asc',
+  categoryFilters: [],
 };
 
 /**
@@ -207,13 +210,38 @@ export function useFilters(initialState?: Partial<FilterState>): UseFiltersResul
       searchQuery: '',
       selectedEffects: [],
       effectFilterMode: 'any',
+      categoryFilters: [],
     }));
   }, []);
 
   // Check if any filters are active
   const hasActiveFilters = useMemo(() => {
-    return filterState.searchQuery.trim() !== '' || filterState.selectedEffects.length > 0;
-  }, [filterState.searchQuery, filterState.selectedEffects]);
+    return filterState.searchQuery.trim() !== '' || filterState.selectedEffects.length > 0 || filterState.categoryFilters.length > 0;
+  }, [filterState.searchQuery, filterState.selectedEffects, filterState.categoryFilters]);
+
+  // Toggle category filter selection
+  const toggleCategoryFilter = useCallback((category: string) => {
+    if (!category || category.trim() === '') {
+      return; // Ignore empty categories
+    }
+
+    setFilterState((prev) => {
+      const isSelected = prev.categoryFilters.includes(category);
+
+      return {
+        ...prev,
+        categoryFilters: isSelected ? prev.categoryFilters.filter((c) => c !== category) : [...prev.categoryFilters, category],
+      };
+    });
+  }, []);
+
+  // Clear all category filters
+  const clearCategoryFilters = useCallback(() => {
+    setFilterState((prev) => ({
+      ...prev,
+      categoryFilters: [],
+    }));
+  }, []);
 
   return {
     filterState,
@@ -227,6 +255,8 @@ export function useFilters(initialState?: Partial<FilterState>): UseFiltersResul
     setSortBy,
     setSortDirection,
     handleSort,
+    toggleCategoryFilter,
+    clearCategoryFilters,
     clearAllFilters,
     hasActiveFilters,
   };

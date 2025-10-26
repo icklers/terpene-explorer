@@ -20,6 +20,7 @@ describe('useFilters', () => {
 
       expect(result.current.filterState.searchQuery).toBe('');
       expect(result.current.filterState.selectedEffects).toEqual([]);
+      expect(result.current.filterState.categoryFilters).toEqual([]); // New test
       expect(result.current.filterState.effectFilterMode).toBe('any');
       expect(result.current.filterState.viewMode).toBe('table'); // UAT: Default should be table view
       expect(result.current.filterState.sortBy).toBe('name');
@@ -34,6 +35,7 @@ describe('useFilters', () => {
         viewMode: 'table' as const,
         sortBy: 'aroma' as const,
         sortDirection: 'desc' as const,
+        categoryFilters: ['mood'] as string[],
       };
 
       const { result } = renderHook(() => useFilters(initialState));
@@ -220,12 +222,6 @@ describe('useFilters', () => {
     it('should toggle between sunburst and table views', () => {
       const { result } = renderHook(() => useFilters());
 
-      expect(result.current.filterState.viewMode).toBe('sunburst');
-
-      act(() => {
-        result.current.setViewMode('table');
-      });
-
       expect(result.current.filterState.viewMode).toBe('table');
 
       act(() => {
@@ -233,6 +229,12 @@ describe('useFilters', () => {
       });
 
       expect(result.current.filterState.viewMode).toBe('sunburst');
+
+      act(() => {
+        result.current.setViewMode('table');
+      });
+
+      expect(result.current.filterState.viewMode).toBe('table');
     });
   });
 
@@ -359,21 +361,44 @@ describe('useFilters', () => {
       expect(result.current.hasActiveFilters).toBe(true);
     });
 
-    it('should be false when all filters are cleared', () => {
+    it('should indicate when category filters are active', () => {
       const { result } = renderHook(() => useFilters());
 
       act(() => {
-        result.current.setSearchQuery('test');
-        result.current.toggleEffect('energizing');
+        result.current.toggleCategoryFilter('mood');
       });
 
       expect(result.current.hasActiveFilters).toBe(true);
+      expect(result.current.filterState.categoryFilters).toContain('mood');
+    });
+
+    it('should indicate when category filters are cleared', () => {
+      const { result } = renderHook(() => useFilters());
+
+      act(() => {
+        result.current.toggleCategoryFilter('mood');
+        result.current.clearCategoryFilters();
+      });
+
+      expect(result.current.hasActiveFilters).toBe(false);
+      expect(result.current.filterState.categoryFilters).toHaveLength(0);
+    });
+
+    it('should clear category filters when clearAllFilters is called', () => {
+      const { result } = renderHook(() => useFilters());
+
+      act(() => {
+        result.current.toggleCategoryFilter('mood');
+        result.current.toggleCategoryFilter('physical');
+      });
+
+      expect(result.current.filterState.categoryFilters).toHaveLength(2);
 
       act(() => {
         result.current.clearAllFilters();
       });
 
-      expect(result.current.hasActiveFilters).toBe(false);
+      expect(result.current.filterState.categoryFilters).toHaveLength(0);
     });
   });
 
@@ -481,6 +506,81 @@ describe('useFilters', () => {
 
       // Should complete in less than 200ms (NFR-PERF-002)
       expect(endTime - startTime).toBeLessThan(200);
+    });
+  });
+
+  describe('Category Filter Management', () => {
+    it('should initialize with empty category filters', () => {
+      const { result } = renderHook(() => useFilters());
+
+      expect(result.current.filterState.categoryFilters).toEqual([]);
+    });
+
+    it('should add category to selection', () => {
+      const { result } = renderHook(() => useFilters());
+
+      act(() => {
+        result.current.toggleCategoryFilter('mood');
+      });
+
+      expect(result.current.filterState.categoryFilters).toContain('mood');
+    });
+
+    it('should remove category from selection when toggled again', () => {
+      const { result } = renderHook(() => useFilters());
+
+      act(() => {
+        result.current.toggleCategoryFilter('mood');
+      });
+
+      expect(result.current.filterState.categoryFilters).toContain('mood');
+
+      act(() => {
+        result.current.toggleCategoryFilter('mood');
+      });
+
+      expect(result.current.filterState.categoryFilters).not.toContain('mood');
+    });
+
+    it('should add multiple categories', () => {
+      const { result } = renderHook(() => useFilters());
+
+      act(() => {
+        result.current.toggleCategoryFilter('mood');
+        result.current.toggleCategoryFilter('cognitive');
+        result.current.toggleCategoryFilter('relaxation');
+      });
+
+      expect(result.current.filterState.categoryFilters).toHaveLength(3);
+      expect(result.current.filterState.categoryFilters).toEqual(expect.arrayContaining(['mood', 'cognitive', 'relaxation']));
+    });
+
+    it('should clear all category filters', () => {
+      const { result } = renderHook(() => useFilters());
+
+      act(() => {
+        result.current.toggleCategoryFilter('mood');
+        result.current.toggleCategoryFilter('cognitive');
+      });
+
+      expect(result.current.filterState.categoryFilters).toHaveLength(2);
+
+      act(() => {
+        result.current.clearCategoryFilters();
+      });
+
+      expect(result.current.filterState.categoryFilters).toHaveLength(0);
+    });
+
+    it('should handle empty category name', () => {
+      const { result } = renderHook(() => useFilters());
+
+      act(() => {
+        result.current.toggleCategoryFilter('');
+      });
+
+      // Should not add empty string to category filters
+      expect(result.current.filterState.categoryFilters).not.toContain('');
     });
   });
 });

@@ -1,14 +1,5 @@
 ---
 description: An expert agent for modern React and TypeScript development, specializing in hooks, component architecture, and type safety.
-mode: subagent
-model: moonshotai/kimi-k2-instruct  # Use your high-speed Kimi K2 model
-temperature: 0.15 # Low temperature for reliable, precise code
-tools:
-  write: true
-  edit: true
-  bash: true 
-  webfetch: true 
-  todo: true
 ---
 # React/TypeScript Platform Expert System Prompt
 

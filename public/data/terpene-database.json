@@ -31,9 +31,7 @@
         "boilingPoint": "Boiling point in degrees Celsius; null if not applicable.",
         "class": "Chemical classification (Monoterpene, Sesquiterpene, Monoterpenoid, etc.)."
       },
-      "sources": [
-        "Natural origins beyond cannabis (e.g., 'Hops', 'Lemongrass', 'Copaiba oil')."
-      ],
+      "sources": ["Natural origins beyond cannabis (e.g., 'Hops', 'Lemongrass', 'Copaiba oil')."],
       "references": [
         {
           "source": "Citation number or URL reference",
@@ -70,10 +68,7 @@
           "boilingPoint": 176,
           "class": "Monoterpene"
         },
-        "sources": [
-          "Lemon peel",
-          "Orange rind"
-        ],
+        "sources": ["Lemon peel", "Orange rind"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -108,13 +103,7 @@
           "boilingPoint": 167,
           "class": "Monoterpene"
         },
-        "sources": [
-          "Mangos",
-          "Hops",
-          "Thyme",
-          "Lemongrass",
-          "Bay leaves"
-        ],
+        "sources": ["Mangos", "Hops", "Thyme", "Lemongrass", "Bay leaves"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -145,13 +134,7 @@
           "boilingPoint": 155,
           "class": "Monoterpene"
         },
-        "sources": [
-          "Pine needles",
-          "Rosemary",
-          "Basil",
-          "Dill",
-          "Parsley"
-        ],
+        "sources": ["Pine needles", "Rosemary", "Basil", "Dill", "Parsley"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -181,12 +164,7 @@
           "boilingPoint": 166,
           "class": "Monoterpene"
         },
-        "sources": [
-          "Pine trees",
-          "Conifers",
-          "Dill",
-          "Parsley"
-        ],
+        "sources": ["Pine trees", "Conifers", "Dill", "Parsley"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -217,13 +195,7 @@
           "boilingPoint": 130,
           "class": "Sesquiterpene"
         },
-        "sources": [
-          "Black pepper",
-          "Cloves",
-          "Hops",
-          "Rosemary",
-          "Copaiba"
-        ],
+        "sources": ["Black pepper", "Cloves", "Hops", "Rosemary", "Copaiba"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -253,13 +225,7 @@
           "boilingPoint": 106.5,
           "class": "Sesquiterpene"
         },
-        "sources": [
-          "Hops",
-          "Coriander",
-          "Cloves",
-          "Basil",
-          "Ginseng"
-        ],
+        "sources": ["Hops", "Coriander", "Cloves", "Basil", "Ginseng"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -289,13 +255,7 @@
           "boilingPoint": 186,
           "class": "Monoterpene"
         },
-        "sources": [
-          "Lilacs",
-          "Nutmeg",
-          "Tea tree",
-          "Cumin",
-          "Apples"
-        ],
+        "sources": ["Lilacs", "Nutmeg", "Tea tree", "Cumin", "Apples"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -326,12 +286,7 @@
           "boilingPoint": 198,
           "class": "Monoterpenoid"
         },
-        "sources": [
-          "Lavender",
-          "Mint",
-          "Coriander",
-          "Rosewood"
-        ],
+        "sources": ["Lavender", "Mint", "Coriander", "Rosewood"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -362,11 +317,7 @@
           "boilingPoint": 257,
           "class": "Sesquiterpenoid"
         },
-        "sources": [
-          "Eucalyptus",
-          "Cannabis (aged)",
-          "Lemon balm"
-        ],
+        "sources": ["Eucalyptus", "Cannabis (aged)", "Lemon balm"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -397,10 +348,7 @@
           "boilingPoint": 315,
           "class": "Sesquiterpenoid"
         },
-        "sources": [
-          "Chamomile",
-          "Candeia tree"
-        ],
+        "sources": ["Chamomile", "Candeia tree"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -439,12 +387,7 @@
           "boilingPoint": 212,
           "class": "Monoterpenoid"
         },
-        "sources": [
-          "Rosemary",
-          "Mint",
-          "Camphor",
-          "Ginger"
-        ],
+        "sources": ["Rosemary", "Mint", "Camphor", "Ginger"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -475,10 +418,7 @@
           "boilingPoint": 176,
           "class": "Monoterpenoid"
         },
-        "sources": [
-          "Eucalyptus",
-          "Tea tree"
-        ],
+        "sources": ["Eucalyptus", "Tea tree"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -509,12 +449,7 @@
           "boilingPoint": 276,
           "class": "Sesquiterpenoid"
         },
-        "sources": [
-          "Jasmine",
-          "Tea tree",
-          "Ginger",
-          "Lavender"
-        ],
+        "sources": ["Jasmine", "Tea tree", "Ginger", "Lavender"],
         "references": [
           {
             "source": "PubMed 35278524",
@@ -544,9 +479,7 @@
           "boilingPoint": 203,
           "class": "Diterpenoid"
         },
-        "sources": [
-          "Green tea"
-        ],
+        "sources": ["Green tea"],
         "references": [
           {
             "source": "Scientific studies on chlorophyll-related diterpenoids",
@@ -576,10 +509,7 @@
           "boilingPoint": 171,
           "class": "Monoterpene"
         },
-        "sources": [
-          "Pine",
-          "Rosemary"
-        ],
+        "sources": ["Pine", "Rosemary"],
         "references": [
           {
             "source": "PMCID PMC35278524",
@@ -609,11 +539,7 @@
           "boilingPoint": 212,
           "class": "Monoterpenoid"
         },
-        "sources": [
-          "Mint",
-          "Lemongrass",
-          "Eucalyptus"
-        ],
+        "sources": ["Mint", "Lemongrass", "Eucalyptus"],
         "references": [
           {
             "source": "Journal of Natural Products",
@@ -643,12 +569,7 @@
           "boilingPoint": 66,
           "class": "Monoterpene"
         },
-        "sources": [
-          "Mint",
-          "Parsley",
-          "Basil",
-          "Orchids"
-        ],
+        "sources": ["Mint", "Parsley", "Basil", "Orchids"],
         "references": [
           {
             "source": "Phytochemistry Reports",
@@ -678,12 +599,7 @@
           "boilingPoint": 163,
           "class": "Monoterpene"
         },
-        "sources": [
-          "Oak moss",
-          "Spruce",
-          "Black pepper",
-          "Pumpkin"
-        ],
+        "sources": ["Oak moss", "Spruce", "Black pepper", "Pumpkin"],
         "references": [
           {
             "source": "Journal of Essential Oil Research",
@@ -713,11 +629,7 @@
           "boilingPoint": 159,
           "class": "Monoterpene"
         },
-        "sources": [
-          "Ginger",
-          "Rosemary",
-          "Citronella"
-        ],
+        "sources": ["Ginger", "Rosemary", "Citronella"],
         "references": [
           {
             "source": "Journal of Chromatography",
@@ -747,11 +659,7 @@
           "boilingPoint": 171,
           "class": "Monoterpene"
         },
-        "sources": [
-          "Dill",
-          "Eucalyptus",
-          "Parsley"
-        ],
+        "sources": ["Dill", "Eucalyptus", "Parsley"],
         "references": [
           {
             "source": "Phytomedicine Reviews",
@@ -781,12 +689,7 @@
           "boilingPoint": 230,
           "class": "Monoterpenoid"
         },
-        "sources": [
-          "Geraniums",
-          "Roses",
-          "Lemon",
-          "Citronella"
-        ],
+        "sources": ["Geraniums", "Roses", "Lemon", "Citronella"],
         "references": [
           {
             "source": "Frontiers in Plant Science",
@@ -816,12 +719,7 @@
           "boilingPoint": 260,
           "class": "Sesquiterpene"
         },
-        "sources": [
-          "Apples",
-          "Oranges",
-          "Turmeric",
-          "Ginger"
-        ],
+        "sources": ["Apples", "Oranges", "Turmeric", "Ginger"],
         "references": [
           {
             "source": "International Journal of Molecular Sciences",
@@ -851,11 +749,7 @@
           "boilingPoint": 252,
           "class": "Sesquiterpene"
         },
-        "sources": [
-          "Valencia oranges",
-          "Tangerines",
-          "Grapefruits"
-        ],
+        "sources": ["Valencia oranges", "Tangerines", "Grapefruits"],
         "references": [
           {
             "source": "Foods Journal",
@@ -885,10 +779,7 @@
           "boilingPoint": 262,
           "class": "Sesquiterpene"
         },
-        "sources": [
-          "Cedar",
-          "Juniper"
-        ],
+        "sources": ["Cedar", "Juniper"],
         "references": [
           {
             "source": "Natural Product Reports",
@@ -918,10 +809,7 @@
           "boilingPoint": 248,
           "class": "Sesquiterpene"
         },
-        "sources": [
-          "Citrus",
-          "Black pepper"
-        ],
+        "sources": ["Citrus", "Black pepper"],
         "references": [
           {
             "source": "International Journal of Molecular Sciences",
@@ -951,11 +839,7 @@
           "boilingPoint": 254,
           "class": "Sesquiterpene"
         },
-        "sources": [
-          "Turmeric",
-          "Atractylodes",
-          "Chinese medicinal plants"
-        ],
+        "sources": ["Turmeric", "Atractylodes", "Chinese medicinal plants"],
         "references": [
           {
             "source": "Chinese Medicine Journal",
@@ -985,11 +869,7 @@
           "boilingPoint": 193,
           "class": "Monoterpenoid (Ketone)"
         },
-        "sources": [
-          "Fennel",
-          "Basil",
-          "Rosemary"
-        ],
+        "sources": ["Fennel", "Basil", "Rosemary"],
         "references": [
           {
             "source": "Phytotherapy Research",
@@ -1019,10 +899,7 @@
           "boilingPoint": 242,
           "class": "Monoterpenoid (Ester)"
         },
-        "sources": [
-          "Lemongrass",
-          "Geranium"
-        ],
+        "sources": ["Lemongrass", "Geranium"],
         "references": [
           {
             "source": "Phytochemistry Letters",
@@ -1040,21 +917,51 @@
       }
     ],
     "effectCategories": [
-      { "id": "cognitive", "name": "Cognitive & Mental", "displayOrder": 1, "description": "Placeholder for cognitive and mental effects" },
+      {
+        "id": "mood",
+        "name": "Mood & Energy",
+        "displayOrder": 1,
+        "description": "Daytime energizing effects that enhance mood, motivation, and vitality"
+      },
+      {
+        "id": "cognitive",
+        "name": "Cognitive & Mental Enhancement",
+        "displayOrder": 2,
+        "description": "Daytime cognitive effects that support focus, alertness, and mental clarity"
+      },
       {
         "id": "relaxation",
-        "name": "Relaxation & Anxiety",
-        "displayOrder": 2,
-        "description": "Placeholder for relaxation and anxiety effects"
+        "name": "Relaxation & Anxiety Management",
+        "displayOrder": 3,
+        "description": "Evening/nighttime effects that promote relaxation, stress relief, and calm"
       },
       {
         "id": "physical",
-        "name": "Physical & Physiological",
-        "displayOrder": 3,
-        "description": "Placeholder for physical and physiological effects"
-      },
-      { "id": "mood", "name": "Mood & Energy", "displayOrder": 4, "description": "Placeholder for mood and energy effects" }
+        "name": "Physical & Physiological Management",
+        "displayOrder": 4,
+        "description": "Therapeutic physical effects that address pain, inflammation, and bodily functions"
+      }
     ],
-    "effectCategoryMapping": {}
+    "effectCategoryMapping": {
+      "Energizing": "mood",
+      "Mood enhancing": "mood",
+      "Mood stabilizing": "mood",
+      "Uplifting": "mood",
+      "Alertness": "cognitive",
+      "Cognitive enhancement": "cognitive",
+      "Focus": "cognitive",
+      "Memory-enhancement": "cognitive",
+      "Anxiety relief": "relaxation",
+      "Relaxing": "relaxation",
+      "Sedative": "relaxation",
+      "Stress relief": "relaxation",
+      "Couch-lock": "relaxation",
+      "Anti-inflammatory": "physical",
+      "Appetite suppressant": "physical",
+      "Breathing support": "physical",
+      "Muscle relaxant": "physical",
+      "Pain relief": "physical",
+      "Seizure related": "physical"
+    }
   }
 }
