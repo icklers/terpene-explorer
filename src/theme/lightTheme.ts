@@ -90,6 +90,14 @@ export const lightTheme = createTheme({
       disabledBackground: 'rgba(0, 0, 0, 0.12)',
       focus: 'rgba(0, 0, 0, 0.12)',
     },
+
+    // Category colors for effect organization (WCAG 2.1 AA compliant)
+    category: {
+      mood: '#FF9800', // Orange 500
+      cognitive: '#9C27B0', // Purple 500
+      relaxation: '#2196F3', // Blue 500
+      physical: '#4CAF50', // Green 500
+    },
   },
 
   // Typography (readable and accessible)

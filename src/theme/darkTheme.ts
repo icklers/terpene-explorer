@@ -91,6 +91,14 @@ export const darkTheme = createTheme({
       disabledBackground: 'rgba(255, 255, 255, 0.12)',
       focus: 'rgba(255, 255, 255, 0.12)',
     },
+
+    // Category colors adjusted for dark theme (WCAG 2.1 AA compliant)
+    category: {
+      mood: '#FFB74D', // Orange 300 (lighter for dark backgrounds)
+      cognitive: '#BA68C8', // Purple 300
+      relaxation: '#64B5F6', // Blue 300
+      physical: '#81C784', // Green 300
+    },
   },
 
   // Typography and Component overrides remain unchanged

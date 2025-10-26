@@ -16,7 +16,6 @@ import { ViewModeToggle } from '../components/common/ViewModeToggle';
 import { WarningSnackbar } from '../components/common/WarningSnackbar';
 import { FilterControls } from '../components/filters/FilterControls';
 import { FilterModeToggle } from '../components/filters/FilterModeToggle';
-import { SearchBar } from '../components/filters/SearchBar';
 import { TerpeneList } from '../components/visualizations/TerpeneList';
 import { useFilters } from '../hooks/useFilters';
 import { useTerpeneData } from '../hooks/useTerpeneData';
@@ -56,8 +55,21 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
   const { terpenes: newTerpenes, loading: newLoading, error: newError } = useTerpeneDatabase();
 
   // Determine which data source to use based on view mode
-  const { filterState, setSearchQuery, toggleEffect, toggleFilterMode, setViewMode, clearAllFilters, hasActiveFilters } = useFilters();
+  const {
+    filterState,
+    // setSearchQuery, // Removed - search is handled by header bar
+    toggleEffect,
+    toggleFilterMode,
+    setViewMode,
+    clearAllFilters,
+    toggleCategoryFilter,
+    hasActiveFilters,
+  } = useFilters();
   const isTableView = filterState.viewMode === 'table';
+
+  const handleCategoryToggle = (category: string) => {
+    toggleCategoryFilter(category);
+  };
 
   // Use new data for table view, old data for sunburst
   // Convert new schema to legacy model for existing UI components
@@ -183,19 +195,12 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
         <Collapse in={filtersExpanded}>
           <Box sx={{ p: 3, pt: 0 }}>
             <Stack spacing={3}>
-              {/* Search Input (T071) */}
-              <SearchBar
-                value={filterState.searchQuery}
-                onChange={setSearchQuery}
-                placeholder={t('pages.home.searchPlaceholder', 'Search terpenes by name, aroma, or effects...')}
-                ariaLabel={t('pages.home.searchAriaLabel', 'Search terpenes')}
-                resultsCount={searchedTerpenes.length}
-              />
-
               {/* Effect Chips */}
               <FilterControls
                 effects={effects}
                 selectedEffects={filterState.selectedEffects}
+                selectedCategories={filterState.categoryFilters}
+                onCategoryToggle={handleCategoryToggle}
                 onToggleEffect={toggleEffect}
                 onClearFilters={clearAllFilters}
                 resultsCount={searchedTerpenes.length}

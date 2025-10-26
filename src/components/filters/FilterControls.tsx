@@ -12,6 +12,7 @@ import { Box, Chip, Typography, Button } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { CategoryTabs } from './CategoryTabs';
 import type { Effect } from '../../models/Effect';
 
 /**
@@ -22,6 +23,10 @@ export interface FilterControlsProps {
   effects: Effect[];
   /** Currently selected effect names */
   selectedEffects: string[];
+  /** Currently selected category IDs for categorized filtering */
+  selectedCategories?: string[];
+  /** Callback when category selection changes */
+  onCategoryToggle?: (category: string) => void;
   /** Callback when effect is toggled */
   onToggleEffect: (effect: string) => void;
   /** Callback when clear filters button is clicked (UAT) */
@@ -41,6 +46,8 @@ export interface FilterControlsProps {
 export function FilterControls({
   effects,
   selectedEffects,
+  selectedCategories = [],
+  onCategoryToggle,
   onToggleEffect,
   onClearFilters,
   label,
@@ -53,6 +60,17 @@ export function FilterControls({
 
   return (
     <Box>
+      {/* Category Tabs */}
+      {onCategoryToggle && (
+        <Box sx={{ mb: 2 }}>
+          <CategoryTabs
+            selectedCategories={selectedCategories}
+            onCategoryToggle={onCategoryToggle}
+            label={t('filters.categoriesLabel', 'Filter by Categories')}
+          />
+        </Box>
+      )}
+
       {/* Label with Clear Button */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
         <Typography variant="subtitle2" component="label" id="effect-filter-label" sx={{ fontWeight: 600 }}>
