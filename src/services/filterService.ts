@@ -134,3 +134,20 @@ export function getEffectsInCategories(categories: string[]): string[] {
 
   return Array.from(allEffects);
 }
+
+/**
+ * Get category id for a given effect name.
+ * Returns the category key (mood|cognitive|relaxation|physical) or undefined if not found.
+ */
+export function getCategoryForEffect(effect: string): string | undefined {
+  const name = effect.trim().toLowerCase();
+
+  for (const key of Object.keys(CATEGORY_DEFINITIONS)) {
+    const def = CATEGORY_DEFINITIONS[key as keyof typeof CATEGORY_DEFINITIONS];
+    if (def.effects.some((e) => e.toLowerCase() === name)) {
+      return key;
+    }
+  }
+
+  return undefined;
+}

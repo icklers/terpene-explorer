@@ -23,7 +23,7 @@ tests/
 
 ## Commands
 
-pnpm run format && pnpm run lint:fix && pnpm run build
+pnpm run type-check && pnpm run format && pnpm run lint:fix && pnpm run build
 
 ## Code Style
 

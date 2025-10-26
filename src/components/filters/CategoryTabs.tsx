@@ -38,16 +38,16 @@ export function CategoryTabs({ selectedCategories, onCategoryToggle, label }: Ca
   const categoryTabs = React.useMemo(() => {
     return Object.entries(CATEGORY_DEFINITIONS)
       .sort(([, a], [, b]) => a.displayOrder - b.displayOrder)
-  .map(([categoryId, category]) => {
+      .map(([categoryId, category]) => {
         const config = CATEGORY_UI_CONFIG[categoryId as keyof typeof CATEGORY_UI_CONFIG];
         const isSelected = selectedCategories.includes(categoryId);
         // Safely access extended category palette without using `any`
         const categoryPalette = (theme.palette as unknown as { category?: Record<string, string> }).category;
         const categoryColor = categoryPalette?.[categoryId] || theme.palette.primary.main;
 
-  const contrastTextRaw = theme.palette.getContrastText ? theme.palette.getContrastText(categoryColor) : '#ffffff';
-  // Prefer a dark text for selected tabs when contrastText is light (keep consistency with effect chips)
-  const contrastText = /^#?f{3,6}$/i.test(contrastTextRaw.replace('#', '')) ? theme.palette.text.primary : contrastTextRaw;
+        const contrastTextRaw = theme.palette.getContrastText ? theme.palette.getContrastText(categoryColor) : '#ffffff';
+        // Prefer a dark text for selected tabs when contrastText is light (keep consistency with effect chips)
+        const contrastText = /^#?f{3,6}$/i.test(contrastTextRaw.replace('#', '')) ? theme.palette.text.primary : contrastTextRaw;
 
         return {
           id: categoryId,
