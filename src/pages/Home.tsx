@@ -161,7 +161,9 @@ export function Home(): React.ReactElement {
               transition: 'transform 0.3s',
             }}
             aria-expanded={filtersExpanded}
-            aria-label={filtersExpanded ? t('pages.home.collapseFilters', 'Collapse filters') : t('pages.home.expandFilters', 'Expand filters')}
+            aria-label={
+              filtersExpanded ? t('pages.home.collapseFilters', 'Collapse filters') : t('pages.home.expandFilters', 'Expand filters')
+            }
           >
             <ExpandMoreIcon />
           </IconButton>
@@ -171,30 +173,31 @@ export function Home(): React.ReactElement {
         <Collapse in={filtersExpanded}>
           <Box sx={{ p: 3, pt: 0 }}>
             <Stack spacing={3}>
-          {/* Search Input (T071) */}
-          <SearchBar
-            value={filterState.searchQuery}
-            onChange={setSearchQuery}
-            placeholder={t('pages.home.searchPlaceholder', 'Search terpenes by name, aroma, or effects...')}
-            ariaLabel={t('pages.home.searchAriaLabel', 'Search terpenes')}
-            resultsCount={filteredTerpenes.length}
-          />
+              {/* Search Input (T071) */}
+              <SearchBar
+                value={filterState.searchQuery}
+                onChange={setSearchQuery}
+                placeholder={t('pages.home.searchPlaceholder', 'Search terpenes by name, aroma, or effects...')}
+                ariaLabel={t('pages.home.searchAriaLabel', 'Search terpenes')}
+                resultsCount={filteredTerpenes.length}
+              />
 
-          {/* Effect Chips */}
-          <FilterControls
-            effects={effects}
-            selectedEffects={filterState.selectedEffects}
-            onToggleEffect={toggleEffect}
-            onClearFilters={clearAllFilters}
-            resultsCount={filteredTerpenes.length}
-          />
+              {/* Effect Chips */}
+              <FilterControls
+                effects={effects}
+                selectedEffects={filterState.selectedEffects}
+                onToggleEffect={toggleEffect}
+                onClearFilters={clearAllFilters}
+                resultsCount={filteredTerpenes.length}
+              />
 
-          {/* Filter Mode Toggle (only show when effects are selected) */}
-          {filterState.selectedEffects.length > 1 && <FilterModeToggle mode={filterState.effectFilterMode} onChange={toggleFilterMode} />}
+              {/* Filter Mode Toggle (only show when effects are selected) */}
+              {filterState.selectedEffects.length > 1 && (
+                <FilterModeToggle mode={filterState.effectFilterMode} onChange={toggleFilterMode} />
+              )}
 
-          {/* View Mode Toggle (T072) */}
-          <ViewModeToggle mode={filterState.viewMode} onChange={setViewMode} />
-
+              {/* View Mode Toggle (T072) */}
+              <ViewModeToggle mode={filterState.viewMode} onChange={setViewMode} />
             </Stack>
           </Box>
         </Collapse>

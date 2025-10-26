@@ -39,7 +39,7 @@ const EffectEnum = z.enum([
   'Sedative',
   'Seizure related',
   'Stress relief',
-  'Uplifting'
+  'Uplifting',
 ]);
 
 // Define therapeutic properties (mix of clinical and user-friendly terms)
@@ -79,7 +79,7 @@ const TherapeuticPropertyEnum = z.enum([
   'Muscle relaxant',
   'Neuroprotective',
   'Sedative',
-  'Wound healing'
+  'Wound healing',
 ]);
 
 // Effect category schema
