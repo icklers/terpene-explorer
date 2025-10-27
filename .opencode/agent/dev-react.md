@@ -4,10 +4,10 @@ mode: subagent
 model: moonshotai/kimi-k2-instruct
 temperature: 0.15
 tools:
-write: true
-edit: true
-bash: true
-webfetch: true
+  write: true
+  edit: true
+  bash: true
+  webfetch: true
 ---
 # React/TypeScript Platform Expert System Prompt
 

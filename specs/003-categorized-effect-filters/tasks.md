@@ -36,6 +36,13 @@
 - ✅ Category filtering functionality
 - ✅ Removed redundant search bar (now consolidated in header)
 
+**Phase 7: Mobile Responsiveness Complete**
+- ✅ useMediaQuery hook for mobile breakpoint detection
+- ✅ Mobile accordion UI (collapsed by default, expand/collapse with tap)
+- ✅ Category headers with functional checkboxes in accordion
+- ✅ Categorized effect chips displayed inside expanded accordions
+- ✅ Mobile-specific E2E tests with 375x667 viewport
+
 ### 🎯 **Current Status**
 
 The categorized effect filters feature is **functionally complete** with:
@@ -209,21 +216,21 @@ The foundation is ready. Remaining tasks (mostly tests and polish) are tracked i
 
 ### Implementation for Mobile
 
-- [ ] T062 [P] Add useMediaQuery hook in CategoryFilterGroup.tsx to detect mobile breakpoint (theme.breakpoints.down('sm'))
-- [ ] T063 Wrap CategoryFilterGroup content in Material UI Accordion component when isMobile is true
-- [ ] T064 Move category header into AccordionSummary with expand icon when on mobile
-- [ ] T065 Move effect chips into AccordionDetails when on mobile
-- [ ] T066 Set accordions to collapsed by default on mobile (expanded: false)
-- [ ] T067 Verify category checkbox remains functional in accordion header
+- [x] T062 [P] Add useMediaQuery hook in CategoryFilterGroup.tsx to detect mobile breakpoint (theme.breakpoints.down('sm'))
+- [x] T063 Wrap CategoryFilterGroup content in Material UI Accordion component when isMobile is true
+- [x] T064 Move category header into AccordionSummary with expand icon when on mobile
+- [x] T065 Move effect chips into AccordionDetails when on mobile
+- [x] T066 Set accordions to collapsed by default on mobile (expanded: false)
+- [x] T067 Verify category checkbox remains functional in accordion header
 
 ### E2E Tests for Mobile
 
-- [ ] T068 [P] Create mobile E2E test in tests/e2e/filter-categories.spec.ts with viewport size 375x667 (iPhone SE)
-- [ ] T069 [P] Add test case to verify categories render as collapsed accordions on mobile
-- [ ] T070 [P] Add test case to verify tapping accordion header expands/collapses content
-- [ ] T071 [P] Add test case to verify category checkbox visible and functional in accordion header
-- [ ] T072 [P] Add test case to verify effect chips visible in expanded accordion details
-- [ ] T072.5 [P] Add E2E test to verify filter state persists after page reload (localStorage validation)
+- [x] T068 [P] Create mobile E2E test in tests/e2e/filter-categories.spec.ts with viewport size 375x667 (iPhone SE)
+- [x] T069 [P] Add test case to verify categories render as collapsed accordions on mobile
+- [x] T070 [P] Add test case to verify tapping accordion header expands/collapses content
+- [x] T071 [P] Add test case to verify category checkbox visible and functional in accordion header
+- [x] T072 [P] Add test case to verify effect chips visible in expanded accordion details
+- [x] T072.5 [P] Add E2E test to verify filter state persists after page reload (localStorage validation)
 
 **Checkpoint**: Mobile UI complete - accordions work correctly on small screens
 
