@@ -155,8 +155,18 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
         </Typography>
       </Box>
 
-      {/* Filter Controls */}
-      <Paper elevation={1} sx={{ mb: 3 }} role="search" aria-label={t('pages.home.filtersLabel', 'Filter controls')}>
+      {/* Filter Controls - Floating Card */}
+      <Paper
+        sx={{
+          bgcolor: 'background.paper', // Card surface background
+          borderRadius: 2, // 8px corners (2 * 4px base unit)
+          boxShadow: '0 4px 8px rgba(0,0,0,0.3)', // Elevation shadow
+          p: 3, // 24px internal padding
+          mb: 3, // 24px margin bottom
+        }}
+        role="search"
+        aria-label={t('pages.home.filtersLabel', 'Filter controls')}
+      >
         {/* Collapsible Header */}
         <Box
           sx={{

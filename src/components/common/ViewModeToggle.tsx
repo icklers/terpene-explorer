@@ -65,6 +65,23 @@ export function ViewModeToggle({ mode, onChange, label, disabled = false }: View
             py: 1,
             textTransform: 'none',
             fontWeight: 500,
+            // Unselected state styling
+            bgcolor: 'background.paper',
+            color: 'text.primary',
+            border: '1px solid',
+            borderColor: 'divider',
+            '&:hover': {
+              bgcolor: 'action.hover',
+            },
+            // Selected state styling - bright green highlight per spec
+            '&.Mui-selected': {
+              bgcolor: 'primary.main', // Bright green for active selection
+              color: 'primary.contrastText', // White text for contrast
+              borderColor: 'primary.main', // Green border to match
+              '&:hover': {
+                bgcolor: 'primary.main', // Keep green on hover when selected
+              },
+            },
           },
         }}
       >

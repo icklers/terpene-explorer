@@ -2,7 +2,14 @@
 
 Auto-generated from all feature plans. Last updated: 2025-10-23
 
+## Documentation
+Always use context7 when I need code generation, setup or configuration steps, or
+library/API documentation. This means you should automatically use the Context7 MCP
+tools to resolve library id and get library docs without me having to explicitly ask.
+
 ## Active Technologies
+- TypeScript 5.7.2, React 19.2.0 + @mui/material 6.3.0, @emotion/react 11.13.5, @emotion/styled 11.13.5, Vite 6.0.3 (003-dark-theme-design)
+- LocalStorage for theme preferences (existing useLocalStorage hook) (003-dark-theme-design)
 
 - TypeScript 5.7+, Node.js 24 LTS, ES2022 target + React 19.2+, Material UI 6.3+, Emotion 11.13+ (styling), Zod 3.24+ (schema validation)
   (003-categorized-effect-filters)
@@ -32,6 +39,7 @@ pnpm run type-check && pnpm run format && pnpm run lint:fix && pnpm run build
 TypeScript 5.7+, Node.js 24 LTS, ES2024 target: Follow standard conventions
 
 ## Recent Changes
+- 003-dark-theme-design: Added TypeScript 5.7.2, React 19.2.0 + @mui/material 6.3.0, @emotion/react 11.13.5, @emotion/styled 11.13.5, Vite 6.0.3
 
 - 003-categorized-effect-filters: Added TypeScript 5.7+, Node.js 24 LTS, ES2022 target + React 19.2+, Material UI 6.3+, Emotion 11.13+
   (styling), Zod 3.24+ (schema validation)

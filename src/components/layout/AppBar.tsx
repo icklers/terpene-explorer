@@ -53,9 +53,25 @@ export function AppBar({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <MuiAppBar position="sticky" elevation={2} sx={{ zIndex: theme.zIndex.appBar }}>
+    <MuiAppBar
+      position="sticky"
+      elevation={0}
+      sx={{
+        zIndex: theme.zIndex.appBar,
+        bgcolor: 'primary.dark', // Dark green background as per spec
+        boxShadow: '0 4px 8px rgba(0,0,0,0.3)', // Elevation shadow
+      }}
+    >
       <Container maxWidth="lg">
-        <Toolbar disableGutters sx={{ gap: 2, alignItems: 'center', py: { xs: 1, md: 0 } }}>
+        <Toolbar
+          disableGutters
+          sx={{
+            gap: 2,
+            alignItems: 'center',
+            px: { xs: 2, md: 4 }, // Responsive horizontal padding: 16px mobile, 32px desktop
+            py: { xs: 1, md: 0 },
+          }}
+        >
           {/* App Title */}
           <Typography
             variant="h6"

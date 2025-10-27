@@ -56,7 +56,7 @@ export function FilterControls({
   resultsCount,
 }: FilterControlsProps): React.ReactElement {
   const { t } = useTranslation();
-  const theme = useTheme();
+  const theme = useTheme(); // Get theme for contrast text calculation
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const defaultLabel = t('filters.effectsLabel', 'Filter by Effects');
@@ -139,13 +139,15 @@ export function FilterControls({
               const isSelected = selectedEffects.includes(effect.name);
               const displayName = effect.displayName.en || effect.name;
               const count = effect.terpeneCount;
-              // Determine category color from theme (fallback to effect.color)
+              // Get category ID and color for effect
               const categoryId = getCategoryForEffect(effect.name);
-              // Safely access extended category palette without using `any`
               const categoryPalette = (theme.palette as unknown as { category?: Record<string, string> }).category;
-              const categoryColor =
-                categoryId && categoryPalette && categoryPalette[categoryId] ? categoryPalette[categoryId] : effect.color;
-              const contrastText = theme.palette.getContrastText(categoryColor);
+              const categoryColor = categoryId && categoryPalette ? categoryPalette[categoryId] : theme.palette.primary.main;
+              const contrastText = theme.palette.getContrastText
+                ? categoryId && categoryPalette && categoryPalette[categoryId]
+                  ? theme.palette.getContrastText(categoryPalette[categoryId])
+                  : theme.palette.getContrastText(theme.palette.primary.main)
+                : '#ffffff';
 
               return (
                 <Chip
@@ -172,16 +174,20 @@ export function FilterControls({
                   color={isSelected ? 'primary' : 'default'}
                   variant={isSelected ? 'filled' : 'outlined'}
                   sx={{
-                    // Use category-derived color to style chips
-                    backgroundColor: isSelected ? categoryColor : 'transparent',
-                    borderColor: categoryColor,
-                    color: isSelected ? contrastText : categoryColor,
+                    // Dual indicator pattern for filter chips:
+                    // 1. Background color using category-specific colors
+                    // 2. Border color using category-specific colors to maintain visual consistency
+                    backgroundColor: isSelected ? categoryColor : 'transparent', // Selected: category color, Unselected: transparent
+                    border: '2px solid',
+                    borderColor: categoryColor, // Use category color for border
+                    color: isSelected ? contrastText : categoryColor, // Selected: contrast text, Unselected: category color
                     fontWeight: isSelected ? 600 : 400,
                     '&:hover': {
-                      backgroundColor: isSelected ? categoryColor : `${categoryColor}20`,
+                      backgroundColor: isSelected ? categoryColor : `${categoryColor}20`, // Slight opacity for unselected
                     },
                     '&:focus-visible': {
-                      outline: `2px solid ${categoryColor}`,
+                      outline: '2px solid',
+                      outlineColor: 'secondary.main', // Use orange for focus as per spec
                       outlineOffset: 2,
                     },
                   }}

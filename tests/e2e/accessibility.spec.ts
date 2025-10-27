@@ -381,6 +381,41 @@ test.describe('Accessibility Compliance', () => {
     expect(hasFocusIndicator).toBeTruthy();
   });
 
+  // Task T036: Verify focus indicators with axe-core
+  test('T036: should verify focus indicators with axe-core', async ({ page }) => {
+    // Run axe accessibility scan specifically checking for focus-related issues
+    const accessibilityScanResults = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .options({
+        runOnly: {
+          type: 'tag',
+          values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'],
+        },
+      })
+      .analyze();
+
+    // Focus-related violations to check for
+    const focusRelatedViolations = [
+      'focus-order-semantics',
+      'frame-title-unique',
+      'heading-order',
+      'hidden-content',
+      'landmark-one-main',
+      'landmark-unique',
+      'page-has-heading-one',
+      'region',
+    ];
+
+    // Check specifically for focus-related issues
+    const focusViolations = accessibilityScanResults.violations.filter((violation) => focusRelatedViolations.includes(violation.id));
+
+    // There should be no focus-related accessibility violations
+    expect(focusViolations).toHaveLength(0);
+
+    // Additionally, run a focused check for focus order and keyboard accessibility
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+
   test('should support screen reader navigation', async ({ page }) => {
     // Verify landmarks for screen reader navigation
     const landmarks = await page.evaluate(() => {

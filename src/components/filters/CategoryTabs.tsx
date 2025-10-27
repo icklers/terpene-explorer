@@ -185,9 +185,9 @@ export function CategoryTabs({
                           const isSelectedEffect = selectedEffects?.includes(effect.name) || false;
                           const displayName = effect.displayName?.en || effect.name;
                           const count = effect.terpeneCount;
-                          const categoryPalette = (theme.palette as unknown as { category?: Record<string, string> }).category;
-                          const categoryColor = categoryPalette?.[tab.id] || theme.palette.primary.main;
-                          const contrastText = theme.palette.getContrastText?.(categoryColor) || '#ffffff';
+                          // Use the category color that's already defined for the tab
+                          const categoryColor = tab.categoryColor;
+                          const contrastText = tab.contrastText;
 
                           return (
                             <Button
