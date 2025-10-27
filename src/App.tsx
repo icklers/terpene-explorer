@@ -74,7 +74,15 @@ export const App: React.FC = () => {
         <GlobalStyles styles={globalAccessibilityStyles} />
 
         {/* App Layout */}
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
+            bgcolor: 'background.default', // Apply dark theme background
+            p: { xs: 2, md: 4 }, // Responsive padding: 16px mobile, 32px desktop
+          }}
+        >
           {/* App Bar with Theme, Language & Search Controls (T087, Phase 5: T036) */}
           <AppBar
             themeMode={themeMode}

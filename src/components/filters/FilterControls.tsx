@@ -56,7 +56,7 @@ export function FilterControls({
   resultsCount,
 }: FilterControlsProps): React.ReactElement {
   const { t } = useTranslation();
-  const theme = useTheme();
+  const theme = useTheme(); // Get theme for contrast text calculation
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const defaultLabel = t('filters.effectsLabel', 'Filter by Effects');
@@ -139,13 +139,10 @@ export function FilterControls({
               const isSelected = selectedEffects.includes(effect.name);
               const displayName = effect.displayName.en || effect.name;
               const count = effect.terpeneCount;
-              // Determine category color from theme (fallback to effect.color)
-              const categoryId = getCategoryForEffect(effect.name);
-              // Safely access extended category palette without using `any`
-              const categoryPalette = (theme.palette as unknown as { category?: Record<string, string> }).category;
-              const categoryColor =
-                categoryId && categoryPalette && categoryPalette[categoryId] ? categoryPalette[categoryId] : effect.color;
-              const contrastText = theme.palette.getContrastText(categoryColor);
+              // Use effect-specific color for styling chips (user requirement)
+              // const effectColor = effect.color;
+              // const theme = useTheme();
+              // const contrastText = theme.palette.getContrastText(effectColor);
 
               return (
                 <Chip
@@ -172,16 +169,20 @@ export function FilterControls({
                   color={isSelected ? 'primary' : 'default'}
                   variant={isSelected ? 'filled' : 'outlined'}
                   sx={{
-                    // Use category-derived color to style chips
-                    backgroundColor: isSelected ? categoryColor : 'transparent',
-                    borderColor: categoryColor,
-                    color: isSelected ? contrastText : categoryColor,
+                    // Dual indicator pattern for filter chips:
+                    // 1. Background color (light elevated for selected, dark card surface for unselected)
+                    // 2. Border color (green for both states to prevent layout shift)
+                    backgroundColor: isSelected ? 'action.selected' : 'background.paper', // Selected: light elevated, Unselected: dark card surface
+                    border: '2px solid',
+                    borderColor: 'primary.main', // Always use green for border to prevent layout shift
+                    color: isSelected ? 'primary.contrastText' : 'primary.main', // Selected: white text, Unselected: green text
                     fontWeight: isSelected ? 600 : 400,
                     '&:hover': {
-                      backgroundColor: isSelected ? categoryColor : `${categoryColor}20`,
+                      backgroundColor: isSelected ? 'action.selected' : 'action.hover',
                     },
                     '&:focus-visible': {
-                      outline: `2px solid ${categoryColor}`,
+                      outline: '2px solid',
+                      outlineColor: 'secondary.main', // Use orange for focus as per spec
                       outlineOffset: 2,
                     },
                   }}

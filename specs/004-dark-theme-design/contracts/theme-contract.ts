@@ -1,9 +1,9 @@
 /**
  * Theme Contract: Type Definitions for Comfortably Dark Theme System
- * 
+ *
  * This file defines TypeScript interfaces and types for the dark theme configuration.
  * These types ensure type safety when working with theme values across the application.
- * 
+ *
  * @feature 004-dark-theme-design
  * @see data-model.md for complete entity definitions
  */
@@ -16,14 +16,14 @@ import type { Theme, ThemeOptions } from '@mui/material/styles';
  */
 export interface DarkThemePaletteConfig {
   mode: 'dark';
-  
+
   background: {
     /** Main page background - very dark gray */
     default: '#121212';
     /** Card surface background - slightly lighter for contrast */
     paper: '#1e1e1e';
   };
-  
+
   primary: {
     /** Bright green for active interactions (selected toggle, chip borders) */
     main: '#4caf50';
@@ -32,21 +32,21 @@ export interface DarkThemePaletteConfig {
     /** White text on primary backgrounds */
     contrastText: '#ffffff';
   };
-  
+
   secondary: {
     /** Vibrant orange for focus/selection indicators */
     main: '#ffb300';
     /** Dark text on secondary backgrounds for contrast */
     contrastText: 'rgba(0, 0, 0, 0.87)';
   };
-  
+
   text: {
     /** Primary text - white */
     primary: '#ffffff';
     /** Secondary text - 70% white */
     secondary: 'rgba(255, 255, 255, 0.7)';
   };
-  
+
   action: {
     /** Hover state background (zebra stripes) */
     hover: 'rgba(255, 255, 255, 0.08)';
@@ -179,8 +179,8 @@ export interface HeaderThemeConfig {
   bgcolor: 'primary.dark';
   toolbar: {
     paddingX: {
-      xs: 2;  // 16px mobile
-      md: 4;  // 32px desktop
+      xs: 2; // 16px mobile
+      md: 4; // 32px desktop
     };
   };
 }
@@ -189,7 +189,7 @@ export interface HeaderThemeConfig {
  * Search bar component theme configuration
  */
 export interface SearchBarThemeConfig {
-  borderRadius: 8;  // px
+  borderRadius: 8; // px
   focus: {
     borderColor: 'secondary.main';
     outlineColor: 'secondary.main';
@@ -232,8 +232,8 @@ export interface MainLayoutConfig {
   container: {
     bgcolor: 'background.default';
     padding: {
-      xs: 2;  // 16px mobile
-      md: 4;  // 32px desktop
+      xs: 2; // 16px mobile
+      md: 4; // 32px desktop
     };
   };
   /** Spacing between cards in theme units (3 = 24px) */
@@ -246,7 +246,7 @@ export interface MainLayoutConfig {
  */
 export interface FocusIndicatorConfig {
   /** Focus ring color */
-  color: 'secondary.main';  // #ffb300
+  color: 'secondary.main'; // #ffb300
   /** Outline width */
   width: '2px' | '3px';
   /** Outline offset from element boundary */
@@ -315,7 +315,7 @@ export function passesWCAGAA(ratio: number, textSize: 'normal' | 'large'): boole
 /**
  * Helper type for sx prop with theme tokens
  */
-export type ThemeTokenValue = 
+export type ThemeTokenValue =
   | 'background.default'
   | 'background.paper'
   | 'primary.main'
@@ -331,7 +331,4 @@ export type ThemeTokenValue =
 /**
  * Export all types for external use
  */
-export type {
-  Theme,
-  ThemeOptions,
-} from '@mui/material/styles';
+export type { Theme, ThemeOptions } from '@mui/material/styles';

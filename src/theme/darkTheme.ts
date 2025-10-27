@@ -74,8 +74,8 @@ export const darkTheme = createTheme({
 
     // Text colors (ensuring 4.5:1 contrast on dark backgrounds)
     text: {
-      primary: 'rgba(255, 255, 255, 0.87)', // High emphasis
-      secondary: 'rgba(255, 255, 255, 0.60)', // Medium emphasis
+      primary: '#ffffff', // High emphasis - changed to pure white per spec
+      secondary: 'rgba(255, 255, 255, 0.70)', // Medium emphasis - adjusted opacity
       disabled: 'rgba(255, 255, 255, 0.38)', // Disabled state
     },
 
@@ -169,8 +169,8 @@ export const darkTheme = createTheme({
           borderRadius: 8,
           '&:focus-visible': {
             outline: '3px solid',
-            // Using primary.main for focus color
-            outlineColor: '#4caf50',
+            // Using secondary.main (orange) for focus color per spec
+            outlineColor: '#ffb300',
             outlineOffset: '2px',
           },
         },
@@ -185,8 +185,8 @@ export const darkTheme = createTheme({
           fontWeight: 500,
           '&:focus-visible': {
             outline: '2px solid',
-            // Using primary.main for focus color
-            outlineColor: '#4caf50',
+            // Using secondary.main (orange) for focus color per spec
+            outlineColor: '#ffb300',
             outlineOffset: '2px',
           },
         },
@@ -203,9 +203,13 @@ export const darkTheme = createTheme({
           '& .MuiOutlinedInput-root': {
             '&:focus-within': {
               outline: '2px solid',
-              // Using primary.main for focus color
-              outlineColor: '#4caf50',
+              // Using secondary.main (orange) for focus color per spec
+              outlineColor: '#ffb300',
               outlineOffset: '2px',
+            },
+            '&.Mui-focused fieldset': {
+              // Orange focus border for TextField per spec
+              borderColor: '#ffb300',
             },
           },
         },
@@ -218,8 +222,8 @@ export const darkTheme = createTheme({
         root: {
           '&:focus-visible': {
             outline: '2px solid',
-            // Using primary.main for focus color
-            outlineColor: '#4caf50',
+            // Using secondary.main (orange) for focus color per spec
+            outlineColor: '#ffb300',
             outlineOffset: '-2px',
           },
         },
@@ -232,8 +236,8 @@ export const darkTheme = createTheme({
         root: {
           '&:focus-visible': {
             outline: '2px solid',
-            // Using primary.main for focus color
-            outlineColor: '#4caf50',
+            // Using secondary.main (orange) for focus color per spec
+            outlineColor: '#ffb300',
             outlineOffset: '2px',
             borderRadius: 4,
           },

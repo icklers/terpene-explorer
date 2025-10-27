@@ -60,7 +60,8 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
   const [sortBy, setSortBy] = useState<SortColumn>(initialSortBy);
   const [sortDirection, setSortDirection] = useState<SortDirection>(initialSortDirection);
 
-  // State for detail modal (T020)
+  // State for detail modal (T020) and row selection (US3)
+  const [selectedTerpeneId, setSelectedTerpeneId] = useState<string | null>(null);
   const [selectedTerpene, setSelectedTerpene] = useState<NewTerpene | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -76,8 +77,11 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
     }
   };
 
-  // Handle row click to open detail modal (T019, T022)
+  // Handle row click to open detail modal and update selection (US3)
   const handleRowClick = (terpene: Terpene) => {
+    // Update selected row for visual feedback
+    setSelectedTerpeneId(terpene.id);
+
     // Convert legacy model to the new terpene shape for the detail modal
     const newTerpene = toNewTerpene(terpene);
     setSelectedTerpene(newTerpene);
@@ -148,16 +152,39 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
   // const useVirtualization = sortedTerpenes.length > 100;
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      component={Paper}
+      sx={{
+        bgcolor: '#272727', // Slightly lighter than card default for visual separation
+        borderRadius: 2, // 8px corners
+        overflow: 'hidden', // Contain table within rounded corners
+        mb: 3, // 24px margin bottom
+      }}
+    >
       <Table stickyHeader aria-label={t('table.ariaLabel', 'Terpenes table')}>
         <TableHead>
-          <TableRow>
+          <TableRow
+            sx={{
+              bgcolor: 'primary.dark', // Dark green background
+              color: 'primary.contrastText', // White text
+              fontWeight: 600, // Make header bold
+            }}
+          >
             <TableCell>
               <TableSortLabel
                 active={sortBy === 'name'}
                 direction={sortBy === 'name' ? sortDirection : 'asc'}
                 onClick={() => handleSort('name')}
                 aria-sort={sortBy === 'name' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
+                sx={{
+                  color: 'primary.contrastText',
+                  '&.Mui-active': {
+                    color: 'primary.contrastText',
+                  },
+                  '&:hover': {
+                    color: 'primary.contrastText',
+                  },
+                }}
               >
                 {t('table.name', 'Name')}
               </TableSortLabel>
@@ -168,6 +195,15 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                 direction={sortBy === 'aroma' ? sortDirection : 'asc'}
                 onClick={() => handleSort('aroma')}
                 aria-sort={sortBy === 'aroma' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
+                sx={{
+                  color: 'primary.contrastText',
+                  '&.Mui-active': {
+                    color: 'primary.contrastText',
+                  },
+                  '&:hover': {
+                    color: 'primary.contrastText',
+                  },
+                }}
               >
                 {t('table.aroma', 'Aroma')}
               </TableSortLabel>
@@ -178,6 +214,15 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                 direction={sortBy === 'effects' ? sortDirection : 'asc'}
                 onClick={() => handleSort('effects')}
                 aria-sort={sortBy === 'effects' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
+                sx={{
+                  color: 'primary.contrastText',
+                  '&.Mui-active': {
+                    color: 'primary.contrastText',
+                  },
+                  '&:hover': {
+                    color: 'primary.contrastText',
+                  },
+                }}
               >
                 {t('table.effects', 'Effects')}
               </TableSortLabel>
@@ -188,6 +233,15 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                 direction={sortBy === 'sources' ? sortDirection : 'asc'}
                 onClick={() => handleSort('sources')}
                 aria-sort={sortBy === 'sources' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
+                sx={{
+                  color: 'primary.contrastText',
+                  '&.Mui-active': {
+                    color: 'primary.contrastText',
+                  },
+                  '&:hover': {
+                    color: 'primary.contrastText',
+                  },
+                }}
               >
                 {t('table.sources', 'Sources')}
               </TableSortLabel>
@@ -203,10 +257,32 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
               tabIndex={0}
               role="button"
               aria-label={t('table.viewDetailsFor', { name: terpene.name, defaultValue: `View details for ${terpene.name}` })}
+              selected={selectedTerpeneId === terpene.id} // Add selected prop for visual indication
               sx={{
                 cursor: 'pointer',
-                '&:hover': { backgroundColor: 'action.hover' },
-                '&:focus': { backgroundColor: 'action.focus', outline: '2px solid primary.main', outlineOffset: '-2px' },
+                // Zebra striping
+                '&:nth-of-type(odd)': {
+                  bgcolor: 'action.hover', // Subtle background for odd rows
+                },
+                '&:nth-of-type(even)': {
+                  bgcolor: 'transparent', // Default background for even rows
+                },
+                // Hover state with transition for performance target (SC-008: 100ms)
+                '&:hover': {
+                  bgcolor: 'action.selected', // Lighter background on hover
+                  transition: 'background-color 100ms ease',
+                },
+                // Selected state with orange left border as per spec
+                '&.Mui-selected': {
+                  bgcolor: 'action.selected', // Selected background
+                  borderLeft: '4px solid', // Left border indicator
+                  borderColor: 'secondary.main', // Orange color for border
+                },
+                // Selected + hover (prevent darker color on hover when selected)
+                '&.Mui-selected:hover': {
+                  bgcolor: 'action.selected',
+                  transition: 'background-color 100ms ease',
+                },
               }}
             >
               <TableCell>{terpene.name}</TableCell>

@@ -140,6 +140,14 @@ export function SearchBar({
           'aria-label': ariaLabel || defaultAriaLabel,
           maxLength,
         }}
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 2, // Apply 8px border radius (2 * 4px base unit)
+          },
+          '& .MuiOutlinedInput-root.Mui-focused fieldset': {
+            borderColor: 'secondary.main', // Orange border on focus as per spec
+          },
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
