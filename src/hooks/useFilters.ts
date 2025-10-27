@@ -11,7 +11,7 @@
 import { useState, useCallback, useMemo } from 'react';
 
 import type { FilterState } from '../models/FilterState';
-import { getCategoryForEffect, getEffectsInCategories } from '../services/filterService';
+import { getEffectsInCategories, syncCategoryFilters } from '../services/filterService';
 
 /**
  * Hook return type
@@ -123,32 +123,18 @@ export function useFilters(initialState?: Partial<FilterState>): UseFiltersResul
     setFilterState((prev) => {
       const isSelected = prev.selectedEffects.includes(effect);
 
-      // Determine category for this effect and update categoryFilters accordingly
-      const categoryId = getCategoryForEffect(effect);
-
       let nextSelectedEffects: string[];
-      let nextCategoryFilters = [...prev.categoryFilters];
 
       if (isSelected) {
         // Deselect effect
         nextSelectedEffects = prev.selectedEffects.filter((e) => e !== effect);
-
-        // If effect's category exists and no other selected effects remain in that category, remove the category
-        if (categoryId) {
-          const stillHasInCategory = nextSelectedEffects.some((e) => getCategoryForEffect(e) === categoryId);
-          if (!stillHasInCategory) {
-            nextCategoryFilters = nextCategoryFilters.filter((c) => c !== categoryId);
-          }
-        }
       } else {
         // Select effect
         nextSelectedEffects = [...prev.selectedEffects, effect];
-
-        // Ensure category is selected when an effect from it is selected
-        if (categoryId && !nextCategoryFilters.includes(categoryId)) {
-          nextCategoryFilters.push(categoryId);
-        }
       }
+
+      // Derive categoryFilters from the updated selected effects to keep them in sync
+      const nextCategoryFilters = syncCategoryFilters(nextSelectedEffects);
 
       return {
         ...prev,
@@ -289,6 +275,7 @@ export function useFilters(initialState?: Partial<FilterState>): UseFiltersResul
     setFilterState((prev) => ({
       ...prev,
       categoryFilters: [],
+      selectedEffects: [],
     }));
   }, []);
 

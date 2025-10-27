@@ -33,7 +33,8 @@
     "validate": "pnpm run type-check && pnpm run lint && pnpm run format:check && pnpm run test:run",
     "clean": "rm -rf dist node_modules/.vite",
     "clean:all": "rm -rf dist node_modules",
-    "copy-and-validate-data": "cp data/terpene-database.json public/data/terpene-database.json && node scripts/validateDatabase.js"
+    "copy-and-validate-data": "cp data/terpene-database.json public/data/terpene-database.json && node scripts/validateDatabase.js",
+    "profile:vitest": "node ./scripts/profile-vitest.js"
   },
   "repository": {
     "type": "git",
@@ -90,6 +91,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.4.0",
+    "happy-dom": "^20.0.8",
     "jsdom": "^27.0.1",
     "prettier": "^3.4.2",
     "typescript": "^5.7.2",
