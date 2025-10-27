@@ -170,6 +170,7 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
           onClick={() => setFiltersExpanded(!filtersExpanded)}
         >
           <Typography variant="h5" component="h2" sx={{ fontWeight: 600 }}>
+            {t('pages.home.filtersTitle', 'Filters')}
             {hasActiveFilters && (
               <Typography component="span" variant="caption" color="primary" sx={{ ml: 2, fontWeight: 600 }}>
                 ({t('pages.home.filtersActive', 'Active')})

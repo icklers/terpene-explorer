@@ -7,13 +7,13 @@
  * @see specs/003-categorized-effect-filters
  */
 
-import { Box, Button, useMediaQuery, useTheme, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useTranslation } from 'react-i18next';
+import { Box, Button, Typography, useMediaQuery, useTheme, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { CATEGORY_UI_CONFIG, CATEGORY_DEFINITIONS } from '../../utils/categoryUIConfig';
 import type { Effect } from '../../models/Effect';
+import { CATEGORY_UI_CONFIG, CATEGORY_DEFINITIONS } from '../../utils/categoryUIConfig';
 
 export interface CategoryTabsProps {
   /** Currently selected category IDs */
@@ -44,12 +44,23 @@ export function CategoryTabs({
 
   const defaultLabel = t('filters.categoriesLabel', 'Filter by Categories');
 
+  /**
+   * Handle category toggle event
+   *
+   * @param categoryId - The ID of the category to toggle
+   */
   const handleCategoryToggle = (categoryId: string) => {
     if (onCategoryToggle) {
       onCategoryToggle(categoryId);
     }
   };
 
+  /**
+   * Get category tabs sorted by display order with color and accessibility data
+   * Creates tab configuration with emoticons, ARIA labels, and theme colors
+   *
+   * @returns Array of category tabs with display configuration
+   */
   // Get category tabs sorted by display order
   const categoryTabs = React.useMemo(() => {
     return Object.entries(CATEGORY_DEFINITIONS)
@@ -77,25 +88,20 @@ export function CategoryTabs({
       });
   }, [selectedCategories, theme.palette, t]);
 
+  /**
+   * Mobile Accordion version
+   * Displays categories as collapsible accordion panels with category checkboxes in headers and effect chips in details
+   * Supports expand/collapse with keyboard navigation and swipe gestures
+   */
   // Mobile accordion version
   if (isMobile) {
     return (
       <Box>
         {/* Label */}
         <Box sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
-          <Box
-            component="h2"
-            sx={{
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              lineHeight: '1.25rem',
-              margin: 0,
-              color: 'text.primary',
-            }}
-            id="category-filter-label"
-          >
+          <Typography variant="subtitle2" component="h2" sx={{ fontWeight: 600 }} id="category-filter-label">
             {label || defaultLabel}
-          </Box>
+          </Typography>
         </Box>
 
         {/* Mobile Accordion Categories */}
@@ -225,19 +231,9 @@ export function CategoryTabs({
     <Box>
       {/* Label */}
       <Box sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
-        <Box
-          component="h2"
-          sx={{
-            fontSize: '0.875rem',
-            fontWeight: 600,
-            lineHeight: '1.25rem',
-            margin: 0,
-            color: 'text.primary',
-          }}
-          id="category-filter-label"
-        >
+        <Typography variant="subtitle2" component="h2" sx={{ fontWeight: 600 }} id="category-filter-label">
           {label || defaultLabel}
-        </Box>
+        </Typography>
       </Box>
 
       {/* Category Tabs */}

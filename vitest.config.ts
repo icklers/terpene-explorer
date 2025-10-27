@@ -24,18 +24,11 @@ export default mergeConfig(
       // ----------------------------------------------------
 
       setupFiles: ['./src/test/setup.ts'],
-      
+
       include: ['src/**/*.{test,spec}.{ts,tsx}', 'tests/**/*.{test,spec}.{ts,tsx}'],
-      
+
       // THE PRIMARY FIX: Use default excludes + your own
-      exclude: [
-        ...configDefaults.exclude,
-        'tests/e2e',
-        'backups',
-        'data',
-        'docs',
-        'specs',
-      ],
+      exclude: [...configDefaults.exclude, 'tests/e2e', 'backups', 'data', 'docs', 'specs'],
 
       coverage: {
         provider: 'v8',
@@ -49,15 +42,11 @@ export default mergeConfig(
           statements: 80,
         },
       },
-      
+
       // Dependency pre-bundling
       deps: {
         experimentalOptimizer: {
-          include: [
-            'react',
-            '@mui/material',
-            '@testing-library/react',
-          ],
+          include: ['react', '@mui/material', '@testing-library/react'],
         },
         include: [
           /^@emotion\/(react|styled)/,

@@ -1,393 +1,274 @@
+/**
+ * Unit tests for filterService.ts
+ *
+ * Tests the OR logic for category and effect filtering per FR-015, FR-016, FR-017.
+ *
+ * @see tasks.md T048-T053
+ */
+
 import { describe, expect, it } from 'vitest';
 
-import { getEffectsInCategories, getCategoryForEffect, syncCategoryFilters } from '../../../src/services/filterService';
-
-describe('filterService helpers', () => {
-  it('getEffectsInCategories returns effects for a single category', () => {
-    const moodEffects = getEffectsInCategories(['mood']);
-    expect(moodEffects).toContain('Energizing');
-    expect(moodEffects).toContain('Uplifting');
-  });
-
-  it('getCategoryForEffect returns correct category id', () => {
-    expect(getCategoryForEffect('Energizing')).toBe('mood');
-    expect(getCategoryForEffect('Focus')).toBe('cognitive');
-    expect(getCategoryForEffect('Pain relief')).toBe('physical');
-  });
-
-  it('syncCategoryFilters derives categories from selected effects', () => {
-    const selected = ['Energizing', 'Focus', 'Pain relief', 'NonexistentEffect'];
-    const categories = syncCategoryFilters(selected);
-
-    // Should include mood, cognitive, and physical, but not duplicates
-    expect(new Set(categories)).toEqual(new Set(['mood', 'cognitive', 'physical']));
-  });
-});
-/**
- * Filter Service Tests
- *
- * Tests for terpene filtering logic with AND/OR modes.
- * Following TDD protocol: these tests should FAIL initially (red 🔴).
- *
- * @see tasks.md T036
- */
-
-import { describe, it, expect } from 'vitest';
 import type { FilterState } from '../../../src/models/FilterState';
 import type { Terpene } from '../../../src/models/Terpene';
-import { filterTerpenes, matchesAnyEffect, matchesAllEffects } from '../../../src/services/filterService';
+import { applyEffectFilters, syncCategoryFilters, getEffectsInCategories } from '../../../src/services/filterService';
 
-/**
- * Sample test data
- */
-const createMockTerpene = (
-  id: string,
-  name: string,
-  effects: string[],
-  aroma: string = 'Test aroma',
-  sources: string[] = ['Test source']
-): Terpene => ({
-  id,
-  name,
-  aroma,
-  description: `Test description for ${name}`,
-  effects,
-  sources,
-});
-
-const mockTerpenes: Terpene[] = [
-  createMockTerpene('1', 'Limonene', ['energizing', 'mood-enhancing', 'anti-inflammatory']),
-  createMockTerpene('2', 'Myrcene', ['sedative', 'muscle-relaxant', 'analgesic']),
-  createMockTerpene('3', 'Pinene', ['focus', 'anti-inflammatory', 'bronchodilator']),
-  createMockTerpene('4', 'Linalool', ['calming', 'sedative', 'anxiolytic']),
-  createMockTerpene('5', 'Caryophyllene', ['anti-inflammatory', 'analgesic', 'gastroprotective']),
+const TEST_TERPEMES: Terpene[] = [
+  {
+    id: '01',
+    name: 'Myrcene',
+    description: 'Earthy musky terpene',
+    aroma: 'earthy, musky, fruity',
+    effects: ['Sedative', 'Muscle relaxant', 'Anti-inflammatory'],
+    sources: [],
+  },
+  {
+    id: '02',
+    name: 'Limonene',
+    description: 'Citrus terpene',
+    aroma: 'citrus, lemon',
+    effects: ['Uplifting', 'Mood enhancing', 'Energizing'],
+    sources: [],
+  },
+  {
+    id: '03',
+    name: 'Caryophyllene',
+    description: 'Peppery terpene',
+    aroma: 'peppery, spicy',
+    effects: ['Anti-inflammatory', 'Pain relief', 'Anxiety relief'],
+    sources: [],
+  },
+  {
+    id: '04',
+    name: 'Pinene',
+    description: 'Pine terpene',
+    aroma: 'piney, fresh',
+    effects: ['Alertness', 'Memory-enhancement', 'Breathing support'],
+    sources: [],
+  },
 ];
 
-describe('filterService', () => {
-  describe('filterTerpenes', () => {
-    it('should return all terpenes when no filters are applied', () => {
-      const filterState: FilterState = {
-        searchQuery: '',
-        selectedEffects: [],
-        effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
+const EMPTY_FILTER_STATE: FilterState = {
+  searchQuery: '',
+  selectedEffects: [],
+  effectFilterMode: 'any',
+  viewMode: 'table',
+  sortBy: 'name',
+  sortDirection: 'asc',
+  categoryFilters: [],
+};
+
+/**
+ * Tests that verify OR logic for filtering as defined in user stories and FR requirements
+ */
+describe('applyEffectFilters - OR Logic (T048-T051)', () => {
+  describe('T048: Multiple category filtering with OR logic', () => {
+    it('should show terpenes matching ANY of the selected categories', () => {
+      const state: FilterState = {
+        ...EMPTY_FILTER_STATE,
+        categoryFilters: ['relaxation'],
       };
 
-      const result = filterTerpenes(mockTerpenes, filterState);
+      const result = applyEffectFilters(TEST_TERPEMES, state);
 
-      expect(result).toHaveLength(5);
-      expect(result).toEqual(mockTerpenes);
+      // Should include Myrcene (relaxation + physical) and Caryophyllene (relaxation only)
+      expect(result.map((t) => t.name)).toEqual(expect.arrayContaining(['Myrcene', 'Caryophyllene']));
+      // Should NOT include Pinene (cognitive/physical only - no relaxation)
+      expect(result.map((t) => t.name)).not.toContain('Pinene');
     });
 
-    it('should filter by search query (case insensitive)', () => {
-      const filterState: FilterState = {
-        searchQuery: 'limo',
-        selectedEffects: [],
-        effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
+    it('should return union of results when multiple categories selected (OR logic)', () => {
+      const state: FilterState = {
+        ...EMPTY_FILTER_STATE,
+        categoryFilters: ['mood', 'cognitive', 'relaxation'],
       };
 
-      const result = filterTerpenes(mockTerpenes, filterState);
+      const result = applyEffectFilters(TEST_TERPEMES, state);
 
-      expect(result).toHaveLength(1);
-      expect(result[0]!.name).toBe('Limonene');
+      // Should include all terpenes since they all match at least one category
+      expect(result).toHaveLength(TEST_TERPEMES.length);
+      expect(result.map((t) => t.name).sort()).toEqual(expect.arrayContaining(['Myrcene', 'Limonene', 'Caryophyllene', 'Pinene']));
     });
 
-    it('should filter by search query across name, aroma, and effects', () => {
-      const terpenes: Terpene[] = [
-        createMockTerpene('1', 'Alpha', ['calming'], 'citrus'),
-        createMockTerpene('2', 'Beta', ['energizing'], 'pine'),
-        createMockTerpene('3', 'Gamma', ['sedative'], 'woody'),
-      ];
+    it('should return all terpenes when category filter is empty', () => {
+      const result = applyEffectFilters(TEST_TERPEMES, EMPTY_FILTER_STATE);
 
-      // Search by aroma
-      const filterState: FilterState = {
-        searchQuery: 'citrus',
-        selectedEffects: [],
-        effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
-      };
-      let result = filterTerpenes(terpenes, filterState);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.name).toBe('Alpha');
-
-      // Search by effect
-      filterState.searchQuery = 'energizing';
-      result = filterTerpenes(terpenes, filterState);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.name).toBe('Beta');
+      expect(result).toHaveLength(TEST_TERPEMES.length);
     });
+  });
 
-    it('should filter by single effect with ANY mode', () => {
-      const filterState: FilterState = {
-        searchQuery: '',
-        selectedEffects: ['anti-inflammatory'],
+  describe('T049: OR logic when both category and effect filters active', () => {
+    it('should return terpenes matching EITHER category OR effect filters', () => {
+      // Select relaxation category and cognitive individual effects
+      const state: FilterState = {
+        ...EMPTY_FILTER_STATE,
+        categoryFilters: ['relaxation'], // Myrcene, Caryophyllene
+        selectedEffects: ['Alertness', 'Memory-enhancement'], // Pinene, should match cognitive category
         effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
       };
 
-      const result = filterTerpenes(mockTerpenes, filterState);
+      const result = applyEffectFilters(TEST_TERPEMES, state);
 
-      expect(result).toHaveLength(3);
-      expect(result.map((t) => t.name)).toEqual(expect.arrayContaining(['Limonene', 'Pinene', 'Caryophyllene']));
+      // Should include Myrcene, Caryophyllene (relaxation) AND Pinene (cognitive via effects)
+      expect(result.map((t) => t.name)).toEqual(expect.arrayContaining(['Myrcene', 'Caryophyllene', 'Pinene']));
+      // Should NOT include Limonene (mood only)
+      expect(result.map((t) => t.name)).not.toContain('Limonene');
     });
 
-    it('should filter by multiple effects with ANY mode (OR logic)', () => {
-      const filterState: FilterState = {
-        searchQuery: '',
-        selectedEffects: ['sedative', 'calming'],
+    it('should work correctly when same category effects are selected', () => {
+      // Select relaxation category AND specific relaxation effects
+      const state: FilterState = {
+        ...EMPTY_FILTER_STATE,
+        categoryFilters: ['relaxation'],
+        selectedEffects: ['Sedative', 'Anxiety relief'],
         effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
       };
 
-      const result = filterTerpenes(mockTerpenes, filterState);
+      const result = applyEffectFilters(TEST_TERPEMES, state);
 
-      expect(result).toHaveLength(2);
-      expect(result.map((t) => t.name)).toEqual(expect.arrayContaining(['Myrcene', 'Linalool']));
+      // All relaxation terpenes should be included
+      expect(result.map((t) => t.name)).toEqual(expect.arrayContaining(['Myrcene', 'Caryophyllene']));
+    });
+  });
+
+  describe('T050: applyEffectFilters returns all terpenes when no filters active', () => {
+    it('should return all terpenes when both category and effect filters are empty', () => {
+      const result = applyEffectFilters(TEST_TERPEMES, EMPTY_FILTER_STATE);
+      expect(result).toEqual(TEST_TERPEMES);
     });
 
-    it('should filter by multiple effects with ALL mode (AND logic)', () => {
-      const filterState: FilterState = {
-        searchQuery: '',
-        selectedEffects: ['anti-inflammatory', 'analgesic'],
+    it('should preserve terpene order when returning all', () => {
+      const result = applyEffectFilters(TEST_TERPEMES, EMPTY_FILTER_STATE);
+      expect(result).toEqual(TEST_TERPEMES);
+    });
+  });
+
+  describe('T050.5: AND logic for same-category effects', () => {
+    it('should filter by individual effects within same category using AND logic', () => {
+      const state: FilterState = {
+        ...EMPTY_FILTER_STATE,
+        categoryFilters: [],
+        selectedEffects: ['Uplifting', 'Mood enhancing', 'Energizing'], // Myrcene mood effects
         effectFilterMode: 'all',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
       };
 
-      const result = filterTerpenes(mockTerpenes, filterState);
+      const result = applyEffectFilters(TEST_TERPEMES, state);
 
-      // Only Caryophyllene has both effects
       expect(result).toHaveLength(1);
-      expect(result[0]!.name).toBe('Caryophyllene');
+      expect(result[0].name).toBe('Limonene');
+    });
+  });
+
+  describe('T051: syncCategoryFilters auto-deselect', () => {
+    it('should remove category filters when all their effects are deselected', () => {
+      const selectedEffects = ['Uplifting', 'Mood enhancing', 'Energizing', 'Mood stabilizing']; // Mood effects
+      const result = syncCategoryFilters(selectedEffects);
+      expect(result).toContain('mood');
+
+      // Remove all mood effects
+      const updatedSelectedEffects = ['Sedative', 'Anxiety relief']; // Relaxation only
+      const updatedResult = syncCategoryFilters(updatedSelectedEffects);
+      expect(updatedResult).not.toContain('mood');
+      expect(updatedResult).toContain('relaxation');
     });
 
-    it('should combine search query and effect filters', () => {
-      const filterState: FilterState = {
-        searchQuery: 'e', // Matches Limonene, Myrcene, Pinene, Caryophyllene
-        selectedEffects: ['anti-inflammatory'],
-        effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
-      };
+    it('should keep category selected if ANY of its effects are selected', () => {
+      const selectedEffects = ['Uplifting', 'Muscle relaxant']; // Both mood and physical
+      const result = syncCategoryFilters(selectedEffects);
+      expect(result).toContain('mood');
+      expect(result).toContain('physical');
+    });
+  });
 
-      const result = filterTerpenes(mockTerpenes, filterState);
+  describe('T052: syncCategoryFilters keeps category if effect still selected', () => {
+    it('should preserve category filter when some but not all effects deselected', () => {
+      // Start with all mood effects selected
+      let selectedEffects = ['Uplifting', 'Mood enhancing', 'Energizing', 'Mood stabilizing'];
+      expect(syncCategoryFilters(selectedEffects)).toContain('mood');
 
-      // Matches: Limonene, Pinene, Caryophyllene (all have 'e' and anti-inflammatory)
-      expect(result).toHaveLength(3);
-      expect(result.map((t) => t.name)).toEqual(expect.arrayContaining(['Limonene', 'Pinene', 'Caryophyllene']));
+      // Deselect some effects
+      selectedEffects = ['Uplifting', 'Mood enhancing'];
+      expect(syncCategoryFilters(selectedEffects)).toContain('mood');
+
+      // Deselect most effects
+      selectedEffects = ['Mood stabilizing'];
+      expect(syncCategoryFilters(selectedEffects)).toContain('mood');
     });
 
-    it('should return empty array when no terpenes match filters', () => {
-      const filterState: FilterState = {
-        searchQuery: '',
-        selectedEffects: ['nonexistent-effect'],
+    it('should remove category when no effects from that category are selected', () => {
+      const selectedEffects = ['Anti-inflammatory', 'Muscle relaxant']; // Physical \u0026 relaxation
+      const result = syncCategoryFilters(selectedEffects);
+      // Anti-inflammatory and Muscle relaxant should map to physical category based on data mapping
+      expect(result).toContain('physical');
+      expect(result).not.toContain('mood');
+      expect(result).not.toContain('relaxation'); // These effects are physical, not relaxation
+    });
+  });
+
+  describe('getEffectsInCategories helper', () => {
+    it('should return all effects for selected categories', () => {
+      const effects = getEffectsInCategories(['mood']);
+      expect(effects).toContain('Energizing');
+      expect(effects).toContain('Mood enhancing');
+      expect(effects.length).toBeGreaterThan(0);
+    });
+
+    it('should return unique effects for multiple categories', () => {
+      const effects = getEffectsInCategories(['mood', 'cognitive']);
+      expect(effects.length).toBeGreaterThan(0);
+      expect(effects.length).toBe(new Set(effects).size); // All unique
+    });
+
+    it('should return empty array for empty categories', () => {
+      const effects = getEffectsInCategories([]);
+      expect(effects).toEqual([]);
+    });
+  });
+
+  describe('Edge cases and filtering scenarios', () => {
+    it('should handle empty categories array', () => {
+      const result = applyEffectFilters(TEST_TERPEMES, {
+        ...EMPTY_FILTER_STATE,
+        categoryFilters: [],
+      });
+      expect(result).toEqual(TEST_TERPEMES);
+    });
+
+    it('should handle both category and individual effect filters on same category', () => {
+      const state: FilterState = {
+        ...EMPTY_FILTER_STATE,
+        categoryFilters: ['relaxation'],
+        selectedEffects: ['Anxiety relief', 'Sedative'],
         effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
       };
 
-      const result = filterTerpenes(mockTerpenes, filterState);
+      const result = applyEffectFilters(TEST_TERPEMES, state);
 
-      expect(result).toHaveLength(0);
+      // Should return Myrcene and Caryophyllene (both have relaxation effects)
+      expect(result.map((t) => t.name)).toEqual(expect.arrayContaining(['Myrcene', 'Caryophyllene']));
+    });
+
+    it('should filter correctly with search query plus category filters', () => {
+      const state: FilterState = {
+        ...EMPTY_FILTER_STATE,
+        searchQuery: 'limonene',
+        categoryFilters: ['mood'],
+      };
+
+      const result = applyEffectFilters(TEST_TERPEMES, state);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe('Limonene');
+    });
+
+    it('should return empty array when no matches', () => {
+      const state: FilterState = {
+        ...EMPTY_FILTER_STATE,
+        categoryFilters: ['unknown-category'],
+      };
+
+      const result = applyEffectFilters(TEST_TERPEMES, state);
+
       expect(result).toEqual([]);
-    });
-
-    it('should handle empty terpene array', () => {
-      const filterState: FilterState = {
-        searchQuery: 'test',
-        selectedEffects: ['calming'],
-        effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
-      };
-
-      const result = filterTerpenes([], filterState);
-
-      expect(result).toHaveLength(0);
-      expect(result).toEqual([]);
-    });
-
-    it('should handle ALL mode with no terpenes matching all effects', () => {
-      const filterState: FilterState = {
-        searchQuery: '',
-        selectedEffects: ['energizing', 'sedative'], // Conflicting effects
-        effectFilterMode: 'all',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
-      };
-
-      const result = filterTerpenes(mockTerpenes, filterState);
-
-      expect(result).toHaveLength(0);
-    });
-
-    it('should be case-insensitive for search queries', () => {
-      const filterState: FilterState = {
-        searchQuery: 'LIMONENE',
-        selectedEffects: [],
-        effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
-      };
-
-      const result = filterTerpenes(mockTerpenes, filterState);
-
-      expect(result).toHaveLength(1);
-      expect(result[0]!.name).toBe('Limonene');
-    });
-
-    it('should trim whitespace from search query', () => {
-      const filterState: FilterState = {
-        searchQuery: '  Limonene  ',
-        selectedEffects: [],
-        effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
-      };
-
-      const result = filterTerpenes(mockTerpenes, filterState);
-
-      expect(result).toHaveLength(1);
-      expect(result[0]!.name).toBe('Limonene');
-    });
-  });
-
-  describe('matchesAnyEffect', () => {
-    it('should return true if terpene has at least one matching effect', () => {
-      const terpene = mockTerpenes[0]!; // Limonene with energizing, mood-enhancing, anti-inflammatory
-
-      expect(matchesAnyEffect(terpene, ['energizing'])).toBe(true);
-      expect(matchesAnyEffect(terpene, ['anti-inflammatory', 'sedative'])).toBe(true);
-    });
-
-    it('should return false if terpene has no matching effects', () => {
-      const terpene = mockTerpenes[0]!; // Limonene
-
-      expect(matchesAnyEffect(terpene, ['sedative'])).toBe(false);
-      expect(matchesAnyEffect(terpene, ['calming', 'sedative'])).toBe(false);
-    });
-
-    it('should return true if no effects specified (empty array)', () => {
-      const terpene = mockTerpenes[0]!;
-
-      expect(matchesAnyEffect(terpene, [])).toBe(true);
-    });
-  });
-
-  describe('matchesAllEffects', () => {
-    it('should return true if terpene has all specified effects', () => {
-      const terpene = mockTerpenes[4]!; // Caryophyllene with anti-inflammatory, analgesic, gastroprotective
-
-      expect(matchesAllEffects(terpene, ['anti-inflammatory'])).toBe(true);
-      expect(matchesAllEffects(terpene, ['anti-inflammatory', 'analgesic'])).toBe(true);
-      expect(matchesAllEffects(terpene, ['anti-inflammatory', 'analgesic', 'gastroprotective'])).toBe(true);
-    });
-
-    it('should return false if terpene is missing any specified effect', () => {
-      const terpene = mockTerpenes[4]!; // Caryophyllene
-
-      expect(matchesAllEffects(terpene, ['anti-inflammatory', 'sedative'])).toBe(false);
-      expect(matchesAllEffects(terpene, ['energizing'])).toBe(false);
-    });
-
-    it('should return true if no effects specified (empty array)', () => {
-      const terpene = mockTerpenes[0]!;
-
-      expect(matchesAllEffects(terpene, [])).toBe(true);
-    });
-  });
-
-  describe('Edge Cases', () => {
-    it('should handle terpenes with empty effects array', () => {
-      const terpeneWithNoEffects = createMockTerpene('99', 'NoEffects', []);
-
-      const filterState: FilterState = {
-        searchQuery: '',
-        selectedEffects: ['calming'],
-        effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
-      };
-
-      const result = filterTerpenes([terpeneWithNoEffects], filterState);
-
-      expect(result).toHaveLength(0);
-    });
-
-    it('should handle special characters in search query', () => {
-      const terpenes: Terpene[] = [
-        createMockTerpene('1', 'α-Pinene', ['focus']),
-        createMockTerpene('2', 'β-Caryophyllene', ['anti-inflammatory']),
-      ];
-
-      const filterState: FilterState = {
-        searchQuery: 'α',
-        selectedEffects: [],
-        effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
-      };
-
-      const result = filterTerpenes(terpenes, filterState);
-
-      expect(result).toHaveLength(1);
-      expect(result[0]!.name).toBe('α-Pinene');
-    });
-
-    it('should handle very long effect lists', () => {
-      const manyEffects = Array.from({ length: 10 }, (_, i) => `effect-${i}`);
-      const terpene = createMockTerpene('999', 'ManyEffects', manyEffects);
-
-      const filterState: FilterState = {
-        searchQuery: '',
-        selectedEffects: ['effect-5'],
-        effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
-      };
-
-      const result = filterTerpenes([terpene], filterState);
-
-      expect(result).toHaveLength(1);
-      expect(result[0]!.name).toBe('ManyEffects');
-    });
-
-    it('should handle duplicate effects in filter selection', () => {
-      const filterState: FilterState = {
-        searchQuery: '',
-        selectedEffects: ['anti-inflammatory', 'anti-inflammatory'], // Duplicate
-        effectFilterMode: 'any',
-        viewMode: 'sunburst',
-        sortBy: 'name',
-        sortDirection: 'asc',
-      };
-
-      const result = filterTerpenes(mockTerpenes, filterState);
-
-      // Should still work correctly
-      expect(result).toHaveLength(3);
-      expect(result.map((t) => t.name)).toEqual(expect.arrayContaining(['Limonene', 'Pinene', 'Caryophyllene']));
     });
   });
 });

@@ -62,6 +62,12 @@ export function FilterControls({
   const defaultLabel = t('filters.effectsLabel', 'Filter by Effects');
   const hasSelection = selectedEffects.length > 0;
 
+  /**
+   * Group effects by category for categorized filter display
+   * Used by CategoryTabs to organize effects by therapeutic category
+   *
+   * @returns Object mapping category IDs to arrays of effects
+   */
   // Group effects by category for CategoryTabs accordion functionality
   const categorizedEffects = React.useMemo(() => {
     const grouped: Record<string, Effect[]> = {};

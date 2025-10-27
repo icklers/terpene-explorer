@@ -13,7 +13,6 @@ import { useState, useCallback, useMemo } from 'react';
 import type { FilterState } from '../models/FilterState';
 import { getEffectsInCategories, syncCategoryFilters } from '../services/filterService';
 
-
 /**
  * Hook return type
  */
@@ -276,6 +275,7 @@ export function useFilters(initialState?: Partial<FilterState>): UseFiltersResul
     setFilterState((prev) => ({
       ...prev,
       categoryFilters: [],
+      selectedEffects: [],
     }));
   }, []);
 

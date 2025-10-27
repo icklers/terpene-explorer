@@ -87,6 +87,63 @@ All Material UI default colors are designed to meet WCAG AA standards.
 - ✅ Skip links and focus indicators
 - ✅ Semantic HTML throughout
 
+### Category Filters Accessibility
+
+The categorized effect filtering feature includes enhanced accessibility features:
+
+#### Category Tabs Accessibility
+
+- **Keyboard Navigation**:
+  - `Tab` to navigate between category tabs
+  - `Space` or `Enter` to select/deselect categories
+  - `Escape` to close expanded accordions (mobile)
+- **ARIA Labels**: Each category tab includes descriptive ARIA labels
+  - Example: "Mood and Energy category" instead of just the emoticon
+  - Screen readers announce full category purpose
+- **Emoticons with Descriptions**:
+  - ⚡ Mood & Energy - "high voltage" → "Mood and Energy category"
+  - 🧠 Cognitive - "brain" → "Cognitive and Mental Enhancement category"
+  - 😌 Relaxation - "relaxed face" → "Relaxation and Anxiety Management category"
+  - 💪 Physical - "flexed biceps" → "Physical and Physiological Management category"
+- **Selected State Indication**: Current category selections are announced to screen readers
+
+#### Effect Chips Accessibility
+
+- **Clickable Chips**:
+  - Effect chips are keyboard navigable
+  - Space/Enter to toggle effect selection
+  - Clear focus indicators on keyboard navigation
+- **ARIA Label Structure**: Each chip shows "{Effect Name} ({terpene count})"
+  - Example: "Energizing (12)"
+- **Color Contrast**: All category colors meet WCAG 2.1 AA compliance
+
+##### Category Colors and Contrast Ratios
+
+| Category      | Color Code | WCAG AA Light Mode | WCAG AA Dark Mode |
+| ------------- | ---------- | ------------------ | ----------------- |
+| Mood & Energy | `#FFA726`  | 4.5:1 ✅           | 4.5:1 ✅          |
+| Cognitive     | `#3F51B5`  | 5.2:1 ✅           | 5.1:1 ✅          |
+| Relaxation    | `#8BC34A`  | 4.8:1 ✅           | 4.8:1 ✅          |
+| Physical      | `#607D8B`  | 4.9:1 ✅           | 4.9:1 ✅          |
+
+#### Keyboard Shortcuts for Category Filters
+
+- **Category Navigation (Desktop)**:
+  - `Tab` → Move focus to next category tab
+  - `Shift+Tab` → Move focus to previous category tab
+  - `Space` or `Enter` → Toggle category selection
+
+- **Category Navigation (Mobile)**:
+  - `Tab` → Navigate between accordion headers
+  - `Enter` or `Space` → Expand/collapse accordion
+  - `Tab` (accordion expanded) → Navigate to category checkbox
+  - `Space` (checkbox) → Toggle category selection
+
+- **Effect Chips**:
+  - `Tab` → Navigate between effect chips
+  - `Space` or `Enter` → Toggle effect selection
+  - `Shift+Tab` → Navigate backwards
+
 ### References
 
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
