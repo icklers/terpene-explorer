@@ -123,7 +123,7 @@ jobs:
       
   #     - name: 📊 Upload test results
   #       if: always()
-  #       uses: actions/upload-artifact@v4
+  #       uses: actions/upload-artifact@v5
   #       with:
   #         name: playwright-report
   #         path: playwright-report/
@@ -187,15 +187,8 @@ jobs:
           echo "| Build Size | ${{ steps.build-swa.outputs.swa_build_size }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Chunk Count | ${{ steps.build-swa.outputs.swa_chunk_count }} |" >> $GITHUB_STEP_SUMMARY
 
-      # - name: 📦 Upload GitHub Pages build
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: github-pages-build
-      #     path: dist-gh-pages/
-      #     retention-days: 7
-
       - name: 📦 Upload Azure SWA build
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: azure-swa-build
           path: dist/
