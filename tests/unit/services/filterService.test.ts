@@ -1,3 +1,28 @@
+import { describe, expect, it } from 'vitest';
+
+import { getEffectsInCategories, getCategoryForEffect, syncCategoryFilters } from '../../../src/services/filterService';
+
+describe('filterService helpers', () => {
+  it('getEffectsInCategories returns effects for a single category', () => {
+    const moodEffects = getEffectsInCategories(['mood']);
+    expect(moodEffects).toContain('Energizing');
+    expect(moodEffects).toContain('Uplifting');
+  });
+
+  it('getCategoryForEffect returns correct category id', () => {
+    expect(getCategoryForEffect('Energizing')).toBe('mood');
+    expect(getCategoryForEffect('Focus')).toBe('cognitive');
+    expect(getCategoryForEffect('Pain relief')).toBe('physical');
+  });
+
+  it('syncCategoryFilters derives categories from selected effects', () => {
+    const selected = ['Energizing', 'Focus', 'Pain relief', 'NonexistentEffect'];
+    const categories = syncCategoryFilters(selected);
+
+    // Should include mood, cognitive, and physical, but not duplicates
+    expect(new Set(categories)).toEqual(new Set(['mood', 'cognitive', 'physical']));
+  });
+});
 /**
  * Filter Service Tests
  *

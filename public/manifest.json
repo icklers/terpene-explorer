@@ -1,11 +1,11 @@
 {
-  "name": "Interactive Terpene Map",
-  "short_name": "Terpene Map",
-  "description": "Explore the aromatic world of terpenes through interactive visualizations",
+  "name": "Terpene Explorer",
+  "short_name": "TerpEx",
+  "description": "Discover and filter terpenes by their effects and properties",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#3f51b5",
+  "background_color": "#121212",
+  "theme_color": "#4caf50",
   "icons": [
     {
       "src": "/icon-192.png",

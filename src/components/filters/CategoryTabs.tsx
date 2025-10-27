@@ -66,7 +66,7 @@ export function CategoryTabs({ selectedCategories, onCategoryToggle, label }: Ca
       {/* Label */}
       <Box sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
         <Box
-          component="h3"
+          component="h2"
           sx={{
             fontSize: '0.875rem',
             fontWeight: 600,

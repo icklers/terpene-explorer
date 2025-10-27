@@ -23,7 +23,7 @@ export const darkTheme = createTheme({
       main: '#4caf50', // Rich Forest Green 500 (Chosen)
       light: '#81c784', // Green 300
       dark: '#388e3c', // Green 700
-      contrastText: '#ffffff', // White text for contrast (WCAG AA Pass)
+      contrastText: '#ffffffde', // White text for contrast (WCAG AA Pass)
     },
 
     // Secondary colors (Vibrant Orange - High Contrast, Focus/Highlight elements)
@@ -39,7 +39,7 @@ export const darkTheme = createTheme({
       main: '#f44336', // Red 500
       light: '#ff7961', // Red 300
       dark: '#d32f2f', // Red 700
-      contrastText: '#ffffff',
+      contrastText: '#ffffffde',
     },
 
     // Warning colors (Orange - attention) - Using a slightly different shade to differentiate from secondary
@@ -63,7 +63,7 @@ export const darkTheme = createTheme({
       main: '#4caf50', // Same as Primary main for cohesive brand success messaging
       light: '#81c784',
       dark: '#388e3c',
-      contrastText: '#ffffff',
+      contrastText: '#ffffffde',
     },
 
     // Background colors (dark but not pure black for comfort)

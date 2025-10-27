@@ -136,6 +136,26 @@ export function getEffectsInCategories(categories: string[]): string[] {
 }
 
 /**
+ * Given a list of selected effect names, return the set of category IDs that contain
+ * any of those effects. Used to keep categoryFilters in sync with selectedEffects.
+ *
+ * @param selectedEffects - Array of selected effect names
+ * @returns Array of category IDs
+ */
+export function syncCategoryFilters(selectedEffects: string[]): string[] {
+  const categorySet = new Set<string>();
+
+  selectedEffects.forEach((effect) => {
+    const category = getCategoryForEffect(effect);
+    if (category) {
+      categorySet.add(category);
+    }
+  });
+
+  return Array.from(categorySet);
+}
+
+/**
  * Get category id for a given effect name.
  * Returns the category key (mood|cognitive|relaxation|physical) or undefined if not found.
  */
