@@ -43,20 +43,20 @@ The following colors are used for effect chips and must be verified against both
 
 The dark theme implements WCAG 2.1 Level AA contrast requirements with the following color scheme:
 
-| Element | Color Code | Background | Contrast Ratio | WCAG Compliance |
-| ------- | ---------- | ---------- | -------------- | --------------- |
-| Primary Text | `#ffffff` | `#121212` (main background) | 15.8:1 | ✓ Pass |
-| Secondary Text | `rgba(255, 255, 255, 0.7)` | `#121212` (main background) | 11.1:1 | ✓ Pass |
-| Card Surface | `#1e1e1e` | `#121212` (main background) | 1.2:1 | ✓ Pass |
-| Structural Branding | `#388e3c` | `#121212` (main background) | 4.8:1 | ✓ Pass |
-| Table Wrapper | `#272727` | `#1e1e1e` (card surface) | 1.2:1 | ✓ Pass |
-| Active Interaction | `#4caf50` | `#121212` (main background) | 4.8:1 | ✓ Pass |
-| Focus/Hover State | `#ffb300` | `#121212` (main background) | 10.7:1 | ✓ Pass |
-| Selected Filter Chip | `rgba(255, 255, 255, 0.16)` | `#1e1e1e` (card surface) | 1.8:1 | ✓ Pass |
-| Odd Table Rows | `rgba(255, 255, 255, 0.08)` | `#1e1e1e` (card surface) | 1.3:1 | ✓ Pass |
-| Hover Table Rows | `rgba(255, 255, 255, 0.16)` | `#1e1e1e` (card surface) | 1.8:1 | ✓ Pass |
-| Selected Table Row | `rgba(255, 255, 255, 0.16)` | `#1e1e1e` (card surface) | 1.8:1 | ✓ Pass |
-| Filter Chip Border | `Effect-specific` | `#1e1e1e` (card surface) | 4.5:1+ | ✓ Pass |
+| Element              | Color Code                  | Background                  | Contrast Ratio | WCAG Compliance |
+| -------------------- | --------------------------- | --------------------------- | -------------- | --------------- |
+| Primary Text         | `#ffffff`                   | `#121212` (main background) | 15.8:1         | ✓ Pass          |
+| Secondary Text       | `rgba(255, 255, 255, 0.7)`  | `#121212` (main background) | 11.1:1         | ✓ Pass          |
+| Card Surface         | `#1e1e1e`                   | `#121212` (main background) | 1.2:1          | ✓ Pass          |
+| Structural Branding  | `#388e3c`                   | `#121212` (main background) | 4.8:1          | ✓ Pass          |
+| Table Wrapper        | `#272727`                   | `#1e1e1e` (card surface)    | 1.2:1          | ✓ Pass          |
+| Active Interaction   | `#4caf50`                   | `#121212` (main background) | 4.8:1          | ✓ Pass          |
+| Focus/Hover State    | `#ffb300`                   | `#121212` (main background) | 10.7:1         | ✓ Pass          |
+| Selected Filter Chip | `rgba(255, 255, 255, 0.16)` | `#1e1e1e` (card surface)    | 1.8:1          | ✓ Pass          |
+| Odd Table Rows       | `rgba(255, 255, 255, 0.08)` | `#1e1e1e` (card surface)    | 1.3:1          | ✓ Pass          |
+| Hover Table Rows     | `rgba(255, 255, 255, 0.16)` | `#1e1e1e` (card surface)    | 1.8:1          | ✓ Pass          |
+| Selected Table Row   | `rgba(255, 255, 255, 0.16)` | `#1e1e1e` (card surface)    | 1.8:1          | ✓ Pass          |
+| Filter Chip Border   | `Effect-specific`           | `#1e1e1e` (card surface)    | 4.5:1+         | ✓ Pass          |
 
 ### Theme Colors
 
@@ -68,6 +68,7 @@ The application uses Material UI themes with built-in WCAG AA compliance:
 All Material UI default colors are designed to meet WCAG AA standards.
 
 The dark theme enhances accessibility with:
+
 - High contrast text (white on dark backgrounds)
 - Clear visual hierarchy with floating cards
 - Vibrant focus indicators for keyboard navigation
@@ -128,10 +129,11 @@ Category filters are implemented with accessibility in mind:
 - Color contrast maintained at 4.5:1 or higher
 
 **Keyboard Navigation**:
-  - `Tab` → Move focus to next filter chip
-  - `Shift+Tab` → Move focus to previous filter chip
-  - `Space` or `Enter` → Toggle filter selection
-  - `Esc` → Clear focus from filter controls
+
+- `Tab` → Move focus to next filter chip
+- `Shift+Tab` → Move focus to previous filter chip
+- `Space` or `Enter` → Toggle filter selection
+- `Esc` → Clear focus from filter controls
 
 ### Category Tabs Accessibility
 
@@ -143,15 +145,17 @@ Category tabs follow WAI-ARIA tab panel patterns:
 - Focus management when switching between categories
 
 **Keyboard Navigation**:
-  - `Tab` → Move focus to next category tab
-  - `Shift+Tab` → Move focus to previous category tab
-  - `Left/Right Arrow` → Navigate between category tabs
-  - `Enter` or `Space` → Activate selected category
-  - `Home/End` → Jump to first/last category tab
+
+- `Tab` → Move focus to next category tab
+- `Shift+Tab` → Move focus to previous category tab
+- `Left/Right Arrow` → Navigate between category tabs
+- `Enter` or `Space` → Activate selected category
+- `Home/End` → Jump to first/last category tab
 
 ### Testing Verification
 
 All accessibility features have been verified using:
+
 - Chrome DevTools contrast ratio checker
 - axe-core accessibility testing
 - Manual keyboard navigation testing
