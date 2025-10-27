@@ -62,3 +62,22 @@ export const CATEGORY_DEFINITIONS: Record<string, CategoryDefinition> = {
     displayOrder: 4,
   },
 };
+
+/**
+ * Get the category ID for a given effect name.
+ * @param effectName - The name of the effect
+ * @returns The category ID (mood|cognitive|relaxation|physical) or undefined if not found
+ */
+export function getCategoryForEffect(effectName: string): string | undefined {
+  const name = effectName.trim().toLowerCase();
+
+  for (const [categoryId, category] of Object.entries(CATEGORY_DEFINITIONS)) {
+    if (category.effects.some((effect) => effect.toLowerCase() === name)) {
+      return categoryId;
+    }
+  }
+
+  return undefined;
+}
+
+

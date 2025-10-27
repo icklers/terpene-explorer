@@ -139,10 +139,15 @@ export function FilterControls({
               const isSelected = selectedEffects.includes(effect.name);
               const displayName = effect.displayName.en || effect.name;
               const count = effect.terpeneCount;
-              // Use effect-specific color for styling chips (user requirement)
-              // const effectColor = effect.color;
-              // const theme = useTheme();
-              // const contrastText = theme.palette.getContrastText(effectColor);
+              // Get category ID and color for effect
+              const categoryId = getCategoryForEffect(effect.name);
+              const categoryPalette = (theme.palette as unknown as { category?: Record<string, string> }).category;
+              const categoryColor = categoryId && categoryPalette ? categoryPalette[categoryId] : theme.palette.primary.main;
+              const contrastText = theme.palette.getContrastText ? 
+                (categoryId && categoryPalette && categoryPalette[categoryId] ? 
+                  theme.palette.getContrastText(categoryPalette[categoryId]) : 
+                  theme.palette.getContrastText(theme.palette.primary.main)) : 
+                '#ffffff';
 
               return (
                 <Chip
@@ -170,15 +175,15 @@ export function FilterControls({
                   variant={isSelected ? 'filled' : 'outlined'}
                   sx={{
                     // Dual indicator pattern for filter chips:
-                    // 1. Background color (light elevated for selected, dark card surface for unselected)
-                    // 2. Border color (green for both states to prevent layout shift)
-                    backgroundColor: isSelected ? 'action.selected' : 'background.paper', // Selected: light elevated, Unselected: dark card surface
+                    // 1. Background color using category-specific colors
+                    // 2. Border color using category-specific colors to maintain visual consistency
+                    backgroundColor: isSelected ? categoryColor : 'transparent', // Selected: category color, Unselected: transparent
                     border: '2px solid',
-                    borderColor: 'primary.main', // Always use green for border to prevent layout shift
-                    color: isSelected ? 'primary.contrastText' : 'primary.main', // Selected: white text, Unselected: green text
+                    borderColor: categoryColor, // Use category color for border
+                    color: isSelected ? contrastText : categoryColor, // Selected: contrast text, Unselected: category color
                     fontWeight: isSelected ? 600 : 400,
                     '&:hover': {
-                      backgroundColor: isSelected ? 'action.selected' : 'action.hover',
+                      backgroundColor: isSelected ? categoryColor : `${categoryColor}20`, // Slight opacity for unselected
                     },
                     '&:focus-visible': {
                       outline: '2px solid',
