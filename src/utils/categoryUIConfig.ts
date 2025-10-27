@@ -79,5 +79,3 @@ export function getCategoryForEffect(effectName: string): string | undefined {
 
   return undefined;
 }
-
-

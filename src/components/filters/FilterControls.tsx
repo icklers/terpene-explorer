@@ -143,11 +143,11 @@ export function FilterControls({
               const categoryId = getCategoryForEffect(effect.name);
               const categoryPalette = (theme.palette as unknown as { category?: Record<string, string> }).category;
               const categoryColor = categoryId && categoryPalette ? categoryPalette[categoryId] : theme.palette.primary.main;
-              const contrastText = theme.palette.getContrastText ? 
-                (categoryId && categoryPalette && categoryPalette[categoryId] ? 
-                  theme.palette.getContrastText(categoryPalette[categoryId]) : 
-                  theme.palette.getContrastText(theme.palette.primary.main)) : 
-                '#ffffff';
+              const contrastText = theme.palette.getContrastText
+                ? categoryId && categoryPalette && categoryPalette[categoryId]
+                  ? theme.palette.getContrastText(categoryPalette[categoryId])
+                  : theme.palette.getContrastText(theme.palette.primary.main)
+                : '#ffffff';
 
               return (
                 <Chip
