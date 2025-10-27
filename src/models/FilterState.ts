@@ -46,6 +46,13 @@ export interface FilterState {
    * @default 'asc'
    */
   sortDirection: 'asc' | 'desc';
+
+  /**
+   * Category filters - IDs of active category filters
+   * Used for category-level filtering in addition to individual effect filters
+   * @default []
+   */
+  categoryFilters: string[];
 }
 
 /**
@@ -58,6 +65,7 @@ export const DEFAULT_FILTER_STATE: FilterState = {
   viewMode: 'sunburst',
   sortBy: 'name',
   sortDirection: 'asc',
+  categoryFilters: [],
 };
 
 /**
@@ -75,6 +83,8 @@ export function isFilterState(obj: unknown): obj is FilterState {
     (f.effectFilterMode === 'any' || f.effectFilterMode === 'all') &&
     (f.viewMode === 'sunburst' || f.viewMode === 'table') &&
     ['name', 'aroma', 'effects', 'sources'].includes(f.sortBy as string) &&
-    (f.sortDirection === 'asc' || f.sortDirection === 'desc')
+    (f.sortDirection === 'asc' || f.sortDirection === 'desc') &&
+    Array.isArray(f.categoryFilters) &&
+    f.categoryFilters.every((c) => typeof c === 'string')
   );
 }

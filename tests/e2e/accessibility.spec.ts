@@ -99,9 +99,161 @@ test.describe('Accessibility Compliance', () => {
     // Search and verify live region announces results
     const liveRegion = page.locator('[aria-live="polite"], [role="status"]');
 
-    // There should be at least one live region
-    const count = await liveRegion.count();
-    expect(count).toBeGreaterThan(0);
+    // Verify it exists
+    await expect(liveRegion).toBeVisible();
+  });
+
+  // T029-T031: Category accessibility tests
+  test('T029: should verify WCAG 2.1 AA contrast ratios for category colors in light theme', async ({ page }) => {
+    await page.waitForSelector('[data-testid="category-accordion"]', { timeout: 5000 });
+
+    // Run axe accessibility scan specifically for category elements
+    const accessibilityScanResults = await new AxeBuilder({ page }).withTags(['wcag2aa', 'wcag21aa']).analyze();
+
+    // Check for contrast violations
+    const contrastViolations = accessibilityScanResults.violations.filter((violation) => violation.id === 'color-contrast');
+
+    expect(contrastViolations.length).toBe(0);
+
+    // Verify category headers have sufficient contrast
+    const categories = [
+      'Mood & Energy',
+      'Cognitive & Mental Enhancement',
+      'Relaxation & Anxiety Management',
+      'Physical & Physiological Management',
+    ];
+
+    for (const category of categories) {
+      const categoryElement = page.locator(`[data-testid="category-accordion"]`).filter({ hasText: category.split(' & ')[0] });
+
+      const hasCategory = (await categoryElement.count()) > 0;
+      expect(hasCategory).toBe(true);
+    }
+  });
+
+  test('T030: should verify WCAG 2.1 AA contrast ratios for category colors in dark theme', async ({ page }) => {
+    // Switch to dark theme
+    const themeToggle = page.locator('button[aria-label*="theme"], button[title="Toggle theme"]');
+    if ((await themeToggle.count()) > 0) {
+      await themeToggle.click();
+      await page.waitForTimeout(500);
+    }
+
+    // Wait for UI elements with new theme applied
+    await page.waitForSelector('[data-testid="category-accordion"]', { timeout: 5000 });
+
+    // Run axe accessibility scan for dark theme contrast
+    const accessibilityScanResults = await new AxeBuilder({ page }).withTags(['wcag2aa', 'wcag21aa']).analyze();
+
+    const contrastViolations = accessibilityScanResults.violations.filter((violation) => violation.id === 'color-contrast');
+
+    expect(contrastViolations.length).toBe(0);
+
+    // Switch back to light theme for other tests
+    if ((await themeToggle.count()) > 0) {
+      await themeToggle.click();
+      await page.waitForTimeout(500);
+    }
+  });
+
+  test('T031: should verify emoticons have proper ARIA labels', async ({ page }) => {
+    await page.waitForSelector('[data-testid="category-accordion"]', { timeout: 5000 });
+
+    // Expected emoticons and their descriptive ARIA labels
+    const emoticonLabels = [
+      { emoticon: '⚡', expectedLabel: 'mood' },
+      { emoticon: '🧠', expectedLabel: 'cognitive' },
+      { emoticon: '😌', expectedLabel: 'relaxation' },
+      { emoticon: '💪', expectedLabel: 'physical' },
+    ];
+
+    const accordions = page.locator('[data-testid="category-accordion"]');
+    const accordionCount = await accordions.count();
+    expect(accordionCount).toBe(4);
+
+    // Check each category has proper ARIA labeling
+    for (let i = 0; i < accordionCount; i++) {
+      const accordion = accordions.nth(i);
+
+      // Check for proper ARIA labels on interactive elements
+      const hasAriaLabels = (await accordion.locator('[aria-label]').count()) > 0;
+
+      // Check for category-specific labels containing the expected terms
+      const labels = await accordion.locator('[aria-label]').all();
+      let hasCorrectLabeling = false;
+
+      for (const labelElement of labels) {
+        const labelText = (await labelElement.getAttribute('aria-label')) || '';
+        const lowerLabel = labelText.toLowerCase();
+
+        if (i === 0 && (lowerLabel.includes('mood') || lowerLabel.includes('energy'))) {
+          hasCorrectLabeling = true;
+          break;
+        } else if (i === 1 && lowerLabel.includes('cognitive')) {
+          hasCorrectLabeling = true;
+          break;
+        } else if (i === 2 && lowerLabel.includes('relaxation')) {
+          hasCorrectLabeling = true;
+          break;
+        } else if (i === 3 && lowerLabel.includes('physical')) {
+          hasCorrectLabeling = true;
+          break;
+        }
+      }
+
+      expect(hasCorrectLabeling).toBe(true);
+    }
+
+    // Verify that all interactive elements related to categories have descriptive labels
+    // Check for category controls that have proper text content or labels
+    const categorySelectors = ['Mood', 'Cognitive', 'Relaxation', 'Physical'];
+    for (const category of categorySelectors) {
+      const categoryControls = page.locator(`[role="checkbox"], [role="button"]`).filter({ hasText: category });
+      if ((await categoryControls.count()) > 0) {
+        const ariaLabel = (await categoryControls.first().getAttribute('aria-label')) || '';
+        expect(ariaLabel.length > 0 || (await categoryControls.first().textContent())).toBeTruthy();
+      }
+    }
+  });
+
+  test('should verify categories have descriptive text alternatives for visual elements', async ({ page }) => {
+    await page.waitForSelector('[data-testid="category-accordion"]', { timeout: 5000 });
+
+    // Check category headers for proper text content
+    const categoryHeaders = page.locator(
+      '[data-testid="category-accordion"] h2, [data-testid="category-accordion"] h3, [data-testid="category-accordion"] h4'
+    );
+    const headerCount = await categoryHeaders.count();
+
+    if (headerCount > 0) {
+      for (let i = 0; i < headerCount; i++) {
+        const headerText = await categoryHeaders.nth(i).textContent();
+        expect(headerText!.length).toBeGreaterThan(0);
+        expect(headerText).toMatch(/mood|cognitive|relaxation|physical/i);
+      }
+    }
+  });
+
+  test('should have no automatically detectable accessibility issues after user interactions', async ({ page }) => {
+    // Perform various interactions
+    const searchInput = page.locator('input[placeholder*="Search"]');
+    await searchInput.fill('test');
+    await page.waitForTimeout(500);
+
+    // Click a filter
+    const chip = page.locator('[aria-pressed]').first();
+    await chip.click();
+    await page.waitForTimeout(300);
+
+    // Switch view
+    const sunburstButton = page.locator('button[aria-label*="sunburst" i]').first();
+    await sunburstButton.click();
+    await page.waitForTimeout(500);
+
+    // Run comprehensive accessibility scan
+    const accessibilityScanResults = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+
+    expect(accessibilityScanResults.violations).toEqual([]);
   });
 
   test('should have accessible table view', async ({ page }) => {

@@ -58,7 +58,7 @@
         "description": "Citrus terpene responsible for uplifting and anti-stress properties; D-isomer found abundantly in citrus-scented cultivars.",
         "aroma": "Citrus, Lemon, Orange",
         "taste": "Bright citrus with slight sweetness",
-        "effects": ["Mood-enhancing", "Anti-stress", "Energizing"],
+        "effects": ["Mood enhancing", "Stress relief", "Energizing"],
         "therapeuticProperties": ["Antidepressant", "Anti-inflammatory", "Anxiolytic"],
         "notableDifferences": "D-form boosts serotonin; L-form mildly sedating; synergy observed with β-Caryophyllene in anxiolytic pathways.",
         "concentrationRange": "0.003-1.613 mg/g",
@@ -70,8 +70,14 @@
         },
         "sources": ["Lemon peel", "Orange rind"],
         "references": [
-          { "source": "PubMed 35278524", "type": "Peer-reviewed" },
-          { "source": "Leafly 2024 Analysis", "type": "Industry report" }
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          },
+          {
+            "source": "Leafly 2024 Analysis",
+            "type": "Industry report"
+          }
         ],
         "researchTier": {
           "dataQuality": "Excellent",
@@ -87,7 +93,7 @@
         "description": "The most abundant terpene in many cannabis varieties. Known for its sedative effects and ability to enhance THC absorption.",
         "aroma": "Earthy, Musky, Fruity, Cloves",
         "taste": "Herbal, earthy with fruity notes",
-        "effects": ["Sedative", "Relaxing", "Muscle relaxant", "Analgesic", "Couch-lock"],
+        "effects": ["Sedative", "Relaxing", "Muscle relaxant", "Pain relief", "Couch-lock"],
         "therapeuticProperties": ["Analgesic", "Anti-inflammatory", "Sedative", "Muscle relaxant", "Antioxidant"],
         "notableDifferences": "Over 0.5% typically produces 'couch-lock' effect",
         "concentrationRange": "0.003-1.32 mg/g",
@@ -98,7 +104,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Mangos", "Hops", "Thyme", "Lemongrass", "Bay leaves"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Excellent",
           "evidenceSummary": "Extensive neuroprotective and analgesic research"
@@ -113,7 +124,7 @@
         "description": "Most common pinene isomer with pine aroma. Known for memory enhancement and alertness.",
         "aroma": "Pine, Fresh, Turpentine",
         "taste": "Sharp pine, woody",
-        "effects": ["Alertness", "Memory-enhancement", "Focus", "Energizing", "Bronchodilator"],
+        "effects": ["Alertness", "Memory-enhancement", "Focus", "Energizing", "Breathing support"],
         "therapeuticProperties": ["Anti-inflammatory", "Bronchodilator", "Memory aid", "Antiseptic", "Gastroprotective"],
         "notableDifferences": "α-pinene counters some THC memory impairments.",
         "concentrationRange": "0.002-1.558 mg/g",
@@ -124,7 +135,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Pine needles", "Rosemary", "Basil", "Dill", "Parsley"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Excellent",
           "evidenceSummary": "Widely documented cognitive enhanced terpene."
@@ -139,8 +155,8 @@
         "description": "Mirror isomer of α-pinene with woody, camphoraceous scent. More relaxing than α-pinene.",
         "aroma": "Woody, Pine, Camphor, Dill",
         "taste": "Woody with spicy edge",
-        "effects": ["Relaxing", "Stress reduction", "Bronchodilator", "Anti-inflammatory"],
-        "therapeuticProperties": ["Anti-inflammatory", "Bronchodilator", "Antiseptic", "Mood regulation"],
+        "effects": ["Relaxing", "Stress relief", "Breathing support", "Anti-inflammatory"],
+        "therapeuticProperties": ["Anti-inflammatory", "Bronchodilator", "Antiseptic", "Mood stabilizing"],
         "concentrationRange": "0.001-0.546 mg/g",
         "molecularData": {
           "molecularFormula": "C10H16",
@@ -149,7 +165,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Pine trees", "Conifers", "Dill", "Parsley"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Documented calming terpene, prevalent in cannabis."
@@ -164,7 +185,7 @@
         "description": "Unique terpene acting as a cannabinoid by binding to CB2 receptors; potent anti-inflammatory.",
         "aroma": "Spicy, Woody, Peppery, Cloves",
         "taste": "Peppery with sweet undertones",
-        "effects": ["Anti-inflammatory", "Analgesic", "Stress relief", "Neuroprotective"],
+        "effects": ["Anti-inflammatory", "Pain relief", "Stress relief"],
         "therapeuticProperties": ["Anti-inflammatory", "Analgesic", "Gastroprotective", "Neuroprotective", "CB2 agonist"],
         "notableDifferences": "Only terpene known to directly bind CB2 receptors.",
         "concentrationRange": "0.051-5.872 mg/g",
@@ -175,7 +196,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Black pepper", "Cloves", "Hops", "Rosemary", "Copaiba"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Excellent",
           "evidenceSummary": "Widespread presence, with confirmed cannabinoid action."
@@ -190,8 +216,8 @@
         "description": "Also called humulene; has appetite suppressant and anti-inflammatory properties.",
         "aroma": "Earthy, Woody, Spicy, Herbal, Hoppy",
         "taste": "Hoppy, earthy with spice",
-        "effects": ["Appetite suppressant", "Anti-inflammatory", "Antibacterial", "Sedative"],
-        "therapeuticProperties": ["Anti-inflammatory", "Antibacterial", "Antitumor", "Appetite suppressant"],
+        "effects": ["Appetite suppressant", "Anti-inflammatory", "Sedative"],
+        "therapeuticProperties": ["Anti-inflammatory", "Antibacterial", "Anticancer", "Appetite suppressant"],
         "concentrationRange": "0.017-2.119 mg/g",
         "molecularData": {
           "molecularFormula": "C15H24",
@@ -200,7 +226,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Hops", "Coriander", "Cloves", "Basil", "Ginseng"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Excellent",
           "evidenceSummary": "Well characterized and pharmacologically validated."
@@ -215,7 +246,7 @@
         "description": "Complex terpene with fresh, piney, floral aroma; sedative and antioxidant properties.",
         "aroma": "Herbal, Pine, Floral, Citrus",
         "taste": "Herbal with citrus and pine notes",
-        "effects": ["Sedative", "Antioxidant", "Antibacterial"],
+        "effects": ["Sedative"],
         "therapeuticProperties": ["Sedative", "Antioxidant", "Antibacterial"],
         "concentrationRange": "Trace to 68.01% (normalized; typically minor)",
         "molecularData": {
@@ -225,7 +256,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Lilacs", "Nutmeg", "Tea tree", "Cumin", "Apples"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Dominant in sativa-dominant cultivars like Jack Herer."
@@ -240,7 +276,7 @@
         "description": "Floral monoterpene with calming, anxiolytic, and sedative properties. Major contributor to relaxing strains.",
         "aroma": "Floral, Lavender, Citrus",
         "taste": "Floral with sweet notes",
-        "effects": ["Calming", "Anti-anxiety", "Analgesic", "Sedative", "Anticonvulsant"],
+        "effects": ["Relaxing", "Anxiety relief", "Pain relief", "Sedative", "Seizure related"],
         "therapeuticProperties": ["Anxiolytic", "Sedative", "Analgesic", "Anti-epileptic", "Anesthetic"],
         "notableDifferences": "Acts on GABA receptors; anti-inflammatory",
         "concentrationRange": "0.003-1.948 mg/g",
@@ -251,7 +287,12 @@
           "class": "Monoterpenoid"
         },
         "sources": ["Lavender", "Mint", "Coriander", "Rosewood"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Excellent",
           "evidenceSummary": "Clinically validated anxiolytic and sedative."
@@ -266,7 +307,7 @@
         "description": "Oxidized form of β-caryophyllene. Known antifungal and analgesic; dogs detect this to identify cannabis.",
         "aroma": "Woody, Spicy, Dry",
         "taste": "Spicy with dry finish",
-        "effects": ["Analgesic", "Antifungal", "Anti-inflammatory"],
+        "effects": ["Pain relief", "Anti-inflammatory"],
         "therapeuticProperties": ["Antifungal", "Analgesic", "Anti-inflammatory", "Anticancer"],
         "notableDifferences": "Dogs use this compound to find cannabis.",
         "concentrationRange": "0.017-1.504 mg/g",
@@ -277,7 +318,12 @@
           "class": "Sesquiterpenoid"
         },
         "sources": ["Eucalyptus", "Cannabis (aged)", "Lemon balm"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Analgesic and antifungal, prominent in aged cannabis."
@@ -292,7 +338,7 @@
         "description": "Floral sesquiterpene from chamomile with anti-inflammatory, soothing, and skin-healing properties; occasional in cannabis.",
         "aroma": "Floral, Sweet, Chamomile, Vanilla",
         "taste": "Floral, delicate, sweet",
-        "effects": ["Calming", "Anti-inflammatory", "Antimicrobial", "Analgesic", "Soothing"],
+        "effects": ["Relaxing", "Anti-inflammatory", "Pain relief"],
         "therapeuticProperties": ["Anti-inflammatory", "Antimicrobial", "Wound healing", "Analgesic", "Neuroprotective"],
         "notableDifferences": "Neuroprotective effects documented.",
         "concentrationRange": "Trace-0.5%",
@@ -303,7 +349,12 @@
           "class": "Sesquiterpenoid"
         },
         "sources": ["Chamomile", "Candeia tree"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Neuroprotective and anti-inflammatory."
@@ -318,8 +369,16 @@
         "description": "Minty, camphor-like monoterpenoid with analgesic and sedative properties. Enhances absorption of drugs.",
         "aroma": "Minty, Camphor, Woody, Cooling",
         "taste": "Menthol-like, woody",
-        "effects": ["Analgesic", "Sedative", "Anti-inflammatory", "Antiviral", "Antispasmodic"],
-        "therapeuticProperties": ["Analgesic", "Anti-inflammatory", "Antioxidant", "Sedative", "Antiviral", "Neuroprotective"],
+        "effects": ["Pain relief", "Sedative", "Anti-inflammatory", "Muscle relaxant"],
+        "therapeuticProperties": [
+          "Analgesic",
+          "Anti-inflammatory",
+          "Antioxidant",
+          "Antispasmodic",
+          "Sedative",
+          "Antiviral",
+          "Neuroprotective"
+        ],
         "notableDifferences": "Acts on TRPM8, TRPV3, and TRPA1 receptors; enhances drug absorption across blood-brain barrier.",
         "concentrationRange": "Trace-0.73 mg/g",
         "molecularData": {
@@ -329,7 +388,12 @@
           "class": "Monoterpenoid"
         },
         "sources": ["Rosemary", "Mint", "Camphor", "Ginger"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Crosses blood-brain barrier; multi-receptor action."
@@ -344,7 +408,7 @@
         "description": "Minty, cooling monoterpenoid with powerful respiratory and antimicrobial benefits; a secondary but pharmacologically significant terpene in cannabis.",
         "aroma": "Minty, Cooling, Eucalyptus, Fresh",
         "taste": "Mint, cooling, spicy",
-        "effects": ["Anti-inflammatory", "Bronchodilator", "Antimicrobial", "Analgesic", "Cognitive enhancement"],
+        "effects": ["Anti-inflammatory", "Breathing support", "Pain relief", "Cognitive enhancement"],
         "therapeuticProperties": ["Anti-inflammatory", "Bronchodilator", "Antimicrobial", "Analgesic", "Mucolytic", "Neuroprotective"],
         "notableDifferences": "Sativa strains ~5%, indicas ~1%.",
         "concentrationRange": "0.01-0.22 mg/g",
@@ -355,7 +419,12 @@
           "class": "Monoterpenoid"
         },
         "sources": ["Eucalyptus", "Tea tree"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Potent, variable based on chemotype."
@@ -370,7 +439,7 @@
         "description": "Woody, floral sesquiterpenoid with sedative and antimicrobial properties. Enhances skin absorption.",
         "aroma": "Woody, Floral, Citrus",
         "taste": "Woody with floral hints",
-        "effects": ["Sedative", "Antiparasitic", "Antimicrobial", "Anti-inflammatory"],
+        "effects": ["Sedative", "Anti-inflammatory"],
         "therapeuticProperties": ["Antiparasitic", "Antimicrobial", "Sedative", "Antifungal", "Anti-inflammatory"],
         "notableDifferences": "Trans-nerolidol is most common isomer; enhances transdermal absorption.",
         "concentrationRange": "trace-0.98 mg/g",
@@ -381,7 +450,12 @@
           "class": "Sesquiterpenoid"
         },
         "sources": ["Jasmine", "Tea tree", "Ginger", "Lavender"],
-        "references": [{ "source": "PubMed 35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PubMed 35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Well documented sedative and antimicrobial."
@@ -396,7 +470,7 @@
         "description": "Floral diterpenoid, degradation product of chlorophyll with sedative and immune-modulating properties.",
         "aroma": "Floral, Balsamic, Grassy, Green",
         "taste": "Floral with grassy notes",
-        "effects": ["Sedative", "Relaxing", "Immune-modulating", "Anxiolytic"],
+        "effects": ["Sedative", "Relaxing", "Anxiety relief"],
         "therapeuticProperties": ["Sedative", "Antioxidant", "Immune-modulating", "Neuroprotective"],
         "concentrationRange": "trace-minor (increases with storage/aging)",
         "molecularData": {
@@ -406,7 +480,12 @@
           "class": "Diterpenoid"
         },
         "sources": ["Green tea"],
-        "references": [{ "source": "Scientific studies on chlorophyll-related diterpenoids", "type": "Botanical research" }],
+        "references": [
+          {
+            "source": "Scientific studies on chlorophyll-related diterpenoids",
+            "type": "Botanical research"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Moderate",
           "evidenceSummary": "Limited cannabis-specific data."
@@ -421,7 +500,7 @@
         "description": "Sweet, pungent monoterpene that may dry mucous membranes; anti-inflammatory and bone-healing effects.",
         "aroma": "Sweet, Woody, Cedar, Pine",
         "taste": "Sweet with cedar tones",
-        "effects": ["Mildly sedative", "Anti-inflammatory", "Bone positive effects"],
+        "effects": ["Relaxing", "Anti-inflammatory"],
         "therapeuticProperties": ["Anti-inflammatory", "Bone regeneration"],
         "concentrationRange": "trace-45.96% (strain-dependent)",
         "molecularData": {
@@ -431,7 +510,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Pine", "Rosemary"],
-        "references": [{ "source": "PMCID PMC35278524", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "PMCID PMC35278524",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Good",
           "evidenceSummary": "Common terpene with demonstrated anti-inflammatory potential."
@@ -446,7 +530,7 @@
         "description": "Minty monoterpenoid with calming, anticonvulsant, and anti-anxiety properties; chemical precursor to menthol.",
         "aroma": "Minty, Herbal, Fresh",
         "taste": "Minty, fresh",
-        "effects": ["Calming", "Anticonvulsant", "Anti-anxiety", "Gastroprotective"],
+        "effects": ["Relaxing", "Seizure related", "Anxiety relief"],
         "therapeuticProperties": ["Anticonvulsant", "Anxiolytic", "Anti-inflammatory", "Gastroprotective", "Analgesic"],
         "concentrationRange": "trace-minor",
         "molecularData": {
@@ -456,7 +540,12 @@
           "class": "Monoterpenoid"
         },
         "sources": ["Mint", "Lemongrass", "Eucalyptus"],
-        "references": [{ "source": "Journal of Natural Products", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Journal of Natural Products",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Sparse cannabis-specific data; known medicinal potential."
@@ -471,7 +560,7 @@
         "description": "Sweet, herbal monoterpene with antiviral, antifungal, and decongestant properties.",
         "aroma": "Sweet, Herbal, Woody",
         "taste": "Sweet, tropical",
-        "effects": ["Uplifting", "Antiviral", "Antifungal", "Decongestant"],
+        "effects": ["Uplifting"],
         "therapeuticProperties": ["Antiviral", "Antifungal", "Antiseptic", "Decongestant"],
         "concentrationRange": "trace-83.29% (strain-dependent)",
         "molecularData": {
@@ -481,7 +570,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Mint", "Parsley", "Basil", "Orchids"],
-        "references": [{ "source": "Phytochemistry Reports", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Phytochemistry Reports",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Moderate",
           "evidenceSummary": "Moderate research on antimicrobial properties."
@@ -496,8 +590,8 @@
         "description": "Spicy, woody monoterpene; used in small quantities for antioxidant and antimicrobial properties.",
         "aroma": "Spicy, Woody, Peppery",
         "taste": "Spicy, woody, slightly citrusy",
-        "effects": ["Antioxidant", "Energizing", "Digestive Aid", "Anti-bacterial"],
-        "therapeuticProperties": ["Antioxidant", "Anti-bacterial", "Digestive"],
+        "effects": ["Energizing"],
+        "therapeuticProperties": ["Antioxidant", "Antibacterial", "Digestive"],
         "concentrationRange": "trace-minor",
         "molecularData": {
           "molecularFormula": "C10H16",
@@ -506,7 +600,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Oak moss", "Spruce", "Black pepper", "Pumpkin"],
-        "references": [{ "source": "Journal of Essential Oil Research", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Journal of Essential Oil Research",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Sparse modern cannabis quantification."
@@ -521,8 +620,8 @@
         "description": "Woody, coniferous monoterpene with mild stimulant and anti-inflammatory effects.",
         "aroma": "Earthy, Coniferous, Pine",
         "taste": "Woodsy, camphor, herbal",
-        "effects": ["Mild stimulant", "Cardiovascular support", "Antioxidant"],
-        "therapeuticProperties": ["Anti-inflammatory", "Antioxidant", "Lipid metabolism"],
+        "effects": ["Energizing"],
+        "therapeuticProperties": ["Anti-inflammatory", "Antioxidant", "Cardiovascular support", "Lipid metabolism"],
         "concentrationRange": "trace-0.09 mg/g",
         "molecularData": {
           "molecularFormula": "C10H16",
@@ -531,7 +630,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Ginger", "Rosemary", "Citronella"],
-        "references": [{ "source": "Journal of Chromatography", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Journal of Chromatography",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Minor component in modern cannabis tests."
@@ -546,8 +650,8 @@
         "description": "Citrus, minty monoterpene with stimulating and decongestant properties.",
         "aroma": "Citrus, Mint, Peppermint",
         "taste": "Citrus, slightly minty",
-        "effects": ["Stimulating", "Decongestant"],
-        "therapeuticProperties": ["Antihyperalgesic", "Gastroprotective"],
+        "effects": ["Energizing"],
+        "therapeuticProperties": ["Antihyperalgesic", "Decongestant", "Gastroprotective"],
         "concentrationRange": "trace-minor",
         "molecularData": {
           "molecularFormula": "C10H16",
@@ -556,7 +660,12 @@
           "class": "Monoterpene"
         },
         "sources": ["Dill", "Eucalyptus", "Parsley"],
-        "references": [{ "source": "Phytomedicine Reviews", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Phytomedicine Reviews",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Present as trace compound in most analyses."
@@ -571,7 +680,7 @@
         "description": "Rose-scented monoterpenoid with neuroprotective and antioxidant effects. Found in sweet, floral cannabis varieties.",
         "aroma": "Rose, Floral, Sweet, Citrus",
         "taste": "Floral, sweet, delicate",
-        "effects": ["Antioxidant", "Neuroprotective", "Mood-lifting", "Uplifting"],
+        "effects": ["Mood enhancing", "Uplifting"],
         "therapeuticProperties": ["Antioxidant", "Neuroprotective", "Antimicrobial", "Antidiabetic"],
         "concentrationRange": "trace-minor",
         "molecularData": {
@@ -581,7 +690,12 @@
           "class": "Monoterpenoid"
         },
         "sources": ["Geraniums", "Roses", "Lemon", "Citronella"],
-        "references": [{ "source": "Frontiers in Plant Science", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Frontiers in Plant Science",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Moderate",
           "evidenceSummary": "Sweet/floral hybrids high in geraniol."
@@ -596,8 +710,8 @@
         "description": "Green apple, herbal sesquiterpene with calming and anti-spasmodic effects.",
         "aroma": "Green apple, Herbal, Woody, Fruity",
         "taste": "Apple, sweet, woody",
-        "effects": ["Calming", "Anti-spasmodic", "Sedative", "Stress-relief"],
-        "therapeuticProperties": ["Anti-inflammatory", "Antifungal", "Antibacterial", "Muscle relaxant"],
+        "effects": ["Relaxing", "Muscle relaxant", "Sedative", "Stress relief"],
+        "therapeuticProperties": ["Anti-inflammatory", "Antifungal", "Antispasmodic", "Antibacterial", "Muscle relaxant"],
         "concentrationRange": "trace-minor",
         "molecularData": {
           "molecularFormula": "C15H24",
@@ -606,7 +720,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Apples", "Oranges", "Turmeric", "Ginger"],
-        "references": [{ "source": "International Journal of Molecular Sciences", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "International Journal of Molecular Sciences",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Moderate",
           "evidenceSummary": "Calming strains show elevated farnesene."
@@ -622,7 +741,7 @@
         "aroma": "Sweet, Orange, Citrus, Woody",
         "taste": "Citrus, sweet, tangy",
         "effects": ["Mood stabilizing", "Anti-inflammatory"],
-        "therapeuticProperties": ["Anti-inflammatory", "Antioxidant", "Anti-anxiety"],
+        "therapeuticProperties": ["Anti-inflammatory", "Antioxidant", "Anxiolytic"],
         "concentrationRange": "trace-minor",
         "molecularData": {
           "molecularFormula": "C15H24",
@@ -631,7 +750,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Valencia oranges", "Tangerines", "Grapefruits"],
-        "references": [{ "source": "Foods Journal", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Foods Journal",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Moderate",
           "evidenceSummary": "Prevalent in citrus-heavy cultivars."
@@ -646,7 +770,7 @@
         "description": "Woody, cedar-scented sesquiterpene found in low concentrations; associated with grounding and anti-fungal properties.",
         "aroma": "Woody, Cedar, Sweet",
         "taste": "Cedar, woody, slightly sweet",
-        "effects": ["Grounding", "Anti-inflammatory"],
+        "effects": ["Mood stabilizing", "Anti-inflammatory"],
         "therapeuticProperties": ["Anti-inflammatory", "Antifungal", "Insecticidal"],
         "concentrationRange": "trace-minor",
         "molecularData": {
@@ -656,7 +780,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Cedar", "Juniper"],
-        "references": [{ "source": "Natural Product Reports", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Natural Product Reports",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Very rarely high in any cannabis chemotype."
@@ -671,7 +800,7 @@
         "description": "Citrus, spicy sesquiterpene found in small concentrations; occasionally reported in specialized aromatic cannabis. Balancing effects on serotonin and GABA pathways.",
         "aroma": "Citrus, Spicy, Herbaceous, Woody",
         "taste": "Citrus with spice",
-        "effects": ["Balancing", "Stress relief", "Mood regulation"],
+        "effects": ["Stress relief", "Mood stabilizing"],
         "therapeuticProperties": ["Anxiolytic", "Analgesic", "Anti-inflammatory"],
         "concentrationRange": "trace-minor",
         "molecularData": {
@@ -681,7 +810,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Citrus", "Black pepper"],
-        "references": [{ "source": "International Journal of Molecular Sciences", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "International Journal of Molecular Sciences",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Rare outside of select citrus-dominant chemotypes."
@@ -696,8 +830,8 @@
         "description": "Herbal, spicy sesquiterpene with anticancer and anti-inflammatory properties; rare in cannabis.",
         "aroma": "Herbal, Spicy, Woody",
         "taste": "Herbal, spicy",
-        "effects": ["Anticancer", "Anti-inflammatory", "Antioxidant"],
-        "therapeuticProperties": ["Anticancer", "Anti-inflammatory", "Antioxidant", "Antitumor"],
+        "effects": ["Anti-inflammatory"],
+        "therapeuticProperties": ["Anticancer", "Anti-inflammatory", "Antioxidant"],
         "concentrationRange": "trace-minor",
         "molecularData": {
           "molecularFormula": "C15H24",
@@ -706,7 +840,12 @@
           "class": "Sesquiterpene"
         },
         "sources": ["Turmeric", "Atractylodes", "Chinese medicinal plants"],
-        "references": [{ "source": "Chinese Medicine Journal", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Chinese Medicine Journal",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Sparse evidence in cannabis; more from traditional medicine."
@@ -721,7 +860,7 @@
         "description": "Minty, camphorous terpene with anti-inflammatory, analgesic, and antioxidant properties.",
         "aroma": "Minty, Camphorous, Earthy",
         "taste": "Camphor-like with menthol notes",
-        "effects": ["Anti-inflammatory", "Analgesic", "Antioxidant"],
+        "effects": ["Anti-inflammatory", "Pain relief"],
         "therapeuticProperties": ["Anti-inflammatory", "Analgesic", "Antioxidant", "Antimicrobial"],
         "concentrationRange": "trace-minor",
         "molecularData": {
@@ -731,7 +870,12 @@
           "class": "Monoterpenoid (Ketone)"
         },
         "sources": ["Fennel", "Basil", "Rosemary"],
-        "references": [{ "source": "Phytotherapy Research", "type": "Peer-reviewed" }],
+        "references": [
+          {
+            "source": "Phytotherapy Research",
+            "type": "Peer-reviewed"
+          }
+        ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Limited cannabis-specific data, evidenced anti-inflammatory."
@@ -746,7 +890,7 @@
         "description": "Fruity, floral ester with mood-balancing and anti-anxiety effects.",
         "aroma": "Fruity, Floral",
         "taste": "Sweet, floral",
-        "effects": ["Mood balancing", "Anti-anxiety"],
+        "effects": ["Mood stabilizing", "Anxiety relief"],
         "therapeuticProperties": ["Anxiolytic", "Antimicrobial", "Anti-inflammatory"],
         "concentrationRange": "trace-minor",
         "molecularData": {
@@ -757,14 +901,67 @@
         },
         "sources": ["Lemongrass", "Geranium"],
         "references": [
-          { "source": "Phytochemistry Letters", "type": "Peer-reviewed" },
-          { "source": "Journal of Agricultural and Food Chemistry", "type": "Peer-reviewed" }
+          {
+            "source": "Phytochemistry Letters",
+            "type": "Peer-reviewed"
+          },
+          {
+            "source": "Journal of Agricultural and Food Chemistry",
+            "type": "Peer-reviewed"
+          }
         ],
         "researchTier": {
           "dataQuality": "Limited",
           "evidenceSummary": "Limited cannabis data."
         }
       }
-    ]
+    ],
+    "effectCategories": [
+      {
+        "id": "mood",
+        "name": "Mood & Energy",
+        "displayOrder": 1,
+        "description": "Daytime energizing effects that enhance mood, motivation, and vitality"
+      },
+      {
+        "id": "cognitive",
+        "name": "Cognitive & Mental Enhancement",
+        "displayOrder": 2,
+        "description": "Daytime cognitive effects that support focus, alertness, and mental clarity"
+      },
+      {
+        "id": "relaxation",
+        "name": "Relaxation & Anxiety Management",
+        "displayOrder": 3,
+        "description": "Evening/nighttime effects that promote relaxation, stress relief, and calm"
+      },
+      {
+        "id": "physical",
+        "name": "Physical & Physiological Management",
+        "displayOrder": 4,
+        "description": "Therapeutic physical effects that address pain, inflammation, and bodily functions"
+      }
+    ],
+    "effectCategoryMapping": {
+      "Energizing": "mood",
+      "Mood enhancing": "mood",
+      "Mood stabilizing": "mood",
+      "Uplifting": "mood",
+      "Alertness": "cognitive",
+      "Cognitive enhancement": "cognitive",
+      "Focus": "cognitive",
+      "Memory-enhancement": "cognitive",
+      "Anxiety relief": "relaxation",
+      "Relaxing": "relaxation",
+      "Sedative": "relaxation",
+      "Stress relief": "relaxation",
+      "Couch-lock": "relaxation",
+      "Anti-inflammatory": "physical",
+      "Appetite suppressant": "physical",
+      "Breathing support": "physical",
+      "Muscle relaxant": "physical",
+      "Pain relief": "physical",
+      "Seizure related": "physical"
+    }
   }
 }

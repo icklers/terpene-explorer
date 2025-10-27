@@ -11,13 +11,44 @@ import type { FilterState } from '../models/FilterState';
 import type { Terpene } from '../models/Terpene';
 
 /**
- * Filter terpenes based on filter state
+ * Filter terpenes based on filter state - alias for applyEffectFilters
  *
  * @param terpenes - Array of terpenes to filter
  * @param filterState - Current filter state
  * @returns Filtered array of terpenes
  */
 export function filterTerpenes(terpenes: Terpene[], filterState: FilterState): Terpene[] {
+  return applyEffectFilters(terpenes, filterState);
+}
+
+// Define category mappings inline for now (TBD: refactor to separate file)
+const CATEGORY_DEFINITIONS = {
+  mood: {
+    name: 'Mood & Energy',
+    effects: ['Energizing', 'Mood enhancing', 'Mood stabilizing', 'Uplifting'],
+  },
+  cognitive: {
+    name: 'Cognitive & Mental Enhancement',
+    effects: ['Alertness', 'Cognitive enhancement', 'Focus', 'Memory-enhancement'],
+  },
+  relaxation: {
+    name: 'Relaxation & Anxiety Management',
+    effects: ['Anxiety relief', 'Relaxing', 'Sedative', 'Stress relief', 'Couch-lock'],
+  },
+  physical: {
+    name: 'Physical & Physiological Management',
+    effects: ['Anti-inflammatory', 'Appetite suppressant', 'Breathing support', 'Muscle relaxant', 'Pain relief', 'Seizure related'],
+  },
+};
+
+/**
+ * Apply effect filters to terpenes with OR logic for categories and individual effects
+ *
+ * @param terpenes - Array of terpenes to filter
+ * @param filterState - Current filter state
+ * @returns Filtered array of terpenes
+ */
+export function applyEffectFilters(terpenes: Terpene[], filterState: FilterState): Terpene[] {
   let filtered = [...terpenes];
 
   // Apply search query filter
@@ -26,16 +57,35 @@ export function filterTerpenes(terpenes: Terpene[], filterState: FilterState): T
     filtered = filtered.filter((terpene) => matchesSearchQuery(terpene, query));
   }
 
-  // Apply effect filters
-  if (filterState.selectedEffects.length > 0) {
-    if (filterState.effectFilterMode === 'any') {
-      filtered = filtered.filter((terpene) => matchesAnyEffect(terpene, filterState.selectedEffects));
-    } else {
-      filtered = filtered.filter((terpene) => matchesAllEffects(terpene, filterState.selectedEffects));
-    }
+  // Apply effect filters with OR logic as specified in FR-015, FR-016
+  const { categoryFilters, selectedEffects, effectFilterMode } = filterState;
+
+  if (categoryFilters.length === 0 && selectedEffects.length === 0) {
+    return filtered; // No filters applied
   }
 
-  return filtered;
+  return filtered.filter((terpene) => {
+    // Check category filters - check if any effect in the terpene belongs to the selected categories
+    const matchesCategoryFilter =
+      categoryFilters.length === 0 ||
+      terpene.effects.some((effect) => {
+        const category = getCategoryForEffect(effect);
+        return category && categoryFilters.includes(category);
+      });
+
+    // Check individual effect filters
+    const matchesEffectFilter =
+      selectedEffects.length === 0 ||
+      (effectFilterMode === 'any' ? matchesAnyEffect(terpene, selectedEffects) : matchesAllEffects(terpene, selectedEffects));
+
+    // Apply OR logic: when both filter types are active, return true if EITHER matches
+    if (categoryFilters.length > 0 && selectedEffects.length > 0) {
+      return matchesCategoryFilter || matchesEffectFilter;
+    } else {
+      // Only one filter type is active: return true only if that one matches
+      return matchesCategoryFilter && matchesEffectFilter;
+    }
+  });
 }
 
 /**
@@ -84,4 +134,60 @@ export function matchesAllEffects(terpene: Terpene, effects: string[]): boolean 
   }
 
   return effects.every((effect) => terpene.effects.includes(effect));
+}
+
+/**
+ * Get all effect names that belong to specified categories
+ *
+ * @param categories - Array of category IDs
+ * @returns Array of effect names that belong to these categories
+ */
+export function getEffectsInCategories(categories: string[]): string[] {
+  const allEffects = new Set<string>();
+
+  categories.forEach((category) => {
+    const categoryDef = CATEGORY_DEFINITIONS[category as keyof typeof CATEGORY_DEFINITIONS];
+    if (categoryDef) {
+      categoryDef.effects.forEach((effect) => allEffects.add(effect));
+    }
+  });
+
+  return Array.from(allEffects);
+}
+
+/**
+ * Given a list of selected effect names, return the set of category IDs that contain
+ * any of those effects. Used to keep categoryFilters in sync with selectedEffects.
+ *
+ * @param selectedEffects - Array of selected effect names
+ * @returns Array of category IDs
+ */
+export function syncCategoryFilters(selectedEffects: string[]): string[] {
+  const categorySet = new Set<string>();
+
+  selectedEffects.forEach((effect) => {
+    const category = getCategoryForEffect(effect);
+    if (category) {
+      categorySet.add(category);
+    }
+  });
+
+  return Array.from(categorySet);
+}
+
+/**
+ * Get category id for a given effect name.
+ * Returns the category key (mood|cognitive|relaxation|physical) or undefined if not found.
+ */
+export function getCategoryForEffect(effect: string): string | undefined {
+  const name = effect.trim().toLowerCase();
+
+  for (const key of Object.keys(CATEGORY_DEFINITIONS)) {
+    const def = CATEGORY_DEFINITIONS[key as keyof typeof CATEGORY_DEFINITIONS]!;
+    if (def.effects.some((e) => e.toLowerCase() === name)) {
+      return key;
+    }
+  }
+
+  return undefined;
 }
