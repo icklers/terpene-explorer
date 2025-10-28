@@ -31,14 +31,15 @@ export interface UseThemeReturn {
  *
  * @returns 'dark' if system prefers dark mode, 'light' otherwise
  */
-function getSystemPreference(): ThemeMode {
-  if (typeof window === 'undefined') {
-    return 'light';
-  }
+// Commented until Light theme is fixed. now defaulting to dark.
+// function getSystemPreference(): ThemeMode {
+//   if (typeof window === 'undefined') {
+//     return 'light';
+//   }
 
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  return mediaQuery.matches ? 'dark' : 'light';
-}
+//   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+//   return mediaQuery.matches ? 'dark' : 'light';
+// }
 
 /**
  * Safely read from localStorage
@@ -74,13 +75,19 @@ function safeSetItem(key: string, value: string): void {
  * @returns Theme mode and control functions
  */
 export function useTheme(): UseThemeReturn {
-  // Initialize state with saved preference or system preference
+  // Initialize state with saved preference or default to dark
+  // Previously the default fell back to system preference. Change: default to 'dark'
+  // to ensure the app initializes in dark mode for users without a saved preference.
   const [mode, setModeState] = useState<ThemeMode>(() => {
     const saved = safeGetItem('theme');
     if (saved && (saved === 'light' || saved === 'dark')) {
       return saved;
     }
-    return getSystemPreference();
+    // Get System Preference as soon as light theme is finished.
+
+    // return getSystemPreference();
+    // Default to dark mode when no user preference is stored
+    return 'dark';
   });
 
   // Listen to system preference changes
