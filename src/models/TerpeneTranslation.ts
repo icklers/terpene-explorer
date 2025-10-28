@@ -1,5 +1,3 @@
-
-
 /**
  * Translation data for a single terpene
  * All fields are optional to support partial translations
@@ -52,12 +50,11 @@ export const TerpeneTranslationSchema = z.object({
 export const TranslationFileSchema = z.object({
   language: z.string().regex(/^[a-z]{2}$/, 'Must be ISO 639-1 language code'),
   version: z.string().regex(/^\d+\.\d+\.\d+$/, 'Must be semantic version'),
-  terpenes: z.record(
-    z.string().uuid('Terpene ID must be valid UUID'),
-    TerpeneTranslationSchema
-  ).refine((terpenes) => Object.keys(terpenes).length > 0, {
-    message: 'At least one translation data entry required',
-  }),
+  terpenes: z
+    .record(z.string().uuid('Terpene ID must be valid UUID'), TerpeneTranslationSchema)
+    .refine((terpenes) => Object.keys(terpenes).length > 0, {
+      message: 'At least one translation data entry required',
+    }),
 });
 
 // TranslatedTerpene interface extending the base Terpene interface with translation metadata
@@ -67,4 +64,3 @@ import { Terpene } from '@/types/terpene';
 export interface TranslatedTerpene extends Terpene {
   translationStatus: TranslationStatus;
 }
-

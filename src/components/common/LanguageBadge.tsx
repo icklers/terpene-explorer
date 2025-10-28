@@ -13,12 +13,7 @@ export interface LanguageBadgeProps extends Omit<ChipProps, 'language'> {
 /**
  * Displays a language indicator badge for fallback content
  */
-export const LanguageBadge: React.FC<LanguageBadgeProps> = ({ 
-  language, 
-  ariaLabel, 
-  className,
-  ...chipProps 
-}) => {
+export const LanguageBadge: React.FC<LanguageBadgeProps> = ({ language, ariaLabel, className, ...chipProps }) => {
   return (
     <Chip
       label={language.toUpperCase()}

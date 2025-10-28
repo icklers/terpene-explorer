@@ -39,7 +39,7 @@ export class TranslationLoadError extends Error {
 export interface ITranslationLoader {
   /**
    * Load translation file for specified language
-   * 
+   *
    * @param language - ISO 639-1 language code
    * @returns Promise resolving to TranslationFile or undefined on error
    */
@@ -47,7 +47,7 @@ export interface ITranslationLoader {
 
   /**
    * Validate translation file against schema
-   * 
+   *
    * @param data - Raw translation file data
    * @returns Validated TranslationFile or throws validation error
    */
@@ -55,7 +55,7 @@ export interface ITranslationLoader {
 
   /**
    * Check if translation file exists for language
-   * 
+   *
    * @param language - Language code to check
    * @returns true if translation file exists
    */
@@ -75,7 +75,7 @@ export class TranslationLoader implements ITranslationLoader {
 
       // Import translation file dynamically
       const response = await fetch(`${this.baseTranslationPath}-${language}.json`);
-      
+
       if (!response.ok) {
         throw new TranslationLoadError(
           `Failed to load translation file for ${language}: ${response.status} ${response.statusText}`,
@@ -93,7 +93,7 @@ export class TranslationLoader implements ITranslationLoader {
 
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       console.error(`[Translation] Failed to load translations for ${language}:`, errorMessage);
-      
+
       throw new TranslationLoadError(
         `Failed to load translations for ${language}`,
         language,
@@ -105,30 +105,22 @@ export class TranslationLoader implements ITranslationLoader {
   validateTranslationFile(data: unknown): TranslationFile {
     try {
       const result = TranslationFileSchema.safeParse(data);
-      
+
       if (!result.success) {
-        const errors = result.error.errors.map(err => 
-          `${err.path.join('.')}: ${err.message}`
-        );
-        
-        throw new TranslationValidationError(
-          'Translation file validation failed',
-          (data as any)?.language || 'unknown',
-          errors
-        );
+        const errors = result.error.errors.map((err) => `${err.path.join('.')}: ${err.message}`);
+
+        throw new TranslationValidationError('Translation file validation failed', (data as any)?.language || 'unknown', errors);
       }
-      
+
       return result.data;
     } catch (error) {
       if (error instanceof TranslationValidationError) {
         throw error;
       }
-      
-      throw new TranslationValidationError(
-        'Translation file validation failed',
-        (data as any)?.language || 'unknown',
-        [error instanceof Error ? error.message : 'Unknown validation error']
-      );
+
+      throw new TranslationValidationError('Translation file validation failed', (data as any)?.language || 'unknown', [
+        error instanceof Error ? error.message : 'Unknown validation error',
+      ]);
     }
   }
 
@@ -147,7 +139,7 @@ export interface ITranslationService {
   /**
    * Initialize the translation service with a specific language
    * Loads translation data and builds search indexes
-   * 
+   *
    * @param language - ISO 639-1 language code (e.g., 'en', 'de')
    * @returns Promise that resolves when translations are loaded
    * @throws Never throws - falls back to English on error
@@ -156,7 +148,7 @@ export interface ITranslationService {
 
   /**
    * Get a translated terpene by ID with fallback support
-   * 
+   *
    * @param terpeneId - UUID of the terpene
    * @param language - Target language code
    * @returns TranslatedTerpene with merged base data and translations
@@ -165,7 +157,7 @@ export interface ITranslationService {
 
   /**
    * Get all terpenes with translations in specified language
-   * 
+   *
    * @param language - Target language code
    * @returns Array of TranslatedTerpene objects
    */
@@ -173,21 +165,17 @@ export interface ITranslationService {
 
   /**
    * Get translation for a specific field with fallback
-   * 
+   *
    * @param terpeneId - UUID of the terpene
    * @param field - Field name to translate
    * @param language - Target language code
    * @returns Translated value or English fallback
    */
-  getTranslatedField(
-    terpeneId: string,
-    field: keyof TerpeneTranslation,
-    language: string
-  ): string | string[] | undefined;
+  getTranslatedField(terpeneId: string, field: keyof TerpeneTranslation, language: string): string | string[] | undefined;
 
   /**
    * Check if a terpene has complete translation in specified language
-   * 
+   *
    * @param terpeneId - UUID of the terpene
    * @param language - Target language code
    * @returns true if all translatable fields have translations
@@ -196,7 +184,7 @@ export interface ITranslationService {
 
   /**
    * Get list of fields that are using fallback for a terpene
-   * 
+   *
    * @param terpeneId - UUID of the terpene
    * @param language - Target language code
    * @returns Array of field names using English fallback
@@ -205,7 +193,7 @@ export interface ITranslationService {
 
   /**
    * Change the active language and reload translations
-   * 
+   *
    * @param language - New language code
    * @returns Promise that resolves when language is switched
    */
@@ -213,21 +201,21 @@ export interface ITranslationService {
 
   /**
    * Get currently active language
-   * 
+   *
    * @returns Current language code
    */
   getCurrentLanguage(): string;
 
   /**
    * Get list of supported languages
-   * 
+   *
    * @returns Array of language codes with metadata
    */
   getSupportedLanguages(): LanguageInfo[];
 
   /**
    * Search terpenes by query string in all languages
-   * 
+   *
    * @param query - Search query
    * @param language - Current UI language (for result formatting)
    * @returns Array of matching TranslatedTerpene objects
@@ -236,17 +224,13 @@ export interface ITranslationService {
 
   /**
    * Search specific fields across languages
-   * 
+   *
    * @param query - Search query
    * @param fields - Fields to search in
    * @param language - Current UI language
    * @returns Array of matching TranslatedTerpene objects
    */
-  searchFields(
-    query: string,
-    fields: Array<keyof Terpene>,
-    language: string
-  ): TranslatedTerpene[];
+  searchFields(query: string, fields: Array<keyof Terpene>, language: string): TranslatedTerpene[];
 }
 
 export interface LanguageInfo {
@@ -273,7 +257,7 @@ export class TranslationService implements ITranslationService {
 
   async initialize(language: string): Promise<void> {
     this.currentLanguage = language;
-    
+
     // Load base terpene data if not already loaded
     if (this.baseTerpenes.length === 0) {
       try {
@@ -298,10 +282,10 @@ export class TranslationService implements ITranslationService {
         this.cache.loadBulk(translations);
       }
     }
-    
+
     // Build search index with base terpenes and translations
     this.searchService.buildSearchIndex(this.baseTerpenes, translations);
-    
+
     this.initialized = true;
   }
 
@@ -309,16 +293,16 @@ export class TranslationService implements ITranslationService {
     if (!this.initialized) {
       throw new Error('TranslationService not initialized. Call initialize() first.');
     }
-    
+
     // Find the base terpene
-    const baseTerpene = this.baseTerpenes.find(t => t.id === terpeneId);
+    const baseTerpene = this.baseTerpenes.find((t) => t.id === terpeneId);
     if (!baseTerpene) {
       throw new Error(`Terpene with ID ${terpeneId} not found in base database`);
     }
-    
+
     // Get translation from cache
     const translation = this.cache.get(terpeneId);
-    
+
     // Merge the base terpene with translation
     return mergeTerpeneTranslation(baseTerpene, translation, language);
   }
@@ -327,25 +311,21 @@ export class TranslationService implements ITranslationService {
     if (!this.initialized) {
       throw new Error('TranslationService not initialized. Call initialize() first.');
     }
-    
-    return this.baseTerpenes.map(baseTerpene => {
+
+    return this.baseTerpenes.map((baseTerpene) => {
       const translation = this.cache.get(baseTerpene.id);
       return mergeTerpeneTranslation(baseTerpene, translation, language);
     });
   }
 
-  getTranslatedField(
-    terpeneId: string,
-    field: keyof TerpeneTranslation,
-    language: string
-  ): string | string[] | undefined {
+  getTranslatedField(terpeneId: string, field: keyof TerpeneTranslation, language: string): string | string[] | undefined {
     if (!this.initialized) {
       throw new Error('TranslationService not initialized. Call initialize() first.');
     }
-    
+
     // Get the full translated terpene
     const translatedTerpene = this.getTranslatedTerpene(terpeneId, language);
-    
+
     // Return the specific field
     return (translatedTerpene as any)[field];
   }
@@ -377,15 +357,15 @@ export class TranslationService implements ITranslationService {
         name: 'English',
         nativeName: 'English',
         isComplete: true,
-        completionPercentage: 100
+        completionPercentage: 100,
       },
       {
         code: 'de',
         name: 'German',
         nativeName: 'Deutsch',
         isComplete: false, // This would be calculated based on translation completeness
-        completionPercentage: 30 // Just an example - would be calculated in reality
-      }
+        completionPercentage: 30, // Just an example - would be calculated in reality
+      },
     ];
   }
 
@@ -393,19 +373,15 @@ export class TranslationService implements ITranslationService {
     if (!this.initialized) {
       throw new Error('TranslationService not initialized. Call initialize() first.');
     }
-    
+
     return this.searchService.search(query, language);
   }
 
-  searchFields(
-    query: string,
-    fields: Array<keyof Terpene>,
-    language: string
-  ): TranslatedTerpene[] {
+  searchFields(query: string, fields: Array<keyof Terpene>, language: string): TranslatedTerpene[] {
     if (!this.initialized) {
       throw new Error('TranslationService not initialized. Call initialize() first.');
     }
-    
+
     return this.searchService.searchFields(query, fields, language);
   }
 }

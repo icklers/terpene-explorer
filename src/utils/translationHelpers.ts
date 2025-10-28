@@ -1,10 +1,9 @@
 import { TerpeneTranslation, TranslatedTerpene } from '@/models/TerpeneTranslation';
 import { Terpene } from '@/types/terpene';
 
-
 /**
  * Normalize string for diacritic-insensitive search
- * 
+ *
  * @param text - Input text
  * @returns Normalized text (ä→a, ö→o, ü→u, ß→ss)
  */
@@ -21,7 +20,7 @@ export function normalizeDiacritics(text: string): string {
 
 /**
  * Merge base terpene with translation data
- * 
+ *
  * @param baseTerpene - Base English terpene data
  * @param translation - Translation data (may be partial)
  * @param language - Target language code
@@ -39,8 +38,8 @@ export function mergeTerpeneTranslation(
       translationStatus: {
         language,
         isFullyTranslated: false,
-        fallbackFields: getTranslatableFields()
-      }
+        fallbackFields: getTranslatableFields(),
+      },
     };
   }
 
@@ -71,41 +70,28 @@ export function mergeTerpeneTranslation(
     translationStatus: {
       language,
       isFullyTranslated,
-      fallbackFields
-    }
+      fallbackFields,
+    },
   };
 }
 
 /**
  * Get translatable field names from Terpene interface
- * 
+ *
  * @returns Array of field names that can be translated
  */
 export function getTranslatableFields(): Array<keyof TerpeneTranslation> {
-  return [
-    'name',
-    'description',
-    'aroma',
-    'taste',
-    'effects',
-    'therapeuticProperties',
-    'sources',
-    'notableDifferences'
-  ];
+  return ['name', 'description', 'aroma', 'taste', 'effects', 'therapeuticProperties', 'sources', 'notableDifferences'];
 }
 
 /**
  * Check if a field value is an array type
- * 
+ *
  * @param field - Field name
  * @returns true if field contains array value
  */
 export function isArrayField(field: keyof TerpeneTranslation): boolean {
-  const arrayFields: Array<keyof TerpeneTranslation> = [
-    'effects',
-    'therapeuticProperties',
-    'sources'
-  ];
-  
+  const arrayFields: Array<keyof TerpeneTranslation> = ['effects', 'therapeuticProperties', 'sources'];
+
   return arrayFields.includes(field);
 }

@@ -6,7 +6,7 @@ import { TranslationService } from '@/services/translationService';
 
 /**
  * Hook for accessing translated terpene data
- * 
+ *
  * @param terpeneId - Optional terpene ID to load specific terpene
  * @returns Translation utilities and data
  */
@@ -45,17 +45,20 @@ export function useTerpeneTranslation(terpeneId?: string) {
     }
   }, [terpeneId, language, isLoading, translationService]);
 
-  const getTerpene = useCallback((id: string): TranslatedTerpene | undefined => {
-    if (id === terpeneId) {
-      return translatedTerpene;
-    }
-    try {
-      return translationService.getTranslatedTerpene(id, language);
-    } catch (err) {
-      console.error(`Error getting terpene with ID ${id}:`, err);
-      return undefined;
-    }
-  }, [terpeneId, translatedTerpene, language, translationService]);
+  const getTerpene = useCallback(
+    (id: string): TranslatedTerpene | undefined => {
+      if (id === terpeneId) {
+        return translatedTerpene;
+      }
+      try {
+        return translationService.getTranslatedTerpene(id, language);
+      } catch (err) {
+        console.error(`Error getting terpene with ID ${id}:`, err);
+        return undefined;
+      }
+    },
+    [terpeneId, translatedTerpene, language, translationService]
+  );
 
   const getAllTerpenes = useCallback((): TranslatedTerpene[] => {
     try {
@@ -66,63 +69,81 @@ export function useTerpeneTranslation(terpeneId?: string) {
     }
   }, [language, translationService]);
 
-  const getField = useCallback((id: string, field: keyof TerpeneTranslation): string | string[] | undefined => {
-    try {
-      return translationService.getTranslatedField(id, field, language);
-    } catch (err) {
-      console.error(`Error getting field ${field} for terpene with ID ${id}:`, err);
-      return undefined;
-    }
-  }, [language, translationService]);
+  const getField = useCallback(
+    (id: string, field: keyof TerpeneTranslation): string | string[] | undefined => {
+      try {
+        return translationService.getTranslatedField(id, field, language);
+      } catch (err) {
+        console.error(`Error getting field ${field} for terpene with ID ${id}:`, err);
+        return undefined;
+      }
+    },
+    [language, translationService]
+  );
 
-  const isFullyTranslated = useCallback((id: string): boolean => {
-    try {
-      return translationService.isFullyTranslated(id, language);
-    } catch (err) {
-      console.error(`Error checking if terpene with ID ${id} is fully translated:`, err);
-      return false;
-    }
-  }, [language, translationService]);
+  const isFullyTranslated = useCallback(
+    (id: string): boolean => {
+      try {
+        return translationService.isFullyTranslated(id, language);
+      } catch (err) {
+        console.error(`Error checking if terpene with ID ${id} is fully translated:`, err);
+        return false;
+      }
+    },
+    [language, translationService]
+  );
 
-  const getFallbackFields = useCallback((id: string): string[] => {
-    try {
-      return translationService.getFallbackFields(id, language);
-    } catch (err) {
-      console.error(`Error getting fallback fields for terpene with ID ${id}:`, err);
-      return [];
-    }
-  }, [language, translationService]);
+  const getFallbackFields = useCallback(
+    (id: string): string[] => {
+      try {
+        return translationService.getFallbackFields(id, language);
+      } catch (err) {
+        console.error(`Error getting fallback fields for terpene with ID ${id}:`, err);
+        return [];
+      }
+    },
+    [language, translationService]
+  );
 
-  const switchLanguage = useCallback(async (lang: string): Promise<void> => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      await translationService.switchLanguage(lang);
-      setLanguage(lang);
-      setIsLoading(false);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Unknown error'));
-      setIsLoading(false);
-    }
-  }, [translationService]);
+  const switchLanguage = useCallback(
+    async (lang: string): Promise<void> => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        await translationService.switchLanguage(lang);
+        setLanguage(lang);
+        setIsLoading(false);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Unknown error'));
+        setIsLoading(false);
+      }
+    },
+    [translationService]
+  );
 
-  const search = useCallback((query: string): TranslatedTerpene[] => {
-    try {
-      return translationService.search(query, language);
-    } catch (err) {
-      console.error('Error during search:', err);
-      return [];
-    }
-  }, [language, translationService]);
+  const search = useCallback(
+    (query: string): TranslatedTerpene[] => {
+      try {
+        return translationService.search(query, language);
+      } catch (err) {
+        console.error('Error during search:', err);
+        return [];
+      }
+    },
+    [language, translationService]
+  );
 
-  const searchFields = useCallback((query: string, fields: Array<keyof Terpene>): TranslatedTerpene[] => {
-    try {
-      return translationService.searchFields(query, fields, language);
-    } catch (err) {
-      console.error('Error during field-specific search:', err);
-      return [];
-    }
-  }, [language, translationService]);
+  const searchFields = useCallback(
+    (query: string, fields: Array<keyof Terpene>): TranslatedTerpene[] => {
+      try {
+        return translationService.searchFields(query, fields, language);
+      } catch (err) {
+        console.error('Error during field-specific search:', err);
+        return [];
+      }
+    },
+    [language, translationService]
+  );
 
   return {
     getTerpene,

@@ -170,7 +170,7 @@ export function isTerpene(obj: unknown): obj is Terpene {
     (t.molecularData as any).molecularFormula !== undefined &&
     typeof (t.molecularData as any).molecularFormula === 'string' &&
     typeof (t.molecularData as any).molecularWeight === 'number' &&
-    ((typeof (t.molecularData as any).boilingPoint === 'number') || ((t.molecularData as any).boilingPoint === null)) &&
+    (typeof (t.molecularData as any).boilingPoint === 'number' || (t.molecularData as any).boilingPoint === null) &&
     typeof (t.molecularData as any).class === 'string' &&
     Array.isArray(t.sources) &&
     t.sources.every((s) => typeof s === 'string') &&

@@ -155,7 +155,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
     <TableContainer
       component={Paper}
       sx={{
-        bgcolor: '#272727', // Slightly lighter than card default for visual separation
+        bgcolor: 'background.paper',
         borderRadius: 2, // 8px corners
         overflow: 'hidden', // Contain table within rounded corners
         mb: 3, // 24px margin bottom
@@ -163,14 +163,8 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
     >
       <Table stickyHeader aria-label={t('table.ariaLabel', 'Terpenes table')}>
         <TableHead>
-          <TableRow
-            sx={{
-              bgcolor: 'primary.dark', // Dark green background
-              color: 'primary.contrastText', // White text
-              fontWeight: 600, // Make header bold
-            }}
-          >
-            <TableCell>
+          <TableRow>
+            <TableCell sx={{ bgcolor: 'primary.dark', color: 'primary.contrastText', fontWeight: 600 }}>
               <TableSortLabel
                 active={sortBy === 'name'}
                 direction={sortBy === 'name' ? sortDirection : 'asc'}
@@ -189,7 +183,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                 {t('table.name', 'Name')}
               </TableSortLabel>
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ bgcolor: 'primary.dark', color: 'primary.contrastText', fontWeight: 600 }}>
               <TableSortLabel
                 active={sortBy === 'aroma'}
                 direction={sortBy === 'aroma' ? sortDirection : 'asc'}
@@ -208,7 +202,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                 {t('table.aroma', 'Aroma')}
               </TableSortLabel>
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ bgcolor: 'primary.dark', color: 'primary.contrastText', fontWeight: 600 }}>
               <TableSortLabel
                 active={sortBy === 'effects'}
                 direction={sortBy === 'effects' ? sortDirection : 'asc'}
@@ -227,7 +221,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                 {t('table.effects', 'Effects')}
               </TableSortLabel>
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ bgcolor: 'primary.dark', color: 'primary.contrastText', fontWeight: 600 }}>
               <TableSortLabel
                 active={sortBy === 'sources'}
                 direction={sortBy === 'sources' ? sortDirection : 'asc'}

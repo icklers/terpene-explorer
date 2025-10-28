@@ -38,21 +38,15 @@ export interface UseTerpeneDataResult {
  */
 export function useTerpeneData(dataPath: string = '/data/terpene-database.json'): UseTerpeneDataResult {
   // Use the translation hook to get translated data
-  const { 
-    getAllTerpenes, 
-    isLoading, 
-    error, 
-    language, 
-    switchLanguage 
-  } = useTerpeneTranslation();
-  
+  const { getAllTerpenes, isLoading, error, language, switchLanguage } = useTerpeneTranslation();
+
   const [warnings, setWarnings] = useState<string[] | null>(null);
 
   // Load data function from the old implementation
   const loadData = useCallback(async () => {
     try {
       const result = await loadTerpeneData(dataPath);
-      
+
       if (result.status === 'error') {
         setWarnings(null);
         return;

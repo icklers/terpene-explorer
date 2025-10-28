@@ -29,7 +29,7 @@ export interface ITranslationCache {
 
 export class TranslationCache implements ITranslationCache {
   private cache: Map<string, TerpeneTranslation> = new Map();
-  
+
   set(id: string, translation: TerpeneTranslation): void {
     this.cache.set(id, translation);
   }

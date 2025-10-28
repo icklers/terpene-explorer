@@ -26,7 +26,7 @@ export const TerpeneSchema = z.object({
 
   // Isomer info
   isomerOf: z.string().nullable(),
-  
+
   // Isomer type
   isomerType: z.string().nullable(),
 
@@ -66,10 +66,12 @@ export const TerpeneSchema = z.object({
   sources: z.array(z.string()).min(1, 'Must have at least one source'),
 
   // References
-  references: z.array(z.object({
-    source: z.string(),
-    type: z.string(),
-  })),
+  references: z.array(
+    z.object({
+      source: z.string(),
+      type: z.string(),
+    })
+  ),
 
   // Research tier
   researchTier: z.object({

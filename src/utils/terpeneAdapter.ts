@@ -16,7 +16,7 @@ interface BasicTerpene {
   aroma?: string;
   effects: string[];
   sources: string[];
-  boilingPoint?: number;  // Original format
+  boilingPoint?: number; // Original format
   molecularFormula?: string;
 }
 
@@ -26,13 +26,53 @@ export function toNewTerpene(legacy: Terpene): CurrentTerpene {
     id: legacy.id,
     name: legacy.name,
     isomerOf: legacy.isomerOf,
-    isomerType: legacy.isomerType as "Optical" | "Optical (Enantiomer)" | "Positional" | "Structural" | "Oxidized derivative" | null, // Cast to satisfy type system
-    category: legacy.category as "Core" | "Secondary" | "Minor", // Cast to satisfy type system
+    isomerType: legacy.isomerType as 'Optical' | 'Optical (Enantiomer)' | 'Positional' | 'Structural' | 'Oxidized derivative' | null, // Cast to satisfy type system
+    category: legacy.category as 'Core' | 'Secondary' | 'Minor', // Cast to satisfy type system
     aroma: legacy.aroma,
     taste: legacy.taste,
     description: legacy.description,
     effects: legacy.effects as CurrentTerpene['effects'], // Cast to satisfy type system
-    therapeuticProperties: legacy.therapeuticProperties as ("Mood stabilizing" | "Sedative" | "Anti-inflammatory" | "Appetite suppressant" | "Muscle relaxant" | "Analgesic" | "Anesthetic" | "Anti-epileptic" | "Antibacterial" | "Anticancer" | "Anticonvulsant" | "Antidepressant" | "Antidiabetic" | "Antifungal" | "Antihyperalgesic" | "Antimicrobial" | "Antioxidant" | "Antiparasitic" | "Antiseptic" | "Antispasmodic" | "Antiviral" | "Anxiolytic" | "Appetite suppressant" | "Bone regeneration" | "Bronchodilator" | "Cardiovascular support" | "Decongestant" | "Digestive" | "Gastroprotective" | "Immune-modulating" | "Insecticidal" | "Lipid metabolism" | "Memory aid" | "Mood stabilizing" | "Mucolytic" | "Muscle relaxant" | "Neuroprotective" | "Sedative" | "Wound healing")[],
+    therapeuticProperties: legacy.therapeuticProperties as (
+      | 'Mood stabilizing'
+      | 'Sedative'
+      | 'Anti-inflammatory'
+      | 'Appetite suppressant'
+      | 'Muscle relaxant'
+      | 'Analgesic'
+      | 'Anesthetic'
+      | 'Anti-epileptic'
+      | 'Antibacterial'
+      | 'Anticancer'
+      | 'Anticonvulsant'
+      | 'Antidepressant'
+      | 'Antidiabetic'
+      | 'Antifungal'
+      | 'Antihyperalgesic'
+      | 'Antimicrobial'
+      | 'Antioxidant'
+      | 'Antiparasitic'
+      | 'Antiseptic'
+      | 'Antispasmodic'
+      | 'Antiviral'
+      | 'Anxiolytic'
+      | 'Appetite suppressant'
+      | 'Bone regeneration'
+      | 'Bronchodilator'
+      | 'Cardiovascular support'
+      | 'Decongestant'
+      | 'Digestive'
+      | 'Gastroprotective'
+      | 'Immune-modulating'
+      | 'Insecticidal'
+      | 'Lipid metabolism'
+      | 'Memory aid'
+      | 'Mood stabilizing'
+      | 'Mucolytic'
+      | 'Muscle relaxant'
+      | 'Neuroprotective'
+      | 'Sedative'
+      | 'Wound healing'
+    )[],
     notableDifferences: legacy.notableDifferences,
     concentrationRange: legacy.concentrationRange,
     molecularData: {
@@ -44,7 +84,7 @@ export function toNewTerpene(legacy: Terpene): CurrentTerpene {
     sources: legacy.sources,
     references: legacy.references,
     researchTier: {
-      dataQuality: legacy.researchTier.dataQuality as "Excellent" | "Good" | "Moderate" | "Limited", // Cast to satisfy type system
+      dataQuality: legacy.researchTier.dataQuality as 'Excellent' | 'Good' | 'Moderate' | 'Limited', // Cast to satisfy type system
       evidenceSummary: legacy.researchTier.evidenceSummary,
     },
   };
@@ -58,7 +98,7 @@ export function toLegacyTerpene(n: CurrentTerpene): BasicTerpene {
     aroma: n.aroma,
     effects: Array.isArray(n.effects) ? n.effects : [],
     sources: Array.isArray(n.sources) ? n.sources : [],
-    boilingPoint: n.molecularData?.boilingPoint ?? undefined,  // Convert null to undefined for compatibility
+    boilingPoint: n.molecularData?.boilingPoint ?? undefined, // Convert null to undefined for compatibility
     molecularFormula: n.molecularData?.molecularFormula,
   };
 }
@@ -86,13 +126,13 @@ export function ensureFullTerpeneStructure(terpene: Partial<CurrentTerpene>): Cu
       molecularFormula: '',
       molecularWeight: 0,
       boilingPoint: null,
-      class: ''
+      class: '',
     },
     sources: terpene.sources || [],
     references: terpene.references || [],
     researchTier: terpene.researchTier || {
       dataQuality: 'Limited',
-      evidenceSummary: 'Default evidence summary'
-    }
+      evidenceSummary: 'Default evidence summary',
+    },
   };
 }

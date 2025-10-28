@@ -11,18 +11,15 @@ export interface SearchIndex {
 export interface ITranslationSearchService {
   /**
    * Build search index for all terpenes with translations
-   * 
+   *
    * @param terpenes - Base terpene data
    * @param translations - Translation data for all languages
    */
-  buildSearchIndex(
-    terpenes: Terpene[],
-    translations: Record<string, TerpeneTranslation>
-  ): void;
+  buildSearchIndex(terpenes: Terpene[], translations: Record<string, TerpeneTranslation>): void;
 
   /**
    * Search terpenes by query string in all languages
-   * 
+   *
    * @param query - Search query
    * @param language - Current UI language (for result formatting)
    * @returns Array of matching TranslatedTerpene objects
@@ -31,17 +28,13 @@ export interface ITranslationSearchService {
 
   /**
    * Search specific fields across languages
-   * 
+   *
    * @param query - Search query
    * @param fields - Fields to search in
    * @param language - Current UI language
    * @returns Array of matching TranslatedTerpene objects
    */
-  searchFields(
-    query: string,
-    fields: Array<keyof Terpene>,
-    language: string
-  ): TranslatedTerpene[];
+  searchFields(query: string, fields: Array<keyof Terpene>, language: string): TranslatedTerpene[];
 
   /**
    * Clear search index (for rebuilding)
@@ -53,15 +46,12 @@ export class TranslationSearchService implements ITranslationSearchService {
   private searchIndex: SearchIndex[] = [];
   private terpenes: Map<string, Terpene> = new Map();
 
-  buildSearchIndex(
-    terpenes: Terpene[],
-    translations: Record<string, TerpeneTranslation>
-  ): void {
+  buildSearchIndex(terpenes: Terpene[], translations: Record<string, TerpeneTranslation>): void {
     // Store terpene data for quick lookup
-    this.terpenes = new Map(terpenes.map(terpene => [terpene.id, terpene]));
+    this.terpenes = new Map(terpenes.map((terpene) => [terpene.id, terpene]));
 
     // Build search index
-    this.searchIndex = terpenes.map(terpene => {
+    this.searchIndex = terpenes.map((terpene) => {
       // Start with base terpene fields
       let searchTerms = [
         terpene.name,
@@ -71,8 +61,8 @@ export class TranslationSearchService implements ITranslationSearchService {
         ...terpene.effects,
         ...terpene.sources,
         ...terpene.therapeuticProperties,
-        terpene.notableDifferences
-      ].filter(term => term !== undefined && term !== null) as string[];
+        terpene.notableDifferences,
+      ].filter((term) => term !== undefined && term !== null) as string[];
 
       // Add translated terms if available
       const translation = translations[terpene.id];
@@ -95,7 +85,7 @@ export class TranslationSearchService implements ITranslationSearchService {
       return {
         id: terpene.id,
         searchText,
-        normalizedText
+        normalizedText,
       };
     });
   }
@@ -105,29 +95,33 @@ export class TranslationSearchService implements ITranslationSearchService {
 
     // Normalize the search query
     const normalizedQuery = normalizeDiacritics(query.toLowerCase());
-    const queryTerms = normalizedQuery.split(/\s+/).filter(term => term.length > 0);
+    const queryTerms = normalizedQuery.split(/\s+/).filter((term) => term.length > 0);
 
     // Find matches - all query terms must be present in the search text
-    const matchedIds = this.searchIndex.filter(index => {
-      return queryTerms.every(term => index.normalizedText.includes(term));
-    }).map(index => index.id);
+    const matchedIds = this.searchIndex
+      .filter((index) => {
+        return queryTerms.every((term) => index.normalizedText.includes(term));
+      })
+      .map((index) => index.id);
 
     // Return the full terpene data for matched IDs
-    return matchedIds.map(id => {
-      const baseTerpene = this.terpenes.get(id);
-      if (!baseTerpene) return null;
+    return matchedIds
+      .map((id) => {
+        const baseTerpene = this.terpenes.get(id);
+        if (!baseTerpene) return null;
 
-      // For a complete implementation, we would merge with translation
-      // For now, return the base terpene as placeholder
-      return {
-        ...baseTerpene,
-        translationStatus: {
-          language,
-          isFullyTranslated: false,
-          fallbackFields: [] // Placeholder
-        }
-      } as TranslatedTerpene;
-    }).filter((terpene): terpene is TranslatedTerpene => terpene !== null);
+        // For a complete implementation, we would merge with translation
+        // For now, return the base terpene as placeholder
+        return {
+          ...baseTerpene,
+          translationStatus: {
+            language,
+            isFullyTranslated: false,
+            fallbackFields: [], // Placeholder
+          },
+        } as TranslatedTerpene;
+      })
+      .filter((terpene): terpene is TranslatedTerpene => terpene !== null);
   }
 
   searchFields(query: string, _fields: Array<keyof Terpene>, language: string): TranslatedTerpene[] {

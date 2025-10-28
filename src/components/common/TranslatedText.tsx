@@ -19,24 +19,24 @@ export interface TranslatedTextProps {
 /**
  * Wrapper component that handles fallback styling for translated text
  */
-export const TranslatedText: React.FC<TranslatedTextProps> = ({ 
-  children, 
-  isFallback, 
+export const TranslatedText: React.FC<TranslatedTextProps> = ({
+  children,
+  isFallback,
   fallbackLanguage = 'en',
   variant,
-  typographyProps = {}
+  typographyProps = {},
 }) => {
   if (isFallback) {
     return (
       <Typography
         component="em"
         variant={variant}
-        sx={{ 
+        sx={{
           fontStyle: 'italic',
           display: 'inline-flex',
           alignItems: 'center',
           gap: 0.5,
-          ...typographyProps?.sx
+          ...typographyProps?.sx,
         }}
         {...typographyProps}
       >
