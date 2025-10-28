@@ -46,7 +46,7 @@ accessibility, reducing development time while ensuring quality.
 
 ### II. Component-Based Architecture
 
-The application MUST be built using React 18+ with a component-based architecture. Components MUST be modular, reusable, and independently
+The application MUST be built using React 19+ with a component-based architecture. Components MUST be modular, reusable, and independently
 testable. Each component SHOULD have a single responsibility and clear prop interfaces defined in TypeScript. State management SHALL use
 React Context API for global state, with local useState/useReducer for component-specific state. Avoid over-engineering with external state
 libraries (Redux, Zustand) unless complexity clearly warrants it.
