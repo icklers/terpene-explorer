@@ -37,12 +37,20 @@ export function useTerpeneTranslation(terpeneId?: string) {
   useEffect(() => {
     if (!terpeneId || isLoading) return;
 
-    try {
-      const terpene = translationService.getTranslatedTerpene(terpeneId, language);
-      setTranslatedTerpene(terpene);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Unknown error'));
-    }
+    let mounted = true;
+
+    (async () => {
+      try {
+        const terpene = await Promise.resolve(translationService.getTranslatedTerpene(terpeneId, language));
+        if (mounted) setTranslatedTerpene(terpene);
+      } catch (err) {
+        if (mounted) setError(err instanceof Error ? err : new Error('Unknown error'));
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
   }, [terpeneId, language, isLoading, translationService]);
 
   const getTerpene = useCallback(

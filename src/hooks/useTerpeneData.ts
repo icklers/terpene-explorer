@@ -43,25 +43,33 @@ export function useTerpeneData(dataPath: string = '/data/terpene-database.json')
   const [warnings, setWarnings] = useState<string[] | null>(null);
 
   // Load data function from the old implementation
-  const loadData = useCallback(async () => {
+  const loadData = useCallback(async (): Promise<string[] | null> => {
     try {
       const result = await loadTerpeneData(dataPath);
 
       if (result.status === 'error') {
-        setWarnings(null);
-        return;
+        return null;
       }
 
-      setWarnings(result.warnings || null);
+      return result.warnings || null;
     } catch (error) {
       console.warn('[TerpeneData] Failed to load warnings:', error);
-      setWarnings(null);
+      return null;
     }
   }, [dataPath]);
 
   // Load data on mount and when dataPath changes
   useEffect(() => {
-    loadData();
+    let mounted = true;
+
+    (async () => {
+      const warnings = await loadData();
+      if (mounted) setWarnings(warnings);
+    })();
+
+    return () => {
+      mounted = false;
+    };
   }, [loadData]);
 
   // Get the translated terpenes
@@ -95,8 +103,9 @@ export function useTerpeneData(dataPath: string = '/data/terpene-database.json')
   }, [terpenes]);
 
   // Retry function - just reloads the data
-  const retry = useCallback(() => {
-    loadData();
+  const retry = useCallback(async () => {
+    const warnings = await loadData();
+    setWarnings(warnings);
   }, [loadData]);
 
   return {
