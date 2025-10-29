@@ -73,12 +73,32 @@
     "notAvailable": "Nicht verfügbar",
     "celsius": "°C"
   },
+  "pages": {
+    "home": {
+      "title": "Terpene Explorer",
+      "subtitle": "Entdecken und filtern Sie Terpene nach ihren Wirkungen und Eigenschaften",
+      "filtersLabel": "Filtersteuerelemente",
+      "filtersTitle": "Filter",
+      "filtersActive": "Aktiv",
+      "collapseFilters": "Filter ausblenden",
+      "expandFilters": "Filter einblenden",
+      "resultsLabel": "Suchergebnisse",
+      "loading": "Terpenedaten werden geladen..."
+    }
+  },
   "table": {
+    "name": "Name",
+    "aroma": "Aroma",
+    "effects": "Wirkungen",
+    "sources": "Natürliche Quellen",
     "sortBy": "Sortieren nach {{column}}",
     "sortAscending": "Aufsteigend sortieren",
     "sortDescending": "Absteigend sortieren",
     "rowsPerPage": "Zeilen pro Seite",
     "of": "von"
+  },
+  "filters": {
+    "categoriesLabel": "Nach Kategorien filtern"
   },
   "error": {
     "loadFailed": "Terpen-Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",

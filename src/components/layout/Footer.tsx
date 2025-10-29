@@ -76,7 +76,7 @@ export function Footer(): React.ReactElement {
           <Typography variant="caption" color="text.secondary">
             {t('footer.openSource', 'Open source project')} •{' '}
             <Link
-              href="https://github.com"
+              href="https://github.com/icklers/terpene-explorer"
               target="_blank"
               rel="noopener noreferrer"
               color="text.secondary"

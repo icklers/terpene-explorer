@@ -73,6 +73,19 @@
     "notAvailable": "Not available",
     "celsius": "°C"
   },
+  "pages": {
+    "home": {
+      "title": "Terpene Explorer",
+      "subtitle": "Discover and filter terpenes by their effects and properties",
+      "filtersLabel": "Filter controls",
+      "filtersTitle": "Filters",
+      "filtersActive": "Active",
+      "collapseFilters": "Collapse filters",
+      "expandFilters": "Expand filters",
+      "resultsLabel": "Search results",
+      "loading": "Loading terpene data..."
+    }
+  },
   "table": {
     "sortBy": "Sort by {{column}}",
     "sortAscending": "Sort ascending",

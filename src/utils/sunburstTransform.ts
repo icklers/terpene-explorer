@@ -9,6 +9,7 @@
 
 import type { Effect } from '../models/Effect';
 import type { Terpene } from '../models/Terpene';
+import { TranslatedTerpene } from '../models/TerpeneTranslation';
 import { getEffectMetadata } from '../services/colorService';
 
 /**
@@ -37,7 +38,7 @@ export interface SunburstNode {
  * @param terpenes - Array of terpenes to transform
  * @returns Root node of sunburst hierarchy
  */
-export function transformToSunburstData(terpenes: Terpene[]): SunburstNode {
+export function transformToSunburstData(terpenes: (Terpene | TranslatedTerpene)[]): SunburstNode {
   // Handle empty array
   if (terpenes.length === 0) {
     return {
@@ -48,10 +49,11 @@ export function transformToSunburstData(terpenes: Terpene[]): SunburstNode {
   }
 
   // Build effect → terpenes mapping
-  const effectMap = new Map<string, Set<Terpene>>();
+  const effectMap = new Map<string, Set<Terpene | TranslatedTerpene>>();
 
   terpenes.forEach((terpene) => {
     // Deduplicate effects within terpene
+    // Note: Both Terpene and TranslatedTerpene have an 'effects' property
     const uniqueEffects = [...new Set(terpene.effects)];
 
     uniqueEffects.forEach((effect) => {
