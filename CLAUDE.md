@@ -7,6 +7,15 @@ Always use context7 when I need code generation, setup or configuration steps, o
 library/API documentation. This means you should automatically use the Context7 MCP
 tools to resolve library id and get library docs without me having to explicitly ask.
 
+## Agents
+
+Agent use is **NOT NEGOTIABLE**:
+
+- **MANDATORY**: For activities related to React/Typescript use the `dev-react` agent.
+- **MANDATORY**: For writing Playwright E2E tests use the `playwright-generator` agent.
+- **MANDATORY**: For creating Playwright E2E Test Plans use the `playwright-planner` agent.
+- **MANDATORY**: For debugging and fixing Playwright tests, use the `playwright-healer` agent.
+
 ## Active Technologies
 - TypeScript 5.7.2, React 19.2.0 + @mui/material 6.3.0, @emotion/react 11.13.5, @emotion/styled 11.13.5, Vite 6.0.3 (003-dark-theme-design)
 - LocalStorage for theme preferences (existing useLocalStorage hook) (003-dark-theme-design)

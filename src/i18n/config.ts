@@ -78,6 +78,10 @@ i18n
 
     // Namespace separator
     nsSeparator: ':',
+    
+    // Add terpeneData as a namespace
+    ns: ['translation', 'terpeneData'],
+    defaultNS: 'translation',
   });
 
 export default i18n;

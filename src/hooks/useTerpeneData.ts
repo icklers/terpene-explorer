@@ -3,14 +3,16 @@
  *
  * Custom hook for loading and managing terpene data.
  * Extracts unique effects with metadata and provides retry functionality.
+ * Updated to integrate with translation service for bilingual support.
  *
  * @see tasks.md T046
  */
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 
+import { useTerpeneTranslation } from './useTerpeneTranslation';
 import type { Effect } from '../models/Effect';
-import type { Terpene } from '../models/Terpene';
+import { TranslatedTerpene } from '../models/TerpeneTranslation';
 import { getEffectMetadata } from '../services/colorService';
 import { loadTerpeneData } from '../services/dataLoader';
 
@@ -18,49 +20,48 @@ import { loadTerpeneData } from '../services/dataLoader';
  * Hook return type
  */
 export interface UseTerpeneDataResult {
-  terpenes: Terpene[];
+  terpenes: TranslatedTerpene[]; // Updated to use translated terpenes
   effects: Effect[];
   isLoading: boolean;
   error: Error | null;
   warnings: string[] | null;
   retry: () => void;
+  language: string;
+  switchLanguage: (lang: string) => Promise<void>;
 }
 
 /**
- * Custom hook for loading terpene data
+ * Custom hook for loading terpene data with translation support
  *
  * @param dataPath - Optional custom path to data file
- * @returns Terpene data, effects, loading state, error, and retry function
+ * @returns Terpene data, effects, loading state, error, language controls and retry function
  */
-export function useTerpeneData(dataPath: string = '/data/terpenes.json'): UseTerpeneDataResult {
-  const [terpenes, setTerpenes] = useState<Terpene[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+export function useTerpeneData(dataPath: string = '/data/terpene-database.json'): UseTerpeneDataResult {
+  // Use the translation hook to get translated data
+  const { 
+    getAllTerpenes, 
+    isLoading, 
+    error, 
+    language, 
+    switchLanguage 
+  } = useTerpeneTranslation();
+  
   const [warnings, setWarnings] = useState<string[] | null>(null);
 
-  // Load data function
+  // Load data function from the old implementation
   const loadData = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
     try {
       const result = await loadTerpeneData(dataPath);
-
-      if (result.status === 'success') {
-        setTerpenes(result.data);
-        setWarnings(result.warnings || null);
-        setError(null);
-      } else {
-        setTerpenes([]);
-        setError(result.error);
+      
+      if (result.status === 'error') {
         setWarnings(null);
+        return;
       }
-    } catch (err) {
-      setTerpenes([]);
-      setError(err instanceof Error ? err : new Error('Unknown error occurred'));
+
+      setWarnings(result.warnings || null);
+    } catch (error) {
+      console.warn('[TerpeneData] Failed to load warnings:', error);
       setWarnings(null);
-    } finally {
-      setIsLoading(false);
     }
   }, [dataPath]);
 
@@ -69,12 +70,10 @@ export function useTerpeneData(dataPath: string = '/data/terpenes.json'): UseTer
     loadData();
   }, [loadData]);
 
-  // Retry function
-  const retry = useCallback(() => {
-    loadData();
-  }, [loadData]);
+  // Get the translated terpenes
+  const terpenes = getAllTerpenes();
 
-  // Extract unique effects with metadata
+  // Extract unique effects with metadata - now using translated terpenes
   const effects = useMemo(() => {
     if (terpenes.length === 0) {
       return [];
@@ -101,12 +100,19 @@ export function useTerpeneData(dataPath: string = '/data/terpenes.json'): UseTer
     return effectsArray.sort((a, b) => a.name.localeCompare(b.name));
   }, [terpenes]);
 
+  // Retry function - just reloads the data
+  const retry = useCallback(() => {
+    loadData();
+  }, [loadData]);
+
   return {
     terpenes,
     effects,
     isLoading,
-    error,
+    error: error,
     warnings,
     retry,
+    language,
+    switchLanguage,
   };
 }

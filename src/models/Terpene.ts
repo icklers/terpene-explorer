@@ -10,64 +10,135 @@ export interface Terpene {
   /**
    * Unique identifier for the terpene
    * @format UUID v4
-   * @example "550e8400-e29b-41d4-a716-446655440000"
+   * @example "550e8400-e29b-41d4-a716-446655440001"
    */
   id: string;
 
   /**
-   * Display name of the terpene
-   * @minLength 1
-   * @maxLength 100
-   * @example "Limonene"
+   * Primary terpene name including optical or structural designation
+   * @example "Limonene", "α-Bisabolol"
    */
   name: string;
 
   /**
+   * If the compound is an isomer variant, specify its parent compound
+   * @example "Limonene", null
+   */
+  isomerOf: string | null;
+
+  /**
+   * Type of isomerism - 'Optical', 'Positional', 'Structural', or null if not relevant
+   * @example "Optical", "Positional", null
+   */
+  isomerType: string | null;
+
+  /**
+   * Categorization tier: 'Core', 'Secondary', or 'Minor'
+   * @example "Core", "Secondary", "Minor"
+   */
+  category: string;
+
+  /**
    * Detailed description of the terpene and its properties
-   * @minLength 10
-   * @maxLength 1000
    */
   description: string;
 
   /**
-   * Characteristic aroma profile
-   * @minLength 1
-   * @maxLength 100
-   * @example "Citrus, Lemon, Fresh"
+   * Characteristic aroma profile as comma-separated descriptors
+   * @example "Citrus, Lemon, Orange"
    */
   aroma: string;
 
   /**
+   * Flavor descriptors relevant to cultivar taste expression
+   * @example "Bright citrus with slight sweetness"
+   */
+  taste: string;
+
+  /**
    * Array of effect names associated with this terpene
-   * References Effect entity by name
-   * @minItems 1
-   * @maxItems 10
-   * @example ["calming", "anxiolytic", "sedative"]
+   * @example ["Mood enhancing", "Stress relief", "Energizing"]
    */
   effects: string[];
 
   /**
-   * Natural sources where this terpene can be found
-   * @minItems 1
-   * @maxItems 20
-   * @example ["Lemon peel", "Orange rind", "Grapefruit"]
+   * Array of therapeutic pharmacological actions
+   * @example ["Antidepressant", "Anti-inflammatory", "Anxiolytic"]
+   */
+  therapeuticProperties: string[];
+
+  /**
+   * Summarized differences supported by data
+   * @example "Only known CB2 agonist among terpenes"
+   */
+  notableDifferences?: string;
+
+  /**
+   * Typical concentration range in cannabis dry flower
+   * @example "0.003-1.613 mg/g"
+   */
+  concentrationRange?: string;
+
+  /**
+   * Molecular data object containing chemical properties
+   */
+  molecularData: {
+    /**
+     * Standard chemical formula
+     * @example "C10H16"
+     */
+    molecularFormula: string;
+
+    /**
+     * Molecular weight in atomic mass units (g/mol)
+     * @example 136
+     */
+    molecularWeight: number;
+
+    /**
+     * Boiling point in degrees Celsius
+     * @example 176
+     */
+    boilingPoint: number | null;
+
+    /**
+     * Chemical classification
+     * @example "Monoterpene", "Sesquiterpene", "Monoterpenoid"
+     */
+    class: string;
+  };
+
+  /**
+   * Natural sources beyond cannabis
+   * @example ["Lemon peel", "Orange rind"]
    */
   sources: string[];
 
   /**
-   * Boiling point in Celsius (optional)
-   * @minimum -200
-   * @maximum 300
-   * @example 176
+   * Reference citations for the terpene data
+   * @example [{"source": "PubMed 35278524", "type": "Peer-reviewed"}]
    */
-  boilingPoint?: number;
+  references: Array<{
+    source: string;
+    type: string;
+  }>;
 
   /**
-   * Chemical molecular formula (optional)
-   * @pattern ^[A-Z][a-z]?\\d*
-   * @example "C10H16"
+   * Research data quality assessment
    */
-  molecularFormula?: string;
+  researchTier: {
+    /**
+     * Data quality rating
+     * @example "Excellent", "Good", "Moderate", "Limited"
+     */
+    dataQuality: string;
+
+    /**
+     * Summary of evidence and dataset scope
+     * @example "Confirmed across multiple chemovars with therapeutic validation"
+     */
+    evidenceSummary: string;
+  };
 }
 
 /**
@@ -83,11 +154,33 @@ export function isTerpene(obj: unknown): obj is Terpene {
   return (
     typeof t.id === 'string' &&
     typeof t.name === 'string' &&
+    typeof t.category === 'string' &&
     typeof t.description === 'string' &&
     typeof t.aroma === 'string' &&
+    typeof t.taste === 'string' &&
     Array.isArray(t.effects) &&
     t.effects.every((e) => typeof e === 'string') &&
+    Array.isArray(t.therapeuticProperties) &&
+    t.therapeuticProperties.every((tp) => typeof tp === 'string') &&
+    (t.concentrationRange === undefined || typeof t.concentrationRange === 'string') &&
+    (t.notableDifferences === undefined || typeof t.notableDifferences === 'string') &&
+    t.molecularData !== undefined &&
+    typeof t.molecularData === 'object' &&
+    t.molecularData !== null &&
+    (t.molecularData as any).molecularFormula !== undefined &&
+    typeof (t.molecularData as any).molecularFormula === 'string' &&
+    typeof (t.molecularData as any).molecularWeight === 'number' &&
+    ((typeof (t.molecularData as any).boilingPoint === 'number') || ((t.molecularData as any).boilingPoint === null)) &&
+    typeof (t.molecularData as any).class === 'string' &&
     Array.isArray(t.sources) &&
-    t.sources.every((s) => typeof s === 'string')
+    t.sources.every((s) => typeof s === 'string') &&
+    Array.isArray(t.references) &&
+    t.references.every((ref) => typeof ref.source === 'string' && typeof ref.type === 'string') &&
+    t.researchTier !== undefined &&
+    typeof t.researchTier === 'object' &&
+    t.researchTier !== null &&
+    (t.researchTier as any).dataQuality !== undefined &&
+    typeof (t.researchTier as any).dataQuality === 'string' &&
+    typeof (t.researchTier as any).evidenceSummary === 'string'
   );
 }

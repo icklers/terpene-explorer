@@ -21,29 +21,61 @@ export const TerpeneSchema = z.object({
   // UUID v4 format
   id: z.string().uuid('ID must be a valid UUID v4'),
 
-  // Name: 1-100 characters
-  name: z.string().min(1, 'Name must not be empty').max(100, 'Name must not exceed 100 characters'),
+  // Name
+  name: z.string().min(1, 'Name must not be empty'),
 
-  // Description: 10-1000 characters
-  description: z.string().min(10, 'Description must be at least 10 characters').max(1000, 'Description must not exceed 1000 characters'),
+  // Isomer info
+  isomerOf: z.string().nullable(),
+  
+  // Isomer type
+  isomerType: z.string().nullable(),
 
-  // Aroma: 1-100 characters
-  aroma: z.string().min(1, 'Aroma must not be empty').max(100, 'Aroma must not exceed 100 characters'),
+  // Category: Core, Secondary, or Minor
+  category: z.string().min(1, 'Category must not be empty'),
 
-  // Effects: 1-10 effect names
-  effects: z.array(z.string()).min(1, 'Must have at least one effect').max(10, 'Cannot have more than 10 effects'),
+  // Description
+  description: z.string().min(10, 'Description must be at least 10 characters'),
 
-  // Sources: 1-20 source names
-  sources: z.array(z.string()).min(1, 'Must have at least one source').max(20, 'Cannot have more than 20 sources'),
+  // Aroma
+  aroma: z.string().min(1, 'Aroma must not be empty'),
 
-  // Optional: Boiling point (-200 to 300 Celsius)
-  boilingPoint: z.number().min(-200, 'Boiling point must be at least -200°C').max(300, 'Boiling point must not exceed 300°C').optional(),
+  // Taste
+  taste: z.string().min(1, 'Taste must not be empty'),
 
-  // Optional: Molecular formula pattern
-  molecularFormula: z
-    .string()
-    .regex(/^[A-Z][a-z]?\d*/, 'Molecular formula must match chemical formula pattern (e.g., C10H16)')
-    .optional(),
+  // Effects: array of strings
+  effects: z.array(z.string()).min(1, 'Must have at least one effect'),
+
+  // Therapeutic properties
+  therapeuticProperties: z.array(z.string()).min(1, 'Must have at least one therapeutic property'),
+
+  // Notable differences
+  notableDifferences: z.string().optional(),
+
+  // Concentration range
+  concentrationRange: z.string().optional(),
+
+  // Molecular data object
+  molecularData: z.object({
+    molecularFormula: z.string(),
+    molecularWeight: z.number(),
+    boilingPoint: z.union([z.number(), z.null()]),
+    class: z.string(),
+  }),
+
+  // Sources: array of strings
+  sources: z.array(z.string()).min(1, 'Must have at least one source'),
+
+  // References
+  references: z.array(z.object({
+    source: z.string(),
+    type: z.string(),
+  })),
+
+  // Research tier
+  researchTier: z.object({
+    dataQuality: z.string(),
+    evidenceSummary: z.string(),
+  }),
 });
 
 /**
