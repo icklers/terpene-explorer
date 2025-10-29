@@ -79,9 +79,9 @@ export async function loadTerpeneData(filePath: string): Promise<LoadResult> {
     // Handle the nested structure in the terpene database
     let terpeneData: unknown;
     if (typeof rawData === 'object' && rawData !== null && 'terpene_database_schema' in rawData) {
-      const schemaData = (rawData as any).terpene_database_schema;
-      if (schemaData && 'entries' in schemaData) {
-        terpeneData = schemaData.entries;
+      const schemaData = (rawData as { terpene_database_schema?: unknown }).terpene_database_schema;
+      if (schemaData && typeof schemaData === 'object' && schemaData !== null && 'entries' in schemaData) {
+        terpeneData = (schemaData as { entries?: unknown }).entries;
       } else {
         terpeneData = rawData;
       }

@@ -109,7 +109,13 @@ export class TranslationLoader implements ITranslationLoader {
       if (!result.success) {
         const errors = result.error.errors.map((err) => `${err.path.join('.')}: ${err.message}`);
 
-        throw new TranslationValidationError('Translation file validation failed', (data as any)?.language || 'unknown', errors);
+        throw new TranslationValidationError(
+          'Translation file validation failed',
+          typeof data === 'object' && data !== null && 'language' in data && typeof (data as { language?: string }).language === 'string'
+            ? (data as { language: string }).language
+            : 'unknown',
+          errors
+        );
       }
 
       return result.data;
@@ -118,9 +124,13 @@ export class TranslationLoader implements ITranslationLoader {
         throw error;
       }
 
-      throw new TranslationValidationError('Translation file validation failed', (data as any)?.language || 'unknown', [
-        error instanceof Error ? error.message : 'Unknown validation error',
-      ]);
+      throw new TranslationValidationError(
+        'Translation file validation failed',
+        typeof data === 'object' && data !== null && 'language' in data && typeof (data as { language?: string }).language === 'string'
+          ? (data as { language: string }).language
+          : 'unknown',
+        [error instanceof Error ? error.message : 'Unknown validation error']
+      );
     }
   }
 
@@ -327,7 +337,7 @@ export class TranslationService implements ITranslationService {
     const translatedTerpene = this.getTranslatedTerpene(terpeneId, language);
 
     // Return the specific field
-    return (translatedTerpene as any)[field];
+    return translatedTerpene[field];
   }
 
   isFullyTranslated(terpeneId: string, language: string): boolean {
@@ -346,6 +356,10 @@ export class TranslationService implements ITranslationService {
 
   getCurrentLanguage(): string {
     return this.currentLanguage;
+  }
+
+  isInitialized(): boolean {
+    return this.initialized;
   }
 
   getSupportedLanguages(): LanguageInfo[] {

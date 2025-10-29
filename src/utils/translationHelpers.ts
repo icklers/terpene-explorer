@@ -54,7 +54,7 @@ export function mergeTerpeneTranslation(
   for (const field of translatableFields) {
     // Use the translated value if available, otherwise use the base value
     if (translation[field] !== undefined) {
-      (result as any)[field] = translation[field];
+      (result as Record<string, unknown>)[field] = translation[field];
     } else {
       // Mark this field as using fallback
       fallbackFields.push(field);

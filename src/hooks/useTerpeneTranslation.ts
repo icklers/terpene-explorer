@@ -58,6 +58,10 @@ export function useTerpeneTranslation(terpeneId?: string) {
       if (id === terpeneId) {
         return translatedTerpene;
       }
+      if (!translationService.isInitialized()) {
+        console.warn('TranslationService not initialized. Cannot get terpene.');
+        return undefined;
+      }
       try {
         return translationService.getTranslatedTerpene(id, language);
       } catch (err) {
@@ -69,6 +73,10 @@ export function useTerpeneTranslation(terpeneId?: string) {
   );
 
   const getAllTerpenes = useCallback((): TranslatedTerpene[] => {
+    if (!translationService.isInitialized()) {
+      console.warn('TranslationService not initialized. Returning empty array.');
+      return [];
+    }
     try {
       return translationService.getAllTranslatedTerpenes(language);
     } catch (err) {
@@ -79,6 +87,10 @@ export function useTerpeneTranslation(terpeneId?: string) {
 
   const getField = useCallback(
     (id: string, field: keyof TerpeneTranslation): string | string[] | undefined => {
+      if (!translationService.isInitialized()) {
+        console.warn('TranslationService not initialized. Cannot get field.');
+        return undefined;
+      }
       try {
         return translationService.getTranslatedField(id, field, language);
       } catch (err) {
@@ -91,6 +103,10 @@ export function useTerpeneTranslation(terpeneId?: string) {
 
   const isFullyTranslated = useCallback(
     (id: string): boolean => {
+      if (!translationService.isInitialized()) {
+        console.warn('TranslationService not initialized. Cannot check translation status.');
+        return false;
+      }
       try {
         return translationService.isFullyTranslated(id, language);
       } catch (err) {
@@ -103,6 +119,10 @@ export function useTerpeneTranslation(terpeneId?: string) {
 
   const getFallbackFields = useCallback(
     (id: string): string[] => {
+      if (!translationService.isInitialized()) {
+        console.warn('TranslationService not initialized. Cannot get fallback fields.');
+        return [];
+      }
       try {
         return translationService.getFallbackFields(id, language);
       } catch (err) {
@@ -131,6 +151,10 @@ export function useTerpeneTranslation(terpeneId?: string) {
 
   const search = useCallback(
     (query: string): TranslatedTerpene[] => {
+      if (!translationService.isInitialized()) {
+        console.warn('TranslationService not initialized. Cannot perform search.');
+        return [];
+      }
       try {
         return translationService.search(query, language);
       } catch (err) {
@@ -143,6 +167,10 @@ export function useTerpeneTranslation(terpeneId?: string) {
 
   const searchFields = useCallback(
     (query: string, fields: Array<keyof Terpene>): TranslatedTerpene[] => {
+      if (!translationService.isInitialized()) {
+        console.warn('TranslationService not initialized. Cannot perform field-specific search.');
+        return [];
+      }
       try {
         return translationService.searchFields(query, fields, language);
       } catch (err) {

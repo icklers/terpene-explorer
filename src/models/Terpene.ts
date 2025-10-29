@@ -167,11 +167,15 @@ export function isTerpene(obj: unknown): obj is Terpene {
     t.molecularData !== undefined &&
     typeof t.molecularData === 'object' &&
     t.molecularData !== null &&
-    (t.molecularData as any).molecularFormula !== undefined &&
-    typeof (t.molecularData as any).molecularFormula === 'string' &&
-    typeof (t.molecularData as any).molecularWeight === 'number' &&
-    (typeof (t.molecularData as any).boilingPoint === 'number' || (t.molecularData as any).boilingPoint === null) &&
-    typeof (t.molecularData as any).class === 'string' &&
+    'molecularFormula' in t.molecularData &&
+    typeof (t.molecularData as Record<string, unknown>).molecularFormula === 'string' &&
+    'molecularWeight' in t.molecularData &&
+    typeof (t.molecularData as Record<string, unknown>).molecularWeight === 'number' &&
+    'boilingPoint' in t.molecularData &&
+    (typeof (t.molecularData as Record<string, unknown>).boilingPoint === 'number' ||
+      (t.molecularData as Record<string, unknown>).boilingPoint === null) &&
+    'class' in t.molecularData &&
+    typeof (t.molecularData as Record<string, unknown>).class === 'string' &&
     Array.isArray(t.sources) &&
     t.sources.every((s) => typeof s === 'string') &&
     Array.isArray(t.references) &&
@@ -179,8 +183,9 @@ export function isTerpene(obj: unknown): obj is Terpene {
     t.researchTier !== undefined &&
     typeof t.researchTier === 'object' &&
     t.researchTier !== null &&
-    (t.researchTier as any).dataQuality !== undefined &&
-    typeof (t.researchTier as any).dataQuality === 'string' &&
-    typeof (t.researchTier as any).evidenceSummary === 'string'
+    'dataQuality' in t.researchTier &&
+    typeof (t.researchTier as Record<string, unknown>).dataQuality === 'string' &&
+    'evidenceSummary' in t.researchTier &&
+    typeof (t.researchTier as Record<string, unknown>).evidenceSummary === 'string'
   );
 }
