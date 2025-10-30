@@ -223,25 +223,6 @@ export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
  * @param effectName - Effect name (internal key)
  * @returns Effect metadata with color and display names
  */
-export function getEffectMetadata(effectName: string): Omit<Effect, 'terpeneCount'> {
-  return (
-    EFFECT_METADATA[effectName] || {
-      name: effectName,
-      displayName: {
-        en: effectName
-          .split('-')
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' '),
-        de: effectName
-          .split('-')
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' '),
-      },
-      color: EFFECT_COLORS['default']!,
-    }
-  );
-}
-
 /**
  * Application configuration constants
  */

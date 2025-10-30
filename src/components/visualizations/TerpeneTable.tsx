@@ -27,6 +27,7 @@ import { TerpeneDetailModal } from './TerpeneDetailModal';
 import type { Terpene } from '../../models/Terpene';
 import type { Terpene as NewTerpene } from '../../types/terpene';
 import { toNewTerpene } from '../../utils/terpeneAdapter';
+import { getEffectMetadata } from '../../services/colorService';
 
 // TODO: Re-enable virtualization with react-window after fixing import issues
 // import { FixedSizeList } from 'react-window';
@@ -56,7 +57,7 @@ type SortColumn = 'name' | 'aroma' | 'sources' | 'effects';
  * @returns Rendered component
  */
 export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDirection = 'asc' }: TerpeneTableProps): React.ReactElement {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [sortBy, setSortBy] = useState<SortColumn>(initialSortBy);
   const [sortDirection, setSortDirection] = useState<SortDirection>(initialSortDirection);
 
@@ -283,9 +284,20 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
               <TableCell>{terpene.aroma}</TableCell>
               <TableCell>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                  {terpene.effects.map((effect) => (
-                    <Chip key={effect} label={effect} size="small" sx={{ textTransform: 'capitalize' }} />
-                  ))}
+                  {terpene.effects.map((effect) => {
+                    // Get the translated effect metadata
+                    const effectData = getEffectMetadata(effect);
+                    // Use the current language's display name, falling back to the effect name itself if not found
+                    const displayName = effectData.displayName[i18n.language as 'en' | 'de'] || effect;
+                    return (
+                      <Chip 
+                        key={effect} 
+                        label={displayName} 
+                        size="small" 
+                        sx={{ textTransform: 'capitalize' }} 
+                      />
+                    );
+                  })}
                 </Box>
               </TableCell>
               <TableCell>{terpene.sources.join(', ')}</TableCell>
