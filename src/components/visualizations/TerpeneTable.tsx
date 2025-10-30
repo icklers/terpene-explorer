@@ -25,9 +25,9 @@ import { useTranslation } from 'react-i18next';
 
 import { TerpeneDetailModal } from './TerpeneDetailModal';
 import type { Terpene } from '../../models/Terpene';
+import { getEffectMetadata } from '../../services/colorService';
 import type { Terpene as NewTerpene } from '../../types/terpene';
 import { toNewTerpene } from '../../utils/terpeneAdapter';
-import { getEffectMetadata } from '../../services/colorService';
 
 // TODO: Re-enable virtualization with react-window after fixing import issues
 // import { FixedSizeList } from 'react-window';
@@ -289,14 +289,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                     const effectData = getEffectMetadata(effect);
                     // Use the current language's display name, falling back to the effect name itself if not found
                     const displayName = effectData.displayName[i18n.language as 'en' | 'de'] || effect;
-                    return (
-                      <Chip 
-                        key={effect} 
-                        label={displayName} 
-                        size="small" 
-                        sx={{ textTransform: 'capitalize' }} 
-                      />
-                    );
+                    return <Chip key={effect} label={displayName} size="small" sx={{ textTransform: 'capitalize' }} />;
                   })}
                 </Box>
               </TableCell>
