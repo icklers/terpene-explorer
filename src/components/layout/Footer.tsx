@@ -81,7 +81,7 @@ export function Footer(): React.ReactElement {
               rel="noopener noreferrer"
               color="text.secondary"
               underline="hover"
-              aria-label={t('footer.githubLink', 'View source code on GitHub (opens in new tab)')}
+              aria-label={t('footer.githubLink', 'View source code on GitHub')}
             >
               GitHub
             </Link>

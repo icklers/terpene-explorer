@@ -61,7 +61,7 @@
   },
   "terpeneDetails": {
     "fields": {
-      "effects": "Wirkungen",
+      "effects": "Wirkung",
       "taste": "Geschmack",
       "description": "Beschreibung",
       "therapeuticProperties": "Therapeutische Eigenschaften",
@@ -75,8 +75,8 @@
   },
   "pages": {
     "home": {
-      "title": "Terpene Explorer",
-      "subtitle": "Entdecken und filtern Sie Terpene nach ihren Wirkungen und Eigenschaften",
+      "title": "Terpen Explorer",
+      "subtitle": "Entdecken und filtern Sie Terpene nach ihrer Wirkung und Eigenschaften",
       "filtersLabel": "Filtersteuerelemente",
       "filtersTitle": "Filter",
       "filtersActive": "Aktiv",
@@ -89,7 +89,7 @@
   "table": {
     "name": "Name",
     "aroma": "Aroma",
-    "effects": "Wirkungen",
+    "effects": "Wirkung",
     "sources": "Natürliche Quellen",
     "sortBy": "Sortieren nach {{column}}",
     "sortAscending": "Aufsteigend sortieren",
@@ -98,7 +98,15 @@
     "of": "von"
   },
   "filters": {
-    "categoriesLabel": "Nach Kategorien filtern"
+    "categoriesLabel": "Nach Kategorien filtern",
+    "effectsLabel": "Nach Wirkung filtern",
+    "clearFilters": "Filter entfernen",
+    "clear": "Gelöscht",
+    "noeffect": "Keine Wirkung gefunden",
+    "noResultsFound": "Keine Ergebnisse mit diesem Filter gefunden",
+    "oneResult": "1 Terpen gefunden",
+    "resultsCount": "{{count}} Terpene gefunden",
+    "effectChipWithCount": "${displayName}, ${count}} Terpen"
   },
   "error": {
     "loadFailed": "Terpen-Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
@@ -124,7 +132,7 @@
     "pleaseWait": "Bitte warten Sie, während wir die Daten laden"
   },
   "accessibility": {
-    "terpeneLabel": "{{name}}, ein Terpen mit {{aroma}}-Duft und {{effects}}-Wirkungen, gefunden in {{sources}}",
+    "terpeneLabel": "{{name}}, ein Terpen mit {{aroma}}-Duft und {{effects}}-Wirkung, gefunden in {{sources}}",
     "effectLabel": "{{name}}-Wirkung, {{count}} Terpen",
     "effectLabel_other": "{{name}}-Wirkung, {{count}} Terpene",
     "effectSelected": "{{name}}-Wirkung ausgewählt",
@@ -136,6 +144,12 @@
   "footer": {
     "madeWith": "Erstellt mit",
     "by": "von",
-    "license": "Lizenz"
+    "license": "Lizenz",
+    "openSource": "Open Source Projekt",
+    "githubLink": "Quellcode auf GitHub anzeigen",
+    "wcagDescription": "Barrierefrei gebaut",
+    "tagline": "Entdecke die aromatische Welt der Terpene",
+    "appName": "Terpen Explorer",
+    "accessibility": "Barrierefreiheit"
   }
 }

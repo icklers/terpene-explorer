@@ -55,7 +55,7 @@ export function FilterControls({
   label,
   resultsCount,
 }: FilterControlsProps): React.ReactElement {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const theme = useTheme(); // Get theme for contrast text calculation
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -137,7 +137,8 @@ export function FilterControls({
           ) : (
             effects.map((effect) => {
               const isSelected = selectedEffects.includes(effect.name);
-              const displayName = effect.displayName.en || effect.name;
+              // Use the current language's display name instead of always English
+              const displayName = effect.displayName[i18n.language as 'en' | 'de'] || effect.displayName.en || effect.name;
               const count = effect.terpeneCount;
               // Get category ID and color for effect
               const categoryId = getCategoryForEffect(effect.name);
