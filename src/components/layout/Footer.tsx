@@ -76,12 +76,12 @@ export function Footer(): React.ReactElement {
           <Typography variant="caption" color="text.secondary">
             {t('footer.openSource', 'Open source project')} •{' '}
             <Link
-              href="https://github.com"
+              href="https://github.com/icklers/terpene-explorer"
               target="_blank"
               rel="noopener noreferrer"
               color="text.secondary"
               underline="hover"
-              aria-label={t('footer.githubLink', 'View source code on GitHub (opens in new tab)')}
+              aria-label={t('footer.githubLink', 'View source code on GitHub')}
             >
               GitHub
             </Link>

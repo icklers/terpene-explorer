@@ -17,16 +17,15 @@ import { EFFECT_COLORS, EFFECT_METADATA } from '../utils/constants';
  * @returns Hex color code
  */
 export function getEffectColor(effectName: string): string {
-  const normalizedName = effectName.toLowerCase().trim();
+  // Do case-insensitive lookup for predefined color
+  const matchingEntry = Object.entries(EFFECT_COLORS).find(([key]) => key.toLowerCase() === effectName.toLowerCase());
 
-  // Return predefined color if available
-  const color = EFFECT_COLORS[normalizedName];
-  if (color) {
-    return color;
+  if (matchingEntry) {
+    return matchingEntry[1];
   }
 
   // Generate fallback color based on effect name hash
-  return generateFallbackColor(normalizedName);
+  return generateFallbackColor(effectName);
 }
 
 /**
@@ -37,10 +36,8 @@ export function getEffectColor(effectName: string): string {
  * @returns Effect metadata
  */
 export function getEffectMetadata(effectName: string, terpeneCount?: number): Effect {
-  const normalizedName = effectName.toLowerCase().trim();
-
-  // Get predefined metadata if available
-  const metadata = EFFECT_METADATA[normalizedName];
+  // Do case-insensitive lookup for predefined metadata
+  const metadata = Object.values(EFFECT_METADATA).find((meta) => meta.name.toLowerCase() === effectName.toLowerCase());
 
   if (metadata) {
     return terpeneCount !== undefined ? { ...metadata, terpeneCount } : metadata;
@@ -53,12 +50,12 @@ export function getEffectMetadata(effectName: string, terpeneCount?: number): Ef
     .join(' ');
 
   const fallbackEffect: Effect = {
-    name: normalizedName,
+    name: effectName, // Keep original casing for the name
     displayName: {
       en: displayName,
       de: displayName, // Use same as English for unknown effects
     },
-    color: generateFallbackColor(normalizedName),
+    color: generateFallbackColor(effectName),
   };
 
   return terpeneCount !== undefined ? { ...fallbackEffect, terpeneCount } : fallbackEffect;

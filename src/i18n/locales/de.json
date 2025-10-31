@@ -24,8 +24,16 @@
   "view": {
     "sunburst": "Sunburst-Diagramm",
     "table": "Tabellenansicht",
-    "toggle": "Ansichtsmodus wechseln",
+    "toggle": "Ansicht wechseln",
     "switchedTo": "Zu {{mode}}-Ansicht gewechselt"
+  },
+  "viewMode": {
+    "label": "Ansicht",
+    "ariaLabel": "Visualisierung auswählen",
+    "sunburst": "Sunburst",
+    "sunburstLabel": "Sunburst",
+    "table": "Tabelle",
+    "tableLabel": "Tabelle"
   },
   "filter": {
     "title": "Nach Wirkungen filtern",
@@ -61,7 +69,7 @@
   },
   "terpeneDetails": {
     "fields": {
-      "effects": "Wirkungen",
+      "effects": "Wirkung",
       "taste": "Geschmack",
       "description": "Beschreibung",
       "therapeuticProperties": "Therapeutische Eigenschaften",
@@ -73,12 +81,54 @@
     "notAvailable": "Nicht verfügbar",
     "celsius": "°C"
   },
+  "pages": {
+    "home": {
+      "title": "Terpen Explorer",
+      "subtitle": "Entdecken und filtern Sie Terpene nach ihrer Wirkung und Eigenschaften",
+      "filtersLabel": "Filtersteuerelemente",
+      "filtersTitle": "Filter",
+      "filtersActive": "Aktiv",
+      "collapseFilters": "Filter ausblenden",
+      "expandFilters": "Filter einblenden",
+      "resultsLabel": "Suchergebnisse",
+      "loading": "Terpenedaten werden geladen..."
+    }
+  },
   "table": {
+    "name": "Name",
+    "aroma": "Aroma",
+    "effects": "Wirkung",
+    "sources": "Natürliche Quellen",
     "sortBy": "Sortieren nach {{column}}",
     "sortAscending": "Aufsteigend sortieren",
     "sortDescending": "Absteigend sortieren",
     "rowsPerPage": "Zeilen pro Seite",
     "of": "von"
+  },
+  "filters": {
+    "categoriesLabel": "Nach Kategorien filtern",
+    "effectsLabel": "Nach Effekten filtern",
+    "clearFilters": "Filter entfernen",
+    "clear": "Löschen",
+    "noEffects": "Keine Effekte verfügbar",
+    "noResultsFound": "Keine Terpene entsprechen den ausgewählten Filtern",
+    "oneResult": "1 Terpen gefunden",
+    "resultsCount": "{{count}} Terpene gefunden",
+    "effectChipWithCount": "{{effect}}, {{count}} Terpene",
+    "filterModeLabel": "Effekt-Übereinstimmungsmodus",
+    "filterModeAriaLabel": "Effekt-Übereinstimmungsmodus auswählen",
+    "anyMode": "BELIEBIG (ODER)",
+    "allMode": "ALLE (UND)",
+    "anyModeAriaLabel": "Beliebiger Effekt (ODER-Logik)",
+    "allModeAriaLabel": "Alle Effekte (UND-Logik)",
+    "anyModeHelp": "Zeige Terpene mit mindestens einem ausgewählten Effekt",
+    "allModeHelp": "Zeige Terpene mit allen ausgewählten Effekten",
+    "categories": {
+      "mood": "Stimmung & Energie",
+      "cognitive": "Kognitiv & Mental",
+      "relaxation": "Entspannung & Angstbewältigung",
+      "physical": "Körperlich & Physiologisch"
+    }
   },
   "error": {
     "loadFailed": "Terpen-Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
@@ -104,7 +154,7 @@
     "pleaseWait": "Bitte warten Sie, während wir die Daten laden"
   },
   "accessibility": {
-    "terpeneLabel": "{{name}}, ein Terpen mit {{aroma}}-Duft und {{effects}}-Wirkungen, gefunden in {{sources}}",
+    "terpeneLabel": "{{name}}, ein Terpen mit {{aroma}}-Duft und {{effects}}-Wirkung, gefunden in {{sources}}",
     "effectLabel": "{{name}}-Wirkung, {{count}} Terpen",
     "effectLabel_other": "{{name}}-Wirkung, {{count}} Terpene",
     "effectSelected": "{{name}}-Wirkung ausgewählt",
@@ -116,6 +166,12 @@
   "footer": {
     "madeWith": "Erstellt mit",
     "by": "von",
-    "license": "Lizenz"
+    "license": "Lizenz",
+    "openSource": "Open Source Projekt",
+    "githubLink": "Quellcode auf GitHub anzeigen",
+    "wcagDescription": "Barrierefrei gebaut",
+    "tagline": "Entdecke die aromatische Welt der Terpene",
+    "appName": "Terpen Explorer",
+    "accessibility": "Barrierefreiheit"
   }
 }

@@ -1,0 +1,82 @@
+{
+  "version": "1.0.0",
+  "language_support": ["en", "de"],
+  "effects": {
+    "Alertness": {
+      "en": "Alertness",
+      "de": "Wachheit"
+    },
+    "Anti-inflammatory": {
+      "en": "Anti-inflammatory",
+      "de": "Entzündungshemmend"
+    },
+    "Anxiety relief": {
+      "en": "Anxiety relief",
+      "de": "Angstabbau"
+    },
+    "Appetite suppressant": {
+      "en": "Appetite suppressant",
+      "de": "Appetitzügelnd"
+    },
+    "Breathing support": {
+      "en": "Breathing support",
+      "de": "Atemunterstützung"
+    },
+    "Cognitive enhancement": {
+      "en": "Cognitive enhancement",
+      "de": "Kognitive Verbesserung"
+    },
+    "Couch-lock": {
+      "en": "Couch-lock",
+      "de": "Couch-Lock"
+    },
+    "Energizing": {
+      "en": "Energizing",
+      "de": "Energetisierend"
+    },
+    "Focus": {
+      "en": "Focus",
+      "de": "Fokus"
+    },
+    "Memory-enhancement": {
+      "en": "Memory-enhancement",
+      "de": "Gedächtnisverbesserung"
+    },
+    "Mood enhancing": {
+      "en": "Mood enhancing",
+      "de": "Stimmungsaufhellend"
+    },
+    "Mood stabilizing": {
+      "en": "Mood stabilizing",
+      "de": "Stimmung stabilisierend"
+    },
+    "Muscle relaxant": {
+      "en": "Muscle relaxant",
+      "de": "Muskel entspannend"
+    },
+    "Pain relief": {
+      "en": "Pain relief",
+      "de": "Schmerzlindernd"
+    },
+    "Relaxing": {
+      "en": "Relaxing",
+      "de": "Entspannend"
+    },
+    "Sedative": {
+      "en": "Sedative",
+      "de": "Sedierend"
+    },
+    "Seizure related": {
+      "en": "Seizure related",
+      "de": "Anfallbezogen"
+    },
+    "Stress relief": {
+      "en": "Stress relief",
+      "de": "Stressabbau"
+    },
+    "Uplifting": {
+      "en": "Uplifting",
+      "de": "Stimmungsaufhellend"
+    }
+  }
+}

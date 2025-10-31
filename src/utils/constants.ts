@@ -223,25 +223,6 @@ export const EFFECT_METADATA: Record<string, Omit<Effect, 'terpeneCount'>> = {
  * @param effectName - Effect name (internal key)
  * @returns Effect metadata with color and display names
  */
-export function getEffectMetadata(effectName: string): Omit<Effect, 'terpeneCount'> {
-  return (
-    EFFECT_METADATA[effectName] || {
-      name: effectName,
-      displayName: {
-        en: effectName
-          .split('-')
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' '),
-        de: effectName
-          .split('-')
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' '),
-      },
-      color: EFFECT_COLORS['default']!,
-    }
-  );
-}
-
 /**
  * Application configuration constants
  */
@@ -309,3 +290,38 @@ export const FEATURE_FLAGS = {
 export const API_ENDPOINTS = {
   // Reserved for future backend integration
 } as const;
+
+/**
+ * Effect category mapping
+ *
+ * Maps effect names to their categories.
+ * Used for determining which category an effect belongs to for styling and filtering.
+ */
+export const EFFECT_CATEGORY_MAPPING: Record<string, string> = {
+  // Mood & Energy effects
+  Energizing: 'mood',
+  'Mood enhancing': 'mood',
+  'Mood stabilizing': 'mood',
+  Uplifting: 'mood',
+
+  // Cognitive & Mental Enhancement effects
+  Alertness: 'cognitive',
+  'Cognitive enhancement': 'cognitive',
+  Focus: 'cognitive',
+  'Memory-enhancement': 'cognitive',
+
+  // Relaxation & Anxiety Management effects
+  'Anxiety relief': 'relaxation',
+  Relaxing: 'relaxation',
+  Sedative: 'relaxation',
+  'Stress relief': 'relaxation',
+  'Couch-lock': 'relaxation',
+
+  // Physical & Physiological Management effects
+  'Anti-inflammatory': 'physical',
+  'Appetite suppressant': 'physical',
+  'Breathing support': 'physical',
+  'Muscle relaxant': 'physical',
+  'Pain relief': 'physical',
+  'Seizure related': 'physical',
+};

@@ -20,16 +20,11 @@ import { TerpeneList } from '../components/visualizations/TerpeneList';
 import { useFilters } from '../hooks/useFilters';
 import { useTerpeneData } from '../hooks/useTerpeneData';
 import { useTerpeneDatabase } from '../hooks/useTerpeneDatabase';
+import { buildEffectsList, loadEffectTranslations } from '../services/effectTranslationService';
 import { filterTerpenes } from '../services/filterService';
-import { transformToSunburstData } from '../utils/sunburstTransform';
 import { toLegacyArray } from '../utils/terpeneAdapter';
 
 // Code splitting for visualization components (T074)
-const SunburstChart = lazy(() =>
-  import('../components/visualizations/SunburstChart').then((module) => ({
-    default: module.SunburstChart,
-  }))
-);
 const TerpeneTable = lazy(() =>
   import('../components/visualizations/TerpeneTable').then((module) => ({
     default: module.TerpeneTable,
@@ -48,11 +43,11 @@ export interface HomeProps {
 export function Home({ searchQuery }: HomeProps): React.ReactElement {
   const { t } = useTranslation();
 
-  // Load old terpene data (for sunburst view)
-  const { terpenes: oldTerpenes, effects: oldEffects, isLoading: oldLoading, error: oldError, warnings, retry } = useTerpeneData();
+  // Load translated terpene data (for both views)
+  const { terpenes: newTerpenes, loading: newLoading, error: newError, reload } = useTerpeneDatabase();
 
-  // Load new terpene data (for table view) - T011e
-  const { terpenes: newTerpenes, loading: newLoading, error: newError } = useTerpeneDatabase();
+  // Load data for warnings only
+  const { warnings } = useTerpeneData();
 
   // Determine which data source to use based on view mode
   const {
@@ -65,45 +60,60 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
     toggleCategoryFilter,
     hasActiveFilters,
   } = useFilters();
-  const isTableView = filterState.viewMode === 'table';
 
   const handleCategoryToggle = (category: string) => {
     toggleCategoryFilter(category);
   };
 
-  // Use new data for table view, old data for sunburst
+  // Use new translated data for both views
   // Convert new schema to legacy model for existing UI components
-  const terpenes = isTableView ? toLegacyArray(newTerpenes) : oldTerpenes;
-  const isLoading = isTableView ? newLoading : oldLoading;
-  const error = isTableView ? newError : oldError;
+  const terpenes = toLegacyArray(newTerpenes);
+  const isLoading = newLoading;
+  const error = newError;
 
-  // Extract effects from current data source
+  // Load base terpene data and effect translations
+  const [baseTerpenes, setBaseTerpenes] = React.useState<Array<{ id: string; effects: string[] }>>([]);
+  const [effectTranslationsLoaded, setEffectTranslationsLoaded] = React.useState(false);
+
+  // Load base terpene data on mount
+  React.useEffect(() => {
+    const loadBaseTerpenes = async () => {
+      try {
+        const response = await fetch('/data/terpene-database.json');
+        if (response.ok) {
+          const data = await response.json();
+          const entries = data.terpene_database_schema?.entries || data.entries || [];
+          setBaseTerpenes(entries);
+        }
+      } catch (err) {
+        console.error('Failed to load base terpene data:', err);
+      }
+    };
+
+    loadBaseTerpenes();
+  }, []);
+
+  // State for effect translations
+  const [effectTranslations, setEffectTranslations] = React.useState<Record<string, { en: string; de: string }>>({});
+
+  // Load effect translations on mount
+  React.useEffect(() => {
+    const loadTranslations = async () => {
+      const translations = await loadEffectTranslations();
+      setEffectTranslations(translations);
+      setEffectTranslationsLoaded(true);
+    };
+
+    loadTranslations();
+  }, []);
+
+  // Extract effects from BASE terpenes (English canonical names) with translations
   const effects = React.useMemo(() => {
-    if (isTableView && newTerpenes.length > 0) {
-      // Extract effects from new data
-      const effectCounts = new Map<string, number>();
-      newTerpenes.forEach((terpene) => {
-        terpene.effects.forEach((effect) => {
-          effectCounts.set(effect, (effectCounts.get(effect) || 0) + 1);
-        });
-      });
-
-      // Convert to Effect objects matching the Effect interface
-      // IMPORTANT: Keep 'name' as original effect name (not kebab-case) for filter matching
-      return Array.from(effectCounts.entries())
-        .map(([effectName, count]) => ({
-          name: effectName, // Keep original name for filter matching
-          displayName: {
-            en: effectName,
-            de: effectName, // Use English name as fallback for German
-          },
-          color: '#4caf50', // Default primary green
-          terpeneCount: count,
-        }))
-        .sort((a, b) => a.displayName.en.localeCompare(b.displayName.en));
+    if (!effectTranslationsLoaded || baseTerpenes.length === 0) {
+      return [];
     }
-    return oldEffects;
-  }, [isTableView, newTerpenes, oldEffects]);
+    return buildEffectsList(baseTerpenes as never[], effectTranslations);
+  }, [baseTerpenes, effectTranslationsLoaded, effectTranslations]);
 
   // Snackbar state for validation warnings
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
@@ -122,14 +132,19 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
   }, [warnings]);
 
   // Focus management when view mode changes (T091 - NFR-A11Y-003)
+  // Use a ref to track the previous view mode to prevent unwanted focus on language changes
+  const prevViewModeRef = useRef(filterState.viewMode);
+
   useEffect(() => {
-    if (visualizationRef.current && !isLoading && !error) {
+    // Only focus if view mode actually changed (not just re-render from language change)
+    if (prevViewModeRef.current !== filterState.viewMode && visualizationRef.current && !isLoading && !error) {
       // Move focus to visualization container when view mode changes
       visualizationRef.current.focus();
     }
+    prevViewModeRef.current = filterState.viewMode;
   }, [filterState.viewMode, isLoading, error]);
 
-  // Apply filters to terpenes
+  // Apply filters to translated terpenes
   const filteredTerpenes = React.useMemo(() => {
     if (isLoading || error) {
       return [];
@@ -247,22 +262,23 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
         )}
 
         {/* Error State */}
-        {error && !isLoading && <TerpeneList terpenes={[]} isLoading={false} error={error} warnings={warnings} onRetry={retry} />}
+        {error && !isLoading && <TerpeneList terpenes={[]} isLoading={false} error={error} warnings={warnings} onRetry={reload} />}
 
         {/* Conditional Visualization Rendering (T073-T074) */}
         {!isLoading && !error && (
           <Suspense fallback={<Skeleton variant="rectangular" width="100%" height={600} />}>
             {filterState.viewMode === 'sunburst' ? (
-              <SunburstChart
-                data={transformToSunburstData(searchedTerpenes)}
-                onSliceClick={(node) => {
-                  if (node.type === 'effect') {
-                    toggleEffect(node.name);
-                  }
-                }}
-              />
+              // Placeholder for future sunburst chart implementation
+              <Box sx={{ textAlign: 'center', py: 8 }}>
+                <Typography variant="h6" color="text.secondary">
+                  Sunburst chart view coming soon
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  In the meantime, use the table view to explore terpene data
+                </Typography>
+              </Box>
             ) : (
-              // T011e: Pass filtered terpenes from new data source
+              // T011e: Pass filtered translated terpenes from new data source
               <TerpeneTable terpenes={searchedTerpenes} />
             )}
           </Suspense>

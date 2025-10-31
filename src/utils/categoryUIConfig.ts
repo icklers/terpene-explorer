@@ -1,3 +1,5 @@
+import { EFFECT_METADATA, EFFECT_CATEGORY_MAPPING } from '../utils/constants';
+
 export interface CategoryUIConfig {
   emoticon: string;
   fallbackLetter: string;
@@ -69,10 +71,28 @@ export const CATEGORY_DEFINITIONS: Record<string, CategoryDefinition> = {
  * @returns The category ID (mood|cognitive|relaxation|physical) or undefined if not found
  */
 export function getCategoryForEffect(effectName: string): string | undefined {
-  const name = effectName.trim().toLowerCase();
+  const name = effectName.trim();
 
-  for (const [categoryId, category] of Object.entries(CATEGORY_DEFINITIONS)) {
-    if (category.effects.some((effect) => effect.toLowerCase() === name)) {
+  // First, try to find the effect in EFFECT_METADATA to get the English name
+  const metadata = Object.values(EFFECT_METADATA).find(
+    (meta) =>
+      meta.name.toLowerCase() === name.toLowerCase() ||
+      meta.displayName.en.toLowerCase() === name.toLowerCase() ||
+      meta.displayName.de.toLowerCase() === name.toLowerCase()
+  );
+
+  // Get the English effect name (canonical name)
+  const englishEffectName = metadata ? metadata.name : name;
+
+  // Use the effect category mapping to find the category
+  const category = EFFECT_CATEGORY_MAPPING[englishEffectName];
+  if (category) {
+    return category;
+  }
+
+  // Fallback to the original lookup method for backwards compatibility
+  for (const [categoryId, categoryDef] of Object.entries(CATEGORY_DEFINITIONS)) {
+    if (categoryDef.effects.some((effect) => effect.toLowerCase() === englishEffectName.toLowerCase())) {
       return categoryId;
     }
   }

@@ -1,0 +1,103 @@
+{
+  "language": "de",
+  "version": "1.0.0",
+  "terpenes": {
+    "550e8400-e29b-41d4-a716-446655440001": {
+      "name": "Limonen",
+      "description": "Zitrus-Terpen, verantwortlich für stimmungsaufhellende und stressabbauende Eigenschaften; D-Isomer reichlich in Zitrus-duftenden Sorten gefunden.",
+      "aroma": "Zitrus, Zitrone, Orange",
+      "taste": "Helles Zitrusaroma mit leichter Süße",
+      "effects": ["Stimmungsaufhellend", "Stressabbau", "Energetisierend"],
+      "therapeuticProperties": ["Antidepressiv", "Entzündungshemmend", "Angstlösend"],
+      "sources": ["Zitronenschale", "Orangenschale"],
+      "notableDifferences": "D-Form steigert Serotonin; L-Form leicht sedierend; Synergie mit β-Caryophyllen in angstlösenden Pfaden beobachtet."
+    },
+    "550e8400-e29b-41d4-a716-446655440002": {
+      "name": "β-Myrcen",
+      "description": "Das am häufigsten vorkommende Terpen in vielen Cannabis-Sorten. Bekannt für seine sedierenden Wirkungen und Fähigkeit, die THC-Absorption zu verstärken.",
+      "aroma": "Erdig, Muffig, Fruchtig, Nelken",
+      "taste": "Kräuterig, erdig mit fruchtigen Noten",
+      "effects": ["Sedierend", "Entspannend", "Muskel entspannend", "Schmerzlindernd", "Couch-Lock"],
+      "therapeuticProperties": ["Schmerzstillend", "Entzündungshemmend", "Sedierend", "Muskel entspannend", "Antioxidans"],
+      "notableDifferences": "Über 0,5% bewirkt typischerweise den 'Couch-Lock'-Effekt",
+      "sources": ["Mango", "Hopfen", "Thymian", "Zitronengras", "Lorbeerblätter"]
+    },
+    "550e8400-e29b-41d4-a716-446655440003": {
+      "name": "α-Pinen",
+      "description": "Häufigstes Pinen-Isomer mit Kiefernaroma. Bekannt für Gedächtnisverbesserung und Wachheit.",
+      "aroma": "Kiefer, Frisch, Terpentin",
+      "taste": "Scharf Kiefer, holzig",
+      "effects": ["Wachheit", "Gedächtnisverbesserung", "Fokus", "Energetisierend", "Atemunterstützung"],
+      "therapeuticProperties": ["Entzündungshemmend", "Bronchodilatator", "Gedächtnisfördernd", "Antiseptisch", "Magen schützend"],
+      "notableDifferences": "α-Pinen gleicht einige Gedächtnisbeeinträchtigungen durch THC aus.",
+      "sources": ["Kiefernnadeln", "Rosmarin", "Basilikum", "Dill", "Petersilie"]
+    },
+    "550e8400-e29b-41d4-a716-446655440004": {
+      "name": "β-Pinen",
+      "description": "Spiegelisomer von α-Pinen mit holzigem, kampherartigem Geruch. Entspannender als α-Pinen.",
+      "aroma": "Holzig, Kiefer, Kampher, Dill",
+      "taste": "Holzig mit würzigem Abgang",
+      "effects": ["Entspannend", "Stressabbau", "Atemunterstützung", "Entzündungshemmend"],
+      "therapeuticProperties": ["Entzündungshemmend", "Bronchodilatator", "Antiseptisch", "Stimmung stabilisierend"],
+      "sources": ["Kiefern", "Nadelbäume", "Dill", "Petersilie"]
+    },
+    "550e8400-e29b-41d4-a716-446655440005": {
+      "name": "β-Caryophyllen",
+      "description": "Einzigartiges Terpen, das als Cannabinoid wirkt, indem es an CB2-Rezeptoren bindet; stark entzündungshemmend.",
+      "aroma": "Würzig, Holzig, Pfeffrig, Nelken",
+      "taste": "Pfeffrig mit süßen Untertönen",
+      "effects": ["Entzündungshemmend", "Schmerzlindernd", "Stressabbau"],
+      "therapeuticProperties": ["Entzündungshemmend", "Schmerzstillend", "Magen schützend", "Neuroprotektiv", "CB2-Agonist"],
+      "notableDifferences": "Einziges Terpen, das bekanntermaßen direkt an CB2-Rezeptoren bindet.",
+      "sources": ["Schwarzer Pfeffer", "Nelken", "Hopfen", "Rosmarin", "Copaiba"]
+    },
+    "550e8400-e29b-41d4-a716-446655440006": {
+      "name": "α-Humulen",
+      "description": "Auch Humulen genannt; hat appetitzügelnde und entzündungshemmende Eigenschaften.",
+      "aroma": "Erdig, Holzig, Würzig, Kräuterig, Hopfig",
+      "taste": "Hopfig, erdig mit Würze",
+      "effects": ["Appetitzügelnd", "Entzündungshemmend", "Sedierend"],
+      "therapeuticProperties": ["Entzündungshemmend", "Bakterizid", "Antikrebs", "Appetitzügelnd"],
+      "sources": ["Hopfen", "Koriander", "Nelken", "Basilikum", "Ginseng"]
+    },
+    "550e8400-e29b-41d4-a716-446655440007": {
+      "name": "Terpinolen",
+      "description": "Komplexes Terpen mit frischem, kieferigem, blumigem Aroma; sedierende und antioxidative Eigenschaften.",
+      "aroma": "Kräuterig, Kiefer, Blumig, Zitrus",
+      "taste": "Kräuterig mit Zitrus- und Kiefernoten",
+      "effects": ["Sedierend"],
+      "therapeuticProperties": ["Sedierend", "Antioxidans", "Bakterizid"],
+      "sources": ["Flieder", "Muskatnuss", "Teebaum", "Kreuzkümmel", "Äpfel"]
+    },
+    "550e8400-e29b-41d4-a716-446655440008": {
+      "name": "Linalool",
+      "description": "Blumiges Monoterpen mit beruhigenden, angstlösenden und sedierenden Eigenschaften. Hauptbeitragender Faktor zu entspannenden Sorten.",
+      "aroma": "Blumig, Lavendel, Zitrus",
+      "taste": "Blumig mit süßen Noten",
+      "effects": ["Entspannend", "Angstabbau", "Schmerzlindernd", "Sedierend", "Anfallbezogen"],
+      "therapeuticProperties": ["Angstlösend", "Sedierend", "Schmerzstillend", "Antiepileptisch", "Anästhetisch"],
+      "notableDifferences": "Wirkt auf GABA-Rezeptoren; entzündungshemmend",
+      "sources": ["Lavendel", "Minze", "Koriander", "Rosenholz"]
+    },
+    "550e8400-e29b-41d4-a716-446655440009": {
+      "name": "Caryophyllenoxid",
+      "description": "Oxidierte Form von β-Caryophyllen. Bekannt für antifungizide und schmerzlindernde Wirkung; Hunde erkennen diesen Stoff, um Cannabis zu identifizieren.",
+      "aroma": "Holzig, Würzig, Trocken",
+      "taste": "Würzig mit trockenem Abgang",
+      "effects": ["Schmerzlindernd", "Entzündungshemmend"],
+      "therapeuticProperties": ["Antifungizid", "Schmerzstillend", "Entzündungshemmend", "Antikrebs"],
+      "notableDifferences": "Hunde verwenden diese Verbindung, um Cannabis zu finden.",
+      "sources": ["Eukalyptus", "Cannabis (gealtert)", "Zitronenmelisse"]
+    },
+    "550e8400-e29b-41d4-a716-446655440010": {
+      "name": "α-Bisabolol",
+      "description": "Blumiges Sesquiterpen aus Kamille mit entzündungshemmenden, beruhigenden und hautheilenden Eigenschaften; gelegentlich in Cannabis.",
+      "aroma": "Blumig, Süß, Kamille, Vanille",
+      "taste": "Blumig, zart, süß",
+      "effects": ["Entspannend", "Entzündungshemmend", "Schmerzlindernd"],
+      "therapeuticProperties": ["Entzündungshemmend", "Mikroben abtötend", "Wundheilung", "Schmerzstillend", "Neuroprotektiv"],
+      "notableDifferences": "Neuroprotektive Wirkungen dokumentiert.",
+      "sources": ["Kamille", "Candeia Baum"]
+    }
+  }
+}

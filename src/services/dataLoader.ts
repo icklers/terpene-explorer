@@ -76,8 +76,21 @@ export async function loadTerpeneData(filePath: string): Promise<LoadResult> {
       throw new Error(`Data format is invalid. ${isYaml ? 'YAML' : 'JSON'} parsing failed: ${errorMessage}`);
     }
 
+    // Handle the nested structure in the terpene database
+    let terpeneData: unknown;
+    if (typeof rawData === 'object' && rawData !== null && 'terpene_database_schema' in rawData) {
+      const schemaData = (rawData as { terpene_database_schema?: unknown }).terpene_database_schema;
+      if (schemaData && typeof schemaData === 'object' && schemaData !== null && 'entries' in schemaData) {
+        terpeneData = (schemaData as { entries?: unknown }).entries;
+      } else {
+        terpeneData = rawData;
+      }
+    } else {
+      terpeneData = rawData;
+    }
+
     // Step 3-4: Validate and filter
-    const validationResult: ValidationResult = validateTerpeneData(rawData);
+    const validationResult: ValidationResult = validateTerpeneData(terpeneData);
 
     // Step 5: Return with warnings if any entries were skipped
     const warnings: string[] = [];

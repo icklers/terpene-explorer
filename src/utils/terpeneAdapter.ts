@@ -1,54 +1,138 @@
 /**
- * Adapter between legacy `models/Terpene` shape and the new `types/terpene` shape.
+ * Adapter for Terpene shape transformations.
  *
- * Provides two helpers:
- * - toNewTerpene(legacy) -> converts legacy model to new typed shape (best-effort)
- * - toLegacyTerpene(newT) -> converts new typed shape to legacy model used across UI
+ * Provides helpers for converting between different Terpene representations.
+ * This is needed to maintain compatibility as we add bilingual functionality.
  */
 
-import type { Terpene as LegacyTerpene } from '../models/Terpene';
-import type { Terpene as NewTerpene } from '../types/terpene';
+import type { Terpene } from '@/models/Terpene';
+import type { Terpene as CurrentTerpene } from '@/types/terpene';
 
-export function toNewTerpene(legacy: LegacyTerpene): NewTerpene {
+// Helper type for a basic terpene shape (may be used in legacy code)
+interface BasicTerpene {
+  id: string;
+  name: string;
+  description?: string;
+  aroma?: string;
+  effects: string[];
+  sources: string[];
+  boilingPoint?: number; // Original format
+  molecularFormula?: string;
+}
+
+export function toNewTerpene(legacy: Terpene): CurrentTerpene {
   // Map fields conservatively. Provide safe defaults for missing newer fields.
   return {
     id: legacy.id,
     name: legacy.name,
-    description: legacy.description || '',
-    aroma: legacy.aroma || '',
-    taste: legacy.molecularFormula ? '' : '',
-    effects: Array.isArray(legacy.effects) ? legacy.effects : [],
-    therapeuticProperties: [],
-    notableDifferences: undefined,
-    concentrationRange: undefined,
+    isomerOf: legacy.isomerOf,
+    isomerType: legacy.isomerType as 'Optical' | 'Optical (Enantiomer)' | 'Positional' | 'Structural' | 'Oxidized derivative' | null, // Cast to satisfy type system
+    category: legacy.category as 'Core' | 'Secondary' | 'Minor', // Cast to satisfy type system
+    aroma: legacy.aroma,
+    taste: legacy.taste,
+    description: legacy.description,
+    effects: legacy.effects as CurrentTerpene['effects'], // Cast to satisfy type system
+    therapeuticProperties: legacy.therapeuticProperties as (
+      | 'Mood stabilizing'
+      | 'Sedative'
+      | 'Anti-inflammatory'
+      | 'Appetite suppressant'
+      | 'Muscle relaxant'
+      | 'Analgesic'
+      | 'Anesthetic'
+      | 'Anti-epileptic'
+      | 'Antibacterial'
+      | 'Anticancer'
+      | 'Anticonvulsant'
+      | 'Antidepressant'
+      | 'Antidiabetic'
+      | 'Antifungal'
+      | 'Antihyperalgesic'
+      | 'Antimicrobial'
+      | 'Antioxidant'
+      | 'Antiparasitic'
+      | 'Antiseptic'
+      | 'Antispasmodic'
+      | 'Antiviral'
+      | 'Anxiolytic'
+      | 'Appetite suppressant'
+      | 'Bone regeneration'
+      | 'Bronchodilator'
+      | 'Cardiovascular support'
+      | 'Decongestant'
+      | 'Digestive'
+      | 'Gastroprotective'
+      | 'Immune-modulating'
+      | 'Insecticidal'
+      | 'Lipid metabolism'
+      | 'Memory aid'
+      | 'Mood stabilizing'
+      | 'Mucolytic'
+      | 'Muscle relaxant'
+      | 'Neuroprotective'
+      | 'Sedative'
+      | 'Wound healing'
+    )[],
+    notableDifferences: legacy.notableDifferences,
+    concentrationRange: legacy.concentrationRange,
     molecularData: {
-      molecularFormula: legacy.molecularFormula || '',
-      molecularWeight: 0,
-      boilingPoint: typeof legacy.boilingPoint === 'number' ? legacy.boilingPoint : null,
-      class: '',
+      molecularFormula: legacy.molecularData.molecularFormula,
+      molecularWeight: legacy.molecularData.molecularWeight,
+      boilingPoint: legacy.molecularData.boilingPoint,
+      class: legacy.molecularData.class,
     },
-    sources: Array.isArray(legacy.sources) ? legacy.sources : [],
-    references: [],
+    sources: legacy.sources,
+    references: legacy.references,
     researchTier: {
-      dataQuality: 'Limited',
-      evidenceSummary: 'Converted from legacy data model',
+      dataQuality: legacy.researchTier.dataQuality as 'Excellent' | 'Good' | 'Moderate' | 'Limited', // Cast to satisfy type system
+      evidenceSummary: legacy.researchTier.evidenceSummary,
     },
-  } as unknown as NewTerpene;
+  };
 }
 
-export function toLegacyTerpene(n: NewTerpene): LegacyTerpene {
+export function toLegacyTerpene(n: CurrentTerpene): BasicTerpene {
   return {
     id: n.id,
     name: n.name,
-    description: n.description || '',
-    aroma: n.aroma || '',
+    description: n.description,
+    aroma: n.aroma,
     effects: Array.isArray(n.effects) ? n.effects : [],
     sources: Array.isArray(n.sources) ? n.sources : [],
-    boilingPoint: n.molecularData?.boilingPoint ?? undefined,
-    molecularFormula: n.molecularData?.molecularFormula ?? undefined,
-  } as LegacyTerpene;
+    boilingPoint: n.molecularData?.boilingPoint ?? undefined, // Convert null to undefined for compatibility
+    molecularFormula: n.molecularData?.molecularFormula,
+  };
 }
 
-export function toLegacyArray(newArr: NewTerpene[]): LegacyTerpene[] {
-  return newArr.map(toLegacyTerpene);
+export function toLegacyArray(newArr: CurrentTerpene[]): CurrentTerpene[] {
+  return newArr; // For now, return as-is since we're using the canonical type
+}
+
+// Helper to ensure backward compatibility if needed
+export function ensureFullTerpeneStructure(terpene: Partial<CurrentTerpene>): CurrentTerpene {
+  return {
+    id: terpene.id || '',
+    name: terpene.name || '',
+    isomerOf: terpene.isomerOf || null,
+    isomerType: terpene.isomerType || null,
+    category: terpene.category || 'Minor',
+    description: terpene.description || '',
+    aroma: terpene.aroma || '',
+    taste: terpene.taste || '',
+    effects: terpene.effects || [],
+    therapeuticProperties: terpene.therapeuticProperties || [],
+    notableDifferences: terpene.notableDifferences ?? '',
+    concentrationRange: terpene.concentrationRange ?? '',
+    molecularData: terpene.molecularData || {
+      molecularFormula: '',
+      molecularWeight: 0,
+      boilingPoint: null,
+      class: '',
+    },
+    sources: terpene.sources || [],
+    references: terpene.references || [],
+    researchTier: terpene.researchTier || {
+      dataQuality: 'Limited',
+      evidenceSummary: 'Default evidence summary',
+    },
+  };
 }

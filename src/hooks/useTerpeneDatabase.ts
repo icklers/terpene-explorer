@@ -1,22 +1,22 @@
 /**
  * useTerpeneDatabase Hook
  *
- * Custom hook for loading terpene data from the new terpene-database.json.
- * Uses Zod validation and provides type-safe access to terpene data.
+ * Custom hook for loading terpene data through the translation service.
+ * Provides access to translated terpene data with fallback to English.
  *
- * This hook is specifically for the enhanced data model (002-terpene-data-model).
+ * This hook now uses the translation system to provide locale-appropriate data.
  * For the legacy data loader, see useTerpeneData.ts.
  *
  * @see specs/002-terpene-data-model/contracts/data-service.md
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 
-import { loadTerpeneDatabase } from '../services/terpeneData';
-import type { Terpene, UseTerpeneDataResult } from '../types/terpene';
+import { useTerpeneTranslation } from './useTerpeneTranslation';
+import type { UseTerpeneDataResult } from '../types/terpene';
 
 /**
- * Custom React hook for loading and managing terpene data from terpene-database.json
+ * Custom React hook for loading and managing terpene data through the translation service
  *
  * @returns Object containing terpenes, loading state, error, and reload function
  *
@@ -31,26 +31,19 @@ import type { Terpene, UseTerpeneDataResult } from '../types/terpene';
  * }
  */
 export function useTerpeneDatabase(): UseTerpeneDataResult {
-  const [terpenes, setTerpenes] = useState<Terpene[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const { getAllTerpenes, isLoading, error, language, switchLanguage } = useTerpeneTranslation();
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+  // Get the current translated terpenes
+  const terpenes = getAllTerpenes();
+
+  // Reload function - just call switchLanguage with the current language to trigger refresh
+  const reload = useCallback(async () => {
     try {
-      const data = await loadTerpeneDatabase();
-      setTerpenes(data);
+      await switchLanguage(language);
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Unknown error'));
-    } finally {
-      setLoading(false);
+      console.error('Error during reload:', err);
     }
-  }, []);
+  }, [language, switchLanguage]);
 
-  useEffect(() => {
-    load();
-  }, [load]);
-
-  return { terpenes, loading, error, reload: load };
+  return { terpenes, loading: isLoading, error, reload };
 }

@@ -56,7 +56,7 @@ function securityHeadersPlugin(): Plugin {
 }
 
 /**
- * Copy Azure SWA config and create 404.html
+ * Copy Azure SWA config, data files and create 404.html
  */
 function azureSwaPlugin(): Plugin {
   return {
@@ -81,6 +81,47 @@ function azureSwaPlugin(): Plugin {
   };
 }
 
+/**
+ * Copy data files to public directory
+ */
+function copyDataFilesPlugin(): Plugin {
+  return {
+    name: 'copy-data-files',
+    writeBundle() {
+      // Ensure public/data directory exists
+      const publicDataDir = path.resolve('dist/data');
+      if (!fs.existsSync(publicDataDir)) {
+        fs.mkdirSync(publicDataDir, { recursive: true });
+        console.log('✅ Created dist/data directory');
+      }
+
+      // Copy terpene database file to public/data
+      const terpeneDataPath = path.resolve('data/terpene-database.json');
+      const distDataPath = path.resolve('dist/data/terpene-database.json');
+      if (fs.existsSync(terpeneDataPath)) {
+        fs.copyFileSync(terpeneDataPath, distDataPath);
+        console.log('✅ Copied terpene-database.json to dist/data/');
+      }
+
+      // Copy German translation file to public/data
+      const germanTranslationPath = path.resolve('data/terpene-translations-de.json');
+      const distGermanTranslationPath = path.resolve('dist/data/terpene-translations-de.json');
+      if (fs.existsSync(germanTranslationPath)) {
+        fs.copyFileSync(germanTranslationPath, distGermanTranslationPath);
+        console.log('✅ Copied terpene-translations-de.json to dist/data/');
+      }
+
+      // Copy effect translations file to dist/data
+      const effectTranslationsPath = path.resolve('data/effect-translations.json');
+      const distEffectTranslationsPath = path.resolve('dist/data/effect-translations.json');
+      if (fs.existsSync(effectTranslationsPath)) {
+        fs.copyFileSync(effectTranslationsPath, distEffectTranslationsPath);
+        console.log('✅ Copied effect-translations.json to dist/data/');
+      }
+    },
+  };
+}
+
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   // Load env file based on mode
@@ -91,6 +132,7 @@ export default defineConfig(({ mode }) => {
       react(),
       securityHeadersPlugin(), // Add security headers
       azureSwaPlugin(), // Copy Azure SWA config and create 404.html
+      copyDataFilesPlugin(), // Copy data files to public directory
     ],
     base: env.VITE_APP_BASE || '/',
     resolve: {
