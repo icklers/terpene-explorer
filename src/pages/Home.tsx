@@ -52,7 +52,7 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
   // Determine which data source to use based on view mode
   const {
     filterState,
-    // setSearchQuery, // Removed - search is handled by header bar
+    setSearchQuery,
     toggleEffect,
     toggleFilterMode,
     setViewMode,
@@ -60,6 +60,11 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
     toggleCategoryFilter,
     hasActiveFilters,
   } = useFilters();
+
+  // Sync searchQuery prop with filterState
+  React.useEffect(() => {
+    setSearchQuery(searchQuery || '');
+  }, [searchQuery, setSearchQuery]);
 
   const handleCategoryToggle = (category: string) => {
     toggleCategoryFilter(category);
@@ -152,11 +157,8 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
     return filterTerpenes(terpenes, filterState);
   }, [terpenes, filterState, isLoading, error]);
 
-  // Apply search query to filter terpenes
-  const searchedTerpenes = React.useMemo(() => {
-    if (!searchQuery) return filteredTerpenes;
-    return filteredTerpenes.filter((terpene) => terpene.name.toLowerCase().includes(searchQuery.toLowerCase()));
-  }, [searchQuery, filteredTerpenes]);
+  // Apply search query to filter terpenes (handled by filterService through filterState)
+  const searchedTerpenes = filteredTerpenes;
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
