@@ -3,9 +3,12 @@
 **Feature Branch**: `005-table-filter-bar`  
 **Created**: 2025-10-28  
 **Status**: Draft  
+**Updated**: 2025-10-31 (post feature 006 merge)  
 **Input**: User description: "extend the current filter feature. the user shall be able to filter the table for effects, taste, therapeutic properties and aroma, when using the search bar. the search bar shall show in the filter area, instead of the header and be described properly as \"Filter\" bar: \"Filter terpenes by name, effect, aroma...\""
 
 **Context**: This feature extends the existing filter functionality that currently supports filtering by terpene name only. The extension adds filtering by effects, taste, therapeutic properties, and aroma, while also improving the filter bar's location and labeling.
+
+**Note**: Feature 006 (bilingual data support) was merged into this branch, providing the data model infrastructure (taste and therapeuticProperties fields) and bilingual search capabilities. The filter implementation must integrate with the existing TranslationSearchService to maintain cross-language search functionality for German-speaking users while extending English-only search to include the new fields.
 
 ## Clarifications
 
@@ -16,6 +19,10 @@
 - Q: When no terpenes match the filter criteria, what specific message should be displayed? → A: No match found for your filter
 - Q: Should there be a maximum length for the filter text input? → A: 100 characters maximum
 - Q: When multiple terpenes match the filter criteria, how should the results be ordered in the table? → A: Maintain original table order
+
+### Session 2025-10-31
+
+- Q: How should the system behave when TranslationSearchService is unavailable or fails in German mode? → A: Gracefully degrade to English-only search with console warning (silent fallback for users, logged error for developers)
 
 ## User Scenarios & Testing _(mandatory)_
 
@@ -200,6 +207,13 @@ comprehension.
   to 500 terpenes through efficient string matching and debounced input (300ms). For datasets
   exceeding 500 terpenes, consider implementing virtualization in TerpeneTable component (FR-020a,
   SC-006).
+- **Bilingual search integration**: With feature 006's bilingual infrastructure now available,
+  filtering must support cross-language search. When the UI language is set to German, users can
+  search using either German or English terms (e.g., "Zitrone" or "Lemon" both find citrus
+  terpenes). The filter implementation coordinates with TranslationSearchService to provide this
+  capability while maintaining the performance targets specified above. If TranslationSearchService
+  fails to initialize or encounters an error, the system gracefully degrades to English-only search
+  with a console warning logged for developers, ensuring filtering remains available to users.
 
 ## Requirements _(mandatory)_
 
@@ -222,6 +236,8 @@ comprehension.
   existing attributes (NEW capability)
 - **FR-006**: System MUST match rows when filter text matches ANY of the searchable attributes
   (name, effect, aroma, taste, therapeutic property)
+- **FR-006a**: System MUST support cross-language search when bilingual mode is active (German UI
+  language), allowing users to find terpenes using either English or German terminology
 
 **UI/UX Improvements:**
 
@@ -257,6 +273,12 @@ comprehension.
 - **FR-022**: System MUST limit filter text input to a maximum of 100 characters
 - **FR-023**: System MUST maintain the original table order when displaying filtered results (no
   re-sorting based on match quality or attribute type)
+- **FR-024**: System MUST integrate with the existing TranslationSearchService when filtering in
+  German language mode to ensure cross-language search capability is preserved (coordination
+  requirement with feature 006)
+- **FR-025**: System MUST gracefully degrade to English-only search when TranslationSearchService is
+  unavailable or fails, logging errors to console for developer visibility while maintaining
+  filtering functionality for users
 
 ### Key Entities
 
@@ -265,12 +287,16 @@ comprehension.
   filter value. Note: "filter bar" is the user-facing term; "SearchBar" is the technical component
   name.
 - **Filter Criteria**: The text entered by user, parsed and normalized for matching against table
-  data
+  data. May be in English or German depending on UI language setting.
 - **Table Row**: A row in the terpene table that can be shown or hidden based on filter criteria
 - **Filterable Attributes**: The specific data fields searchable via filter bar - terpene name,
   effects array, aroma descriptors, taste profiles, therapeutic properties array (camelCase:
-  `therapeuticProperties`)
+  `therapeuticProperties`). In bilingual mode, these fields are searchable in both English and
+  German.
 - **Empty State**: Visual feedback shown when no table rows match the filter criteria
+- **TranslationSearchService**: Existing service (from feature 006) that provides cross-language
+  search capability. The filter implementation coordinates with this service when German language
+  mode is active.
 
 ## Success Criteria _(mandatory)_
 
@@ -281,9 +307,9 @@ comprehension.
 - **SC-003**: Table filtering updates with less than 400ms total perceived latency (300ms debounce
   + <100ms filter operation) for datasets up to 100 terpenes
 - **SC-004**: 95% of filter queries return at least one result when filtering for documented
-  attributes
+  attributes (in either English or German)
 - **SC-005**: Users can successfully filter by name, effect, aroma, taste, or therapeutic property
-  on first attempt
+  on first attempt (using terminology in their selected language)
 - **SC-006**: Filter bar remains performant (filter operation responsive within 100ms, total
   perceived latency <400ms including 300ms debounce) with up to 200 table rows
 - **SC-007**: Zero crashes or errors when handling edge cases (empty filter, special characters,
@@ -296,7 +322,8 @@ comprehension.
 - The terpene table is already implemented and contains columns for name, effects, aroma, taste, and
   therapeutic properties
 - The existing data model provides terpene data in a structure that supports filtering by all
-  specified attributes
+  specified attributes (verified: taste and therapeuticProperties fields exist as of feature 006
+  merge)
 - A filter area already exists in the UI (or can be added) separate from the page header
 - The table uses client-side rendering for all rows (filtering happens in browser, not via API
   calls)
@@ -305,3 +332,10 @@ comprehension.
 - Users understand common terminology for effects, aromas, tastes, and therapeutic properties
 - The existing filter implementation can be extended to search additional attributes without
   requiring a complete rewrite
+- **Feature 006's bilingual infrastructure is available**: TranslationSearchService exists and
+  provides cross-language search for German users. The filter implementation integrates with this
+  service to maintain bilingual capabilities while extending to new fields.
+- German-speaking users expect to search using German terminology (e.g., "Zitrone" for lemon,
+  "beruhigend" for sedative) and the system should match results accordingly
+- The i18n infrastructure (src/i18n/) provides translation files that can be updated to reflect the
+  extended filter capabilities in placeholder text

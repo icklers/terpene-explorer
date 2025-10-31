@@ -1,16 +1,23 @@
 # Implementation Plan: Table Filter Bar Extension
 
 **Branch**: `005-table-filter-bar` | **Date**: 2025-10-28 | **Spec**: [spec.md](./spec.md)  
+**Updated**: 2025-10-31 (post feature 006 merge and clarification)  
 **Input**: Feature specification from `/specs/005-table-filter-bar/spec.md`
 
 **Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
 
+**Clarification (Session 2025-10-31)**: When TranslationSearchService is unavailable or fails in German mode, the system must gracefully degrade to English-only search with a console warning (silent fallback for users, logged error for developers). This ensures filtering remains functional even if bilingual infrastructure fails (FR-025).
+
+**Integration Reference**: See `specs/005-table-filter-bar/docs/feature-006-merge-implications.md` for detailed analysis of the bilingual integration strategy, including the recommended hybrid approach (delegate to TranslationSearchService in German mode with English fallback).
+
 ## Summary
 
-Extend the existing terpene filter functionality to support multi-attribute filtering beyond the current name-only capability. The extension adds filtering by effects, taste, aroma, and therapeutic properties while maintaining backward compatibility with existing name filtering. Additionally, improve UI/UX by relocating the filter bar to the filter area with clear labeling and updated placeholder text. All changes follow TDD protocol (RED, GREEN, REFACTOR) and maintain the static-first architecture with client-side filtering.
+Extend the existing terpene filter functionality to support multi-attribute filtering beyond the current name-only capability. The extension adds filtering by effects, taste, aroma, and therapeutic properties while maintaining backward compatibility with existing name filtering. The implementation must integrate with the bilingual infrastructure from feature 006, coordinating with TranslationSearchService to provide cross-language search when German UI language is active, with graceful degradation to English-only search if the service fails. Additionally, improve UI/UX by relocating the filter bar to the filter area with clear labeling and updated placeholder text. All changes follow TDD protocol (RED, GREEN, REFACTOR) and maintain the static-first architecture with client-side filtering.
 
 **Key Requirements**:
 - Extend `filterService.ts` `matchesSearchQuery()` to search across name, effects, taste, aroma, and therapeutic properties
+- Integrate with TranslationSearchService for bilingual search when German language mode is active
+- Implement graceful degradation to English-only search when TranslationSearchService fails (with console warning)
 - Update `SearchBar` component placeholder text to reflect new capabilities
 - Relocate filter bar to filter area if not already there
 - Implement 2-character minimum, 300ms debounce, 100-character maximum
