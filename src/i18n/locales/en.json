@@ -27,6 +27,14 @@
     "toggle": "Switch view mode",
     "switchedTo": "Switched to {{mode}} view"
   },
+  "viewMode": {
+    "label": "View Mode",
+    "ariaLabel": "Select visualization",
+    "sunburst": "Sunburst chart",
+    "sunburstLabel": "Sunburst",
+    "table": "Table view",
+    "tableLabel": "Table"
+  },
   "filter": {
     "title": "Filter by Effects",
     "clear": "Clear all filters",
@@ -92,6 +100,31 @@
     "sortDescending": "Sort descending",
     "rowsPerPage": "Rows per page",
     "of": "of"
+  },
+  "filters": {
+    "categoriesLabel": "Filter by Categories",
+    "effectsLabel": "Filter by Effects",
+    "clearFilters": "Clear all filters",
+    "clear": "Clear",
+    "noEffects": "No effects available",
+    "noResultsFound": "No terpenes match the selected filters",
+    "oneResult": "1 terpene found",
+    "resultsCount": "{{count}} terpenes found",
+    "effectChipWithCount": "{{effect}}, {{count}} terpenes",
+    "filterModeLabel": "Effect Matching Mode",
+    "filterModeAriaLabel": "Select effect matching mode",
+    "anyMode": "Match ANY (OR)",
+    "allMode": "Match ALL (AND)",
+    "anyModeAriaLabel": "Match any effect (OR logic)",
+    "allModeAriaLabel": "Match all effects (AND logic)",
+    "anyModeHelp": "Show terpenes with at least one selected effect",
+    "allModeHelp": "Show terpenes with all selected effects",
+    "categories": {
+      "mood": "Mood & Energy",
+      "cognitive": "Cognitive & Mental Enhancement",
+      "relaxation": "Relaxation & Anxiety Management",
+      "physical": "Physical & Physiological Management"
+    }
   },
   "error": {
     "loadFailed": "Unable to load terpene data. Please check your connection and try again.",

@@ -110,6 +110,14 @@ function copyDataFilesPlugin(): Plugin {
         fs.copyFileSync(germanTranslationPath, distGermanTranslationPath);
         console.log('✅ Copied terpene-translations-de.json to dist/data/');
       }
+
+      // Copy effect translations file to dist/data
+      const effectTranslationsPath = path.resolve('data/effect-translations.json');
+      const distEffectTranslationsPath = path.resolve('dist/data/effect-translations.json');
+      if (fs.existsSync(effectTranslationsPath)) {
+        fs.copyFileSync(effectTranslationsPath, distEffectTranslationsPath);
+        console.log('✅ Copied effect-translations.json to dist/data/');
+      }
     },
   };
 }

@@ -24,8 +24,16 @@
   "view": {
     "sunburst": "Sunburst-Diagramm",
     "table": "Tabellenansicht",
-    "toggle": "Ansichtsmodus wechseln",
+    "toggle": "Ansicht wechseln",
     "switchedTo": "Zu {{mode}}-Ansicht gewechselt"
+  },
+  "viewMode": {
+    "label": "Ansicht",
+    "ariaLabel": "Visualisierung auswählen",
+    "sunburst": "Sunburst",
+    "sunburstLabel": "Sunburst",
+    "table": "Tabelle",
+    "tableLabel": "Tabelle"
   },
   "filter": {
     "title": "Nach Wirkungen filtern",
@@ -99,14 +107,28 @@
   },
   "filters": {
     "categoriesLabel": "Nach Kategorien filtern",
-    "effectsLabel": "Nach Wirkung filtern",
+    "effectsLabel": "Nach Effekten filtern",
     "clearFilters": "Filter entfernen",
-    "clear": "Gelöscht",
-    "noeffect": "Keine Wirkung gefunden",
-    "noResultsFound": "Keine Ergebnisse mit diesem Filter gefunden",
+    "clear": "Löschen",
+    "noEffects": "Keine Effekte verfügbar",
+    "noResultsFound": "Keine Terpene entsprechen den ausgewählten Filtern",
     "oneResult": "1 Terpen gefunden",
     "resultsCount": "{{count}} Terpene gefunden",
-    "effectChipWithCount": "${displayName}, ${count}} Terpen"
+    "effectChipWithCount": "{{effect}}, {{count}} Terpene",
+    "filterModeLabel": "Effekt-Übereinstimmungsmodus",
+    "filterModeAriaLabel": "Effekt-Übereinstimmungsmodus auswählen",
+    "anyMode": "BELIEBIG (ODER)",
+    "allMode": "ALLE (UND)",
+    "anyModeAriaLabel": "Beliebiger Effekt (ODER-Logik)",
+    "allModeAriaLabel": "Alle Effekte (UND-Logik)",
+    "anyModeHelp": "Zeige Terpene mit mindestens einem ausgewählten Effekt",
+    "allModeHelp": "Zeige Terpene mit allen ausgewählten Effekten",
+    "categories": {
+      "mood": "Stimmung & Energie",
+      "cognitive": "Kognitiv & Mental",
+      "relaxation": "Entspannung & Angstbewältigung",
+      "physical": "Körperlich & Physiologisch"
+    }
   },
   "error": {
     "loadFailed": "Terpen-Daten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",

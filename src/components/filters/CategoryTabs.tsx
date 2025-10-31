@@ -38,7 +38,7 @@ export function CategoryTabs({
   selectedEffects = [],
   onToggleEffect,
 }: CategoryTabsProps): React.ReactElement {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -183,7 +183,7 @@ export function CategoryTabs({
                       >
                         {categoryEffects!.map((effect) => {
                           const isSelectedEffect = selectedEffects?.includes(effect.name) || false;
-                          const displayName = effect.displayName?.en || effect.name;
+                          const displayName = effect.displayName[i18n.language as 'en' | 'de'] || effect.displayName.en || effect.name;
                           const count = effect.terpeneCount;
                           // Use the category color that's already defined for the tab
                           const categoryColor = tab.categoryColor;

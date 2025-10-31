@@ -133,8 +133,20 @@ export function useFilters(initialState?: Partial<FilterState>): UseFiltersResul
         nextSelectedEffects = [...prev.selectedEffects, effect];
       }
 
-      // Derive categoryFilters from the updated selected effects to keep them in sync
-      const nextCategoryFilters = syncCategoryFilters(nextSelectedEffects);
+      // Only auto-select a category if ALL effects in that category are now selected
+      // Get all category IDs that the current effect list could belong to
+      const potentialCategories = syncCategoryFilters(nextSelectedEffects);
+      const nextCategoryFilters: string[] = [];
+
+      // Check each potential category to see if ALL its effects are selected
+      potentialCategories.forEach((categoryId) => {
+        const effectsInCategory = getEffectsInCategories([categoryId]);
+        const allEffectsSelected = effectsInCategory.every((eff) => nextSelectedEffects.includes(eff));
+
+        if (allEffectsSelected) {
+          nextCategoryFilters.push(categoryId);
+        }
+      });
 
       return {
         ...prev,

@@ -20,6 +20,7 @@ import { TerpeneList } from '../components/visualizations/TerpeneList';
 import { useFilters } from '../hooks/useFilters';
 import { useTerpeneData } from '../hooks/useTerpeneData';
 import { useTerpeneDatabase } from '../hooks/useTerpeneDatabase';
+import { buildEffectsList, loadEffectTranslations } from '../services/effectTranslationService';
 import { filterTerpenes } from '../services/filterService';
 import { toLegacyArray } from '../utils/terpeneAdapter';
 
@@ -70,29 +71,49 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
   const isLoading = newLoading;
   const error = newError;
 
-  // Extract effects from translated data
-  const effects = React.useMemo(() => {
-    const effectCounts = new Map<string, number>();
-    newTerpenes.forEach((terpene) => {
-      terpene.effects.forEach((effect) => {
-        effectCounts.set(effect, (effectCounts.get(effect) || 0) + 1);
-      });
-    });
+  // Load base terpene data and effect translations
+  const [baseTerpenes, setBaseTerpenes] = React.useState<Array<{ id: string; effects: string[] }>>([]);
+  const [effectTranslationsLoaded, setEffectTranslationsLoaded] = React.useState(false);
 
-    // Convert to Effect objects matching the Effect interface
-    // IMPORTANT: Keep 'name' as original effect name (not kebab-case) for filter matching
-    return Array.from(effectCounts.entries())
-      .map(([effectName, count]) => ({
-        name: effectName, // Keep original name for filter matching
-        displayName: {
-          en: effectName,
-          de: effectName, // Use English name as fallback for German
-        },
-        color: '#4caf50', // Default primary green
-        terpeneCount: count,
-      }))
-      .sort((a, b) => a.displayName.en.localeCompare(b.displayName.en));
-  }, [newTerpenes]);
+  // Load base terpene data on mount
+  React.useEffect(() => {
+    const loadBaseTerpenes = async () => {
+      try {
+        const response = await fetch('/data/terpene-database.json');
+        if (response.ok) {
+          const data = await response.json();
+          const entries = data.terpene_database_schema?.entries || data.entries || [];
+          setBaseTerpenes(entries);
+        }
+      } catch (err) {
+        console.error('Failed to load base terpene data:', err);
+      }
+    };
+
+    loadBaseTerpenes();
+  }, []);
+
+  // State for effect translations
+  const [effectTranslations, setEffectTranslations] = React.useState<Record<string, { en: string; de: string }>>({});
+
+  // Load effect translations on mount
+  React.useEffect(() => {
+    const loadTranslations = async () => {
+      const translations = await loadEffectTranslations();
+      setEffectTranslations(translations);
+      setEffectTranslationsLoaded(true);
+    };
+
+    loadTranslations();
+  }, []);
+
+  // Extract effects from BASE terpenes (English canonical names) with translations
+  const effects = React.useMemo(() => {
+    if (!effectTranslationsLoaded || baseTerpenes.length === 0) {
+      return [];
+    }
+    return buildEffectsList(baseTerpenes as never[], effectTranslations);
+  }, [baseTerpenes, effectTranslationsLoaded, effectTranslations]);
 
   // Snackbar state for validation warnings
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
@@ -111,11 +132,16 @@ export function Home({ searchQuery }: HomeProps): React.ReactElement {
   }, [warnings]);
 
   // Focus management when view mode changes (T091 - NFR-A11Y-003)
+  // Use a ref to track the previous view mode to prevent unwanted focus on language changes
+  const prevViewModeRef = useRef(filterState.viewMode);
+
   useEffect(() => {
-    if (visualizationRef.current && !isLoading && !error) {
+    // Only focus if view mode actually changed (not just re-render from language change)
+    if (prevViewModeRef.current !== filterState.viewMode && visualizationRef.current && !isLoading && !error) {
       // Move focus to visualization container when view mode changes
       visualizationRef.current.focus();
     }
+    prevViewModeRef.current = filterState.viewMode;
   }, [filterState.viewMode, isLoading, error]);
 
   // Apply filters to translated terpenes
