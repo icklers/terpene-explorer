@@ -2,17 +2,17 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   # Allow manual trigger
   workflow_dispatch:
 
 env:
   # Enable build time tracking
-  TIMING: "1"
+  TIMING: '1'
   # Enable dependency cache debugging
-  DEBUG: "1"
+  DEBUG: '1'
 
 # Ensure we don't have multiple workflows running at once
 concurrency:
@@ -23,15 +23,15 @@ jobs:
   validate:
     name: 🔍 Validate
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v5
-      
+
       - name: 📥 Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10.19.0
-      
+
       - name: 🏗 Setup Node.js
         uses: actions/setup-node@v6
         with:
@@ -62,7 +62,7 @@ jobs:
           key: ${{ runner.os }}-build-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-build-${{ hashFiles('**/pnpm-lock.yaml') }}-
-      
+
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -78,13 +78,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-tsbuild-${{ hashFiles('**/tsconfig*.json') }}-
             ${{ runner.os }}-tsbuild-
-      
+
       - name: 🔎 Type check
         run: pnpm run type-check
-      
+
       - name: 🧪 Lint
         run: pnpm run lint
-      
+
       - name: 💅 Check formatting
         run: pnpm run format:check
 
@@ -92,35 +92,35 @@ jobs:
       # - name: 🧬 Run unit tests
       #   run: pnpm run test:run
 
-  # E2E tests disabled for now, because of missing test suite        
+  # E2E tests disabled for now, because of missing test suite
   # e2e:
   #   name: 🎭 E2E Tests
   #   runs-on: ubuntu-latest
   #   needs: validate
-    
+
   #   steps:
   #     - uses: actions/checkout@v5
-      
+
   #     - name: 📥 Setup pnpm
   #       uses: pnpm/action-setup@v4
   #       with:
   #         version: 9
-      
+
   #     - name: 🏗 Setup Node.js
   #       uses: actions/setup-node@v6
   #       with:
   #         node-version: 24
   #         cache: 'pnpm'
-      
+
   #     - name: 📦 Install dependencies
   #       run: pnpm install --frozen-lockfile
-      
+
   #     - name: 🎭 Install Playwright
   #       run: pnpm exec playwright install --with-deps
-      
+
   #     - name: 🎭 Run Playwright tests
   #       run: pnpm run test:e2e
-      
+
   #     - name: 📊 Upload test results
   #       if: always()
   #       uses: actions/upload-artifact@v5
@@ -133,24 +133,24 @@ jobs:
     name: 🏗 Build
     runs-on: ubuntu-latest
     needs: [validate]
-    
+
     steps:
       - uses: actions/checkout@v5
-      
+
       - name: 📥 Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10.19.0
-      
+
       - name: 🏗 Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: 'pnpm'
-      
+
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
-      
+
       - name: 🔧 Create production env
         run: |
           echo "VITE_BUILD_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> .env.production
@@ -174,10 +174,10 @@ jobs:
           echo "swa_build_size=$build_size" >> $GITHUB_OUTPUT
           chunk_count=$(find dist/assets -type f | wc -l)
           echo "swa_chunk_count=$chunk_count" >> $GITHUB_OUTPUT
-      
+
       - name: 📝 Create 404.html
         run: cp dist/index.html dist/404.html
-      
+
       - name: 📊 Report Build Stats
         run: |
           echo "### Build Performance Report 📊" >> $GITHUB_STEP_SUMMARY
@@ -193,3 +193,17 @@ jobs:
           name: azure-swa-build
           path: dist/
           retention-days: 7
+
+  deploy_preview:
+    name: 🚀 Deploy Preview
+    needs: [build]
+    # Only deploy for PRs, not for main branch (that uses workflow_run)
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: ./.github/workflows/azure-static-web-apps-blue-desert-06e30df03.yml
+    with:
+      environment: preview
+    secrets:
+      AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_DESERT_06E30DF03 }}
