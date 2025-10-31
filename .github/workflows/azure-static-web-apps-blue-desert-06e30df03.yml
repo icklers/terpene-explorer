@@ -33,7 +33,7 @@ jobs:
   deploy_job:
     if: |
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
-      (github.event_name == 'workflow_call') ||
+      github.event_name == 'pull_request' ||
       github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     name: Deploy Job
