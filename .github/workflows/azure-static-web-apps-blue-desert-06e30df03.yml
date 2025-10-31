@@ -30,13 +30,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build_and_deploy_job:
+  deploy_job:
     if: |
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
       (github.event_name == 'workflow_call') ||
       github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
+    name: Deploy Job
     steps:
       - uses: actions/checkout@v5
         with:
