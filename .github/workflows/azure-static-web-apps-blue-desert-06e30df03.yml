@@ -60,12 +60,15 @@ jobs:
           run_id: ${{ github.event.workflow_run.id }}
           workflow_conclusion: success
 
-      - name: 📥 Download build artifacts (workflow_call)
-        if: github.event_name == 'workflow_call'
-        uses: actions/download-artifact@v5
+      - name: 📥 Download build artifacts (pull_request via workflow_call)
+        if: github.event_name == 'pull_request'
+        uses: dawidd6/action-download-artifact@v11
         with:
+          workflow: ci.yml
           name: azure-swa-build
           path: dist
+          run_id: ${{ github.event.workflow_run.id }}
+          workflow_conclusion: success
 
       - name: 📋 List build contents
         run: |
