@@ -49,12 +49,13 @@
     "resultsCount_other": "{{count}} terpenes found"
   },
   "search": {
-    "placeholder": "Search terpenes by name, aroma, or effects...",
+    "placeholder": "Filter terpenes by name, effect, aroma, taste, therapeutic properties...",
+    "ariaLabel": "Filter terpenes by multiple attributes",
     "label": "Search terpenes",
     "clear": "Clear search",
     "noResults": "No results found for \"{{query}}\"",
-    "resultsCount": "{{count}} result for \"{{query}}\"",
-    "resultsCount_other": "{{count}} results for \"{{query}}\""
+    "oneResult": "1 result found",
+    "resultsCount": "{{count}} results found"
   },
   "terpene": {
     "name": "Name",
@@ -99,7 +100,8 @@
     "sortAscending": "Sort ascending",
     "sortDescending": "Sort descending",
     "rowsPerPage": "Rows per page",
-    "of": "of"
+    "of": "of",
+    "noTerpenes": "No match found for your filter"
   },
   "filters": {
     "categoriesLabel": "Filter by Categories",
