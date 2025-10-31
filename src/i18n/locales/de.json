@@ -49,12 +49,13 @@
     "resultsCount_other": "{{count}} Terpene gefunden"
   },
   "search": {
-    "placeholder": "Terpene nach Name, Aroma oder Wirkungen suchen...",
+    "placeholder": "Terpene nach Name, Effekt, Aroma, Geschmack, therapeutischen Eigenschaften filtern...",
+    "ariaLabel": "Terpene nach mehreren Attributen filtern",
     "label": "Terpene suchen",
     "clear": "Suche löschen",
     "noResults": "Keine Ergebnisse für \"{{query}}\" gefunden",
-    "resultsCount": "{{count}} Ergebnis für \"{{query}}\"",
-    "resultsCount_other": "{{count}} Ergebnisse für \"{{query}}\""
+    "oneResult": "1 Ergebnis gefunden",
+    "resultsCount": "{{count}} Ergebnisse gefunden"
   },
   "terpene": {
     "name": "Name",
@@ -103,7 +104,8 @@
     "sortAscending": "Aufsteigend sortieren",
     "sortDescending": "Absteigend sortieren",
     "rowsPerPage": "Zeilen pro Seite",
-    "of": "von"
+    "of": "von",
+    "noTerpenes": "Kein Ergebnis für Ihren Filter gefunden"
   },
   "filters": {
     "categoriesLabel": "Nach Kategorien filtern",

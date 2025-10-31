@@ -7,8 +7,28 @@
  * @see tasks.md T044
  */
 
+import { getCurrentLanguage } from '../i18n/config';
 import type { FilterState } from '../models/FilterState';
 import type { Terpene } from '../models/Terpene';
+import { TranslationService } from '../services/translationService';
+
+// Global translation service instance to be initialized by app
+let translationServiceInstance: TranslationService | null = null;
+
+// Function to set the translation service instance
+export const setTranslationService = (service: TranslationService) => {
+  translationServiceInstance = service;
+};
+
+/**
+ * Minimum search query length before filtering activates
+ */
+export const MIN_SEARCH_LENGTH = 2;
+
+/**
+ * Maximum search query length (enforced at UI level)
+ */
+export const MAX_SEARCH_LENGTH = 100;
 
 /**
  * Filter terpenes based on filter state - alias for applyEffectFilters
@@ -54,7 +74,12 @@ export function applyEffectFilters(terpenes: Terpene[], filterState: FilterState
   // Apply search query filter
   if (filterState.searchQuery && filterState.searchQuery.trim()) {
     const query = filterState.searchQuery.trim().toLowerCase();
-    filtered = filtered.filter((terpene) => matchesSearchQuery(terpene, query));
+
+    // Only apply search filtering if query is 2+ characters
+    if (query.length >= MIN_SEARCH_LENGTH) {
+      filtered = filtered.filter((terpene) => matchesSearchQuery(terpene, query));
+    }
+    // If query < 2 characters: show all results (no filtering applied)
   }
 
   // Apply effect filters with OR logic as specified in FR-015, FR-016
@@ -90,18 +115,48 @@ export function applyEffectFilters(terpenes: Terpene[], filterState: FilterState
 
 /**
  * Check if terpene matches search query
- * Searches across name, aroma, and effects
+ * Searches across name, aroma, taste, effects, and therapeutic properties
+ * With bilingual search support when TranslationService is available
+ *
+ * Searches across:
+ * - name (string)
+ * - aroma (string)
+ * - taste (string, optional)
+ * - effects (string array)
+ * - therapeuticProperties (string array, optional)
  *
  * @param terpene - Terpene to check
  * @param query - Search query (lowercase)
- * @returns True if terpene matches query
+ * @returns True if terpene matches query in ANY attribute (OR logic)
  */
 function matchesSearchQuery(terpene: Terpene, query: string): boolean {
+  // Check current language for bilingual search
+  const currentLang = getCurrentLanguage();
+
+  // If we're in German mode and TranslationService is available, delegate to it
+  if (currentLang === 'de' && translationServiceInstance) {
+    try {
+      // Use TranslationService to search for matching terpene IDs
+      const searchResults = translationServiceInstance.search(query, currentLang);
+
+      // Return true if terpene.id matches any result ID from TranslationSearchService
+      return searchResults.some((result) => result.id === terpene.id);
+    } catch (error) {
+      // If TranslationService fails, log warning and fall back to English search
+      console.warn('TranslationService search failed, falling back to English search:', error);
+    }
+  }
+
+  // English-only fallback search (or if TranslationService unavailable)
   const name = terpene.name.toLowerCase();
   const aroma = terpene.aroma.toLowerCase();
+  const taste = (terpene.taste || '').toLowerCase();
+  const therapeuticProps = (terpene.therapeuticProperties || []).map((t) => t.toLowerCase()).join(' ');
   const effects = terpene.effects.map((e) => e.toLowerCase()).join(' ');
 
-  return name.includes(query) || aroma.includes(query) || effects.includes(query);
+  return (
+    name.includes(query) || aroma.includes(query) || taste.includes(query) || therapeuticProps.includes(query) || effects.includes(query)
+  );
 }
 
 /**

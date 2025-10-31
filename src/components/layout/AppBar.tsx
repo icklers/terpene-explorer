@@ -103,6 +103,7 @@ export function AppBar({
             <SearchBar
               value={searchQuery}
               onChange={onSearchChange}
+              maxLength={100}
               placeholder={t('search.placeholder', 'Search terpenes...')}
               ariaLabel={t('search.ariaLabel', 'Search for terpenes')}
             />

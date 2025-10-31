@@ -21,6 +21,14 @@ Single-page web application structure:
 - Tests: `tests/` at repository root
 - Translations: `src/i18n/locales/`
 
+## Terminology Note (M4 Resolution)
+
+**"Filter bar" vs "SearchBar"**: Throughout these tasks, we use both terms interchangeably:
+- **"filter bar"** = User-facing UX term (what users see and interact with)
+- **"SearchBar"** = Technical component name (React component in `src/components/filters/SearchBar.tsx`)
+
+Both terms refer to the same UI element. The spec (Key Entities section) explicitly documents this equivalence.
+
 ---
 
 ## Phase 1: Setup (Shared Infrastructure)
@@ -53,7 +61,88 @@ Single-page web application structure:
 - [ ] T013 Review existing `matchesSearchQuery()` function in `src/services/filterService.ts` for extension points
 - [ ] T014 Review existing `applyEffectFilters()` function in `src/services/filterService.ts` (after 2-char minimum added)
 
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+**Checkpoint**: Foundation ready - bilingual integration can now begin
+
+---
+
+## Phase 2a: Bilingual Integration (Feature 006 Coordination) 🌍 [C1, C2, C3 Resolution]
+
+**Purpose**: Integrate with TranslationSearchService for cross-language search (FR-024, FR-006a, FR-025)
+
+**Critical**: This phase implements Session 2025-10-31 clarification for bilingual support
+
+**Reference**: See `specs/005-table-filter-bar/docs/feature-006-merge-implications.md` for detailed integration strategy (M3 resolution)
+
+### Tests for Bilingual Integration (TDD RED Phase)
+
+- [ ] T200 [P] [Bilingual] Add test: matchesSearchQuery() detects German language mode in `tests/unit/services/filterService.test.ts` - SHOULD FAIL
+- [ ] T201 [P] [Bilingual] Add test: matchesSearchQuery() delegates to TranslationSearchService when language=de in `tests/unit/services/filterService.test.ts` - SHOULD FAIL
+- [ ] T202 [P] [Bilingual] Add test: matchesSearchQuery() uses English fallback when language=en in `tests/unit/services/filterService.test.ts` - SHOULD FAIL
+- [ ] T203 [P] [Bilingual] Add test: TranslationSearchService returns matching terpene IDs in `tests/unit/services/filterService.test.ts` - SHOULD FAIL
+- [ ] T204 [Bilingual] Run tests - verify they FAIL (bilingual integration not yet implemented)
+
+### Implementation for Bilingual Integration (GREEN Phase)
+
+- [ ] T205 [Bilingual] Import getCurrentLanguage() from i18n config in `src/services/filterService.ts`
+- [ ] T206 [Bilingual] Import TranslationSearchService in `src/services/filterService.ts`
+- [ ] T207 [Bilingual] Refactor matchesSearchQuery() to check current language at start of function in `src/services/filterService.ts`
+- [ ] T208 [Bilingual] Add delegation logic: if (currentLang === 'de') use TranslationSearchService.search() in `src/services/filterService.ts`
+- [ ] T209 [Bilingual] Return true if terpene.id matches any result ID from TranslationSearchService in `src/services/filterService.ts`
+- [ ] T210 [Bilingual] Extend English fallback path to search taste + therapeutic properties in `src/services/filterService.ts`
+- [ ] T211 [Bilingual] Run tests - verify T200-T203 NOW PASS
+
+### Refactor for Bilingual Integration (REFACTOR Phase)
+
+- [ ] T212 [Bilingual] Add JSDoc documenting bilingual search behavior in matchesSearchQuery() in `src/services/filterService.ts`
+- [ ] T213 [Bilingual] Extract English search logic to helper function if complex in `src/services/filterService.ts`
+- [ ] T214 [Bilingual] Re-run all tests to ensure refactoring didn't break functionality
+
+**Checkpoint**: Bilingual integration complete (FR-024, FR-006a) - graceful degradation next
+
+---
+
+## Phase 2b: Error Handling & Graceful Degradation (Session 2025-10-31) ⚠️ [C2 Resolution]
+
+**Purpose**: Implement FR-025 graceful degradation when TranslationSearchService fails
+
+**Critical**: This ensures filtering remains functional even if bilingual infrastructure fails
+
+### Tests for Error Handling (TDD RED Phase)
+
+- [ ] T220 [P] [Error] Add test: TranslationSearchService undefined → falls back to English search in `tests/unit/services/filterService.test.ts` - SHOULD FAIL
+- [ ] T221 [P] [Error] Add test: TranslationSearchService.search() throws error → logs console.warn() and falls back in `tests/unit/services/filterService.test.ts` - SHOULD FAIL
+- [ ] T222 [P] [Error] Add test: getCurrentLanguage() fails → falls back to English in `tests/unit/services/filterService.test.ts` - SHOULD FAIL
+- [ ] T223 [Error] Run tests - verify they FAIL (error handling not yet implemented)
+
+### Implementation for Error Handling (GREEN Phase)
+
+- [ ] T224 [Error] Add try-catch around TranslationSearchService delegation in matchesSearchQuery() in `src/services/filterService.ts`
+- [ ] T225 [Error] Add console.warn() logging for developer visibility in catch block in `src/services/filterService.ts`
+- [ ] T226 [Error] Ensure fallback to English-only search (silent for users) in catch block in `src/services/filterService.ts`
+- [ ] T227 [Error] Add null/undefined check for TranslationSearchService before calling in `src/services/filterService.ts`
+- [ ] T228 [Error] Run tests - verify T220-T222 NOW PASS
+
+### Refactor for Error Handling (REFACTOR Phase)
+
+- [ ] T229 [Error] Add JSDoc documenting error handling behavior in `src/services/filterService.ts`
+- [ ] T230 [Error] Verify error messages are developer-friendly and actionable in `src/services/filterService.ts`
+- [ ] T231 [Error] Re-run all tests to ensure error handling doesn't break normal operation
+
+**Checkpoint**: Graceful degradation complete (FR-025) - filtering works even if bilingual fails
+
+---
+
+## Phase 2c: Additional Regression Tests [M2 Resolution]
+
+**Purpose**: Add missing regression tests for existing behavior
+
+- [ ] T240 [P] [Regression] Add test: complete table renders on initial page load (FR-010) in `tests/unit/components/TerpeneTable.test.tsx`
+- [ ] T241 [P] [Regression] Add test: filter updates in real-time as user types (FR-011) in `tests/integration/filter-flow.test.ts`
+- [ ] T242 [P] [Regression] Add test: clear filter button restores all terpenes (FR-018, H1) in `tests/unit/components/SearchBar.test.tsx`
+- [ ] T243 [P] [Regression] Add test: filtered results maintain original table order (FR-023, H2) in `tests/unit/services/filterService.test.ts`
+- [ ] T244 [Regression] Run regression tests to establish baseline
+
+**Checkpoint**: All foundational work complete - user story implementation can now begin in parallel
 
 ---
 
@@ -287,6 +376,9 @@ Single-page web application structure:
 - [ ] T094 [P] Add E2E test for 100-character maximum in `tests/e2e/filter-terpenes.spec.ts`
 - [ ] T095 [P] Add E2E test for placeholder text visibility in `tests/e2e/filter-terpenes.spec.ts`
 - [ ] T096 [P] Add E2E test for combined filters (search + effect categories) in `tests/e2e/filter-terpenes.spec.ts`
+- [ ] T097a [P] [E2E-Bilingual] Add E2E test for German search term ("Zitrone" finds citrus terpenes) in `tests/e2e/filter-terpenes.spec.ts` [C3 Resolution]
+- [ ] T097b [P] [E2E-Bilingual] Add E2E test for English search in German mode (still works) in `tests/e2e/filter-terpenes.spec.ts` [C3 Resolution]
+- [ ] T097c [P] [E2E-Bilingual] Add E2E test for language switcher + search persistence in `tests/e2e/filter-terpenes.spec.ts` [C3 Resolution]
 - [ ] T097 Run all E2E tests: `pnpm playwright test`
 
 **Checkpoint**: All E2E tests pass - complete user journeys validated
@@ -477,6 +569,9 @@ All converge for Phase 11 (E2E Tests) and Phase 12 (Polish).
 
 - **Phase 1 (Setup)**: 4 tasks
 - **Phase 2 (Foundational)**: 10 tasks (includes 2-char minimum + verification tasks)
+- **Phase 2a (Bilingual Integration)**: 15 tasks [NEW - C1, C3 resolution]
+- **Phase 2b (Error Handling)**: 12 tasks [NEW - C2 resolution]
+- **Phase 2c (Regression Tests)**: 5 tasks [NEW - M2 resolution]
 - **Phase 3 (US1 - Name)**: 9 tasks
 - **Phase 4 (US2 - Effects)**: 8 tasks
 - **Phase 5 (US3 - Aroma)**: 7 tasks
@@ -484,14 +579,16 @@ All converge for Phase 11 (E2E Tests) and Phase 12 (Polish).
 - **Phase 7 (US5 - Therapeutic)**: 15 tasks
 - **Phase 8 (US6 - UI)**: 17 tasks
 - **Phase 9 (Empty State)**: 5 tasks
-- **Phase 10 (E2E Tests)**: 10 tasks
+- **Phase 10 (E2E Tests)**: 13 tasks (includes 3 bilingual E2E tests - C3 resolution)
 - **Phase 11 (Polish)**: 14 tasks (includes automated performance test)
 
-**Total**: 111 tasks
+**Total**: 146 tasks (was 111, added 35 for bilingual integration & error handling)
 
-**MVP Tasks** (P1 stories only): ~55 tasks (Phases 1-4, 8, 11)
+**MVP Tasks** (P1 stories only): ~90 tasks (must include bilingual integration per constitution)
 
-**Parallel Tasks**: 38 tasks marked [P] (34% can run in parallel)
+**Parallel Tasks**: 53 tasks marked [P] (36% can run in parallel)
+
+**Critical Addition**: Phases 2a-2c implement Session 2025-10-31 clarification (FR-025) and resolve constitution Gate 6 violation
 
 ---
 
