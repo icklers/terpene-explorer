@@ -1,33 +1,35 @@
 # Implementation Plan: Table Filter Bar Extension
 
-**Branch**: `005-table-filter-bar` | **Date**: 2025-10-28 | **Spec**: [spec.md](./spec.md)  
+**Branch**: `005-table-filter-bar` | **Date**: 2025-10-31 | **Spec**: [spec.md](./spec.md)  
 **Input**: Feature specification from `/specs/005-table-filter-bar/spec.md`
 
 **Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
 
 ## Summary
 
-Extend the existing terpene filter functionality to support multi-attribute filtering beyond the current name-only capability. The extension adds filtering by effects, taste, aroma, and therapeutic properties while maintaining backward compatibility with existing name filtering. Additionally, improve UI/UX by relocating the filter bar to the filter area with clear labeling and updated placeholder text. All changes follow TDD protocol (RED, GREEN, REFACTOR) and maintain the static-first architecture with client-side filtering.
+Extend the existing terpene filter functionality to support multi-attribute filtering beyond the current name-only capability. The extension adds filtering by effects, taste, aroma, and therapeutic properties while maintaining backward compatibility with existing name filtering. Additionally, implement bilingual filtering support to search both English and German terpene data based on selected language. Improve UI/UX by relocating the filter bar to the filter area with clear labeling and updated placeholder text. All changes follow TDD protocol (RED, GREEN, REFACTOR) and maintain the static-first architecture with client-side filtering.
 
 **Key Requirements**:
 - Extend `filterService.ts` `matchesSearchQuery()` to search across name, effects, taste, aroma, and therapeutic properties
+- Implement bilingual search capability that utilizes translation service to match terms across English and German data
 - Update `SearchBar` component placeholder text to reflect new capabilities
 - Relocate filter bar to filter area if not already there
 - Implement 2-character minimum, 300ms debounce, 100-character maximum
 - Maintain original table order (no re-sorting)
 - Display "No match found for your filter" empty state
 - Preserve all existing name filtering behavior (backward compatibility)
+- Support special characters including umlauts, accents, and other diacritics
 
 ## Technical Context
 
 **Language/Version**: TypeScript 5.7.2, Node.js 24 LTS, ES2022 target  
-**Primary Dependencies**: React 19.2.0, Material UI 6.3.0, Emotion 11.13.5, Vite 6.0.3, Vitest (testing), Playwright (E2E)  
-**Storage**: Static JSON files (`/data/terpene-database.json`) - client-side only  
+**Primary Dependencies**: React 19.2.0, Material UI 6.3.0, Emotion 11.13.5, Vite 6.0.3, Vitest (testing), Playwright (E2E), i18next 25.6.0, react-i18next 15.2.0  
+**Storage**: Static JSON files (`/data/terpene-database.json`, `/data/terpene-translations-de.json`) - client-side only  
 **Testing**: Vitest (unit/integration), Playwright (E2E), jest-axe (accessibility)  
 **Target Platform**: Modern browsers (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+) via static CDN deployment  
 **Project Type**: Single-page web application with static-first architecture  
 **Performance Goals**: <100ms filter operation for 100-200 terpenes (300ms debounce separate for UX), Lighthouse Performance ≥90  
-**Constraints**: Client-side filtering only, no backend, maintain 80% test coverage, WCAG 2.1 Level AA compliance  
+**Constraints**: Client-side filtering only, no backend, maintain 80% test coverage, WCAG 2.1 Level AA compliance, translation service lookups must complete within 50ms  
 **Scale/Scope**: ~100-500 terpenes, single filter bar extension feature touching 3-5 files
 
 ## Constitution Check
@@ -60,7 +62,7 @@ _GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 ✅ **Gate 5: Static Architecture**
 - [x] No backend server dependencies
-- [x] Data source is static files (terpene-database.json)
+- [x] Data source is static files (terpene-database.json, terpene-translations-de.json)
 - [x] Deployment target is static hosting (Vercel/Netlify/GitHub Pages)
 - [x] No database or API required
 
@@ -92,9 +94,9 @@ specs/005-table-filter-bar/
 src/
 ├── components/
 │   └── filters/
-│       └── SearchBar.tsx          # MODIFY: Update placeholder, add label
+│       └── SearchBar.tsx          # MODIFY: Update placeholder, add label, implement bilingual support
 ├── services/
-│   └── filterService.ts           # MODIFY: Extend matchesSearchQuery() to search new fields
+│   └── filterService.ts           # MODIFY: Extend matchesSearchQuery() to search new fields and support bilingual functionality
 ├── i18n/
 │   └── locales/
 │       ├── en/
@@ -109,7 +111,7 @@ src/
 tests/
 ├── unit/
 │   ├── services/
-│   │   └── filterService.test.ts  # MODIFY: Add tests for new search fields
+│   │   └── filterService.test.ts  # MODIFY: Add tests for new search fields and bilingual functionality
 │   └── components/
 │       └── SearchBar.test.tsx     # MODIFY: Add tests for 2-char minimum, 100-char max
 └── integration/
@@ -122,4 +124,4 @@ tests/
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
-**No violations**. All constitution gates pass. This is a straightforward extension of existing filtering logic following established patterns.
+**No violations**. All constitution gates pass. This is a straightforward extension of existing filtering logic following established patterns with bilingual support.
