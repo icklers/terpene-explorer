@@ -1,26 +1,39 @@
 name: Azure Static Web Apps CI/CD
 
 on:
+  # Triggered by CI workflow for PRs
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Deployment environment (preview or production)'
+        required: false
+        type: string
+        default: 'preview'
+    secrets:
+      AZURE_STATIC_WEB_APPS_API_TOKEN:
+        required: true
+  # Direct trigger for main branch after CI completes
   workflow_run:
-    workflows: ["CI"]
+    workflows: ['CI']
     types: [completed]
     branches: [main]
+  # Only handle PR closure (not open/sync)
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [closed]
     branches:
       - main
   workflow_dispatch:
 
-# Allow one concurrent deployment
+# Allow one concurrent deployment per environment
 concurrency:
-  group: "azure-deploy"
+  group: 'azure-deploy-${{ github.event.pull_request.number || github.ref }}'
   cancel-in-progress: true
 
 jobs:
   build_and_deploy_job:
     if: |
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
-      (github.event_name == 'pull_request' && github.event.action != 'closed') ||
+      (github.event_name == 'workflow_call') ||
       github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     name: Build and Deploy Job
@@ -37,14 +50,22 @@ jobs:
           echo "Workflow run conclusion: ${{ github.event.workflow_run.conclusion || 'N/A' }}"
           echo "Head branch: ${{ github.event.workflow_run.head_branch || github.ref_name }}"
 
-      - name: 📥 Download build artifacts
+      - name: 📥 Download build artifacts (workflow_run)
+        if: github.event_name == 'workflow_run'
         uses: dawidd6/action-download-artifact@v11
         with:
           workflow: ci.yml
           name: azure-swa-build
           path: dist
-          run_id: ${{ github.event.workflow_run.id || '' }}
+          run_id: ${{ github.event.workflow_run.id }}
           workflow_conclusion: success
+
+      - name: 📥 Download build artifacts (workflow_call)
+        if: github.event_name == 'workflow_call'
+        uses: actions/download-artifact@v5
+        with:
+          name: azure-swa-build
+          path: dist
 
       - name: 📋 List build contents
         run: |
@@ -71,16 +92,16 @@ jobs:
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_DESERT_06E30DF03 }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN || secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_DESERT_06E30DF03 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-          action: "upload"
+          action: 'upload'
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "dist" # Point to pre-built files
+          app_location: 'dist' # Point to pre-built files
           skip_api_build: true # Set to true to skip building APIs - optional
           skip_app_build: true # Set to true to skip building app - optional
-          output_location: "" # Already built, no additional output
-          config_file_location: "" # Look in app_location (dist)
+          output_location: '' # Already built, no additional output
+          config_file_location: '' # Look in app_location (dist)
           # deployment_environment: Production
           production_branch: main
           ###### End of Repository/Build Configurations ######
@@ -99,4 +120,4 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_DESERT_06E30DF03 }}
-          action: "close"
+          action: 'close'
