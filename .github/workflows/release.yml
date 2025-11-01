@@ -1,8 +1,9 @@
 name: Release
 
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -46,12 +47,13 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: 📥 Download build artifacts
-        uses: actions/download-artifact@v5
-        continue-on-error: true
+      - name: 📥 Download build artifacts from CI
+        uses: dawidd6/action-download-artifact@v11
         with:
+          workflow: ci.yml
           name: release-artifacts
           path: .
+          workflow_conclusion: success
 
       # If artifacts don't exist, build them
       - name: 🏗 Build (if needed)
