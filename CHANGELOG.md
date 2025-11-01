@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.0 (2025-11-01)
+
+* feat: Implement category color coding for effect chips in TerpeneTable (#52) ([e743569](https://github.com/icklers/terpene-explorer/commit/e743569)), closes [#52](https://github.com/icklers/terpene-explorer/issues/52)
+
 ## 1.0.0 (2025-11-01)
 
 * fix: Add favicon.svg and refine navigationFallback ([e4e6630](https://github.com/icklers/terpene-explorer/commit/e4e6630))
