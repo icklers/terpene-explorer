@@ -17,9 +17,8 @@ A researcher wants to quickly scan terpene information without being overwhelmed
 
 **Acceptance Scenarios**:
 
-1. **Given** the user navigates to the terpene table view, **When** the table loads, **Then** the table displays exactly four column headers: "Name", "Aroma", "Effects", and "Category"
-2. **Given** the table is displayed, **When** the user scans the column headers, **Then** the "Sources" column is not present
-3. **Given** the table contains terpene data, **When** each row is displayed, **Then** each row shows the terpene's name, aroma description, effects (as chips/badges), and category label
+1. **Given** the user navigates to the terpene table view, **When** the table loads, **Then** the table displays exactly four column headers ("Name", "Aroma", "Effects", "Category") and the "Sources" column is not present
+2. **Given** the table contains terpene data, **When** each row is displayed, **Then** each row shows the terpene's name, aroma description, effects (as chips/badges), and category label
 
 ---
 
@@ -81,7 +80,7 @@ A user wants to sort the table by different columns (Name, Aroma, Effects, or Ca
 - **FR-007**: All four columns (Name, Aroma, Effects, Category) MUST support column header sorting
 - **FR-008**: The table MUST maintain visual sort indicators (arrows) to show which column is actively sorted and in which direction
 - **FR-009**: The table MUST preserve existing functionality for row selection, hover states, and detail modal opening
-- **FR-013**: Terpene names in the Name column MUST be displayed in bold font weight when the terpene's category is "Core"
+- **FR-013**: Terpene names in the Name column MUST be displayed in bold font weight (font-weight: 700) when the terpene's category is "Core", and regular font weight (font-weight: 400) for all other categories
 - **FR-014**: Category labels in the Category column MUST be displayed as plain text without special styling (no bold, color, or icons)
 - **FR-010**: The table MUST handle missing or invalid category values by displaying "Uncategorized" label (sorted after Minor with rank=4)
 - **FR-011**: The Effects column MUST continue to display effects as chips/badges with proper internationalization
