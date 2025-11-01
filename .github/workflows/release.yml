@@ -1,9 +1,9 @@
 name: Release
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types: [completed]
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -24,6 +24,11 @@ jobs:
     if: |
       github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch'
+
+    env:
+      SEMANTIC_RELEASE_BOT_APP_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_ID }}
+      SEMANTIC_RELEASE_BOT_PRIVATE_KEY: ${{ secrets.SEMANTIC_RELEASE_BOT_PRIVATE_KEY }}
+      SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID }}
 
     steps:
       - name: 📥 Checkout
@@ -68,29 +73,25 @@ jobs:
       # Create a short-lived installation token from the GitHub App
       - name: 🔐 Create GitHub App installation token
         id: create_app_token
-        env:
-          GH_APP_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_ID }}
-          GH_APP_PRIVATE_KEY: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_PRIVATE_KEY }}
-          GH_APP_INSTALLATION_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID }}
         run: |
           set -euo pipefail
 
-          echo "Checking GitHub App secret presence:"
-          echo "- GH_APP_ID set: ${GH_APP_ID:+yes}") || true
-          echo "- GH_APP_INSTALLATION_ID set: ${GH_APP_INSTALLATION_ID:+yes}") || true
+          echo "Checking GitHub App secret presence (non-sensitive):"
+          echo "- SEMANTIC_RELEASE_BOT_APP_ID set: ${SEMANTIC_RELEASE_BOT_APP_ID:+yes}" || true
+          echo "- SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID set: ${SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID:+yes}" || true
 
-          if [ -z "${GH_APP_ID:-}" ] || [ -z "${GH_APP_PRIVATE_KEY:-}" ] || [ -z "${GH_APP_INSTALLATION_ID:-}" ]; then
-            echo "One of GH_APP_ID, GH_APP_PRIVATE_KEY or GH_APP_INSTALLATION_ID is empty. Please add the secrets to the repository." >&2
+          if [ -z "${SEMANTIC_RELEASE_BOT_APP_ID:-}" ] || [ -z "${SEMANTIC_RELEASE_BOT_PRIVATE_KEY:-}" ] || [ -z "${SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID:-}" ]; then
+            echo "One of SEMANTIC_RELEASE_BOT_APP_ID, SEMANTIC_RELEASE_BOT_PRIVATE_KEY or SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID is empty. Please add the secrets to the repository." >&2
             exit 1
           fi
 
           # Create JWT using Node's crypto builtin to avoid external deps
-          JWT=$(node -e "const crypto=require('crypto');const appId=process.env.GH_APP_ID;const pk=process.env.GH_APP_PRIVATE_KEY.replace(/\r?\n/g,'\n');const header=Buffer.from(JSON.stringify({alg:'RS256',typ:'JWT'})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const now=Math.floor(Date.now()/1000);const payload=Buffer.from(JSON.stringify({iat:now-60,exp:now+600,iss:parseInt(appId)})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const data=header+'.'+payload;const sign=crypto.createSign('RSA-SHA256');sign.update(data);const sig=sign.sign(pk,'base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');console.log(data+'.'+sig);")
+          JWT=$(node -e "const crypto=require('crypto');const appId=process.env.SEMANTIC_RELEASE_BOT_APP_ID;const pk=process.env.SEMANTIC_RELEASE_BOT_PRIVATE_KEY.replace(/\r?\n/g,'\n');const header=Buffer.from(JSON.stringify({alg:'RS256',typ:'JWT'})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const now=Math.floor(Date.now()/1000);const payload=Buffer.from(JSON.stringify({iat:now-60,exp:now+600,iss:parseInt(appId)})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const data=header+'.'+payload;const sign=crypto.createSign('RSA-SHA256');sign.update(data);const sig=sign.sign(pk,'base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');console.log(data+'.'+sig);")
 
           echo "JWT created"
 
           # Exchange JWT for an installation token
-          RESP=$(curl -s -X POST "https://api.github.com/app/installations/${GH_APP_INSTALLATION_ID}/access_tokens" -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json")
+          RESP=$(curl -s -X POST "https://api.github.com/app/installations/${SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID}/access_tokens" -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json")
 
           TOKEN=$(echo "$RESP" | python -c 'import sys, json;print(json.load(sys.stdin).get("token", ""))')
 
@@ -110,7 +111,7 @@ jobs:
           if [ -z "${{ steps.create_app_token.outputs.token }}" ]; then
             echo "ERROR: Installation token was not created."
             echo "Possible causes:"
-            echo " - Secrets missing or malformed (GH_APP_ID, GH_APP_PRIVATE_KEY, GH_APP_INSTALLATION_ID)."
+            echo " - Secrets missing or malformed (SEMANTIC_RELEASE_BOT_APP_ID, SEMANTIC_RELEASE_BOT_PRIVATE_KEY, SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID)."
             echo " - The App installation does not have correct repository permissions (contents: write)."
             echo " - Organization policy prevents App-generated tokens from pushing to protected branches."
             echo "Suggested actions:" 
