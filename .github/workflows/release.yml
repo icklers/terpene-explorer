@@ -75,7 +75,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          echo "Checking GitHub App secret presence (non-sensitive):"
+          echo "Checking GitHub App secret presence:"
           echo "- GH_APP_ID set: ${GH_APP_ID:+yes}") || true
           echo "- GH_APP_INSTALLATION_ID set: ${GH_APP_INSTALLATION_ID:+yes}") || true
 
