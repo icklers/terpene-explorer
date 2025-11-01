@@ -5,6 +5,9 @@ on:
     types: [opened, synchronize, reopened, edited]
     branches: [main]
 
+permissions:
+  pull-requests: write
+
 jobs:
   validate-commits:
     name: 🔍 Validate Commits
@@ -53,7 +56,7 @@ jobs:
           echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
 
       - name: 💬 Comment on PR
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const nextVersion = '${{ steps.analyze.outputs.next_version }}';
