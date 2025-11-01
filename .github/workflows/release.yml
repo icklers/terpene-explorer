@@ -52,19 +52,19 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: 📥 Download build artifacts from CI
-        uses: dawidd6/action-download-artifact@v11
-        with:
-          workflow: ci.yml
-          name: release-artifacts
-          path: .
-          workflow_conclusion: success
+      # - name: 📥 Download build artifacts from CI
+      #   uses: dawidd6/action-download-artifact@v11
+      #   with:
+      #     workflow: ci.yml
+      #     name: release-artifacts
+      #     path: .
+      #     workflow_conclusion: success
 
       # If artifacts don't exist, build them
-      - name: 🏗 Build (if needed)
+      - name: 🏗 Build Release
         run: |
           if [ ! -f "dist.tar.gz" ]; then
-            echo "Building artifacts..."
+            echo "Building Release artifacts..."
             pnpm run build
             cd dist && tar -czf ../dist.tar.gz . && cd ..
             zip -r dist.zip dist/
@@ -163,7 +163,7 @@ jobs:
           LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
           echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
 
-      - name: 🚀 Trigger deployments
+      - name: 🚀 Trigger deployment
         if: steps.release.outputs.tag != 'none'
         uses: actions/github-script@v8
         with:
@@ -184,22 +184,6 @@ jobs:
               console.log('✅ Triggered Azure Static Web Apps deployment');
             } catch (error) {
               console.log('⚠️ Azure deployment trigger skipped:', error.message);
-            }
-
-            // Trigger GitHub Pages deployment
-            try {
-              await github.rest.actions.createWorkflowDispatch({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: 'deploy-gh-pages.yml',
-                ref: 'main',
-                inputs: {
-                  release_tag: tag
-                }
-              });
-              console.log('✅ Triggered GitHub Pages deployment');
-            } catch (error) {
-              console.log('⚠️ GitHub Pages deployment trigger skipped:', error.message);
             }
 
             console.log(`✅ Deployment triggers completed for ${tag}`)

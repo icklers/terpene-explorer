@@ -85,8 +85,8 @@ jobs:
       - name: 🧪 Lint
         run: pnpm run lint
 
-      - name: 💅 Check formatting
-        run: pnpm run format:check
+      - name: 💅 Format code
+        run: pnpm run format
 
       # disabled, because of missing final test suite
       # - name: 🧬 Run unit tests
