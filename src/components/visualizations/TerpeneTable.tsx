@@ -19,6 +19,7 @@ import {
   Paper,
   Chip,
   Typography,
+  useTheme,
 } from '@mui/material';
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -26,11 +27,31 @@ import { useTranslation } from 'react-i18next';
 import { TerpeneDetailModal } from './TerpeneDetailModal';
 import type { Terpene } from '../../models/Terpene';
 import { getEffectMetadata } from '../../services/colorService';
+import { getCategoryForEffect } from '../../services/filterService';
 import type { Terpene as NewTerpene } from '../../types/terpene';
 import { toNewTerpene } from '../../utils/terpeneAdapter';
 
 // TODO: Re-enable virtualization with react-window after fixing import issues
 // import { FixedSizeList } from 'react-window';
+
+/**
+ * Get display name for category with translation
+ */
+function getCategoryDisplay(category: string | undefined | null, t: (key: string, defaultValue: string) => string): string {
+  switch (category) {
+    case 'Core':
+      return t('table.categoryCore', 'Core');
+    case 'Secondary':
+      return t('table.categorySecondary', 'Secondary');
+    case 'Minor':
+      return t('table.categoryMinor', 'Minor');
+    default:
+      if (category && category !== 'Uncategorized') {
+        console.warn(`Invalid category: ${category}`);
+      }
+      return t('table.categoryUncategorized', 'Uncategorized');
+  }
+}
 
 /**
  * Component props
@@ -39,7 +60,7 @@ export interface TerpeneTableProps {
   /** Terpenes to display */
   terpenes: Terpene[];
   /** Initial sort column */
-  initialSortBy?: 'name' | 'aroma' | 'sources' | 'effects';
+  initialSortBy?: 'name' | 'aroma' | 'effects' | 'category';
   /** Initial sort direction */
   initialSortDirection?: 'asc' | 'desc';
 }
@@ -48,7 +69,7 @@ export interface TerpeneTableProps {
  * Sort direction type
  */
 type SortDirection = 'asc' | 'desc';
-type SortColumn = 'name' | 'aroma' | 'sources' | 'effects';
+type SortColumn = 'name' | 'aroma' | 'effects' | 'category';
 
 /**
  * TerpeneTable component
@@ -56,8 +77,13 @@ type SortColumn = 'name' | 'aroma' | 'sources' | 'effects';
  * @param props - Component props
  * @returns Rendered component
  */
-export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDirection = 'asc' }: TerpeneTableProps): React.ReactElement {
+export function TerpeneTable({
+  terpenes,
+  initialSortBy = 'category',
+  initialSortDirection = 'asc',
+}: TerpeneTableProps): React.ReactElement {
   const { t, i18n } = useTranslation();
+  const theme = useTheme();
   const [sortBy, setSortBy] = useState<SortColumn>(initialSortBy);
   const [sortDirection, setSortDirection] = useState<SortDirection>(initialSortDirection);
 
@@ -105,33 +131,47 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
 
   // Sort terpenes
   const sortedTerpenes = useMemo(() => {
+    // Define category ranking for sorting
+    const CATEGORY_RANK = {
+      Core: 1,
+      Secondary: 2,
+      Minor: 3,
+      Uncategorized: 4,
+    } as const;
+
     const sorted = [...terpenes].sort((a, b) => {
-      let aValue: string;
-      let bValue: string;
+      let comparison: number;
 
       switch (sortBy) {
         case 'name':
-          aValue = a.name;
-          bValue = b.name;
+          comparison = a.name.localeCompare(b.name);
           break;
         case 'aroma':
-          aValue = a.aroma;
-          bValue = b.aroma;
-          break;
-        case 'sources':
-          aValue = a.sources.join(', ');
-          bValue = b.sources.join(', ');
+          comparison = a.aroma.localeCompare(b.aroma);
           break;
         case 'effects':
-          aValue = a.effects.join(', ');
-          bValue = b.effects.join(', ');
+          comparison = a.effects.join(', ').localeCompare(b.effects.join(', '));
           break;
+        case 'category': {
+          const categoryA = (a.category || 'Uncategorized') as keyof typeof CATEGORY_RANK;
+          const categoryB = (b.category || 'Uncategorized') as keyof typeof CATEGORY_RANK;
+
+          const rankA = CATEGORY_RANK[categoryA];
+          const rankB = CATEGORY_RANK[categoryB];
+
+          // Primary sort by category rank
+          if (rankA !== rankB) {
+            comparison = rankA - rankB;
+          } else {
+            // Secondary sort by name (alphabetical)
+            comparison = a.name.localeCompare(b.name);
+          }
+          break;
+        }
         default:
-          aValue = a.name;
-          bValue = b.name;
+          comparison = a.name.localeCompare(b.name);
       }
 
-      const comparison = aValue.localeCompare(bValue);
       return sortDirection === 'asc' ? comparison : -comparison;
     });
 
@@ -224,10 +264,10 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
             </TableCell>
             <TableCell sx={{ bgcolor: 'primary.dark', color: 'primary.contrastText', fontWeight: 600 }}>
               <TableSortLabel
-                active={sortBy === 'sources'}
-                direction={sortBy === 'sources' ? sortDirection : 'asc'}
-                onClick={() => handleSort('sources')}
-                aria-sort={sortBy === 'sources' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
+                active={sortBy === 'category'}
+                direction={sortBy === 'category' ? sortDirection : 'asc'}
+                onClick={() => handleSort('category')}
+                aria-sort={sortBy === 'category' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}
                 sx={{
                   color: 'primary.contrastText',
                   '&.Mui-active': {
@@ -238,7 +278,7 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                   },
                 }}
               >
-                {t('table.sources', 'Sources')}
+                {t('table.category', 'Category')}
               </TableSortLabel>
             </TableCell>
           </TableRow>
@@ -280,7 +320,9 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                 },
               }}
             >
-              <TableCell>{terpene.name}</TableCell>
+              <TableCell>
+                <Typography sx={{ fontWeight: terpene.category === 'Core' ? 700 : 400 }}>{terpene.name}</Typography>
+              </TableCell>
               <TableCell>{terpene.aroma}</TableCell>
               <TableCell>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -288,12 +330,41 @@ export function TerpeneTable({ terpenes, initialSortBy = 'name', initialSortDire
                     // Get the translated effect metadata
                     const effectData = getEffectMetadata(effect);
                     // Use the current language's display name, falling back to the effect name itself if not found
-                    const displayName = effectData.displayName[i18n.language as 'en' | 'de'] || effect;
-                    return <Chip key={effect} label={displayName} size="small" sx={{ textTransform: 'capitalize' }} />;
+                    let displayName = effectData.displayName[i18n.language as 'en' | 'de'] || effect;
+                    // Capitalize the effect name if not already translated
+                    if (!effectData.displayName[i18n.language as 'en' | 'de']) {
+                      displayName = displayName
+                        .split(' ')
+                        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                        .join(' ');
+                    }
+
+                    // Get category ID and color for effect (like in FilterControls)
+                    const categoryId = getCategoryForEffect(effect);
+                    const categoryPalette = (theme.palette as unknown as { category?: Record<string, string> }).category;
+                    const categoryColor = categoryId && categoryPalette ? categoryPalette[categoryId] : theme.palette.primary.main;
+
+                    return (
+                      <Chip
+                        key={effect}
+                        label={displayName}
+                        size="small"
+                        sx={{
+                          backgroundColor: `${categoryColor}20`, // 20% opacity for background
+                          borderColor: categoryColor,
+                          color: categoryColor,
+                          borderWidth: '1px',
+                          borderStyle: 'solid',
+                          '& .MuiChip-label': {
+                            color: categoryColor,
+                          },
+                        }}
+                      />
+                    );
                   })}
                 </Box>
               </TableCell>
-              <TableCell>{terpene.sources.join(', ')}</TableCell>
+              <TableCell>{getCategoryDisplay(terpene.category, t)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

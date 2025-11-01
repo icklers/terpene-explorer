@@ -96,6 +96,15 @@
     }
   },
   "table": {
+    "name": "Name",
+    "aroma": "Aroma",
+    "effects": "Effects",
+    "sources": "Sources",
+    "category": "Category",
+    "categoryCore": "Core",
+    "categorySecondary": "Secondary",
+    "categoryMinor": "Minor",
+    "categoryUncategorized": "Uncategorized",
     "sortBy": "Sort by {{column}}",
     "sortAscending": "Sort ascending",
     "sortDescending": "Sort descending",
