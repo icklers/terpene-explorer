@@ -63,9 +63,67 @@ jobs:
             zip -r dist.zip dist/
           fi
 
+      # Create a short-lived installation token from the GitHub App
+      - name: 🔐 Create GitHub App installation token
+        id: create_app_token
+        env:
+          GH_APP_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_ID }}
+          GH_APP_PRIVATE_KEY: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_PRIVATE_KEY }}
+          GH_APP_INSTALLATION_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID }}
+        run: |
+          set -euo pipefail
+
+          echo "Checking GitHub App secret presence (non-sensitive):"
+          echo "- GH_APP_ID set: ${GH_APP_ID:+yes}") || true
+          echo "- GH_APP_INSTALLATION_ID set: ${GH_APP_INSTALLATION_ID:+yes}") || true
+
+          if [ -z "${GH_APP_ID:-}" ] || [ -z "${GH_APP_PRIVATE_KEY:-}" ] || [ -z "${GH_APP_INSTALLATION_ID:-}" ]; then
+            echo "One of GH_APP_ID, GH_APP_PRIVATE_KEY or GH_APP_INSTALLATION_ID is empty. Please add the secrets to the repository." >&2
+            exit 1
+          fi
+
+          # Create JWT using Node's crypto builtin to avoid external deps
+          JWT=$(node -e "const crypto=require('crypto');const appId=process.env.GH_APP_ID;const pk=process.env.GH_APP_PRIVATE_KEY.replace(/\r?\n/g,'\n');const header=Buffer.from(JSON.stringify({alg:'RS256',typ:'JWT'})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const now=Math.floor(Date.now()/1000);const payload=Buffer.from(JSON.stringify({iat:now-60,exp:now+600,iss:parseInt(appId)})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const data=header+'.'+payload;const sign=crypto.createSign('RSA-SHA256');sign.update(data);const sig=sign.sign(pk,'base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');console.log(data+'.'+sig);")
+
+          echo "JWT created"
+
+          # Exchange JWT for an installation token
+          RESP=$(curl -s -X POST "https://api.github.com/app/installations/${GH_APP_INSTALLATION_ID}/access_tokens" -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json")
+
+          TOKEN=$(echo "$RESP" | python -c 'import sys, json;print(json.load(sys.stdin).get("token", ""))')
+
+          if [ -z "$TOKEN" ]; then
+            echo "Failed to get installation token from GitHub API:" >&2
+            echo "$RESP" >&2
+            exit 1
+          fi
+
+          # Print a masked preview of the token length for diagnostics (do not print the token itself)
+          echo "Got installation token of length: ${#TOKEN}"
+
+          echo "token=$TOKEN" >> "$GITHUB_OUTPUT"
+
+      - name: ⚠️ Verify App token and provide fallback logs
+        run: |
+          if [ -z "${{ steps.create_app_token.outputs.token }}" ]; then
+            echo "ERROR: Installation token was not created."
+            echo "Possible causes:"
+            echo " - Secrets missing or malformed (GH_APP_ID, GH_APP_PRIVATE_KEY, GH_APP_INSTALLATION_ID)."
+            echo " - The App installation does not have correct repository permissions (contents: write)."
+            echo " - Organization policy prevents App-generated tokens from pushing to protected branches."
+            echo "Suggested actions:" 
+            echo " - Verify repo secrets in Settings → Secrets → Actions." 
+            echo " - Confirm the App installation has 'Contents: Read & write' permission and is installed on this repo." 
+            echo " - If branch protection still blocks pushes, add the App installation as an allowed actor in the branch protection rule or use a machine user PAT as a fallback."
+            echo "Failing early to avoid attempting a release that will fail due to missing token." >&2
+            exit 1
+          else
+            echo "Installation token available. Proceeding with release..."
+          fi
+
       - name: 🚀 Run semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.create_app_token.outputs.token }}
           GIT_AUTHOR_NAME: github-actions[bot]
           GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
           GIT_COMMITTER_NAME: github-actions[bot]
