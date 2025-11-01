@@ -194,6 +194,24 @@ jobs:
           path: dist/
           retention-days: 7
 
+      - name: 📦 Archive build artifacts
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          cd dist
+          tar -czf ../dist.tar.gz .
+          cd ..
+          zip -r dist.zip dist/
+
+      - name: 📤 Upload archived artifacts
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v5
+        with:
+          name: release-artifacts
+          path: |
+            dist.tar.gz
+            dist.zip
+          retention-days: 7
+
   deploy_preview:
     name: 🚀 Deploy Preview
     needs: [build]

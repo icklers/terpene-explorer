@@ -1,0 +1,112 @@
+name: PR Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    branches: [main]
+
+jobs:
+  validate-commits:
+    name: 🔍 Validate Commits
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: 📥 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔎 Validate commit messages
+        uses: wagoid/commitlint-github-action@v6
+        with:
+          configFile: .commitlintrc.json
+          failOnWarnings: false
+          helpURL: https://www.conventionalcommits.org/
+
+      - name: 📊 Analyze version impact
+        id: analyze
+        run: |
+          # Run semantic-release in dry-run mode to see what would happen
+          pnpm exec semantic-release --dry-run --branches ${{ github.head_ref }} > /tmp/release-output.txt 2>&1 || true
+
+          # Extract version info
+          NEXT_VERSION=$(grep -oP "(?<=next release version is )[0-9]+\.[0-9]+\.[0-9]+" /tmp/release-output.txt || echo "No version change")
+          echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+
+          # Determine bump type
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: 💬 Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const nextVersion = '${{ steps.analyze.outputs.next_version }}';
+            const currentVersion = '${{ steps.analyze.outputs.current_version }}';
+
+            let bumpType = 'none';
+            let emoji = '⚪';
+
+            if (nextVersion !== 'No version change' && nextVersion !== currentVersion) {
+              const [currMajor, currMinor, currPatch] = currentVersion.split('.').map(Number);
+              const [nextMajor, nextMinor, nextPatch] = nextVersion.split('.').map(Number);
+
+              if (nextMajor > currMajor) {
+                bumpType = 'MAJOR 💥';
+                emoji = '🔴';
+              } else if (nextMinor > currMinor) {
+                bumpType = 'MINOR ✨';
+                emoji = '🟡';
+              } else if (nextPatch > currPatch) {
+                bumpType = 'PATCH 🐛';
+                emoji = '🟢';
+              }
+            }
+
+            const comment = `## ${emoji} Release Impact Analysis
+
+            **Current Version:** \`v${currentVersion}\`
+            **Next Version:** \`${nextVersion === 'No version change' ? 'No release' : 'v' + nextVersion}\`
+            **Bump Type:** ${bumpType === 'none' ? 'No version change' : bumpType}
+
+            ${bumpType !== 'none' ? `
+            ### 📝 What triggers a release?
+
+            - \`feat:\` commits → **MINOR** version bump
+            - \`fix:\` commits → **PATCH** version bump
+            - \`BREAKING CHANGE:\` in commit body → **MAJOR** version bump
+            - Other commits (docs, chore, etc.) → **No release**
+
+            This PR will automatically trigger a release when merged to \`main\`.
+            ` : `
+            ### ℹ️ No Release
+
+            This PR contains only non-release commits (docs, chore, style, etc.).
+            No new version will be published when merged.
+            `}
+
+            ---
+            <sub>💡 Learn more about [Conventional Commits](https://www.conventionalcommits.org/)</sub>
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
