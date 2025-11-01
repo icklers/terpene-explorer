@@ -3,9 +3,9 @@
 Auto-generated from all feature plans. Last updated: 2025-10-23
 
 ## Documentation
-Always use context7 when I need code generation, setup or configuration steps, or
-library/API documentation. This means you should automatically use the Context7 MCP
-tools to resolve library id and get library docs without me having to explicitly ask.
+
+Always use context7 when I need code generation, setup or configuration steps, or library/API documentation. This means you should
+automatically use the Context7 MCP tools to resolve library id and get library docs without me having to explicitly ask.
 
 ## Agents
 
@@ -17,13 +17,18 @@ Agent use is **NOT NEGOTIABLE**:
 - **MANDATORY**: For debugging and fixing Playwright tests, use the `playwright-healer` agent.
 
 ## Active Technologies
+
 - TypeScript 5.7.2, React 19.2.0 + @mui/material 6.3.0, @emotion/react 11.13.5, @emotion/styled 11.13.5, Vite 6.0.3 (003-dark-theme-design)
 - LocalStorage for theme preferences (existing useLocalStorage hook) (003-dark-theme-design)
-- TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, Emotion 11.13.5, Vite 6.0.3, Vitest (testing), Playwright (E2E) (005-table-filter-bar)
+- TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, Emotion 11.13.5, Vite 6.0.3, Vitest (testing),
+  Playwright (E2E) (005-table-filter-bar)
 - Static JSON files (`/data/terpene-database.json`) - client-side only (005-table-filter-bar)
-- TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, i18next 25.6.0, react-i18next 15.2.0, Zod 3.24.1 (006-bilingual-data-support)
-- Static JSON files (`/data/terpene-database.json` for English, `/data/terpene-translations-de.json` for German) (006-bilingual-data-support)
-- TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, Emotion 11.13.5, i18next 25.6.0, Zod 3.24.1 (007-table-column-simplification)
+- TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, i18next 25.6.0, react-i18next 15.2.0, Zod 3.24.1
+  (006-bilingual-data-support)
+- Static JSON files (`/data/terpene-database.json` for English, `/data/terpene-translations-de.json` for German)
+  (006-bilingual-data-support)
+- TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, Emotion 11.13.5, i18next 25.6.0, Zod 3.24.1
+  (007-table-column-simplification)
 - Static JSON files (`/data/terpene-database.json` with category field already present) (007-table-column-simplification)
 
 - TypeScript 5.7+, Node.js 24 LTS, ES2022 target + React 19.2+, Material UI 6.3+, Emotion 11.13+ (styling), Zod 3.24+ (schema validation)
@@ -54,9 +59,13 @@ pnpm run type-check && pnpm run format && pnpm run lint:fix && pnpm run build
 TypeScript 5.7+, Node.js 24 LTS, ES2024 target: Follow standard conventions
 
 ## Recent Changes
-- 007-table-column-simplification: Added TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, Emotion 11.13.5, i18next 25.6.0, Zod 3.24.1
-- 006-bilingual-data-support: Added TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, i18next 25.6.0, react-i18next 15.2.0, Zod 3.24.1
-- 005-table-filter-bar: Added TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, Emotion 11.13.5, Vite 6.0.3, Vitest (testing), Playwright (E2E)
+
+- 007-table-column-simplification: Added TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, Emotion 11.13.5,
+  i18next 25.6.0, Zod 3.24.1
+- 006-bilingual-data-support: Added TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, i18next 25.6.0,
+  react-i18next 15.2.0, Zod 3.24.1
+- 005-table-filter-bar: Added TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, Emotion 11.13.5, Vite
+  6.0.3, Vitest (testing), Playwright (E2E)
 
   (styling), Zod 3.24+ (schema validation)
 
