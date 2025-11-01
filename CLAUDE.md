@@ -17,6 +17,7 @@ Agent use is **NOT NEGOTIABLE**:
 - **MANDATORY**: For debugging and fixing Playwright tests, use the `playwright-healer` agent.
 
 ## Active Technologies
+
 - TypeScript 5.7.2, React 19.2.0 + @mui/material 6.3.0, @emotion/react 11.13.5, @emotion/styled 11.13.5, Vite 6.0.3 (003-dark-theme-design)
 - LocalStorage for theme preferences (existing useLocalStorage hook) (003-dark-theme-design)
 - TypeScript 5.7.2, Node.js 24 LTS, ES2022 target + React 19.2.0, Material UI 6.3.0, Emotion 11.13.5, Vite 6.0.3, Vitest (testing), Playwright (E2E) (005-table-filter-bar)
@@ -46,6 +47,10 @@ backend/
 frontend/
 tests/
 ```
+
+## Temporary file storage
+
+Use the `.temp/` directory to store temporary files. You **must** avoid using directories outside the project root.
 
 ## Commands
 
