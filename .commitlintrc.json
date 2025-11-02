@@ -7,5 +7,4 @@
     "footer-leading-blank": [0],
     "subject-max-length": [0]
   },
-  "ignores": [{ "message": "*[skip ci]*" }]
 }
