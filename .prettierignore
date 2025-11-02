@@ -27,17 +27,18 @@ staticwebapp.config.json
 # Ignore spec markdown files
 specs/**/*.md
 
-# Ignore GitHub prompts and instructions
-.github/prompts/
-.github/instructions/
-.github/copilot-instructions.md
+# Ignore GitHub dotdirectories
+.github
+
+# Ignore spec-kit files
+.specify
 
 # Ignore AI Agent files
 .claude/
+.qwen/
 CLAUDE.md
 QWEN.md
 AGENTS.md
 GEMINI.md
 .gemini/
-.opencode/**/*.md
-.opencode/*.md
+.opencode
