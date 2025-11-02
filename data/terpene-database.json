@@ -35,7 +35,9 @@
       "references": [
         {
           "source": "Citation number or URL reference",
-          "type": "Peer-reviewed study, industry lab report, or botanical data"
+          "type": "Peer-reviewed study, industry lab report, or botanical data",
+          "url": "Optional direct link to source",
+          "notes": "Optional additional context about the reference"
         }
       ],
       "researchTier": {
@@ -72,11 +74,15 @@
         "references": [
           {
             "source": "PubMed 35278524",
-            "type": "Peer-reviewed"
+            "type": "Peer-reviewed",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/35278524/",
+            "notes": "Comprehensive review of terpene pharmacology."
           },
           {
             "source": "Leafly 2024 Analysis",
-            "type": "Industry report"
+            "type": "Industry report",
+            "url": "https://www.leafly.com/news/science-tech/cannabis-terpene-profiles-2024",
+            "notes": "In-depth analysis of cannabis terpene profiles."
           }
         ],
         "researchTier": {

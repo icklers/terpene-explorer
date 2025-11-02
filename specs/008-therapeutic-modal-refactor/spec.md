@@ -13,7 +13,7 @@ A medical cannabis patient views a terpene's details to quickly understand how i
 
 **Why this priority**: This is the core value proposition - medical patients need rapid access to therapeutic information to make informed decisions about their treatment. This addresses the primary user need: "How does this terpene help my health condition?"
 
-**Independent Test**: Can be fully tested by opening the modal for any terpene and verifying that therapeutic properties, categorized effects, and patient-friendly descriptions are immediately visible without scrolling, and that the user can identify key therapeutic benefits within 15 seconds.
+**Independent Test**: Can be fully tested by opening the modal for any terpene and verifying that therapeutic properties, categorized effects, and patient-friendly descriptions are immediately visible without scrolling, and that the user can identify key therapeutic benefits within 15 seconds (measured from modal open to user verbal identification using stopwatch timing in user testing sessions).
 
 **Acceptance Scenarios**:
 
@@ -58,7 +58,7 @@ A patient wants to find other terpenes with similar therapeutic properties by cl
 2. **Given** a therapeutic property filter is applied, **When** the filter activates, **Then** a snackbar notification appears with the message "Showing terpenes with [Property] properties"
 3. **Given** the user clicked a therapeutic property chip, **When** the filter is applied, **Then** the modal remains open to allow viewing the current terpene details while comparing with filtered results
 4. **Given** the modal is open after a filter is applied, **When** the user wants to close it, **Then** they can use the X button, Escape key, or click outside the modal
-4. **Given** Expert View is active, **When** the user clicks an effect chip in the categorized effects section, **Then** the main table is filtered by that specific effect
+5. **Given** Expert View is active, **When** the user clicks an effect chip in the categorized effects section, **Then** the main table is filtered by that specific effect
 
 ---
 
@@ -103,6 +103,9 @@ A user wants to understand what the concentration value means in practical terms
 - How does the system handle terpenes with many therapeutic properties (>10)? → Basic View shows all properties as chips that wrap naturally; no truncation of therapeutic properties as they are primary information
 - What happens when a reference URL is not accessible or broken? → The reference is still displayed but the external link icon is not shown; clicking shows a "Link unavailable" message
 - How does the copy-to-clipboard function handle browsers that don't support the Clipboard API? → A fallback method (select and copy) is used, or an error message is shown if clipboard access is denied
+- What should users see while the modal is loading/rendering? → Show skeleton/placeholder UI in modal frame immediately to prevent layout shifts and provide visual feedback
+- How does the system handle network delays or timeouts when loading modal content? → Display loading skeleton initially, then show error message with retry option if timeout occurs
+- What happens when concentration data is malformed or missing? → Display "Data unavailable" fallback text instead of broken progress bar or incorrect labels
 
 ## Requirements _(mandatory)_
 
@@ -114,7 +117,7 @@ A user wants to understand what the concentration value means in practical terms
 - **FR-002**: System MUST display the terpene name as a prominent heading (24px, bold) at the top of the modal
 - **FR-003**: System MUST display a category badge (Core/Secondary/Minor) next to the terpene name with color coding
 - **FR-004**: System MUST display aroma descriptors as clickable chips with appropriate icons in the Identity section
-- **FR-005**: System MUST display a therapeutic description with the heading "What it does for you:" in plain, patient-friendly language (target: Flesch-Kincaid Grade Level 6-8, short sentences, avoid medical jargon)
+- **FR-005**: System MUST display a therapeutic description with the heading "What it does for you:" in plain, patient-friendly language (target: Flesch-Kincaid Grade Level 6-8, measured using readable.com formula, short sentences, avoid medical jargon)
 - **FR-006**: System MUST display therapeutic properties as color-coded, clickable chips immediately below the description
 - **FR-007**: System MUST organize and display effects by category using the effectCategoryMapping from the database schema
 - **FR-008**: System MUST display category headers with appropriate icons (🌞 Mood & Energy, 🧠 Cognitive, 🧘 Relaxation, 🏃 Physical)
@@ -138,7 +141,7 @@ A user wants to understand what the concentration value means in practical terms
 - **FR-023**: System MUST conditionally display isomer information (type and parent compound) only if `isomerOf` is not null
 - **FR-024**: System MUST display a color-coded data quality badge in the Research & Evidence accordion
 - **FR-025**: System MUST display the evidence summary text
-- **FR-026**: System MUST display references as a numbered list with type badges and external link icons for URLs
+- **FR-026**: System MUST display references categorized by type (Peer-reviewed, Industry report, etc.) with source names as clickable links for URLs and plain text for citation-only references
 
 #### Interactions
 
@@ -152,8 +155,16 @@ A user wants to understand what the concentration value means in practical terms
 - **FR-034**: System MUST display a success toast notification after copying molecular formula (Material UI Snackbar, 3-second duration, bottom-center position, auto-dismiss)
 - **FR-035**: Users MUST be able to expand and collapse accordion sections independently in Expert View
 - **FR-036**: System MUST allow multiple accordions to be open simultaneously
-- **FR-037**: Users MUST be able to close the modal using the X button, Escape key, or clicking outside
+- **FR-037**: Users MUST be able to close the modal using the X button, Escape key, or clicking outside (consolidated with US3 close behaviors in lines 60, 102)
 - **FR-038**: System MUST restore focus to the triggering element when the modal closes
+
+#### Error Handling & Edge Cases
+
+- **FR-058**: System MUST handle clipboard API failures gracefully with fallback to document.execCommand('copy') method
+- **FR-059**: System MUST display references without URLs as plain text and references with URLs as clickable links with proper target="_blank" and rel="noopener noreferrer" attributes
+- **FR-060**: System MUST show skeleton loading UI during modal content loading to prevent layout shifts
+- **FR-061**: System MUST gracefully handle network timeouts with user-friendly error messages
+- **FR-062**: System MUST display "Data unavailable" fallback for malformed or missing concentration data
 
 #### Responsive Behavior
 
@@ -176,8 +187,8 @@ A user wants to understand what the concentration value means in practical terms
 
 #### Performance
 
-- **FR-052**: System MUST render the modal in under 100 milliseconds
-- **FR-053**: System MUST animate toggle transitions smoothly without layout shifts (unless prefers-reduced-motion is enabled)
+- **FR-052**: System MUST render the modal in under 100 milliseconds (measured from user click to modal content visible using Chrome DevTools Performance tab)
+- **FR-053**: System MUST animate toggle transitions smoothly without layout shifts (CLS <0.1, measured using Chrome DevTools Performance tab, unless prefers-reduced-motion is enabled)
 - **FR-054**: System MUST conditionally render Expert View content only when the Expert View toggle is activated (content not rendered in DOM until toggled)
 - **FR-055**: System MUST display skeleton/placeholder UI (Material UI Skeleton component) in the modal frame immediately when triggered, preserving layout dimensions before full content loads
 
@@ -214,13 +225,13 @@ A user wants to understand what the concentration value means in practical terms
 ### Measurable Outcomes
 
 - **SC-001**: Medical cannabis patients can identify at least 3 therapeutic benefits of a terpene within 15 seconds of opening the modal
-- **SC-002**: The modal renders and displays content in under 100 milliseconds on standard devices
+- **SC-002**: The modal renders and displays content in under 100 milliseconds on standard devices (see FR-052 for measurement methodology)
 - **SC-003**: At least 40% of users who open the modal explore the Expert View toggle during their session
 - **SC-004**: At least 30% of users click on therapeutic property chips to filter the main table
 - **SC-005**: The modal passes WCAG 2.1 AA accessibility compliance (minimum 4.5:1 color contrast, keyboard navigation, screen reader compatibility)
 - **SC-006**: Users can complete the primary task (understanding therapeutic benefits) without scrolling on mobile devices in portrait orientation
 - **SC-007**: At least 85% of users report that they understand the therapeutic purpose of a terpene after viewing the Basic View (via user testing)
-- **SC-008**: The toggle interaction between Basic and Expert views completes within 200 milliseconds with smooth animation
+- **SC-008**: The toggle interaction between Basic and Expert views completes within 200 milliseconds with smooth animation (60fps frame rate maintained, measured using Chrome DevTools Rendering tab)
 - **SC-009**: Copy-to-clipboard functionality works successfully on at least 95% of supported browsers
 - **SC-010**: At least 50% of users who open a modal re-open another terpene modal in the same session (indicating successful information finding)
 - **SC-011**: The modal maintains performance with no layout shifts (Cumulative Layout Shift score < 0.1)

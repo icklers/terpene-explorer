@@ -12,6 +12,8 @@ const MolecularDataSchema = z.object({
 const ReferenceSchema = z.object({
   source: z.string().min(1),
   type: z.string().min(1),
+  url: z.string().url().optional(),
+  notes: z.string().optional(),
 });
 
 const ResearchTierSchema = z.object({

@@ -24,12 +24,12 @@ import {
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { TerpeneDetailModal } from './TerpeneDetailModal';
 import type { Terpene } from '../../models/Terpene';
 import { getEffectMetadata } from '../../services/colorService';
 import { getCategoryForEffect } from '../../services/filterService';
 import type { Terpene as NewTerpene } from '../../types/terpene';
 import { toNewTerpene } from '../../utils/terpeneAdapter';
+import { TerpeneDetailModal } from '../TerpeneDetailModal';
 
 // TODO: Re-enable virtualization with react-window after fixing import issues
 // import { FixedSizeList } from 'react-window';
