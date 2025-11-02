@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.3.0 (2025-11-02)
 
+* chore(deps): bump react-window from 2.2.1 to 2.2.2 (#56) ([77075fd](https://github.com/icklers/terpene-explorer/commit/77075fd)), closes [#56](https://github.com/icklers/terpene-explorer/issues/56)
+* chore(release): 1.3.0 [skip ci] ([7d3c302](https://github.com/icklers/terpene-explorer/commit/7d3c302))
+* feat: add automated release workflow v2 ([d159bac](https://github.com/icklers/terpene-explorer/commit/d159bac))
+
+## 1.3.0 (2025-11-02)
+
 * feat: add automated release workflow v2 ([d159bac](https://github.com/icklers/terpene-explorer/commit/d159bac))
 
 ## 1.2.0 (2025-11-02)
