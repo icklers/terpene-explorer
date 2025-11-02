@@ -23,6 +23,8 @@ export interface TerpeneDetailModalProps {
   open: boolean;
   terpene: Terpene | null;
   onClose: () => void;
+  onTherapeuticPropertyClick?: (property: string) => void;
+  onEffectClick?: (effect: string) => void;
 }
 
 export interface SearchOptions {

@@ -5,6 +5,65 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added - Therapeutic-Focused Terpene Details Modal (Feature #008)
+
+- **Complete Modal Refactor**: Rebuilt terpene details modal with therapeutic information prioritized for medical cannabis patients
+- **Dual View System**: Basic View for quick assessment and Expert View for scientific depth
+- **User Stories Implemented**:
+  - US1: Quick Therapeutic Assessment - patients identify benefits in <15 seconds
+  - US2: Deep Therapeutic Exploration - accordion-based scientific data access
+  - US4: Category Badge Information - tooltips explain terpene prevalence tiers
+  - US5: Concentration Context - percentile-based concentration explanations
+  
+- **UI Improvements**:
+  - Color-coded therapeutic property chips (WCAG AA compliant)
+  - Categorized effects display (Mood & Energy, Relaxation, Physical)
+  - Concentration visualization with percentile indicators
+  - Natural sources display with first 3 in Basic View, all in Expert View
+  - Category badges with inline positioning and tooltips
+  - Responsive design with full-screen mode on mobile
+  
+- **Data Quality System**:
+  - Improved badge color coding (Excellent: dark green, Good: light green, Moderate: green border, Limited: grey border, Unknown: filled grey)
+  - Evidence summaries with quality indicators
+  - Reference citations with type badges and external links
+  
+- **Molecular Properties Accordion**:
+  - Chemical class, molecular formula with copy-to-clipboard
+  - Molecular weight, boiling point display
+  - Isomer information when applicable
+  
+- **Accessibility Features**:
+  - Full keyboard navigation support
+  - ARIA labels and semantic HTML
+  - Focus trap when modal open
+  - Focus restoration on close
+  - Touch targets ≥48px on mobile
+  
+- **Performance Optimizations**:
+  - Memoized effect categorization computation
+  - Memoized concentration data parsing
+  - Optimized re-renders with dependency tracking
+
+### Changed
+
+- **Typography Consistency**: All headings use consistent subtitle1 style without colons
+- **Effects Display**: Basic View shows flat color-coded chips; Expert View adds category groupings
+- **Removed Visual Clutter**: Eliminated emojis from aroma profiles, natural sources, and section headings
+- **Heading Hierarchy**: Changed "Primary Effects" to "Effects", removed "What it does for you:" colon
+- **Description Truncation**: Increased from 120 to 180 characters (+50%) for better context
+
+### Technical Details
+
+- **Testing**: 74 passing tests (62 modal + 12 supporting components)
+- **TDD Approach**: All features developed with RED→GREEN→REFACTOR cycles
+- **Coverage**: Maintained high test coverage across all components
+- **Bundle Size**: Total gzipped: ~102kB (within budget)
+- **Type Safety**: Zero TypeScript errors
+- **Code Quality**: Zero ESLint warnings
+
 ## 1.1.0 (2025-11-01)
 
 - feat: Implement category color coding for effect chips in TerpeneTable (#52)
@@ -300,23 +359,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - chore(ci): update github-script action to v8
 
-* Update actions/github-script from v7 to v8 in both PR validation and release workflows
-* Ensures compatibility with latest GitHub Actions runtime
+- Update actions/github-script from v7 to v8 in both PR validation and release workflows
+
+- Ensures compatibility with latest GitHub Actions runtime
 
 - chore(ci): avoid pushing to protected main by removing @semantic-release/git
 
 - chore(ci): enable git pushes via GitHub App installation token; add token mint step to release workflow
 
 - chore(ci): ensure App installation token is minted before semantic-release; add diagnostic/fallback logs
-
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
-[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
 
 ### Added
 

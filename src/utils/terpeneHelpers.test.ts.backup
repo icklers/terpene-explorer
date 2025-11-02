@@ -1,0 +1,269 @@
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { getTherapeuticColor, categorizeEffects, parseConcentration, getSourceIcon, copyToClipboard } from './terpeneHelpers';
+
+describe('terpeneHelpers', () => {
+  describe('getTherapeuticColor', () => {
+    it('returns blue[500] for Anxiolytic', () => {
+      expect(getTherapeuticColor('Anxiolytic')).toBe('#2196f3'); // blue[500]
+    });
+
+    it('returns cyan[500] for Antidepressant', () => {
+      expect(getTherapeuticColor('Antidepressant')).toBe('#00bcd4'); // cyan[500]
+    });
+
+    it('returns indigo[600] for Sedative', () => {
+      expect(getTherapeuticColor('Sedative')).toBe('#303f9f'); // indigo[600]
+    });
+
+    it('returns purple[500] for Neuroprotective', () => {
+      expect(getTherapeuticColor('Neuroprotective')).toBe('#9c27b0'); // purple[500]
+    });
+
+    it('returns purple[600] for Anti-epileptic', () => {
+      expect(getTherapeuticColor('Anti-epileptic')).toBe('#8e24aa'); // purple[600]
+    });
+
+    it('returns red[400] for Anti-inflammatory', () => {
+      expect(getTherapeuticColor('Anti-inflammatory')).toBe('#ef5350'); // red[400]
+    });
+
+    it('returns orange[500] for Analgesic', () => {
+      expect(getTherapeuticColor('Analgesic')).toBe('#ff9800'); // orange[500]
+    });
+
+    it('returns red[300] for Muscle relaxant', () => {
+      expect(getTherapeuticColor('Muscle relaxant')).toBe('#e57373'); // red[300]
+    });
+
+    it('returns teal[500] for Bronchodilator', () => {
+      expect(getTherapeuticColor('Bronchodilator')).toBe('#009688'); // teal[500]
+    });
+
+    it('returns teal[400] for Mucolytic', () => {
+      expect(getTherapeuticColor('Mucolytic')).toBe('#26a69a'); // teal[400]
+    });
+
+    it('returns brown[400] for Antimicrobial', () => {
+      expect(getTherapeuticColor('Antimicrobial')).toBe('#8d6e63'); // brown[400]
+    });
+
+    it('returns green[600] for Antiviral', () => {
+      expect(getTherapeuticColor('Antiviral')).toBe('#388e3c'); // green[600]
+    });
+
+    it('returns green[500] for Antioxidant', () => {
+      expect(getTherapeuticColor('Antioxidant')).toBe('#4caf50'); // green[500]
+    });
+
+    it('returns brown[300] for Gastroprotective', () => {
+      expect(getTherapeuticColor('Gastroprotective')).toBe('#a1887f'); // brown[300]
+    });
+
+    it('returns brown[500] for Antispasmodic', () => {
+      expect(getTherapeuticColor('Antispasmodic')).toBe('#795548'); // brown[500]
+    });
+
+    it('returns grey[600] for unknown properties', () => {
+      expect(getTherapeuticColor('Unknown Property')).toBe('#757575'); // grey[600]
+    });
+
+    it('returns grey[600] for empty string', () => {
+      expect(getTherapeuticColor('')).toBe('#757575'); // grey[600]
+    });
+  });
+
+  describe('categorizeEffects', () => {
+    it('groups effects by category (mood, cognitive, relaxation, physical)', () => {
+      const effects = ['Mood enhancing', 'Energizing', 'Focus', 'Anxiety relief', 'Anti-inflammatory'];
+
+      const result = categorizeEffects(effects);
+
+      expect(result).toHaveLength(4);
+      expect(result.find((cat) => cat.id === 'mood')?.effects).toEqual(['Mood enhancing', 'Energizing']);
+      expect(result.find((cat) => cat.id === 'cognitive')?.effects).toEqual(['Focus']);
+      expect(result.find((cat) => cat.id === 'relaxation')?.effects).toEqual(['Anxiety relief']);
+      expect(result.find((cat) => cat.id === 'physical')?.effects).toEqual(['Anti-inflammatory']);
+    });
+
+    it('limits to max 3 effects per category when showAll=false (Basic View)', () => {
+      const effects = ['Mood enhancing', 'Energizing', 'Uplifting', 'Mood stabilizing'];
+
+      const result = categorizeEffects(effects, false);
+      const moodCategory = result.find((cat) => cat.id === 'mood');
+
+      expect(moodCategory?.effects).toHaveLength(3);
+      expect(moodCategory?.effects).toEqual(['Mood enhancing', 'Energizing', 'Uplifting']);
+    });
+
+    it('shows all effects when showAll=true (Expert View)', () => {
+      const effects = ['Mood enhancing', 'Energizing', 'Uplifting', 'Mood stabilizing'];
+
+      const result = categorizeEffects(effects, true);
+      const moodCategory = result.find((cat) => cat.id === 'mood');
+
+      expect(moodCategory?.effects).toHaveLength(4);
+    });
+
+    it('filters out empty categories', () => {
+      const effects = ['Mood enhancing', 'Energizing'];
+
+      const result = categorizeEffects(effects);
+
+      // Should only return categories with effects
+      expect(result.every((cat) => cat.effects.length > 0)).toBe(true);
+      expect(result).toHaveLength(1); // Only mood category
+    });
+  });
+
+  describe('parseConcentration', () => {
+    it('parses "0.003-1.613 mg/g" format correctly', () => {
+      const result = parseConcentration('0.003-1.613 mg/g', 'Core');
+
+      expect(result.min).toBe(0.003);
+      expect(result.max).toBe(1.613);
+      expect(result.displayText).toBe('0.003-1.613 mg/g');
+    });
+
+    it('calculates percentile for Core category (0-2.0 mg/g baseline)', () => {
+      const result = parseConcentration('0.003-1.613 mg/g', 'Core');
+
+      // 1.613 / 2.0 = 80.65% percentile
+      expect(result.percentile).toBeCloseTo(80.65, 2);
+    });
+
+    it('calculates percentile for Secondary category (0-1.0 mg/g baseline)', () => {
+      const result = parseConcentration('0.003-1.613 mg/g', 'Secondary');
+
+      // 1.613 / 1.0 = 161.3%, but capped at 100%
+      expect(result.percentile).toBe(100);
+    });
+
+    it('calculates percentile for Minor category (0-0.5 mg/g baseline)', () => {
+      const result = parseConcentration('0.003-1.613 mg/g', 'Minor');
+
+      // 1.613 / 0.5 = 322.6%, but capped at 100%
+      expect(result.percentile).toBe(100);
+    });
+
+    it('assigns High label for ≥75th percentile', () => {
+      const result = parseConcentration('1.5-2.0 mg/g', 'Core');
+
+      expect(result.label).toBe('High');
+    });
+
+    it('assigns Moderate label for 40-74th percentile', () => {
+      const result = parseConcentration('0.8-1.2 mg/g', 'Core');
+
+      expect(result.label).toBe('Moderate');
+    });
+
+    it('assigns Low label for 10-39th percentile', () => {
+      const result = parseConcentration('0.2-0.5 mg/g', 'Core');
+
+      expect(result.label).toBe('Low');
+    });
+
+    it('assigns Trace label for <10th percentile', () => {
+      const result = parseConcentration('0.001-0.1 mg/g', 'Core');
+
+      expect(result.label).toBe('Trace');
+    });
+  });
+
+  describe('getSourceIcon', () => {
+    it('returns 🍋 for "Lemon peel"', () => {
+      expect(getSourceIcon('Lemon peel')).toBe('🍋');
+    });
+
+    it('returns 🍊 for "Orange rind"', () => {
+      expect(getSourceIcon('Orange rind')).toBe('🍊');
+    });
+
+    it('returns 🌿 for "Lavender"', () => {
+      expect(getSourceIcon('Lavender')).toBe('🌿');
+    });
+
+    it('returns 🌲 for "Pine needles"', () => {
+      expect(getSourceIcon('Pine needles')).toBe('🌲');
+    });
+
+    it('returns 🌶️ for "Black pepper"', () => {
+      expect(getSourceIcon('Black pepper')).toBe('🌶️');
+    });
+
+    it('returns 🍺 for "Hops"', () => {
+      expect(getSourceIcon('Hops')).toBe('🍺');
+    });
+
+    it('returns 🌿 for unknown sources', () => {
+      expect(getSourceIcon('Unknown source')).toBe('🌿');
+    });
+
+    it('returns 🌿 for empty string', () => {
+      expect(getSourceIcon('')).toBe('🌿');
+    });
+  });
+
+  describe('copyToClipboard', () => {
+    let originalClipboard: any;
+    
+    beforeEach(() => {
+      // Store original clipboard
+      originalClipboard = (navigator as any).clipboard;
+      
+      // Mock clipboard API
+      (navigator as any).clipboard = {
+        writeText: vi.fn().mockResolvedValue(undefined)
+      };
+    });
+    
+    afterEach(() => {
+      // Restore original clipboard
+      (navigator as any).clipboard = originalClipboard;
+    });
+    });
+
+    it('calls Clipboard API with text', async () => {
+      await copyToClipboard('test text');
+
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith('test text');
+    });
+
+    it('calls onSuccess callback when copy succeeds', async () => {
+      const onSuccess = vi.fn();
+
+      await copyToClipboard('test text', onSuccess);
+
+      expect(onSuccess).toHaveBeenCalledOnce();
+    });
+
+    it('uses document.execCommand fallback when Clipboard API unavailable', async () => {
+      // Remove clipboard API
+      delete (navigator as any).clipboard;
+
+      // Mock execCommand
+      const execCommandMock = vi.fn().mockReturnValue(true);
+      Object.defineProperty(document, 'execCommand', {
+        value: execCommandMock,
+        writable: true,
+      });
+
+      const onSuccess = vi.fn();
+      await copyToClipboard('test text', onSuccess);
+
+      expect(execCommandMock).toHaveBeenCalledWith('copy');
+      expect(onSuccess).toHaveBeenCalledOnce();
+    });
+
+    it('calls onError callback when copy fails', async () => {
+      // Mock clipboard API to reject
+      (navigator.clipboard.writeText as any).mockRejectedValue(new Error('Copy failed'));
+
+      const onError = vi.fn();
+
+      await copyToClipboard('test text', undefined, onError);
+
+      expect(onError).toHaveBeenCalledWith(expect.any(Error));
+    });
+  });
+});

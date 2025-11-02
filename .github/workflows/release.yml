@@ -156,6 +156,16 @@ jobs:
     if: success()
     runs-on: ubuntu-latest
 
+    # Add permissions needed to trigger workflows
+    permissions:
+      contents: read
+      actions: write
+
+    env:
+      SEMANTIC_RELEASE_BOT_APP_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_ID }}
+      SEMANTIC_RELEASE_BOT_PRIVATE_KEY: ${{ secrets.SEMANTIC_RELEASE_BOT_PRIVATE_KEY }}
+      SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID }}
+
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v5
@@ -166,27 +176,89 @@ jobs:
           LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
           echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
 
-      - name: 🚀 Trigger deployment
+      # Create installation token for deployment triggering
+      - name: 🔐 Create deployment token
+        id: create_deploy_token
+        run: |
+          set -euo pipefail
+
+          if [ -z "${SEMANTIC_RELEASE_BOT_APP_ID:-}" ] || [ -z "${SEMANTIC_RELEASE_BOT_PRIVATE_KEY:-}" ] || [ -z "${SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID:-}" ]; then
+            echo "GitHub App secrets not available, falling back to GITHUB_TOKEN"
+            echo "token=${{ secrets.GITHUB_TOKEN }}" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Create JWT using Node's crypto builtin
+          JWT=$(node -e "const crypto=require('crypto');const appId=process.env.SEMANTIC_RELEASE_BOT_APP_ID;const pk=process.env.SEMANTIC_RELEASE_BOT_PRIVATE_KEY.replace(/\r?\n/g,'\n');const header=Buffer.from(JSON.stringify({alg:'RS256',typ:'JWT'})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const now=Math.floor(Date.now()/1000);const payload=Buffer.from(JSON.stringify({iat:now-60,exp:now+600,iss:parseInt(appId)})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const data=header+'.'+payload;const sign=crypto.createSign('RSA-SHA256');sign.update(data);const sig=sign.sign(pk,'base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');console.log(data+'.'+sig);")
+
+          # Exchange JWT for an installation token
+          RESP=$(curl -s -X POST "https://api.github.com/app/installations/${SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID}/access_tokens" -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json")
+
+          TOKEN=$(echo "$RESP" | python -c 'import sys, json;print(json.load(sys.stdin).get("token", ""))')
+
+          if [ -z "$TOKEN" ]; then
+            echo "Failed to get installation token, falling back to GITHUB_TOKEN"
+            echo "token=${{ secrets.GITHUB_TOKEN }}" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "token=$TOKEN" >> "$GITHUB_OUTPUT"
+
+      - name: � Validate deployment workflow exists
+        run: |
+          WORKFLOW_FILE=".github/workflows/azure-static-web-apps-blue-desert-06e30df03.yml"
+          if [ ! -f "$WORKFLOW_FILE" ]; then
+            echo "❌ Deployment workflow file not found: $WORKFLOW_FILE"
+            echo "Available workflow files:"
+            ls -la .github/workflows/ || true
+            exit 1
+          fi
+          echo "✅ Deployment workflow file exists: $WORKFLOW_FILE"
+
+      - name: �🚀 Trigger deployment
         if: steps.release.outputs.tag != 'none'
         uses: actions/github-script@v8
         with:
+          github-token: ${{ steps.create_deploy_token.outputs.token }}
           script: |
             const tag = '${{ steps.release.outputs.tag }}';
+            const workflowId = 'azure-static-web-apps-blue-desert-06e30df03.yml';
 
-            // Trigger Azure Static Web Apps deployment
+            console.log(`🚀 Triggering deployment for release: ${tag}`);
+
             try {
-              await github.rest.actions.createWorkflowDispatch({
+              // First, verify the workflow exists and is accessible
+              const workflows = await github.rest.actions.listRepoWorkflows({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
+
+              const targetWorkflow = workflows.data.workflows.find(w => w.path.endsWith(workflowId));
+              if (!targetWorkflow) {
+                throw new Error(`Workflow ${workflowId} not found. Available workflows: ${workflows.data.workflows.map(w => w.path).join(', ')}`);
+              }
+
+              console.log(`✅ Found target workflow: ${targetWorkflow.path} (ID: ${targetWorkflow.id})`);
+
+              // Trigger the deployment workflow
+              const result = await github.rest.actions.createWorkflowDispatch({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                workflow_id: 'azure-static-web-apps-blue-desert-06e30df03.yml',
+                workflow_id: workflowId,
                 ref: 'main',
                 inputs: {
                   release_tag: tag
                 }
               });
-              console.log('✅ Triggered Azure Static Web Apps deployment');
-            } catch (error) {
-              console.log('⚠️ Azure deployment trigger skipped:', error.message);
-            }
 
-            console.log(`✅ Deployment triggers completed for ${tag}`)
+              console.log(`✅ Successfully triggered Azure Static Web Apps deployment for ${tag}`);
+              console.log(`📋 Workflow dispatch result: ${result.status}`);
+
+            } catch (error) {
+              console.error(`❌ Failed to trigger deployment: ${error.message}`);
+              if (error.response) {
+                console.error(`HTTP ${error.response.status}: ${JSON.stringify(error.response.data, null, 2)}`);
+              }
+              // Make the step fail so the release process doesn't silently continue
+              process.exit(1);
+            }

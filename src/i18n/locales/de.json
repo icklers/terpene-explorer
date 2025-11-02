@@ -180,5 +180,47 @@
     "tagline": "Entdecke die aromatische Welt der Terpene",
     "appName": "Terpen Explorer",
     "accessibility": "Barrierefreiheit"
+  },
+  "modal": {
+    "terpeneDetail": {
+      "title": "Terpene-Details",
+      "close": "Schließen",
+      "viewMode": {
+        "basic": "Basics-Ansicht",
+        "expert": "Experten-Ansicht",
+        "label": "Ansichtsmodus"
+      },
+      "sections": {
+        "whatItDoes": "Was es für Sie tut:",
+        "therapeuticProperties": "💊 Therapeutische Eigenschaften",
+        "primaryEffects": "Primäre Wirkungen:",
+        "concentration": "Konzentration:",
+        "alsoFoundIn": "🌿 Auch gefunden in:",
+        "therapeuticDetails": "Therapeutische Details",
+        "molecularProperties": "Molekulare Eigenschaften",
+        "researchEvidence": "Forschung & Referenzen"
+      },
+      "concentration": {
+        "high": "Hoch",
+        "moderate": "Mäßig",
+        "low": "Niedrig",
+        "trace": "Spur"
+      },
+      "categories": {
+        "moodEnergy": "Stimmung & Energie",
+        "cognitive": "Kognitive Verbesserung",
+        "relaxation": "Entspannung & Angst",
+        "physical": "Körperlich & Physiologisch"
+      },
+      "readMore": "Mehr lesen...",
+      "showLess": "Weniger anzeigen",
+      "notableDifferences": "Bemerkenswerte Synergien & Unterschiede",
+      "completeSources": "Vollständige Quellenliste",
+      "dataQuality": "Datenqualität:",
+      "evidenceSummary": "Beweiszusammenfassung:",
+      "references": "📚 Referenzen:",
+      "copySuccess": "Molekularformel in Zwischenablage kopiert",
+      "copyError": "Kopieren in Zwischenablage fehlgeschlagen"
+    }
   }
 }

@@ -174,5 +174,47 @@
     "madeWith": "Made with",
     "by": "by",
     "license": "License"
+  },
+  "modal": {
+    "terpeneDetail": {
+      "title": "Terpene Details",
+      "close": "Close",
+      "viewMode": {
+        "basic": "Basic View",
+        "expert": "Expert View",
+        "label": "View Mode"
+      },
+      "sections": {
+        "whatItDoes": "What it does for you:",
+        "therapeuticProperties": "💊 Therapeutic Properties",
+        "primaryEffects": "Primary Effects:",
+        "concentration": "Concentration:",
+        "alsoFoundIn": "🌿 Also found in:",
+        "therapeuticDetails": "Therapeutic Details",
+        "molecularProperties": "Molecular Properties",
+        "researchEvidence": "Research & References"
+      },
+      "concentration": {
+        "high": "High",
+        "moderate": "Moderate",
+        "low": "Low",
+        "trace": "Trace"
+      },
+      "categories": {
+        "moodEnergy": "Mood & Energy",
+        "cognitive": "Cognitive Enhancement",
+        "relaxation": "Relaxation & Anxiety",
+        "physical": "Physical & Physiological"
+      },
+      "readMore": "Read more...",
+      "showLess": "Show less",
+      "notableDifferences": "Notable Synergies & Differences",
+      "completeSources": "Complete Source List",
+      "dataQuality": "Data Quality:",
+      "evidenceSummary": "Evidence Summary:",
+      "references": "📚 References:",
+      "copySuccess": "Molecular formula copied to clipboard",
+      "copyError": "Failed to copy to clipboard"
+    }
   }
 }

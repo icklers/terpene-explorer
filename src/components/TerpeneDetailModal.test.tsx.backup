@@ -1,0 +1,460 @@
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+
+import { TerpeneDetailModal } from './TerpeneDetailModal';
+import type { Terpene } from '../types/terpene';
+
+// Mock terpene data for testing
+const mockTerpene: Terpene = {
+  id: 'limonene-001',
+  name: 'Limonene',
+  isomerOf: null,
+  isomerType: null,
+  category: 'Core',
+  aroma: 'Citrus, Lemon, Orange',
+  taste: 'Citrus, sweet',
+  description: 'Citrus terpene responsible for uplifting properties',
+  therapeuticProperties: ['Antidepressant', 'Anti-inflammatory', 'Anxiolytic'],
+  effects: ['Mood enhancing', 'Energizing', 'Stress relief', 'Focus'],
+  concentrationRange: '0.003-1.613 mg/g',
+  sources: ['Lemon peel', 'Orange rind', 'Grapefruit'],
+  molecularData: {
+    molecularFormula: 'C10H16',
+    molecularWeight: 136.24,
+    boilingPoint: 176,
+    class: 'Monoterpene',
+  },
+  researchTier: {
+    dataQuality: 'Excellent' as const,
+    evidenceSummary: 'Well-documented across multiple studies',
+  },
+  references: [
+    {
+      source: 'https://example.com/study1',
+      type: 'Peer-reviewed study',
+    },
+  ],
+};
+
+describe('TerpeneDetailModal', () => {
+  describe('Modal Shell & Identity Section', () => {
+    it('renders with terpene name', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      expect(screen.getByText('Limonene')).toBeInTheDocument();
+    });
+
+    it('renders CategoryBadge next to name', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Should have both name and category badge
+      expect(screen.getByText('Limonene')).toBeInTheDocument();
+      expect(screen.getByText('Core')).toBeInTheDocument();
+    });
+
+    it('renders aroma chips with icons', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Should render individual aroma items as chips
+      expect(screen.getByText('Citrus')).toBeInTheDocument();
+      expect(screen.getByText('Lemon')).toBeInTheDocument();
+      expect(screen.getByText('Orange')).toBeInTheDocument();
+    });
+
+    it('has close button (X icon)', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Look for close button by aria-label (using i18n key)
+      const closeButton = screen.getByLabelText('modal.terpeneDetail.close');
+      expect(closeButton).toBeInTheDocument();
+    });
+
+    it('calls onClose when close button clicked', () => {
+      const onClose = vi.fn();
+
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={onClose} />);
+
+      const closeButton = screen.getByLabelText('modal.terpeneDetail.close');
+      fireEvent.click(closeButton);
+
+      expect(onClose).toHaveBeenCalledOnce();
+    });
+
+    it('calls onClose when close button clicked', () => {
+      const onClose = vi.fn();
+
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={onClose} />);
+
+      const closeButton = screen.getByLabelText('modal.terpeneDetail.close');
+      fireEvent.click(closeButton);
+
+      expect(onClose).toHaveBeenCalledOnce();
+    });
+
+    it('does not render when closed', () => {
+      render(<TerpeneDetailModal open={false} terpene={null} onClose={vi.fn()} />);
+
+      // Should not render anything when closed
+      expect(screen.queryByText('Limonene')).not.toBeInTheDocument();
+    });
+
+    it('does not render when terpene is null', () => {
+      render(<TerpeneDetailModal open={true} terpene={null} onClose={vi.fn()} />);
+
+      // Should not render anything when terpene is null
+      expect(screen.queryByText('Limonene')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Description Section', () => {
+    it('displays "What it does for you:" heading', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      expect(screen.getByText('What it does for you:')).toBeInTheDocument();
+    });
+
+    it('truncates description to 120 characters with "Read more..." link', () => {
+      const longDescription = 'A'.repeat(200); // 200 character description
+      const terpeneWithLongDesc = { ...mockTerpene, description: longDescription };
+
+      render(<TerpeneDetailModal open={true} terpene={terpeneWithLongDesc} onClose={vi.fn()} />);
+
+      // Should show truncated text (120 chars + "...")
+      const truncatedText = screen.getByText('A'.repeat(120) + '...');
+      expect(truncatedText).toBeInTheDocument();
+
+      // Should have "Read more..." link
+      expect(screen.getByText('Read more...')).toBeInTheDocument();
+    });
+
+    it('shows full description when "Read more..." is clicked', () => {
+      const longDescription = 'A'.repeat(200); // 200 character description
+      const terpeneWithLongDesc = { ...mockTerpene, description: longDescription };
+
+      render(<TerpeneDetailModal open={true} terpene={terpeneWithLongDesc} onClose={vi.fn()} />);
+
+      // Click "Read more..."
+      const readMoreLink = screen.getByText('Read more...');
+      fireEvent.click(readMoreLink);
+
+      // Should now show full description
+      expect(screen.getByText(longDescription)).toBeInTheDocument();
+
+      // Should have "Show less" link
+      expect(screen.getByText('Show less')).toBeInTheDocument();
+    });
+
+    it('collapses back to truncated when "Show less" is clicked', () => {
+      const longDescription = 'A'.repeat(200); // 200 character description
+      const terpeneWithLongDesc = { ...mockTerpene, description: longDescription };
+
+      render(<TerpeneDetailModal open={true} terpene={terpeneWithLongDesc} onClose={vi.fn()} />);
+
+      // Expand first
+      const readMoreLink = screen.getByText('Read more...');
+      fireEvent.click(readMoreLink);
+
+      // Then collapse
+      const showLessLink = screen.getByText('Show less');
+      fireEvent.click(showLessLink);
+
+      // Should show truncated again
+      expect(screen.getByText('A'.repeat(120) + '...')).toBeInTheDocument();
+      expect(screen.getByText('Read more...')).toBeInTheDocument();
+    });
+
+    it('shows full description when under 120 characters', () => {
+      const shortDescription = 'Short description under 120 characters';
+      const terpeneWithShortDesc = { ...mockTerpene, description: shortDescription };
+
+      render(<TerpeneDetailModal open={true} terpene={terpeneWithShortDesc} onClose={vi.fn()} />);
+
+      // Should show full description
+      expect(screen.getByText(shortDescription)).toBeInTheDocument();
+
+      // Should not have "Read more..." link
+      expect(screen.queryByText('Read more...')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Therapeutic Properties Section', () => {
+    it('displays "💊 Therapeutic Properties" heading', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      expect(screen.getByText('💊 Therapeutic Properties')).toBeInTheDocument();
+    });
+
+    it('renders therapeutic property chips with correct colors', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Should render all therapeutic properties as chips
+      expect(screen.getByText('Antidepressant')).toBeInTheDocument();
+      expect(screen.getByText('Anti-inflammatory')).toBeInTheDocument();
+      expect(screen.getByText('Anxiolytic')).toBeInTheDocument();
+    });
+
+    it('calls onTherapeuticPropertyClick when chip is clicked', () => {
+      const onTherapeuticPropertyClick = vi.fn();
+
+      render(
+        <TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} onTherapeuticPropertyClick={onTherapeuticPropertyClick} />
+      );
+
+      // Click on a therapeutic property chip
+      const antidepressantChip = screen.getByText('Antidepressant');
+      fireEvent.click(antidepressantChip);
+
+      expect(onTherapeuticPropertyClick).toHaveBeenCalledWith('Antidepressant');
+    });
+
+    it('does not call callback when onTherapeuticPropertyClick is not provided', () => {
+      render(
+        <TerpeneDetailModal
+          open={true}
+          terpene={mockTerpene}
+          onClose={vi.fn()}
+          // onTherapeuticPropertyClick not provided
+        />
+      );
+
+      // Click on a therapeutic property chip
+      const antidepressantChip = screen.getByText('Antidepressant');
+      fireEvent.click(antidepressantChip);
+
+      // Should not throw any errors
+      expect(antidepressantChip).toBeInTheDocument();
+    });
+  });
+
+  describe('Effects Section', () => {
+    it('displays "Primary Effects:" heading', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      expect(screen.getByText('Primary Effects:')).toBeInTheDocument();
+    });
+
+    it('categorizes effects with icons (🌞, 🧠, 🧘, 🏃)', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Should have category headers with icons
+      expect(screen.getByText('🌞 Mood & Energy')).toBeInTheDocument();
+      expect(screen.getByText('🧠 Cognitive Enhancement')).toBeInTheDocument();
+      expect(screen.getByText('🧘 Relaxation & Anxiety')).toBeInTheDocument();
+    });
+
+    it('limits to max 3 effects per category in Basic View', () => {
+      const terpeneWithManyEffects = {
+        ...mockTerpene,
+        effects: [
+          'Mood enhancing',
+          'Energizing',
+          'Uplifting',
+          'Focus',
+          'Alertness',
+          'Memory-enhancement',
+          'Anxiety relief',
+          'Relaxing',
+          'Stress relief',
+        ] as any, // Cast for testing purposes
+      };
+
+      render(<TerpeneDetailModal open={true} terpene={terpeneWithManyEffects} onClose={vi.fn()} />);
+
+      // Should only show first 3 effects per category
+      expect(screen.getByText('Mood enhancing')).toBeInTheDocument();
+      expect(screen.getByText('Energizing')).toBeInTheDocument();
+      expect(screen.getByText('Uplifting')).toBeInTheDocument();
+      expect(screen.queryByText('Mood stabilizing')).not.toBeInTheDocument();
+    });
+
+    it('filters out empty categories', () => {
+      const terpeneWithLimitedEffects = {
+        ...mockTerpene,
+        effects: ['Mood enhancing', 'Focus'] as any, // Cast to any for testing
+      };
+
+      render(<TerpeneDetailModal open={true} terpene={terpeneWithLimitedEffects} onClose={vi.fn()} />);
+
+      // Should only show categories with effects
+      expect(screen.getByText('🌞 Mood & Energy')).toBeInTheDocument();
+      expect(screen.getByText('🧠 Cognitive Enhancement')).toBeInTheDocument();
+      expect(screen.queryByText('🧘 Relaxation & Anxiety')).not.toBeInTheDocument();
+      expect(screen.queryByText('🏃 Physical & Physiological')).not.toBeInTheDocument();
+    });
+
+    it('renders effects as bulleted list under each category', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Should render effects as list items
+      expect(screen.getByText('Mood enhancing')).toBeInTheDocument();
+      expect(screen.getByText('Energizing')).toBeInTheDocument();
+      expect(screen.getByText('Stress relief')).toBeInTheDocument();
+    });
+  });
+
+  describe('Responsive & Accessibility Features', () => {
+    it('renders in full-screen mode on mobile devices', () => {
+      // Mock mobile viewport
+      Object.defineProperty(window, 'innerWidth', { value: 375, writable: true });
+
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Should have full-screen dialog class
+      const dialog = screen.getByRole('dialog');
+      expect(dialog).toHaveClass('MuiDialog-paperFullWidth');
+    });
+
+    it('has proper ARIA attributes for accessibility', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      const dialog = screen.getByRole('dialog');
+      expect(dialog).toHaveAttribute('aria-labelledby', 'terpene-modal-title');
+      expect(dialog).toHaveAttribute('aria-describedby', 'terpene-modal-description');
+    });
+
+    it('has keyboard accessible close button', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      const closeButton = screen.getByLabelText('modal.terpeneDetail.close');
+      expect(closeButton).toHaveAttribute('tabindex', '0');
+      expect(closeButton).toHaveAttribute('type', 'button');
+    });
+
+    it('supports keyboard navigation for therapeutic property chips', () => {
+      const onTherapeuticPropertyClick = vi.fn();
+
+      render(
+        <TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} onTherapeuticPropertyClick={onTherapeuticPropertyClick} />
+      );
+
+      // Find the actual chip element (parent of the text)
+      const antidepressantChip = screen.getByText('Antidepressant').closest('.MuiChip-root');
+      expect(antidepressantChip).toBeInTheDocument();
+
+      // Simulate click interaction (chips respond to click, not keyboard in this implementation)
+      fireEvent.click(antidepressantChip!);
+      expect(onTherapeuticPropertyClick).toHaveBeenCalledWith('Antidepressant');
+    });
+
+    it('has sufficient color contrast for therapeutic property chips', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Find the actual chip elements
+      const chips = screen.getAllByText(/Antidepressant|Anti-inflammatory|Anxiolytic/).map(text => 
+        text.closest('.MuiChip-root') as HTMLElement
+      );
+      
+      chips.forEach(chip => {
+        const computedStyle = window.getComputedStyle(chip);
+        const backgroundColor = computedStyle.backgroundColor;
+        const color = computedStyle.color;
+        
+        // Ensure colors are defined (basic check for contrast)
+        expect(backgroundColor).toBeTruthy();
+        expect(color).toBeTruthy();
+      });
+    });
+    });
+
+    it('maintains readable font sizes on different screen sizes', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Check that headings use responsive typography variants
+      const headings = screen.getAllByRole('heading');
+      headings.forEach((heading) => {
+        const fontSize = window.getComputedStyle(heading).fontSize;
+        expect(fontSize).toBeTruthy();
+        expect(parseFloat(fontSize)).toBeGreaterThan(0);
+      });
+    });
+  });
+
+  describe('Performance Optimization', () => {
+    it('memoizes effect categorization to prevent unnecessary recalculations', () => {
+      // This test verifies that the useMemo hook is properly implemented
+      // by checking that the component renders efficiently
+      const { rerender } = render(
+        <TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />
+      );
+
+      // Verify initial render works
+      expect(screen.getByText('Primary Effects:')).toBeInTheDocument();
+
+      // Re-render with same terpene - should be efficient due to memoization
+      rerender(
+        <TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />
+      );
+
+      // Should still render correctly
+      expect(screen.getByText('Primary Effects:')).toBeInTheDocument();
+      
+      // The test passes if no errors occur and rendering is efficient
+      // (actual memoization is handled by React's useMemo)
+    });
+
+    it('efficiently handles large numbers of effects without performance degradation', () => {
+      const terpeneWithManyEffects = {
+        ...mockTerpene,
+        effects: Array.from({ length: 50 }, (_, i) => ['Mood enhancing', 'Energizing', 'Focus', 'Stress relief', 'Relaxing'][i % 5] as any),
+      };
+
+      const startTime = performance.now();
+
+      render(<TerpeneDetailModal open={true} terpene={terpeneWithManyEffects} onClose={vi.fn()} />);
+
+      const endTime = performance.now();
+      const renderTime = endTime - startTime;
+
+      // Should render in reasonable time (less than 100ms)
+      expect(renderTime).toBeLessThan(100);
+    });
+
+    it('optimizes re-renders when terpene data changes minimally', () => {
+      const { rerender } = render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Change only the description
+      const updatedTerpene = {
+        ...mockTerpene,
+        description: 'Updated description',
+      };
+
+      const startTime = performance.now();
+
+      rerender(<TerpeneDetailModal open={true} terpene={updatedTerpene} onClose={vi.fn()} />);
+
+      const endTime = performance.now();
+      const rerenderTime = endTime - startTime;
+
+      // Should re-render quickly for minimal changes
+      expect(rerenderTime).toBeLessThan(50);
+    });
+
+    it('uses efficient DOM structure for effect lists', () => {
+      render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Check that effect lists use semantic HTML
+      const effectLists = screen.getAllByRole('list');
+      expect(effectLists.length).toBeGreaterThan(0);
+
+      effectLists.forEach((list) => {
+        expect(list.tagName).toBe('UL');
+      });
+
+      // Check that list items are properly structured
+      const listItems = screen.getAllByRole('listitem');
+      listItems.forEach((item) => {
+        expect(item.tagName).toBe('LI');
+      });
+    });
+
+    it('implements proper cleanup when modal is closed', () => {
+      const { unmount } = render(<TerpeneDetailModal open={true} terpene={mockTerpene} onClose={vi.fn()} />);
+
+      // Ensure modal content is rendered
+      expect(screen.getByText('Limonene')).toBeInTheDocument();
+
+      // Unmount should clean up properly
+      expect(() => unmount()).not.toThrow();
+    });
+  });
+});
