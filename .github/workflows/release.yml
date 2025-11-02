@@ -213,43 +213,9 @@ jobs:
     name: 🎯 Trigger Deployments
     needs: release
     if: success() && needs.release.outputs.release_created == 'true' && needs.release.outputs.release_tag != 'none' && needs.release.outputs.release_tag != ''
-    runs-on: ubuntu-latest
-
-    # Add permissions needed to trigger workflows
-    permissions:
-      contents: read
-      actions: write
-
-    env:
-      SEMANTIC_RELEASE_BOT_APP_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_ID }}
-      SEMANTIC_RELEASE_BOT_PRIVATE_KEY: ${{ secrets.SEMANTIC_RELEASE_BOT_PRIVATE_KEY }}
-      SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID }}
-
-    steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v5
-
-      - name: 🔍 Validate release artifacts
-        run: |
-          echo "Checking for release artifacts..."
-          if [ ! -f "dist.tar.gz" ] && [ ! -f "dist.zip" ]; then
-            echo "❌ No release artifacts found. Checking if they were uploaded by CI..."
-            # Try to download from CI workflow artifacts
-            echo "Attempting to download artifacts from CI workflow..."
-            # This will be handled by the deployment workflow
-          else
-            echo "✅ Release artifacts found locally"
-            # Verify version in artifacts
-            if [ -f "dist.tar.gz" ]; then
-              echo "Checking version in dist.tar.gz..."
-              tar -tzf dist.tar.gz | head -10
-            fi
-          fi
-
-      - name: 🚀 Deploy Production
-        uses: ./.github/workflows/azure-static-web-apps-blue-desert-06e30df03.yml
-        with:
-          environment: production
-          release_tag: ${{ needs.release.outputs.release_tag }}
-        secrets:
-          AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_DESERT_06E30DF03 }}
+    uses: ./.github/workflows/azure-static-web-apps-blue-desert-06e30df03.yml
+    with:
+      environment: production
+      release_tag: ${{ needs.release.outputs.release_tag }}
+    secrets:
+      AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_DESERT_06E30DF03 }}
