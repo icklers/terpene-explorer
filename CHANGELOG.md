@@ -5,6 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.0 (2025-11-02)
+
+* Merge branch 'main' into 008-therapeutic-modal-refactor ([f8f22fa](https://github.com/icklers/terpene-explorer/commit/f8f22fa))
+* Merge pull request #61 from icklers/008-therapeutic-modal-refactor ([aa0469f](https://github.com/icklers/terpene-explorer/commit/aa0469f)), closes [#61](https://github.com/icklers/terpene-explorer/issues/61)
+* chore: formatting ([73aaa93](https://github.com/icklers/terpene-explorer/commit/73aaa93))
+* chore(ci): mint GitHub App installation token before release and add diagnostics (#54) ([a9ae59c](https://github.com/icklers/terpene-explorer/commit/a9ae59c)), closes [#54](https://github.com/icklers/terpene-explorer/issues/54) [#53](https://github.com/icklers/terpene-explorer/issues/53)
+* chore(ci): trigger release on CI workflow_run and download CI artifacts via dawidd6/action-download- ([6931c86](https://github.com/icklers/terpene-explorer/commit/6931c86))
+* chore(release): 1.0.0 [skip ci] ([9f0be76](https://github.com/icklers/terpene-explorer/commit/9f0be76))
+* chore(release): 1.1.0 [skip ci] ([6b0a2d8](https://github.com/icklers/terpene-explorer/commit/6b0a2d8))
+* chore(release): 1.1.1 [skip ci] ([0eddd1a](https://github.com/icklers/terpene-explorer/commit/0eddd1a))
+* feat: add table column simplification specification ([28647ec](https://github.com/icklers/terpene-explorer/commit/28647ec))
+* feat: complete mobile optimization specification and planning ([0a0a45b](https://github.com/icklers/terpene-explorer/commit/0a0a45b))
+* feat: Implement category color coding for effect chips in TerpeneTable (#52) ([d0a9a72](https://github.com/icklers/terpene-explorer/commit/d0a9a72)), closes [#52](https://github.com/icklers/terpene-explorer/issues/52)
+* feat: Terpene Details Modal with Basic/Expert View ([7088005](https://github.com/icklers/terpene-explorer/commit/7088005)), closes [#US1-Complete](https://github.com/icklers/terpene-explorer/issues/US1-Complete) [Hi#prevalence](https://github.com/Hi/issues/prevalence) [#2E7D32](https://github.com/icklers/terpene-explorer/issues/2E7D32) [#66BB6A](https://github.com/icklers/terpene-explorer/issues/66BB6A) [#757575](https://github.com/icklers/terpene-explorer/issues/757575) [#9E9E9E](https://github.com/icklers/terpene-explorer/issues/9E9E9E) [#60](https://github.com/icklers/terpene-explorer/issues/60) [#US1-Complete](https://github.com/icklers/terpene-explorer/issues/US1-Complete) [Hi#prevalence](https://github.com/Hi/issues/prevalence) [#2E7D32](https://github.com/icklers/terpene-explorer/issues/2E7D32) [#66BB6A](https://github.com/icklers/terpene-explorer/issues/66BB6A) [#757575](https://github.com/icklers/terpene-explorer/issues/757575) [#9E9E9E](https://github.com/icklers/terpene-explorer/issues/9E9E9E) [#60](https://github.com/icklers/terpene-explorer/issues/60) [#US1-Complete](https://github.com/icklers/terpene-explorer/issues/US1-Complete) [Hi#prevalence](https://github.com/Hi/issues/prevalence) [#2E7D32](https://github.com/icklers/terpene-explorer/issues/2E7D32) [#66BB6A](https://github.com/icklers/terpene-explorer/issues/66BB6A) [#757575](https://github.com/icklers/terpene-explorer/issues/757575) [#9E9E9E](https://github.com/icklers/terpene-explorer/issues/9E9E9E) [#60](https://github.com/icklers/terpene-explorer/issues/60)
+* feat(007): complete TDD-compliant implementation plan for table column simplification ([28505f2](https://github.com/icklers/terpene-explorer/commit/28505f2))
+* feat(ci): implement automated release with semantic-release (#53) ([59da2ec](https://github.com/icklers/terpene-explorer/commit/59da2ec)), closes [#53](https://github.com/icklers/terpene-explorer/issues/53)
+* feat(spec): update specification ([cae43c1](https://github.com/icklers/terpene-explorer/commit/cae43c1))
+* ci: fix code formatting ([2737005](https://github.com/icklers/terpene-explorer/commit/2737005))
+* ci: make release workflow wait for CI success using workflow_run trigger ([deb461a](https://github.com/icklers/terpene-explorer/commit/deb461a))
+* fix: opencode prompts ([f1313b4](https://github.com/icklers/terpene-explorer/commit/f1313b4))
+* fix: release workflow ([846d7e1](https://github.com/icklers/terpene-explorer/commit/846d7e1))
+* fix(ci): remove extra parentheses in echo statements causing syntax error ([f5d9921](https://github.com/icklers/terpene-explorer/commit/f5d9921))
+* docs(spec): address analysis findings for therapeutic modal refactor ([6f258c5](https://github.com/icklers/terpene-explorer/commit/6f258c5))
+
+
+### BREAKING CHANGE
+
+* Manual tag creation no longer triggers releases.
+The release process is now fully automated via semantic-release on pushes to main.
+
+* chore(ci): update github-script action to v8
+
+- Update actions/github-script from v7 to v8 in both PR validation and release workflows
+- Ensures compatibility with latest GitHub Actions runtime
+
+* chore(ci): avoid pushing to protected main by removing @semantic-release/git
+
+* chore(ci): enable git pushes via GitHub App installation token; add token mint step to release workflow
+
+* chore(ci): ensure App installation token is minted before semantic-release; add diagnostic/fallback logs
+* Modal now includes concentration visualization with percentile indicators
+* Modal now includes concentration visualization with percentile indicators
+* Modal now includes concentration visualization with percentile indicators
+
 ## <small>1.1.1 (2025-11-02)</small>
 
 * fix(ci): Release workflow wait for CI, no Dependabot PR deployments ([b2fff29](https://github.com/icklers/terpene-explorer/commit/b2fff29))
