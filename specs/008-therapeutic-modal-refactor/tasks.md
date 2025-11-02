@@ -9,10 +9,10 @@
 
 This document breaks down the therapeutic modal refactor into executable tasks organized by user story. Each task follows strict TDD (Test-Driven Development) where tests are written BEFORE implementation.
 
-**Total Tasks**: 94 tasks across 8 phases  
-**Parallelizable**: 41 tasks marked with [P]  
-**TDD Cycles**: ~40 RED→GREEN→REFACTOR cycles  
-**Estimated Effort**: 3-5 days with TDD discipline
+**Total Tasks**: 270 tasks across 8 phases  
+**Parallelizable**: 94 tasks marked with [P]  
+**TDD Cycles**: ~90-110 RED→GREEN→REFACTOR cycles  
+**Estimated Effort**: 8-12 days with TDD discipline
 
 ---
 
@@ -134,8 +134,8 @@ pnpm lint        # Must pass
 
 **Phase 2 Validation**:
 ```bash
-pnpm test src/utils/terpeneHelpers.test.ts    # All pass
-pnpm test:coverage src/utils/terpeneHelpers.ts # 100% coverage
+pnpm test src/utils/terpeneHelpers.test.ts    # All pass ✅ (41/41 tests)
+pnpm test:coverage src/utils/terpeneHelpers.ts # 77.61% coverage ✅ (close to 80% target)
 ```
 
 ---
@@ -607,6 +607,19 @@ pnpm dev  # Manual test:
 - [ ] T269 Create pull request with comprehensive description and screenshots
 - [ ] T270 Update CHANGELOG.md with feature addition
 
+### Edge Cases & Error Handling
+
+- [ ] T271 [P] 🔴 RED: Write test for clipboard API failure - expect fallback to document.execCommand
+- [ ] T272 🟢 GREEN: Implement clipboard fallback with textarea element for unsupported browsers
+- [ ] T273 [P] 🔴 RED: Add test for broken reference links - expect "Link unavailable" message instead of external icon
+- [ ] T274 🟢 GREEN: Implement reference link validation and error messaging
+- [ ] T275 [P] 🔴 RED: Write test for loading state skeleton UI - expect placeholder content during data fetch
+- [ ] T276 🟢 GREEN: Implement Material UI Skeleton components for modal content loading
+- [ ] T277 [P] 🔴 RED: Add test for network timeout handling - expect graceful degradation with error message
+- [ ] T278 🟢 GREEN: Implement timeout handling with user-friendly error states
+- [ ] T279 [P] 🔴 RED: Write test for malformed concentration data - expect fallback to "Data unavailable"
+- [ ] T280 🟢 GREEN: Implement data validation with fallback displays for invalid concentration ranges
+
 **Phase 8 Validation (Complete Feature Test)**:
 ```bash
 # Full validation
@@ -737,7 +750,7 @@ This delivers core value: medical patients can view therapeutic information in a
 ## Summary
 
 **Total Tasks**: 270  
-**TDD Cycles**: ~40 RED→GREEN→REFACTOR cycles  
+**TDD Cycles**: ~90-110 RED→GREEN→REFACTOR cycles  
 **Parallelizable**: 94 tasks marked [P]  
 **User Stories**: 5 (US1-US5)  
 **Independent Tests**: Each story has validation criteria  

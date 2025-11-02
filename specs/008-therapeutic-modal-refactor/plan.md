@@ -29,7 +29,11 @@ Refactor the terpene details modal to prioritize therapeutic information for med
 **Testing**: Vitest (unit tests), Playwright (E2E tests), jest-axe (accessibility tests)  
 **Target Platform**: Web (static site), responsive mobile/tablet/desktop (320px-1920px+)  
 **Project Type**: Web application (frontend only, no backend)  
-**Performance Goals**: <100ms modal render, <200ms toggle animation, Cumulative Layout Shift (CLS) <0.1  
+**Performance Goals**: 
+- <100ms modal render (measured from user click to modal content visible using Chrome DevTools Performance tab)
+- <200ms toggle animation between Basic/Expert views (measured from click to animation complete using Chrome DevTools Performance tab, 60fps target)
+- Cumulative Layout Shift (CLS) <0.1 (measured using Chrome DevTools Performance tab, no layout shifts during content loading or view transitions)
+- Smooth accordion animations at 60fps (measured using Chrome DevTools Rendering tab, frame rate maintained during expand/collapse)  
 **Constraints**: WCAG 2.1 AA compliance, 4.5:1 contrast ratio, 48x48px touch targets, 80%+ test coverage  
 **Scale/Scope**: Single modal component with 4 sub-components, 5 user stories, 57 functional requirements
 
@@ -291,6 +295,25 @@ git commit -m "feat: add getTherapeuticColor with semantic color mapping"
 - [ ] No untested production code exists
 - [ ] Git history shows RED→GREEN→REFACTOR pattern in commits
 
+### Realistic TDD Expectations
+
+**TDD Cycle Count Analysis**:
+- **270 total tasks** ÷ **~2.5 tasks per TDD cycle** = **90-110 cycles**
+- **Helper functions** (Phase 2): 5 functions × 3-4 cycles each = 15-20 cycles
+- **Component development** (Phases 3-7): 15 components × 4-6 cycles each = 60-90 cycles  
+- **Integration & E2E** (Phase 8): 10-15 cycles for complex interactions
+- **Edge case handling**: 5-10 additional cycles for error states
+
+**Time Estimates**:
+- **MVP (US1)**: 107 tasks ÷ 3 tasks/day = 35-40 cycles over 12-15 days
+- **Full feature**: 270 tasks ÷ 2.5 tasks/day = 90-110 cycles over 35-45 days
+- **Parallel execution**: 94 [P] tasks can reduce timeline by 25-30% with multiple developers
+
+**Quality Metrics**:
+- Target: 90%+ test coverage through TDD (not retrofitted)
+- Commit pattern: RED→GREEN→REFACTOR visible in git history
+- No production code without corresponding test coverage
+
 ### TDD Benefits for This Feature
 
 1. **Complex Logic**: Helper functions (categorizeEffects, parseConcentration) benefit from test-first approach
@@ -372,5 +395,8 @@ tests/
 
 | Violation                  | Why Needed         | Simpler Alternative Rejected Because |
 | -------------------------- | ------------------ | ------------------------------------ |
-| [e.g., 4th project]        | [current need]     | [why 3 projects insufficient]        |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient]  |
+| TDD Cycle Count (90-110)   | Complex feature with 270 tasks | 40 cycles insufficient for comprehensive test coverage of 270 tasks across 8 phases |
+| Task Count Discrepancy (270 vs 94) | Initial estimate missed detailed TDD breakdown | Original 94 tasks didn't account for RED→GREEN→REFACTOR cycle granularity |
+| Missing Error Handling Tasks | Critical for production readiness | Edge cases like clipboard failures, broken links, loading states essential for robust UX |
+| Expert View vs KISS Principle | Medical professionals require scientific depth | Basic View alone insufficient for clinical decision-making; Expert View provides necessary pharmacological data |
+| Skeleton UI Performance Budget | CLS <0.1 requirement conflicts with immediate content display | Skeleton loading required to prevent layout shifts while maintaining <100ms render target; trade-off accepted for better perceived performance |
