@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.3.0 (2025-11-02)
 
+* chore(deps-dev): bump globals from 16.4.0 to 16.5.0 (#57) ([9663ce4](https://github.com/icklers/terpene-explorer/commit/9663ce4)), closes [#57](https://github.com/icklers/terpene-explorer/issues/57)
+* chore(deps-dev): bump the development-dependencies group with 3 updates (#55) ([7f0fec9](https://github.com/icklers/terpene-explorer/commit/7f0fec9)), closes [#55](https://github.com/icklers/terpene-explorer/issues/55)
+* chore(deps): bump react-i18next from 15.7.4 to 16.2.3 (#58) ([e767c42](https://github.com/icklers/terpene-explorer/commit/e767c42)), closes [#58](https://github.com/icklers/terpene-explorer/issues/58)
+* chore(deps): bump react-window from 2.2.1 to 2.2.2 (#56) ([77075fd](https://github.com/icklers/terpene-explorer/commit/77075fd)), closes [#56](https://github.com/icklers/terpene-explorer/issues/56)
+* chore(release): 1.3.0 [skip ci] ([74ce92b](https://github.com/icklers/terpene-explorer/commit/74ce92b))
+* chore(release): 1.3.0 [skip ci] ([7d3c302](https://github.com/icklers/terpene-explorer/commit/7d3c302))
+* feat: add automated release workflow v2 ([d159bac](https://github.com/icklers/terpene-explorer/commit/d159bac))
+
+## 1.3.0 (2025-11-02)
+
 * chore(deps): bump react-window from 2.2.1 to 2.2.2 (#56) ([77075fd](https://github.com/icklers/terpene-explorer/commit/77075fd)), closes [#56](https://github.com/icklers/terpene-explorer/issues/56)
 * chore(release): 1.3.0 [skip ci] ([7d3c302](https://github.com/icklers/terpene-explorer/commit/7d3c302))
 * feat: add automated release workflow v2 ([d159bac](https://github.com/icklers/terpene-explorer/commit/d159bac))
