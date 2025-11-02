@@ -1,0 +1,314 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: false
+        default: 'production'
+      release_tag:
+        description: 'Release tag to deploy (vx.y.z)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+# Prevent multiple releases running simultaneously
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: 🚀 Release
+    runs-on: ubuntu-latest
+    # Only run if CI workflow completed successfully
+    if: |
+      (github.event_name == 'workflow_dispatch') ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+    outputs:
+      release_created: ${{ steps.check_release.outputs.release_created }}
+      release_tag: ${{ steps.check_release.outputs.release_tag }}
+
+    env:
+      SEMANTIC_RELEASE_BOT_APP_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_ID }}
+      SEMANTIC_RELEASE_BOT_PRIVATE_KEY: ${{ secrets.SEMANTIC_RELEASE_BOT_PRIVATE_KEY }}
+      SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID }}
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
+
+      - name: 📥 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Download build artifacts from CI workflow that triggered this release
+      - name: 📥 Download build artifacts from CI
+        uses: dawidd6/action-download-artifact@v11
+        with:
+          workflow: ci.yml
+          name: release-artifacts
+          path: .
+          workflow_conclusion: success
+
+      # If artifacts don't exist, build them
+      - name: 🏗 Build Release
+        run: |
+          if [ ! -f "dist.tar.gz" ] || [ ! -f "dist.zip" ]; then
+            echo "Building Release artifacts..."
+            pnpm install --frozen-lockfile
+            pnpm run build
+            cd dist && tar -czf ../dist.tar.gz . && cd ..
+            zip -r dist.zip dist/
+          else
+            echo "Using existing release artifacts from CI"
+          fi
+
+      # Verify artifacts contain correct version
+      - name: 🔍 Verify artifact version
+        run: |
+          echo "Verifying artifact contents..."
+          if [ -f "dist.tar.gz" ]; then
+            echo "Contents of dist.tar.gz:"
+            tar -tzf dist.tar.gz | head -10
+            # Extract temporarily to check version
+            mkdir -p temp_dist
+            tar -xzf dist.tar.gz -C temp_dist/
+            if [ -f "temp_dist/index.html" ]; then
+              echo "Checking for version in index.html..."
+              grep -i "version\|${{ needs.release.outputs.tag }}" temp_dist/index.html || echo "Version not found in HTML"
+            fi
+            rm -rf temp_dist
+          fi
+
+      # Upload artifacts for deployment workflow
+      - name: 📤 Upload release artifacts
+        uses: actions/upload-artifact@v5
+        with:
+          name: release-artifacts
+          path: |
+            dist.tar.gz
+            dist.zip
+          retention-days: 7
+
+      # Verify artifacts were uploaded successfully
+      - name: 🔍 Verify artifact upload
+        run: |
+          echo "Verifying artifacts were uploaded..."
+          # Check if artifacts still exist locally
+          if [ ! -f "dist.tar.gz" ] || [ ! -f "dist.zip" ]; then
+            echo "❌ Artifacts missing after upload attempt"
+            exit 1
+          fi
+          
+          # Verify file sizes are reasonable (not empty)
+          TAR_SIZE=$(stat -f%z dist.tar.gz 2>/dev/null || stat -c%s dist.tar.gz 2>/dev/null || echo "0")
+          ZIP_SIZE=$(stat -f%z dist.zip 2>/dev/null || stat -c%s dist.zip 2>/dev/null || echo "0")
+          
+          if [ "$TAR_SIZE" -lt 1000 ] || [ "$ZIP_SIZE" -lt 1000 ]; then
+            echo "❌ Artifact files are too small (tar: ${TAR_SIZE}B, zip: ${ZIP_SIZE}B)"
+            exit 1
+          fi
+          
+          echo "✅ Artifacts uploaded successfully (tar: ${TAR_SIZE}B, zip: ${ZIP_SIZE}B)"
+
+      # Create a short-lived installation token from the GitHub App
+      - name: 🔐 Create GitHub App installation token
+        id: create_app_token
+        run: |
+          set -euo pipefail
+
+          echo "Checking GitHub App secret presence (non-sensitive):"
+          echo "- SEMANTIC_RELEASE_BOT_APP_ID set: ${SEMANTIC_RELEASE_BOT_APP_ID:+yes}" || true
+          echo "- SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID set: ${SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID:+yes}" || true
+
+          if [ -z "${SEMANTIC_RELEASE_BOT_APP_ID:-}" ] || [ -z "${SEMANTIC_RELEASE_BOT_PRIVATE_KEY:-}" ] || [ -z "${SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID:-}" ]; then
+            echo "One of SEMANTIC_RELEASE_BOT_APP_ID, SEMANTIC_RELEASE_BOT_PRIVATE_KEY or SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID is empty. Please add the secrets to the repository." >&2
+            exit 1
+          fi
+
+          # Create JWT using Node's crypto builtin to avoid external deps
+          JWT=$(node -e "const crypto=require('crypto');const appId=process.env.SEMANTIC_RELEASE_BOT_APP_ID;const pk=process.env.SEMANTIC_RELEASE_BOT_PRIVATE_KEY.replace(/\r?\n/g,'\n');const header=Buffer.from(JSON.stringify({alg:'RS256',typ:'JWT'})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const now=Math.floor(Date.now()/1000);const payload=Buffer.from(JSON.stringify({iat:now-60,exp:now+600,iss:parseInt(appId)})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const data=header+'.'+payload;const sign=crypto.createSign('RSA-SHA256');sign.update(data);const sig=sign.sign(pk,'base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');console.log(data+'.'+sig);")
+
+          echo "JWT created"
+
+          # Exchange JWT for an installation token
+          RESP=$(curl -s -X POST "https://api.github.com/app/installations/${SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID}/access_tokens" -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json")
+
+          TOKEN=$(echo "$RESP" | python -c 'import sys, json;print(json.load(sys.stdin).get("token", ""))')
+
+          if [ -z "$TOKEN" ]; then
+            echo "Failed to get installation token from GitHub API:" >&2
+            echo "$RESP" >&2
+            exit 1
+          fi
+
+          # Print a masked preview of the token length for diagnostics (do not print the token itself)
+          echo "Got installation token of length: ${#TOKEN}"
+
+          echo "token=$TOKEN" >> "$GITHUB_OUTPUT"
+
+      - name: ⚠️ Verify App token and provide fallback logs
+        run: |
+          if [ -z "${{ steps.create_app_token.outputs.token }}" ]; then
+            echo "ERROR: Installation token was not created."
+            echo "Possible causes:"
+            echo " - Secrets missing or malformed (SEMANTIC_RELEASE_BOT_APP_ID, SEMANTIC_RELEASE_BOT_PRIVATE_KEY, SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID)."
+            echo " - The App installation does not have correct repository permissions (contents: write)."
+            echo " - Organization policy prevents App-generated tokens from pushing to protected branches."
+            echo "Suggested actions:" 
+            echo " - Verify repo secrets in Settings → Secrets → Actions." 
+            echo " - Confirm the App installation has 'Contents: Read & write' permission and is installed on this repo." 
+            echo " - If branch protection still blocks pushes, add the App installation as an allowed actor in the branch protection rule or use a machine user PAT as a fallback."
+            echo "Failing early to avoid attempting a release that will fail due to missing token." >&2
+            exit 1
+          else
+            echo "Installation token available. Proceeding with release..."
+          fi
+
+      - name: 🚀 Run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ steps.create_app_token.outputs.token }}
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+        run: pnpm exec semantic-release
+
+      - name: 🔍 Check if release was created
+        id: check_release
+        run: |
+          # Get the latest tag after semantic-release
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
+          echo "Latest tag: $LATEST_TAG"
+
+          # Check if this tag was created in this run by comparing with the previous commit
+          if [ "$LATEST_TAG" != "none" ]; then
+            # Check if the latest commit message contains the release tag
+            if git log -1 --oneline | grep -q "$LATEST_TAG"; then
+              echo "✅ Release was created: $LATEST_TAG"
+              echo "release_created=true" >> $GITHUB_OUTPUT
+              echo "release_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+            else
+              echo "ℹ️ No new release created in this run"
+              echo "release_created=false" >> $GITHUB_OUTPUT
+              echo "release_tag=none" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "ℹ️ No tags found"
+            echo "release_created=false" >> $GITHUB_OUTPUT
+            echo "release_tag=none" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 📊 Release Summary
+        if: success()
+        run: |
+          echo "### 🎉 Release Published!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
+          if [ "$LATEST_TAG" != "none" ]; then
+            echo "**Version:** \`$LATEST_TAG\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "🔗 [View Release](https://github.com/${{ github.repository }}/releases/tag/$LATEST_TAG)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ No new release was created (no releasable commits since last release)" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  trigger-deployments:
+    name: 🎯 Trigger Deployments
+    needs: release
+    if: |
+      (github.event_name == 'workflow_dispatch') ||
+      (success() && needs.release.outputs.release_created == 'true' && needs.release.outputs.release_tag != 'none' && needs.release.outputs.release_tag != '')
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v5
+
+      - name: 🔍 Determine deployment tag
+        id: deployment
+        run: |
+          # Use input tag if provided, otherwise use release output, otherwise find latest
+          if [ -n "${{ github.event.inputs.release_tag }}" ]; then
+            DEPLOY_TAG="${{ github.event.inputs.release_tag }}"
+            echo "Using specified release tag: $DEPLOY_TAG"
+          elif [ "${{ needs.release.outputs.release_tag }}" != "none" ] && [ -n "${{ needs.release.outputs.release_tag }}" ]; then
+            DEPLOY_TAG="${{ needs.release.outputs.release_tag }}"
+            echo "Using newly created release tag: $DEPLOY_TAG"
+          else
+            # Find latest release tag
+            DEPLOY_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+            if [ -z "$DEPLOY_TAG" ]; then
+              echo "❌ No release tags found for deployment"
+              exit 1
+            fi
+            echo "Using latest release tag: $DEPLOY_TAG"
+          fi
+          
+          echo "deploy_tag=$DEPLOY_TAG" >> $GITHUB_OUTPUT
+          echo "environment=${{ github.event.inputs.environment || 'production' }}" >> $GITHUB_OUTPUT
+
+      - name: � Prepare deployment artifacts
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "Preparing artifacts for manual deployment..."
+          
+          # For manual deployments, we need to build artifacts since they won't be available from CI
+          # Download build artifacts from CI workflow that triggered this release (if any)
+          echo "Checking for existing CI artifacts..."
+          
+          # If no artifacts exist, build them
+          if [ ! -f "dist.tar.gz" ] || [ ! -f "dist.zip" ]; then
+            echo "Building deployment artifacts..."
+            # Setup environment
+            npm install -g pnpm@10.19.0
+            pnpm install --frozen-lockfile
+            pnpm run build
+            
+            # Create artifacts
+            cd dist && tar -czf ../dist.tar.gz . && cd ..
+            zip -r dist.zip dist/
+          else
+            echo "Using existing artifacts"
+          fi
+
+      - name: 📤 Upload deployment artifacts
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v5
+        with:
+          name: release-artifacts
+          path: |
+            dist.tar.gz
+            dist.zip
+          retention-days: 7
+
+      - name:  Deploy Release
+        uses: ./.github/workflows/azure-static-web-apps-blue-desert-06e30df03.yml
+        with:
+          environment: ${{ steps.deployment.outputs.environment }}
+          release_tag: ${{ steps.deployment.outputs.deploy_tag }}

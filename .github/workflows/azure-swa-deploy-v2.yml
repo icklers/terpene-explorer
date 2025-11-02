@@ -1,0 +1,143 @@
+name: Azure SWA Deploy (v2)
+
+# This workflow is designed to be called from the release workflow
+# It handles deployment to Azure Static Web Apps after a release is created
+on:
+  workflow_call:
+    inputs:
+      release_tag:
+        description: 'Git tag of the release to deploy'
+        required: true
+        type: string
+      environment:
+        description: 'Deployment environment (production or preview)'
+        required: false
+        type: string
+        default: 'production'
+    secrets:
+      AZURE_STATIC_WEB_APPS_API_TOKEN:
+        required: true
+
+  # Allow manual deployment
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Git tag of the release to deploy'
+        required: false
+        type: string
+        default: 'latest'
+      environment:
+        description: 'Deployment environment'
+        required: false
+        type: choice
+        options:
+          - production
+          - preview
+        default: 'production'
+
+# Allow one deployment at a time per environment
+concurrency:
+  group: azure-swa-deploy-${{ inputs.environment }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: 🚀 Deploy to Azure SWA
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v5
+        with:
+          # Checkout the release tag if provided
+          ref: ${{ inputs.release_tag != 'latest' && inputs.release_tag || 'main' }}
+          submodules: true
+          lfs: false
+
+      - name: 📋 Deployment Info
+        run: |
+          echo "### 🚀 Azure SWA Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** ${{ inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Release Tag:** ${{ inputs.release_tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** \`${GITHUB_SHA:0:7}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+      - name: 📥 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🏗 Build for Azure SWA
+        run: |
+          echo "Building for Azure SWA (environment: ${{ inputs.environment }})..."
+          NODE_ENV=production MODE=azure-swa pnpm run build
+
+          # Copy SWA config into the build
+          cp staticwebapp.config.json dist/
+
+          # Create 404.html for SPA routing
+          cp dist/index.html dist/404.html
+
+          echo "✅ Build complete"
+          echo "Build size: $(du -sh dist | cut -f1)"
+
+      - name: 📋 Build contents
+        run: |
+          echo "### 📦 Build Contents" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          ls -lah dist/ >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: 🚀 Deploy to Azure Static Web Apps
+        id: deploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: 'upload'
+          # Configuration
+          app_location: 'dist'
+          skip_api_build: true
+          skip_app_build: true
+          output_location: ''
+          config_file_location: ''
+          production_branch: main
+        env:
+          VITE_APP_VERSION: ${{ inputs.release_tag }}
+          VITE_APP_BASE: /
+
+      - name: 📊 Deployment Summary
+        if: success()
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Deployment Successful" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Your application has been deployed to Azure Static Web Apps." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** ${{ inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ inputs.release_tag }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: ❌ Deployment Failed
+        if: failure()
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ❌ Deployment Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Check the logs above for error details." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Common issues:" >> $GITHUB_STEP_SUMMARY
+          echo "- Invalid Azure SWA API token" >> $GITHUB_STEP_SUMMARY
+          echo "- Build artifacts missing or corrupted" >> $GITHUB_STEP_SUMMARY
+          echo "- Azure SWA service issues" >> $GITHUB_STEP_SUMMARY

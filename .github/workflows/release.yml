@@ -1,13 +1,17 @@
-name: Release
+# DEPRECATED: This workflow is disabled. Use release-v2.yml instead.
+# Kept for backwards compatibility and reference.
+# To re-enable, uncomment the workflow trigger below.
 
-on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
-    branches:
-      - main
-  workflow_dispatch:
+# name: Release (DISABLED)
+
+# on:
+#   workflow_run:
+#     workflows: ["CI"]
+#     types:
+#       - completed
+#     branches:
+#       - main
+#   workflow_dispatch:
 
 permissions:
   contents: write

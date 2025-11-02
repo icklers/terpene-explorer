@@ -111,17 +111,69 @@ If automation fails, you can trigger manually:
 gh workflow run release.yml
 ```
 
-## 6. PR Builds (Unit and Security Testing)
+## 6. PR Builds (CI Validation)
 
-Every Pull Request will trigger a GitHub Actions workflow (`.github/workflows/pr-build.yml`) to ensure code quality and stability before
-merging.
+Every Pull Request triggers GitHub Actions workflows to ensure code quality and stability.
 
-### PR Build Steps:
+### CI Workflow (`.github/workflows/ci.yml`)
 
-1.  **Checkout Code**: Checks out the code from the feature branch.
-2.  **Install Dependencies**: Installs project dependencies.
-3.  **Run Unit Tests**: Executes all unit tests (`npm test`).
-4.  **Run Security Scan**: Performs a security audit of dependencies (`npm audit`).
-5.  **Linting (Optional but Recommended)**: Runs code linting to enforce style guidelines.
+1. **Type checking**: Validates TypeScript types
+2. **Linting**: Enforces code style guidelines
+3. **Code formatting**: Checks Prettier formatting
+4. **Build**: Creates production build
+5. **Artifact upload**: Stores build artifacts for release
 
-All these steps MUST pass for the PR to be mergeable into `main`.
+### PR Validation Workflow (`.github/workflows/pr-validation.yml`)
+
+1. **Commit message validation**: Ensures conventional commit format
+2. **Version impact analysis**: Shows what version bump would result
+3. **PR comment**: Posts analysis summary on the PR
+
+All checks MUST pass before a PR can be merged to `main`.
+
+## 7. Deployment
+
+Deployments are automatically triggered after successful releases.
+
+### Azure Static Web Apps
+
+- Triggered by the release workflow via `workflow_call`
+- Uses the `azure-swa-deploy-v2.yml` workflow
+- Deploys the production build to Azure
+- Environment: `production`
+
+### Manual Deployment
+
+If needed, you can trigger deployment manually:
+
+```bash
+# Via GitHub Actions UI or GitHub CLI
+gh workflow run azure-swa-deploy-v2.yml -f release_tag=v1.2.0
+```
+
+## 8. Monitoring & Troubleshooting
+
+### Success Metrics
+
+- Release time: < 5 minutes (merge → deployed)
+- Commit compliance: > 95% valid conventional commits
+- Workflow success rate: > 99%
+
+### Common Issues
+
+**Release workflow fails**
+
+- Check commit message format (must follow conventional commits)
+- Verify GITHUB_TOKEN has proper permissions
+- Review semantic-release logs in Actions
+
+**No release created**
+
+- Expected if only non-release commits (docs, chore, etc.)
+- Use `feat:` or `fix:` types to trigger releases
+
+**Deployment fails**
+
+- Check Azure SWA API token is valid
+- Verify build artifacts were created
+- Review Azure SWA logs
