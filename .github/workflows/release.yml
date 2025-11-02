@@ -212,7 +212,7 @@ jobs:
   trigger-deployments:
     name: 🎯 Trigger Deployments
     needs: release
-    if: success() && needs.release.outputs.release_created == 'true'
+    if: success() && needs.release.outputs.release_created == 'true' && needs.release.outputs.release_tag != 'none' && needs.release.outputs.release_tag != ''
     runs-on: ubuntu-latest
 
     # Add permissions needed to trigger workflows
