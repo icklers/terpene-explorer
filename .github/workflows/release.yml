@@ -27,6 +27,9 @@ jobs:
     if: |
       (github.event_name == 'workflow_dispatch') ||
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+    outputs:
+      release_created: ${{ steps.check_release.outputs.release_created }}
+      release_tag: ${{ steps.check_release.outputs.release_tag }}
 
     env:
       SEMANTIC_RELEASE_BOT_APP_ID: ${{ secrets.SEMANTIC_RELEASE_BOT_APP_ID }}
@@ -55,23 +58,54 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # - name: 📥 Download build artifacts from CI
-      #   uses: dawidd6/action-download-artifact@v11
-      #   with:
-      #     workflow: ci.yml
-      #     name: release-artifacts
-      #     path: .
-      #     workflow_conclusion: success
+      # Download build artifacts from CI workflow that triggered this release
+      - name: 📥 Download build artifacts from CI
+        uses: dawidd6/action-download-artifact@v11
+        with:
+          workflow: ci.yml
+          name: release-artifacts
+          path: .
+          workflow_conclusion: success
 
       # If artifacts don't exist, build them
       - name: 🏗 Build Release
         run: |
-          if [ ! -f "dist.tar.gz" ]; then
+          if [ ! -f "dist.tar.gz" ] || [ ! -f "dist.zip" ]; then
             echo "Building Release artifacts..."
+            pnpm install --frozen-lockfile
             pnpm run build
             cd dist && tar -czf ../dist.tar.gz . && cd ..
             zip -r dist.zip dist/
+          else
+            echo "Using existing release artifacts from CI"
           fi
+
+      # Verify artifacts contain correct version
+      - name: 🔍 Verify artifact version
+        run: |
+          echo "Verifying artifact contents..."
+          if [ -f "dist.tar.gz" ]; then
+            echo "Contents of dist.tar.gz:"
+            tar -tzf dist.tar.gz | head -10
+            # Extract temporarily to check version
+            mkdir -p temp_dist
+            tar -xzf dist.tar.gz -C temp_dist/
+            if [ -f "temp_dist/index.html" ]; then
+              echo "Checking for version in index.html..."
+              grep -i "version\|${{ needs.release.outputs.tag }}" temp_dist/index.html || echo "Version not found in HTML"
+            fi
+            rm -rf temp_dist
+          fi
+
+      # Upload artifacts for deployment workflow
+      - name: 📤 Upload release artifacts
+        uses: actions/upload-artifact@v5
+        with:
+          name: release-artifacts
+          path: |
+            dist.tar.gz
+            dist.zip
+          retention-days: 7
 
       # Create a short-lived installation token from the GitHub App
       - name: 🔐 Create GitHub App installation token
@@ -136,6 +170,31 @@ jobs:
           GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
         run: pnpm exec semantic-release
 
+      - name: 🔍 Check if release was created
+        id: check_release
+        run: |
+          # Get the latest tag after semantic-release
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
+          echo "Latest tag: $LATEST_TAG"
+
+          # Check if this tag was created in this run by comparing with the previous commit
+          if [ "$LATEST_TAG" != "none" ]; then
+            # Check if the latest commit message contains the release tag
+            if git log -1 --oneline | grep -q "$LATEST_TAG"; then
+              echo "✅ Release was created: $LATEST_TAG"
+              echo "release_created=true" >> $GITHUB_OUTPUT
+              echo "release_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+            else
+              echo "ℹ️ No new release created in this run"
+              echo "release_created=false" >> $GITHUB_OUTPUT
+              echo "release_tag=none" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "ℹ️ No tags found"
+            echo "release_created=false" >> $GITHUB_OUTPUT
+            echo "release_tag=none" >> $GITHUB_OUTPUT
+          fi
+
       - name: 📊 Release Summary
         if: success()
         run: |
@@ -153,7 +212,7 @@ jobs:
   trigger-deployments:
     name: 🎯 Trigger Deployments
     needs: release
-    if: success()
+    if: success() && needs.release.outputs.release_created == 'true'
     runs-on: ubuntu-latest
 
     # Add permissions needed to trigger workflows
@@ -176,89 +235,40 @@ jobs:
           LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
           echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
 
-      # Create installation token for deployment triggering
-      - name: 🔐 Create deployment token
-        id: create_deploy_token
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v5
+
+      - name: 🔍 Validate release artifacts
         run: |
-          set -euo pipefail
-
-          if [ -z "${SEMANTIC_RELEASE_BOT_APP_ID:-}" ] || [ -z "${SEMANTIC_RELEASE_BOT_PRIVATE_KEY:-}" ] || [ -z "${SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID:-}" ]; then
-            echo "GitHub App secrets not available, falling back to GITHUB_TOKEN"
-            echo "token=${{ secrets.GITHUB_TOKEN }}" >> "$GITHUB_OUTPUT"
-            exit 0
+          echo "Checking for release artifacts..."
+          if [ ! -f "dist.tar.gz" ] && [ ! -f "dist.zip" ]; then
+            echo "❌ No release artifacts found. Checking if they were uploaded by CI..."
+            # Try to download from CI workflow artifacts
+            echo "Attempting to download artifacts from CI workflow..."
+            # This will be handled by the deployment workflow
+          else
+            echo "✅ Release artifacts found locally"
+            # Verify version in artifacts
+            if [ -f "dist.tar.gz" ]; then
+              echo "Checking version in dist.tar.gz..."
+              tar -tzf dist.tar.gz | head -10
+            fi
           fi
 
-          # Create JWT using Node's crypto builtin
-          JWT=$(node -e "const crypto=require('crypto');const appId=process.env.SEMANTIC_RELEASE_BOT_APP_ID;const pk=process.env.SEMANTIC_RELEASE_BOT_PRIVATE_KEY.replace(/\r?\n/g,'\n');const header=Buffer.from(JSON.stringify({alg:'RS256',typ:'JWT'})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const now=Math.floor(Date.now()/1000);const payload=Buffer.from(JSON.stringify({iat:now-60,exp:now+600,iss:parseInt(appId)})).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');const data=header+'.'+payload;const sign=crypto.createSign('RSA-SHA256');sign.update(data);const sig=sign.sign(pk,'base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');console.log(data+'.'+sig);")
-
-          # Exchange JWT for an installation token
-          RESP=$(curl -s -X POST "https://api.github.com/app/installations/${SEMANTIC_RELEASE_BOT_APP_INSTALLATION_ID}/access_tokens" -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json")
-
-          TOKEN=$(echo "$RESP" | python -c 'import sys, json;print(json.load(sys.stdin).get("token", ""))')
-
-          if [ -z "$TOKEN" ]; then
-            echo "Failed to get installation token, falling back to GITHUB_TOKEN"
-            echo "token=${{ secrets.GITHUB_TOKEN }}" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          echo "token=$TOKEN" >> "$GITHUB_OUTPUT"
-
-      - name: � Validate deployment workflow exists
-        run: |
-          WORKFLOW_FILE=".github/workflows/azure-static-web-apps-blue-desert-06e30df03.yml"
-          if [ ! -f "$WORKFLOW_FILE" ]; then
-            echo "❌ Deployment workflow file not found: $WORKFLOW_FILE"
-            echo "Available workflow files:"
-            ls -la .github/workflows/ || true
-            exit 1
-          fi
-          echo "✅ Deployment workflow file exists: $WORKFLOW_FILE"
-
-      - name: �🚀 Trigger deployment
-        if: steps.release.outputs.tag != 'none'
-        uses: actions/github-script@v8
+      - name: 🚀 Deploy Production
+        uses: ./.github/workflows/azure-static-web-apps-blue-desert-06e30df03.yml
         with:
-          github-token: ${{ steps.create_deploy_token.outputs.token }}
-          script: |
-            const tag = '${{ steps.release.outputs.tag }}';
-            const workflowId = 'azure-static-web-apps-blue-desert-06e30df03.yml';
+          environment: production
+          release_tag: ${{ needs.release.outputs.release_tag }}
+        secrets:
+          AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_DESERT_06E30DF03 }}
 
-            console.log(`🚀 Triggering deployment for release: ${tag}`);
-
-            try {
-              // First, verify the workflow exists and is accessible
-              const workflows = await github.rest.actions.listRepoWorkflows({
-                owner: context.repo.owner,
-                repo: context.repo.repo
-              });
-
-              const targetWorkflow = workflows.data.workflows.find(w => w.path.endsWith(workflowId));
-              if (!targetWorkflow) {
-                throw new Error(`Workflow ${workflowId} not found. Available workflows: ${workflows.data.workflows.map(w => w.path).join(', ')}`);
-              }
-
-              console.log(`✅ Found target workflow: ${targetWorkflow.path} (ID: ${targetWorkflow.id})`);
-
-              // Trigger the deployment workflow
-              const result = await github.rest.actions.createWorkflowDispatch({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: workflowId,
-                ref: 'main',
-                inputs: {
-                  release_tag: tag
-                }
-              });
-
-              console.log(`✅ Successfully triggered Azure Static Web Apps deployment for ${tag}`);
-              console.log(`📋 Workflow dispatch result: ${result.status}`);
-
-            } catch (error) {
-              console.error(`❌ Failed to trigger deployment: ${error.message}`);
-              if (error.response) {
-                console.error(`HTTP ${error.response.status}: ${JSON.stringify(error.response.data, null, 2)}`);
-              }
-              // Make the step fail so the release process doesn't silently continue
-              process.exit(1);
-            }
+      - name: 🚀 Deploy Production
+        if: steps.release.outputs.tag != 'none'
+        uses: ./.github/workflows/azure-static-web-apps-blue-desert-06e30df03.yml
+        with:
+          environment: production
+          release_tag: ${{ steps.release.outputs.tag }}
+        secrets:
+          AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_DESERT_06E30DF03 }}
