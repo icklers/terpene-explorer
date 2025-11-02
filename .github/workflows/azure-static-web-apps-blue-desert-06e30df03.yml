@@ -75,6 +75,36 @@ jobs:
           path: .
           workflow_conclusion: success
 
+      - name: 🔍 Validate release artifacts download
+        if: github.event_name == 'workflow_call' && inputs.release_tag != ''
+        run: |
+          echo "Validating downloaded release artifacts..."
+          if [ ! -f "dist.tar.gz" ] && [ ! -f "dist.zip" ]; then
+            echo "❌ No release artifacts downloaded from release workflow"
+            echo "Expected artifacts: dist.tar.gz or dist.zip"
+            ls -la
+            exit 1
+          fi
+          
+          # Check file sizes
+          if [ -f "dist.tar.gz" ]; then
+            TAR_SIZE=$(stat -f%z dist.tar.gz 2>/dev/null || stat -c%s dist.tar.gz 2>/dev/null || echo "0")
+            if [ "$TAR_SIZE" -lt 1000 ]; then
+              echo "❌ dist.tar.gz is too small (${TAR_SIZE}B)"
+              exit 1
+            fi
+            echo "✅ dist.tar.gz downloaded (${TAR_SIZE}B)"
+          fi
+          
+          if [ -f "dist.zip" ]; then
+            ZIP_SIZE=$(stat -f%z dist.zip 2>/dev/null || stat -c%s dist.zip 2>/dev/null || echo "0")
+            if [ "$ZIP_SIZE" -lt 1000 ]; then
+              echo "❌ dist.zip is too small (${ZIP_SIZE}B)"
+              exit 1
+            fi
+            echo "✅ dist.zip downloaded (${ZIP_SIZE}B)"
+          fi
+
       - name: 📥 Download build artifacts (workflow_call from CI for PR preview)
         if: github.event_name == 'workflow_call' && inputs.release_tag == ''
         uses: dawidd6/action-download-artifact@v11
