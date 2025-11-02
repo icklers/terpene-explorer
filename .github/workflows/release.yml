@@ -107,6 +107,27 @@ jobs:
             dist.zip
           retention-days: 7
 
+      # Verify artifacts were uploaded successfully
+      - name: 🔍 Verify artifact upload
+        run: |
+          echo "Verifying artifacts were uploaded..."
+          # Check if artifacts still exist locally
+          if [ ! -f "dist.tar.gz" ] || [ ! -f "dist.zip" ]; then
+            echo "❌ Artifacts missing after upload attempt"
+            exit 1
+          fi
+          
+          # Verify file sizes are reasonable (not empty)
+          TAR_SIZE=$(stat -f%z dist.tar.gz 2>/dev/null || stat -c%s dist.tar.gz 2>/dev/null || echo "0")
+          ZIP_SIZE=$(stat -f%z dist.zip 2>/dev/null || stat -c%s dist.zip 2>/dev/null || echo "0")
+          
+          if [ "$TAR_SIZE" -lt 1000 ] || [ "$ZIP_SIZE" -lt 1000 ]; then
+            echo "❌ Artifact files are too small (tar: ${TAR_SIZE}B, zip: ${ZIP_SIZE}B)"
+            exit 1
+          fi
+          
+          echo "✅ Artifacts uploaded successfully (tar: ${TAR_SIZE}B, zip: ${ZIP_SIZE}B)"
+
       # Create a short-lived installation token from the GitHub App
       - name: 🔐 Create GitHub App installation token
         id: create_app_token
