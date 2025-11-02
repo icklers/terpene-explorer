@@ -9,6 +9,10 @@ on:
         required: false
         type: string
         default: 'preview'
+      release_tag:
+        description: 'Release tag for production deployments'
+        required: false
+        type: string
     secrets:
       AZURE_STATIC_WEB_APPS_API_TOKEN:
         required: true
@@ -49,8 +53,10 @@ jobs:
           echo "Workflow run ID: ${{ github.event.workflow_run.id || 'N/A' }}"
           echo "Workflow run conclusion: ${{ github.event.workflow_run.conclusion || 'N/A' }}"
           echo "Head branch: ${{ github.event.workflow_run.head_branch || github.ref_name }}"
+          echo "Environment input: ${{ inputs.environment || 'N/A' }}"
+          echo "Release tag input: ${{ inputs.release_tag || 'N/A' }}"
 
-      - name: 📥 Download build artifacts (workflow_run)
+      - name: 📥 Download build artifacts (workflow_run from CI)
         if: github.event_name == 'workflow_run'
         uses: dawidd6/action-download-artifact@v11
         with:
@@ -60,6 +66,24 @@ jobs:
           run_id: ${{ github.event.workflow_run.id }}
           workflow_conclusion: success
 
+      - name: 📥 Download build artifacts (workflow_call from release)
+        if: github.event_name == 'workflow_call' && inputs.release_tag != ''
+        uses: dawidd6/action-download-artifact@v11
+        with:
+          workflow: release.yml
+          name: release-artifacts
+          path: .
+          workflow_conclusion: success
+
+      - name: 📥 Download build artifacts (workflow_call from CI for PR preview)
+        if: github.event_name == 'workflow_call' && inputs.release_tag == ''
+        uses: dawidd6/action-download-artifact@v11
+        with:
+          workflow: ci.yml
+          name: azure-swa-build
+          path: dist
+          workflow_conclusion: success
+
       - name: 📥 Download build artifacts (pull_request via workflow_call)
         if: github.event_name == 'pull_request'
         uses: dawidd6/action-download-artifact@v11
@@ -67,29 +91,45 @@ jobs:
           workflow: ci.yml
           name: azure-swa-build
           path: dist
-          run_id: ${{ github.event.workflow_run.id }}
           workflow_conclusion: success
 
       - name: 📋 List build contents
         run: |
           echo "=== Build contents ==="
-          ls -la dist/
+          ls -la dist/ 2>/dev/null || echo "No dist directory"
+          ls -la dist.tar.gz 2>/dev/null || echo "No dist.tar.gz"
+          ls -la dist.zip 2>/dev/null || echo "No dist.zip"
           echo "=== Assets directory ==="
-          ls -la dist/assets/ || echo "No assets directory"
+          ls -la dist/assets/ 2>/dev/null || echo "No assets directory"
           echo "=== Checking index.html ==="
-          head -20 dist/index.html
-          echo "=== Checking for staticwebapp.config.json ==="
-          ls -la staticwebapp.config.json || echo "No config in root"
-          ls -la dist/staticwebapp.config.json || echo "No config in dist"
+          head -20 dist/index.html 2>/dev/null || echo "No index.html found"
+
+      - name: 📦 Extract release artifacts
+        if: github.event_name == 'workflow_call' && inputs.release_tag != ''
+        run: |
+          if [ -f "dist.tar.gz" ]; then
+            echo "Extracting dist.tar.gz..."
+            mkdir -p dist
+            tar -xzf dist.tar.gz -C dist/
+            echo "✅ Extracted dist.tar.gz"
+          elif [ -f "dist.zip" ]; then
+            echo "Extracting dist.zip..."
+            mkdir -p dist
+            unzip -q dist.zip -d dist/
+            echo "✅ Extracted dist.zip"
+          else
+            echo "❌ No release artifacts found to extract"
+            exit 1
+          fi
 
       - name: 📋 Ensure config file is in root
         run: |
           if [ -f "dist/staticwebapp.config.json" ]; then
-            cp dist/staticwebapp.config.json ./
+            cp dist/staticwebapp.config.json ./ 2>/dev/null || echo "Config already exists in root"
             echo "Copied staticwebapp.config.json from dist to root"
           fi
           echo "Config file contents:"
-          cat staticwebapp.config.json | head -20
+          cat staticwebapp.config.json 2>/dev/null || echo "No config file found"
 
       - name: Build And Deploy
         id: builddeploy
@@ -110,7 +150,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env:
           # Add any environment variables your app needs at runtime
-          VITE_APP_VERSION: ${{ github.event.workflow_run.head_branch || github.ref_name }}
+          VITE_APP_VERSION: ${{ inputs.release_tag || github.event.workflow_run.head_branch || github.ref_name }}
           VITE_APP_BASE: /
 
   close_pull_request_job:
