@@ -103,3 +103,4 @@ See [`docs/ACCESSIBILITY.md`](docs/ACCESSIBILITY.md) for detailed accessibility 
 ## License
 
 MIT License - see LICENSE file for details.
+# Test release trigger for v1.2.1
