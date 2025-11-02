@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## <small>1.1.1 (2025-11-02)</small>
+
+* fix(ci): Release workflow wait for CI, no Dependabot PR deployments ([b2fff29](https://github.com/icklers/terpene-explorer/commit/b2fff29))
+* ci: fix code formatting ([f683ab0](https://github.com/icklers/terpene-explorer/commit/f683ab0))
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
