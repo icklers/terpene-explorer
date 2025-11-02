@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.3.0 (2025-11-02)
+
+* feat: add automated release workflow v2 ([d159bac](https://github.com/icklers/terpene-explorer/commit/d159bac))
+
 ## 1.2.0 (2025-11-02)
 
 * Merge branch 'main' into 008-therapeutic-modal-refactor ([f8f22fa](https://github.com/icklers/terpene-explorer/commit/f8f22fa))
