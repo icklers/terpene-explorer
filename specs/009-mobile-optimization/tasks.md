@@ -193,15 +193,15 @@ touch targets meet WCAG AA standards and keyboard accessibility.
 **Description**: Update theme files with responsive typography using CSS clamp() and component overrides for mobile touch targets.
 
 **Acceptance Criteria**:
-- [ ] Typography uses clamp() for fluid scaling
-- [ ] Base font-size ≥16px on mobile
-- [ ] H1: clamp(2rem, 5vw, 2.5rem)
-- [ ] Body1: clamp(1rem, 2vw, 1rem)
-- [ ] MuiButton: minHeight 44px desktop, 48px mobile
-- [ ] MuiIconButton: padding 12px desktop, 14px mobile
-- [ ] MuiChip: height 28px desktop, 32px mobile
-- [ ] All component overrides use @media queries for mobile
-- [ ] Dark and light themes both updated
+- [X] Typography uses clamp() for fluid scaling
+- [X] Base font-size ≥16px on mobile
+- [X] H1: clamp(2rem, 5vw, 2.5rem)
+- [X] Body1: clamp(1rem, 2vw, 1rem)
+- [X] MuiButton: minHeight 44px desktop, 48px mobile
+- [X] MuiIconButton: padding 12px desktop, 14px mobile
+- [X] MuiChip: height 28px desktop, 32px mobile
+- [X] All component overrides use @media queries for mobile
+- [X] Dark and light themes both updated
 - [ ] Visual regression tests pass (if configured)
 
 **Implementation Notes**:

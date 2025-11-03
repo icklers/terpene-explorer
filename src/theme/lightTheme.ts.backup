@@ -100,7 +100,7 @@ export const lightTheme = createTheme({
     },
   },
 
-  // T005: Responsive typography with CSS clamp() for fluid scaling
+  // Typography (readable and accessible)
   typography: {
     fontFamily: [
       '-apple-system',
@@ -119,66 +119,57 @@ export const lightTheme = createTheme({
     fontSize: 16,
     htmlFontSize: 16,
 
-    // Fluid typography scales smoothly between mobile and desktop
+    // Heading styles
     h1: {
-      fontSize: 'clamp(2rem, 5vw, 2.5rem)', // 32px-40px
+      fontSize: '2.5rem',
       fontWeight: 500,
       lineHeight: 1.2,
     },
     h2: {
-      fontSize: 'clamp(1.75rem, 4vw, 2rem)', // 28px-32px
+      fontSize: '2rem',
       fontWeight: 500,
       lineHeight: 1.3,
     },
     h3: {
-      fontSize: 'clamp(1.5rem, 3.5vw, 1.75rem)', // 24px-28px
+      fontSize: '1.75rem',
       fontWeight: 500,
       lineHeight: 1.4,
     },
     h4: {
-      fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', // 20px-24px
+      fontSize: '1.5rem',
       fontWeight: 500,
       lineHeight: 1.4,
     },
     h5: {
-      fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', // 18px-20px
+      fontSize: '1.25rem',
       fontWeight: 500,
       lineHeight: 1.5,
     },
     h6: {
-      fontSize: 'clamp(1rem, 2vw, 1.125rem)', // 16px-18px
+      fontSize: '1.125rem',
       fontWeight: 500,
       lineHeight: 1.6,
     },
 
     // Body text
     body1: {
-      fontSize: 'clamp(1rem, 2vw, 1rem)', // 16px (base font size ≥16px on mobile per spec FR-006)
+      fontSize: '1rem',
       lineHeight: 1.6,
     },
     body2: {
-      fontSize: 'clamp(0.875rem, 2vw, 0.875rem)', // 14px
+      fontSize: '0.875rem',
       lineHeight: 1.6,
-    },
-    button: {
-      fontSize: 'clamp(0.875rem, 2vw, 1rem)', // 14px-16px
-      textTransform: 'none',
     },
   },
 
-  // Component overrides for accessibility + T005: Touch target sizes
+  // Component overrides for accessibility
   components: {
-    // Button - ensure focus visibility + Touch target sizes
+    // Button - ensure focus visibility
     MuiButton: {
       styleOverrides: {
         root: {
           textTransform: 'none', // More readable
           borderRadius: 8,
-          minHeight: 44, // Desktop minimum (WCAG AA)
-          '@media (max-width:600px)': {
-            minHeight: 48, // Mobile minimum (recommended per spec FR-006)
-            padding: '12px 16px',
-          },
           '&:focus-visible': {
             outline: '3px solid',
             outlineColor: '#3f51b5',
@@ -188,47 +179,12 @@ export const lightTheme = createTheme({
       },
     },
 
-    // IconButton - T005: Touch target sizes
-    MuiIconButton: {
-      styleOverrides: {
-        root: {
-          padding: 12, // Desktop (44px total with 20px icon)
-          '@media (max-width:600px)': {
-            padding: 14, // Mobile (48px total with 20px icon)
-          },
-          '&:focus-visible': {
-            outline: '2px solid',
-            outlineColor: '#3f51b5',
-            outlineOffset: '2px',
-          },
-        },
-      },
-    },
-
-    // ToggleButton - T005: Touch target sizes for Basic/Expert toggle
-    MuiToggleButton: {
-      styleOverrides: {
-        root: {
-          minHeight: 44, // Desktop
-          '@media (max-width:600px)': {
-            minHeight: 48, // Mobile
-            padding: '12px 16px',
-          },
-        },
-      },
-    },
-
-    // Chip - for effect tags + T005: Touch target sizes
+    // Chip - for effect tags
     MuiChip: {
       styleOverrides: {
         root: {
           borderRadius: 16,
           fontWeight: 500,
-          height: 28, // Desktop
-          '@media (max-width:600px)': {
-            height: 32, // Mobile (larger touch target)
-            fontSize: '0.875rem',
-          },
           '&:focus-visible': {
             outline: '2px solid',
             outlineColor: '#3f51b5',
