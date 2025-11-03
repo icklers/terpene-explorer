@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+build/
+*.local
+
+# Testing
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Generated files
+*.d.ts
+vite-env.d.ts
+
+# Temporary files
+*.tmp
+*.temp
+.gemini/
+
+# Miscellaneous
+.cache/
+backups/

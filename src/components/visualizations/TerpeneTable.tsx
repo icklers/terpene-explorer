@@ -20,6 +20,7 @@ import {
   Chip,
   Typography,
   useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +31,7 @@ import { getCategoryForEffect } from '../../services/filterService';
 import type { Terpene as NewTerpene } from '../../types/terpene';
 import { toNewTerpene } from '../../utils/terpeneAdapter';
 import { TerpeneDetailModal } from '../TerpeneDetailModal';
+import { TerpeneCardGrid } from './TerpeneCardGrid';
 
 // TODO: Re-enable virtualization with react-window after fixing import issues
 // import { FixedSizeList } from 'react-window';
@@ -84,6 +86,7 @@ export function TerpeneTable({
 }: TerpeneTableProps): React.ReactElement {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [sortBy, setSortBy] = useState<SortColumn>(initialSortBy);
   const [sortDirection, setSortDirection] = useState<SortDirection>(initialSortDirection);
 
@@ -186,6 +189,32 @@ export function TerpeneTable({
           {t('table.noTerpenes', 'No terpenes to display')}
         </Typography>
       </Box>
+    );
+  }
+
+  // T002: Conditional rendering - CardGrid on mobile, Table on desktop
+  if (isMobile) {
+    // Convert legacy Terpene[] to NewTerpene[] for CardGrid
+    const newTerpenes = sortedTerpenes.map(toNewTerpene);
+
+    const handleCardClick = (terpene: NewTerpene) => {
+      setSelectedTerpeneId(terpene.id);
+      setSelectedTerpene(terpene);
+      setModalOpen(true);
+    };
+
+    return (
+      <>
+        <TerpeneCardGrid
+          terpenes={newTerpenes}
+          onTerpeneClick={handleCardClick}
+        />
+        <TerpeneDetailModal
+          open={modalOpen}
+          terpene={selectedTerpene}
+          onClose={handleModalClose}
+        />
+      </>
     );
   }
 

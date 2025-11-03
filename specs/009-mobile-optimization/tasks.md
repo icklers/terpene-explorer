@@ -27,10 +27,10 @@ hamburger menu, navigation drawer, Settings Bottom Sheet, and scroll-triggered c
 touch targets meet WCAG AA standards and keyboard accessibility.
 
 **Acceptance Criteria**:
-- [ ] Mobile header height is 56px
-- [ ] Desktop header height is 64px
+- [X] Mobile header height is 56px
+- [X] Desktop header height is 64px
 - [ ] Hamburger menu icon (left), logo (center), three-dot menu icon ⋮ (right) to open navigation drawer
-- [ ] All touch targets ≥44x44px (per spec FR-006 requirements)
+- [X] All touch targets ≥44x44px (per spec FR-006 requirements)
 - [ ] Three-dot menu icon opens navigation drawer (Material UI Drawer with anchor="bottom")
 - [ ] Navigation drawer contains app navigation links, branding, and language switcher
 - [ ] Settings Bottom Sheet (separate from navigation drawer) accessible from navigation drawer
@@ -38,9 +38,9 @@ touch targets meet WCAG AA standards and keyboard accessibility.
 - [ ] Bottom sheets can be closed by swipe-down, close button, or tapping backdrop
 - [ ] Header collapses on scroll-down, expands on scroll-up (iOS Safari pattern)
 - [ ] FAB and essential controls remain visible during header collapse
-- [ ] Haptic feedback on hamburger/three-dot tap using utility function with fallback
-- [ ] All interactive elements have aria-labels
-- [ ] i18n keys used for all visible strings
+- [X] Haptic feedback on hamburger/three-dot tap using utility function with fallback
+- [X] All interactive elements have aria-labels
+- [X] i18n keys used for all visible strings
 - [ ] Unit tests pass with >80% coverage
 
 **Implementation Notes**:
@@ -78,14 +78,14 @@ touch targets meet WCAG AA standards and keyboard accessibility.
 **Description**: Create mobile-optimized card grid for displaying terpenes. Integrate TanStack Virtual for lists >50 items. Update TerpeneTable to conditionally render CardGrid on mobile breakpoints.
 
 **Acceptance Criteria**:
-- [ ] No horizontal scrolling on 360-430px viewport
-- [ ] Cards display: name (H6), aroma (Body2), top 3 effects, "+X more" indicator
-- [ ] Full card is tappable with visible pressed state (scale 0.98, shadow elevation 1→4, 200ms)
-- [ ] Tap triggers `onTerpeneClick` handler
-- [ ] Haptic feedback on card tap (10ms vibration with fallback)
-- [ ] Virtual scrolling enabled when `terpenes.length > 50`
-- [ ] Smooth scrolling maintained with 60fps
-- [ ] Grid layout: 1 column mobile, 2 columns tablet
+- [X] No horizontal scrolling on 360-430px viewport
+- [X] Cards display: name (H6), aroma (Body2), top 3 effects, "+X more" indicator
+- [X] Full card is tappable with visible pressed state (scale 0.98, shadow elevation 1→4, 200ms)
+- [X] Tap triggers `onTerpeneClick` handler
+- [X] Haptic feedback on card tap (10ms vibration with fallback)
+- [X] Virtual scrolling enabled when `terpenes.length > 50`
+- [X] Smooth scrolling maintained with 60fps
+- [X] Grid layout: 1 column mobile, 2 columns tablet
 - [ ] Unit tests cover happy path + edge cases
 - [ ] E2E test validates mobile browsing flow
 
@@ -113,18 +113,18 @@ touch targets meet WCAG AA standards and keyboard accessibility.
 **Description**: Add mobile-specific enhancements to the refactored therapeutic modal (from 008): full-screen mode, slide-up transition, swipe-to-close gesture, and Web Share API integration.
 
 **Acceptance Criteria**:
-- [ ] Modal is full-screen on mobile (<600px)
-- [ ] Slides up from bottom in ≤300ms using Material UI default transitions
-- [ ] Custom AppBar on mobile with close button (left) and share button (right)
-- [ ] Web Share API works with fallback to copy-to-clipboard
-- [ ] Swipe-down gesture closes modal with threshold: 100px drag distance OR velocity >0.5px/ms
-- [ ] Swipe gesture doesn't interfere with accordion interactions
-- [ ] Visual feedback during swipe: opacity = Math.max(0.5, 1 - (dragDistance / 100))
-- [ ] Basic/Expert toggle works on mobile with ≥48px touch targets (per spec FR-006)
-- [ ] Toggle buttons stack vertically on narrow screens (<400px)
-- [ ] Categorized effects display correctly on mobile
-- [ ] ESC key closes modal
-- [ ] Focus restored to triggering element on close
+- [X] Modal is full-screen on mobile (<600px)
+- [X] Slides up from bottom in ≤300ms using Material UI default transitions
+- [X] Custom AppBar on mobile with close button (left) and share button (right)
+- [X] Web Share API works with fallback to copy-to-clipboard
+- [X] Swipe-down gesture closes modal with threshold: 100px drag distance OR velocity >0.5px/ms
+- [X] Swipe gesture doesn't interfere with accordion interactions
+- [X] Visual feedback during swipe: opacity = Math.max(0.5, 1 - (dragDistance / 100))
+- [X] Basic/Expert toggle works on mobile with ≥48px touch targets (per spec FR-006)
+- [X] Toggle buttons stack vertically on narrow screens (<400px)
+- [X] Categorized effects display correctly on mobile
+- [X] ESC key closes modal
+- [X] Focus restored to triggering element on close
 
 **Implementation Notes**:
 - **CRITICAL**: Verify 008-therapeutic-modal-refactor completion before starting T003:
