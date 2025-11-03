@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.4.0 (2025-11-03)
 
+* Merge pull request #70 from icklers/009-mobile-optimization ([a6e61e9](https://github.com/icklers/terpene-explorer/commit/a6e61e9)), closes [#70](https://github.com/icklers/terpene-explorer/issues/70)
+* feat: add version display to footer ([07d78f6](https://github.com/icklers/terpene-explorer/commit/07d78f6))
+* feat: improve CI/CD (#67) ([f9e55b6](https://github.com/icklers/terpene-explorer/commit/f9e55b6)), closes [#67](https://github.com/icklers/terpene-explorer/issues/67)
+* feat(mobile): implement Phase 1 Foundation - mobile components and hooks ([a428c8b](https://github.com/icklers/terpene-explorer/commit/a428c8b))
+* feat(mobile): implement Phase 2 Enhancement - responsive themes (T005) ([b62d30a](https://github.com/icklers/terpene-explorer/commit/b62d30a))
+* feat(mobile): implement Phase 3 PWA & Polish - PWA and optimization (T008-T010) ([323ed79](https://github.com/icklers/terpene-explorer/commit/323ed79)), closes [#4caf50](https://github.com/icklers/terpene-explorer/issues/4caf50) [#121212](https://github.com/icklers/terpene-explorer/issues/121212)
+* fix: resolve linter errors in mobile optimization ([f3f3857](https://github.com/icklers/terpene-explorer/commit/f3f3857))
+* fix(ci): ci/deployment workflow fixes ([85d15ff](https://github.com/icklers/terpene-explorer/commit/85d15ff))
+* fix(mobile): add color coding to chips and improve effect visibility (UAT Round 2) ([72f7fe5](https://github.com/icklers/terpene-explorer/commit/72f7fe5))
+* fix(mobile): optimize build chunks ([81256ab](https://github.com/icklers/terpene-explorer/commit/81256ab))
+* fix(mobile): resolve critical UAT issues from iPhone 16 testing ([c813eb8](https://github.com/icklers/terpene-explorer/commit/c813eb8)), closes [#3](https://github.com/icklers/terpene-explorer/issues/3) [#70](https://github.com/icklers/terpene-explorer/issues/70)
+* chore(release): 1.4.0 [skip ci] ([96cc3a5](https://github.com/icklers/terpene-explorer/commit/96cc3a5))
+* chore(spec): fixed ambiguities in spec ([99e748d](https://github.com/icklers/terpene-explorer/commit/99e748d))
+* chore(spec): updated specs and tasks ([2c0299d](https://github.com/icklers/terpene-explorer/commit/2c0299d))
+
+## 1.4.0 (2025-11-03)
+
 * feat: improve CI/CD (#67) ([f9e55b6](https://github.com/icklers/terpene-explorer/commit/f9e55b6)), closes [#67](https://github.com/icklers/terpene-explorer/issues/67)
 * fix(ci): ci/deployment workflow fixes ([85d15ff](https://github.com/icklers/terpene-explorer/commit/85d15ff))
 
