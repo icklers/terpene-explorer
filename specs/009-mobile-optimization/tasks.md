@@ -30,7 +30,7 @@ touch targets meet WCAG AA standards and keyboard accessibility.
 - [ ] Mobile header height is 56px
 - [ ] Desktop header height is 64px
 - [ ] Hamburger menu icon (left), logo (center), three-dot menu icon ⋮ (right) to open navigation drawer
-- [ ] All touch targets ≥44x44px (per FR-006 rationale table)
+- [ ] All touch targets ≥44x44px (per spec FR-006 requirements)
 - [ ] Three-dot menu icon opens navigation drawer (Material UI Drawer with anchor="bottom")
 - [ ] Navigation drawer contains app navigation links, branding, and language switcher
 - [ ] Settings Bottom Sheet (separate from navigation drawer) accessible from navigation drawer
@@ -94,6 +94,7 @@ touch targets meet WCAG AA standards and keyboard accessibility.
 - TanStack Virtual with estimated card height 180px, overscan 5
 - Card tap animation using transform and box-shadow (GPU-accelerated)
 - Use haptic utility function (see T001) for consistent feedback
+- Touch targets: 44px minimum (per spec FR-006)
 
 ---
 
@@ -102,7 +103,7 @@ touch targets meet WCAG AA standards and keyboard accessibility.
 **ID**: `T003`  
 **Owner**: FE  
 **Estimate**: 8 hours  
-**Dependencies**: `008-therapeutic-modal-refactor` MUST be complete  
+**Dependencies**: `008-therapeutic-modal-refactor` MUST be complete (see verification checklist below)  
 **Priority**: P1  
 **Files**:
 - Modify: `src/components/visualizations/TerpeneDetailModal.tsx`
@@ -119,13 +120,18 @@ touch targets meet WCAG AA standards and keyboard accessibility.
 - [ ] Swipe-down gesture closes modal with threshold: 100px drag distance OR velocity >0.5px/ms
 - [ ] Swipe gesture doesn't interfere with accordion interactions
 - [ ] Visual feedback during swipe: opacity = Math.max(0.5, 1 - (dragDistance / 100))
-- [ ] Basic/Expert toggle works on mobile with ≥48px touch targets (per FR-006 rationale)
+- [ ] Basic/Expert toggle works on mobile with ≥48px touch targets (per spec FR-006)
 - [ ] Toggle buttons stack vertically on narrow screens (<400px)
 - [ ] Categorized effects display correctly on mobile
 - [ ] ESC key closes modal
 - [ ] Focus restored to triggering element on close
 
 **Implementation Notes**:
+- **CRITICAL**: Verify 008-therapeutic-modal-refactor completion before starting T003:
+  - [ ] Basic/Expert view toggle implemented and working
+  - [ ] Effects categorized into 4 categories (Mood/Energy, Cognitive, Relaxation, Physical)
+  - [ ] Therapeutic properties displayed as badge chips
+  - [ ] Modal structure supports mobile enhancements
 - Preserve ALL therapeutic modal features from 008-therapeutic-modal-refactor
 - Use `TransitionComponent={Slide}` with `direction="up"` on mobile
 - Share format: `{name}\n{description}\n{effects}\n{url}`
@@ -152,12 +158,12 @@ touch targets meet WCAG AA standards and keyboard accessibility.
 **Acceptance Criteria**:
 - [ ] FAB visible in bottom-right corner with filter icon
 - [ ] FAB shows badge with active filter count
-- [ ] FAB touch target ≥56x56px
+- [ ] FAB touch target ≥56x56px (per spec FR-006)
 - [ ] Bottom sheet slides up with drag handle visible
 - [ ] Drag handle is 40x4px, centered
 - [ ] Real-time results count displays: "X terpenes match"
 - [ ] Categories organized as accordions (Mood/Energy, Cognitive, Relaxation, Physical)
-- [ ] Effect chips are tappable with ≥44x44px targets
+- [ ] Effect chips are tappable with ≥44x44px targets (per spec FR-006)
 - [ ] "Clear All" button resets filters
 - [ ] "Apply" button in sticky footer closes sheet and applies filters
 - [ ] Sheet can be closed by: swipe-down, close button, or tapping backdrop
@@ -168,6 +174,7 @@ touch targets meet WCAG AA standards and keyboard accessibility.
 - Material UI `Drawer` with `anchor="bottom"`
 - Results count computed via `useMemo` on filter changes
 - Keep modal open after applying filter (per spec)
+- Touch targets: 44px minimum for chips, 56px for FAB (per spec FR-006)
 
 ---
 

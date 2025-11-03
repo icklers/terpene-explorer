@@ -1,11 +1,11 @@
 # Implementation Plan: Mobile Optimization
 
 **Branch**: `009-mobile-optimization` | **Date**: 2025-11-01 | **Spec**: [spec.md](./spec.md)  
-**Input**: Feature specification from `specs/009-mobile-optimization/spec.md` + `.idea/mobile-optimization-proposal.md`
+**Input**: Feature specification from `specs/009-mobile-optimization/spec.md`
 
 ## Summary
 
-Transform Terpene Explorer into a mobile-first web application by implementing responsive layouts, touch-optimized interactions, a card-based browsing interface, full-screen modals, and bottom-sheet filters. The app will meet WCAG 2.1 AA standards, achieve Lighthouse Performance ≥90, and function as an installable Progressive Web App with offline support.
+Implementation plan for mobile optimization feature. See spec.md for detailed requirements.
 
 ## Technical Context
 
@@ -16,8 +16,8 @@ Transform Terpene Explorer into a mobile-first web application by implementing r
 **Target Platform**: Modern web browsers on mobile (Chrome 120+, Safari 17+, Samsung 23+, Firefox 121+, Edge 120+)  
 **Project Type**: Web application (frontend only, Vite SPA)
 
-**Performance Goals**: Lighthouse ≥90, FCP <1.5s, LCP <2.5s, TTI <5s, 60fps animations, <200ms filter response  
-**Constraints**: JS bundle ≤200KB, CSS ≤50KB, total ≤500KB, 44px touch targets, 4.5:1 contrast ratio  
+**Performance Goals**: Lighthouse ≥90, FCP <1.5s, LCP <2.5s, TTI <5s, 60fps animations, <200ms filter response
+**Constraints**: JS bundle ≤200KB, CSS ≤50KB, total ≤500KB (per spec FR-069-071), 44px touch targets, 4.5:1 contrast ratio
 **Scale/Scope**: ~50-200 terpenes, 1000+ concurrent users, 280px-1024px viewports, 3-week delivery
 
 ## Constitution Check
@@ -33,7 +33,7 @@ Transform Terpene Explorer into a mobile-first web application by implementing r
 
 - [x] Lighthouse score targets: Performance ≥90, Accessibility ≥95
 - [x] Response time targets: filters <200ms, visualization renders <500ms
-- [x] Bundle size budgets: ~200KB JS, ~50KB CSS, ~500KB total
+- [x] Bundle size budgets: ≤200KB JS, ≤50KB CSS, ≤500KB total (per spec requirements)
 - [x] Virtualization plan: TanStack Virtual for lists >50 items
 
 ✅ **Gate 3: Testing Strategy**
