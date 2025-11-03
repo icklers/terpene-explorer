@@ -91,13 +91,14 @@ specs/009-mobile-optimization/
 src/
 ├── components/
 │   ├── layout/
-│   │   └── AppBar.tsx                    # 🆕 Mobile-aware header with settings sheet
+│   │   ├── AppBar.tsx                    # 🆕 Mobile-aware header with navigation drawer
+│   │   └── Footer.tsx                    # 🆕 Version display + GitHub link
 │   ├── visualizations/
 │   │   ├── TerpeneCardGrid.tsx           # 🆕 Mobile card grid view
-│   │   ├── TerpeneDetailModal.tsx        # 🔄 Add mobile full-screen mode
+│   │   ├── TerpeneDetailModal.tsx        # 🔄 Add mobile full-screen mode + swipe-to-close
 │   │   └── TerpeneTable.tsx              # 🔄 Integrate card grid for mobile
 │   └── filters/
-│       └── FilterBottomSheet.tsx         # 🆕 Mobile filter interface
+│       └── FilterBottomSheet.tsx         # 🆕 Mobile filter interface (Material UI Drawer)
 ├── pages/
 │   └── Home.tsx                           # 🔄 Add FAB + bottom sheet integration
 ├── theme/
@@ -105,8 +106,9 @@ src/
 │   └── lightTheme.ts                      # 🔄 Add responsive typography + touch targets
 ├── hooks/
 │   ├── useMediaBreakpoints.ts             # 🆕 Custom breakpoint hooks
-│   ├── useSwipeToClose.ts                 # 🆕 Swipe gesture detection
-│   └── useShare.ts                        # 🆕 Web Share API with fallback
+│   ├── useSwipeToClose.ts                 # 🆕 Swipe gesture detection with velocity threshold
+│   ├── useShare.ts                        # 🆕 Web Share API with fallback
+│   └── useSearchDebounce.ts               # 🆕 300ms search debouncing
 └── utils/
     └── pwa.ts                             # 🆕 PWA install prompts, offline detection
 

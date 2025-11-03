@@ -22,30 +22,43 @@ This document provides granular implementation tasks with estimates, owners, dep
 - Create: `src/components/layout/AppBar.test.tsx`
 - Create: `src/hooks/useHeaderCollapse.ts`
 
-**Description**: Implement mobile-aware AppBar component that renders compact header with collapsible search, hamburger menu, settings bottom sheet, and scroll-triggered collapse/expand behavior. Ensure all touch targets meet WCAG AA standards and keyboard accessibility.
+**Description**: Implement mobile-aware AppBar component that renders compact header with collapsible search,
+hamburger menu, navigation drawer, Settings Bottom Sheet, and scroll-triggered collapse/expand behavior. Ensure all
+touch targets meet WCAG AA standards and keyboard accessibility.
 
 **Acceptance Criteria**:
 - [ ] Mobile header height is 56px
 - [ ] Desktop header height is 64px
-- [ ] Hamburger menu icon (left), logo (center), three-dot menu icon ⋮ (right)
-- [ ] All touch targets ≥44x44px
-- [ ] Search expands full-width when tapped on mobile
-- [ ] Search input type="search" with mobile-friendly keyboard
-- [ ] Search debounced (300ms)
-- [ ] Settings open in bottom sheet with drag handle
-- [ ] Bottom sheet can be closed by swipe-down, close button, or tapping backdrop
+- [ ] Hamburger menu icon (left), logo (center), three-dot menu icon ⋮ (right) to open navigation drawer
+- [ ] All touch targets ≥44x44px (per FR-006 rationale table)
+- [ ] Three-dot menu icon opens navigation drawer (Material UI Drawer with anchor="bottom")
+- [ ] Navigation drawer contains app navigation links, branding, and language switcher
+- [ ] Settings Bottom Sheet (separate from navigation drawer) accessible from navigation drawer
+- [ ] Settings Bottom Sheet contains theme toggle and language selector with ≥48px touch targets
+- [ ] Bottom sheets can be closed by swipe-down, close button, or tapping backdrop
 - [ ] Header collapses on scroll-down, expands on scroll-up (iOS Safari pattern)
 - [ ] FAB and essential controls remain visible during header collapse
-- [ ] Haptic feedback on hamburger/settings tap (Vibration API with fallback)
+- [ ] Haptic feedback on hamburger/three-dot tap using utility function with fallback
 - [ ] All interactive elements have aria-labels
 - [ ] i18n keys used for all visible strings
 - [ ] Unit tests pass with >80% coverage
 
 **Implementation Notes**:
 - Use `useMediaQuery(theme.breakpoints.down('sm'))` for mobile detection
-- Material UI `Drawer` with `anchor="bottom"` for settings bottom sheet
+- Material UI `Drawer` with `anchor="bottom"` for navigation drawer and Settings Bottom Sheet
 - Implement scroll listener for collapse/expand behavior
-- Add vibration on interaction: `navigator.vibrate(10)` with try/catch
+- Haptic utility function:
+  ```typescript
+  const triggerHaptic = (duration: number = 10) => {
+    try {
+      if ('vibrate' in navigator) {
+        navigator.vibrate(duration);
+      }
+    } catch (e) {
+      console.debug('Haptic feedback not supported');
+    }
+  };
+  ```
 
 ---
 
@@ -80,7 +93,7 @@ This document provides granular implementation tasks with estimates, owners, dep
 - Use Material UI `Grid` with responsive breakpoints (xs=12, sm=6)
 - TanStack Virtual with estimated card height 180px, overscan 5
 - Card tap animation using transform and box-shadow (GPU-accelerated)
-- Add navigator.vibrate(10) on tap with try/catch
+- Use haptic utility function (see T001) for consistent feedback
 
 ---
 
@@ -100,12 +113,13 @@ This document provides granular implementation tasks with estimates, owners, dep
 
 **Acceptance Criteria**:
 - [ ] Modal is full-screen on mobile (<600px)
-- [ ] Slides up from bottom in ≤300ms
+- [ ] Slides up from bottom in ≤300ms using Material UI default transitions
 - [ ] Custom AppBar on mobile with close button (left) and share button (right)
 - [ ] Web Share API works with fallback to copy-to-clipboard
-- [ ] Swipe-down gesture closes modal (threshold: 100px)
+- [ ] Swipe-down gesture closes modal with threshold: 100px drag distance OR velocity >0.5px/ms
 - [ ] Swipe gesture doesn't interfere with accordion interactions
-- [ ] Basic/Expert toggle works on mobile with ≥48px touch targets
+- [ ] Visual feedback during swipe: opacity = Math.max(0.5, 1 - (dragDistance / 100))
+- [ ] Basic/Expert toggle works on mobile with ≥48px touch targets (per FR-006 rationale)
 - [ ] Toggle buttons stack vertically on narrow screens (<400px)
 - [ ] Categorized effects display correctly on mobile
 - [ ] ESC key closes modal
@@ -115,6 +129,7 @@ This document provides granular implementation tasks with estimates, owners, dep
 - Preserve ALL therapeutic modal features from 008-therapeutic-modal-refactor
 - Use `TransitionComponent={Slide}` with `direction="up"` on mobile
 - Share format: `{name}\n{description}\n{effects}\n{url}`
+- Swipe velocity calculation: `velocity = dragDistance / (touchEndTime - touchStartTime)`
 
 ---
 
@@ -263,13 +278,16 @@ This document provides granular implementation tasks with estimates, owners, dep
 - [ ] Service worker registers automatically
 - [ ] App is installable on supported browsers (Chrome, Safari, Edge)
 - [ ] Previously viewed terpene data cached for offline access
+- [ ] Offline indicator displays when navigator.onLine === false (per FR-060)
+- [ ] Offline banner states "You're offline. Viewing cached data." with dismiss button
 - [ ] Lighthouse PWA audit passes
-- [ ] Install prompt appears after engagement threshold (30s or 3 terpenes viewed)
+- [ ] Install prompt appears after engagement threshold: 30s active interaction OR 3 terpene modals viewed
 
 **Implementation Notes**:
 - Workbox caching strategies: CacheFirst for assets, NetworkFirst for data
 - Theme color: #4caf50 (existing brand green)
 - Background color: #121212 (dark mode)
+- Engagement tracking: increment counter on tap, scroll, search, or filter events
 
 ---
 
@@ -405,7 +423,9 @@ This document provides granular implementation tasks with estimates, owners, dep
 - [ ] No critical axe violations
 - [ ] All interactive elements have aria-labels
 - [ ] Focus indicators visible (3px outline, 2px offset, minimum 3:1 contrast per FR-073)
-- [ ] Skip-to-content link present and functional (per FR-078)
+- [ ] Skip-to-content link implemented: visually hidden until focused, appears at top on Tab key
+- [ ] Skip-to-content link navigates keyboard focus directly to main content area (per FR-078)
+- [ ] Skip link tested with keyboard navigation (Tab from page load activates link)
 - [ ] Keyboard navigation works (Tab, Enter, Esc, Arrow keys)
 - [ ] Screen reader testing completed (VoiceOver or TalkBack)
 - [ ] All headings form logical hierarchy
@@ -492,14 +512,125 @@ This document provides granular implementation tasks with estimates, owners, dep
 
 ---
 
+### Task 017: Critical CSS Extraction
+
+**ID**: `T017`  
+**Owner**: FE  
+**Estimate**: 4 hours  
+**Dependencies**: T009  
+**Priority**: P3  
+**Files**:
+- Modify: `vite.config.ts`
+- Modify: `index.html`
+
+**Description**: Extract and inline critical CSS for above-the-fold content to achieve FCP <1.5s on 3G networks
+(per FR-071). Use vite-plugin-critical for automated extraction.
+
+**Acceptance Criteria**:
+- [ ] vite-plugin-critical installed and configured in vite.config.ts
+- [ ] Critical CSS extracted for mobile viewport (360px width)
+- [ ] Above-the-fold CSS inlined in index.html: header, card grid skeleton, loading states
+- [ ] Non-critical CSS loaded asynchronously
+- [ ] FCP <1.5s verified via Lighthouse CI on 3G throttling
+- [ ] No FOUC (flash of unstyled content) on initial page load
+- [ ] Build process completes without errors
+
+**Implementation Notes**:
+- Use vite-plugin-critical with configuration:
+  ```javascript
+  critical({
+    dimensions: [{ width: 360, height: 800 }],
+    inline: true,
+    minify: true,
+  })
+  ```
+- Target critical selectors: AppBar, Card skeleton, FAB, loading spinner
+
+---
+
+### Task 018: Mobile Search Optimization
+
+**ID**: `T018`  
+**Owner**: FE  
+**Estimate**: 3 hours  
+**Dependencies**: T001  
+**Priority**: P2  
+**Files**:
+- Modify: `src/components/layout/AppBar.tsx`
+- Create: `src/hooks/useSearchDebounce.ts`
+
+**Description**: Enhance search input with mobile-specific optimizations: type="search", debouncing, mobile-friendly
+keyboard, and autocomplete attributes (per FR-086).
+
+**Acceptance Criteria**:
+- [ ] Search input has type="search" for mobile keyboard optimization
+- [ ] Search is debounced with 300ms delay using custom hook
+- [ ] Mobile keyboard shows search/go button instead of return
+- [ ] Search input has autocomplete="off" and spellcheck="false"
+- [ ] Clear button (×) appears when search has value
+- [ ] Search expands to full width on focus (mobile only)
+- [ ] Search collapses when empty and blurred
+- [ ] i18n placeholder text: "Search terpenes..."
+- [ ] Unit tests cover debounce logic and clear functionality
+
+**Implementation Notes**:
+- useSearchDebounce hook pattern:
+  ```typescript
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(value), 300);
+    return () => clearTimeout(timer);
+  }, [value]);
+  ```
+
+---
+
+### Task 019: Version Footer Display
+
+**ID**: `T019`  
+**Owner**: FE  
+**Estimate**: 2 hours  
+**Dependencies**: None  
+**Priority**: P3  
+**Parallel**: Yes [P]  
+**Files**:
+- Create: `src/components/layout/Footer.tsx`
+- Create: `src/components/layout/Footer.test.tsx`
+- Modify: `src/App.tsx`
+
+**Description**: Create Footer component that displays app version number (centered) above GitHub project link.
+Version should be sourced from package.json (per FR-088).
+
+**Acceptance Criteria**:
+- [ ] Footer component created with version display and GitHub link
+- [ ] Version number centered above GitHub link
+- [ ] Version sourced from package.json via import.meta.env.PACKAGE_VERSION or import
+- [ ] Typography variant caption used for version (muted color: text.secondary)
+- [ ] Footer visible on all pages, positioned at bottom
+- [ ] Footer responsive: full width, padding adjusted for mobile
+- [ ] GitHub link opens in new tab with rel="noopener noreferrer"
+- [ ] All text uses i18n keys
+- [ ] Unit tests verify version rendering
+
+**Implementation Notes**:
+- Import version from package.json: `import { version } from '../../../package.json'`
+- Or configure Vite to expose version: `define: { __APP_VERSION__: JSON.stringify(version) }`
+- Footer layout: centered column, version above link
+
+---
+
 ## Task Summary
 
 | Phase | Tasks | Total Hours | Parallel Tasks |
 |-------|-------|------------:|----------------|
-| Phase 1: Foundation | 3 | 28 | T002 |
-| Phase 2: Enhancement | 5 | 32 | T005 |
-| Phase 3: PWA & Polish | 8 | 48 | T008, T009 |
-| **Total** | **16** | **108** | **4** |
+| Phase 1: Foundation | 3 | 30 | T002 |
+| Phase 2: Enhancement | 6 | 37 | T005, T018 |
+| Phase 3: PWA & Polish | 10 | 62 | T008, T009, T019 |
+| **Total** | **19** | **129** | **5** |
+
+**Note**: Total estimate is 129 hours including 21-hour buffer from original 108 hours. This accounts for contingency
+and provides headroom for unforeseen complexity. Original spec estimated 120 hours; updated estimate includes critical
+CSS extraction (T017), mobile search optimization (T018), and version footer (T019).
 
 ## Dependencies Graph
 

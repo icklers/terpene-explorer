@@ -158,7 +158,14 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 #### Touch Interaction Standards
 
-- **FR-006**: System MUST ensure all interactive elements have minimum touch targets: 44px minimum per WCAG 2.1 AA, 48px recommended for primary action buttons, 56px for floating action buttons (FAB)
+- **FR-006**: System MUST ensure all interactive elements have minimum touch targets per the following rationale:
+
+  | Element Type | Size | Rationale |
+  |--------------|------|-----------|
+  | Minimum (WCAG AA) | 44×44px | Links, secondary buttons, chips, icon buttons |
+  | Primary Actions | 48×48px | Submit buttons, main CTAs, toggle buttons |
+  | Floating Action Buttons | 56×56px | Material Design spec for prominence and easy thumb access |
+
 - **FR-007**: System MUST provide minimum 8px spacing between adjacent tappable elements
 - **FR-008**: System MUST show visual feedback within 100ms of touch interaction (scale to 0.98, increase shadow elevation from 1 to 4, duration 200ms)
 - **FR-009**: System MUST provide haptic feedback on supported devices for primary interactions (card tap, modal open/close, filter apply, share button) using Vibration API with graceful degradation when unsupported
@@ -166,11 +173,10 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 #### Navigation & Header
 
-- **FR-011**: System MUST display mobile-optimized header with hamburger menu (left), app logo (center), and three-dot vertical menu icon (⋮) for settings access (right); all touch targets ≥44x44px
-- **FR-012**: System MUST implement slide-in navigation drawer (bottom sheet) triggered by hamburger menu
-- **FR-013**: System MUST provide settings bottom sheet for theme toggle and language selection
+- **FR-011**: System MUST display mobile-optimized header with hamburger menu (left), app logo (center), and three-dot vertical menu icon (⋮) to access navigation drawer (right); all touch targets ≥44x44px
+- **FR-012**: System MUST implement slide-in navigation drawer (Material UI Drawer with anchor="bottom") triggered by hamburger menu or three-dot menu icon
+- **FR-013**: System MUST provide Settings Bottom Sheet (Material UI Drawer with anchor="bottom") for theme toggle and language selection, accessible from navigation drawer
 - **FR-014**: System MUST collapse header on scroll-down and expand on scroll-up (iOS Safari pattern) while keeping FAB and essential controls visible
-- **FR-015**: (Merged with FR-014 - sticky controls maintained via FAB during header collapse)
 
 #### Content Display - Terpene Cards
 
@@ -205,17 +211,25 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 - **FR-036**: System MUST implement swipe-down gesture to close modals and bottom sheets
 - **FR-037**: System MUST provide pull-to-refresh gesture on main terpene list with loading indicator
-- **FR-038**: System MUST implement smooth, physics-based animations for gesture interactions using spring animations (damping ratio 0.8, stiffness 300) or Material Design motion specifications
-- **FR-039**: System MUST ensure gestures don't conflict with system-level gestures: iOS swipe-back navigation, Android navigation gestures, browser pull-to-refresh (disable when app handles it)
-- **FR-040**: System MUST provide visual feedback during gesture interactions: modal opacity reduces proportionally to drag distance during swipe-to-close
+- **FR-038**: System MUST implement smooth, physics-based animations for gesture interactions using Material UI
+  default transitions (respects theme.transitions.create() with easing and duration)
+- **FR-039**: System MUST ensure gestures don't conflict with system-level gestures: iOS swipe-back navigation,
+  Android navigation gestures, browser pull-to-refresh (disable when app handles it)
+- **FR-040**: System MUST provide visual feedback during gesture interactions: modal opacity reduces proportionally
+  to drag distance during swipe-to-close using formula `opacity = Math.max(0.5, 1 - (dragDistance / 100))`
 
 #### Typography & Readability
 
 - **FR-041**: System MUST use minimum 16px base font size on mobile viewports
 - **FR-042**: System MUST implement fluid typography scaling using CSS clamp() for responsive sizing
 - **FR-043**: System MUST maintain 1.5-1.6 line height for body text readability
-- **FR-044**: System MUST establish clear heading hierarchy using clamp(): H1 (clamp(2rem, 5vw, 2.5rem) = 32-40px), H2 (clamp(1.75rem, 4vw, 2rem) = 28-32px), H3 (clamp(1.5rem, 3.5vw, 1.75rem) = 24-28px)
-- **FR-045**: System MUST ensure text line length stays within optimal reading range by applying max-width: 65ch on body text containers
+- **FR-044**: System MUST establish clear heading hierarchy using clamp() with viewport units:
+  - H1: `clamp(2rem, 5vw, 2.5rem)` (32-40px)
+  - H2: `clamp(1.75rem, 4vw, 2rem)` (28-32px)
+  - H3: `clamp(1.5rem, 3.5vw, 1.75rem)` (24-28px)
+  - Body: `clamp(1rem, 2vw, 1rem)` (16px base)
+- **FR-045**: System MUST ensure text line length stays within optimal reading range by applying max-width:
+  65ch on body text containers
 
 #### Color & Contrast
 
@@ -246,7 +260,9 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 - **FR-062**: System MUST implement Web Share API for sharing terpene information
 - **FR-063**: System MUST adapt to system theme preferences when user hasn't set app theme explicitly
-- **FR-064**: System MUST provide install prompts for PWA where browser supports it (trigger after 30 seconds of engagement OR after viewing 3 terpenes)
+- **FR-064**: System MUST provide install prompts for PWA where browser supports it. Trigger criteria:
+  after 30 seconds of active engagement (defined as any user interaction: tap, scroll, search, or filter
+  action) OR after viewing 3 distinct terpene detail modals
 - **FR-065**: System MUST handle orientation change events for layout adjustments
 
 #### Performance Requirements
@@ -280,8 +296,13 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 - **FR-084**: System MUST make all existing terpene data accessible through mobile interface
 - **FR-085**: System MUST preserve all filtering logic from desktop version
-- **FR-086**: System MUST maintain search functionality with mobile-optimized input (type="search", debouncing, mobile-friendly keyboard)
+- **FR-086**: System MUST maintain search functionality with mobile-optimized input (type="search", debouncing,
+  mobile-friendly keyboard)
 - **FR-087**: System MUST ensure no information is permanently hidden on mobile (use progressive disclosure)
+
+#### Footer & App Information
+
+- **FR-088**: System MUST display app version number in footer, centered, positioned above the GitHub project link
 
 ### Key Entities
 
@@ -291,9 +312,15 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 - **Filter Bottom Sheet**: Mobile interface with drag handle, category-organized effect filters, real-time results preview, clear all button, and sticky apply button in footer
 
-- **Mobile Navigation Header**: Condensed header with hamburger menu (left), app logo (center), three-dot menu icon for settings (right); all touch targets ≥44px with appropriate spacing; collapses on scroll-down, expands on scroll-up
+- **Mobile Navigation Header**: Condensed header with hamburger menu (left), app logo (center), three-dot menu icon
+  to open navigation drawer (right); all touch targets ≥44px with appropriate spacing; collapses on scroll-down,
+  expands on scroll-up
 
-- **Floating Action Button (FAB)**: Circular button positioned bottom-right for filter access; displays badge with active filter count; 56x56px touch target
+- **Floating Action Button (FAB)**: Circular button positioned bottom-right for filter access; displays badge with
+  active filter count; 56x56px touch target
+
+- **App Footer**: Footer component displaying app version number (centered) positioned above GitHub project link;
+  visible on all pages; uses Typography variant caption with muted color
 
 - **Effect Category Badge**: Color-coded chip indicating effect category (Orange/Purple/Blue/Green) and effect name; used in both card summaries and detail modals; inherits from 008-therapeutic-modal-refactor
 
