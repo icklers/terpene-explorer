@@ -73,6 +73,24 @@ jobs:
           search_artifacts: true
           if_no_artifact_found: warn
 
+      - name: 📥 Download azure-swa-build artifact from CI
+        uses: dawidd6/action-download-artifact@v11
+        continue-on-error: true
+        with:
+          workflow: ci.yml
+          workflow_conclusion: success
+          name: azure-swa-build
+          path: dist
+          search_artifacts: true
+          if_no_artifact_found: warn
+
+      - name: 📦 Upload azure-swa-build artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: azure-swa-build
+          path: dist/
+          retention-days: 7
+
       - name: 🏗 Build artifacts if not found
         run: |
           if [ ! -f "dist.tar.gz" ] || [ ! -f "dist.zip" ]; then

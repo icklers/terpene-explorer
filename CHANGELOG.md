@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.4.0 (2025-11-03)
+
+* feat: improve CI/CD (#67) ([f9e55b6](https://github.com/icklers/terpene-explorer/commit/f9e55b6)), closes [#67](https://github.com/icklers/terpene-explorer/issues/67)
+* fix(ci): ci/deployment workflow fixes ([85d15ff](https://github.com/icklers/terpene-explorer/commit/85d15ff))
+
 ## 1.3.0 (2025-11-02)
 
 * chore(deps-dev): bump globals from 16.4.0 to 16.5.0 (#57) ([9663ce4](https://github.com/icklers/terpene-explorer/commit/9663ce4)), closes [#57](https://github.com/icklers/terpene-explorer/issues/57)
