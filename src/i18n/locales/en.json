@@ -171,9 +171,14 @@
     "mainContent": "Main content"
   },
   "footer": {
-    "madeWith": "Made with",
-    "by": "by",
-    "license": "License"
+    "ariaLabel": "Site footer",
+    "appName": "Terpene Explorer",
+    "tagline": "Discover terpenes and their effects",
+    "accessibility": "Accessibility",
+    "wcagDescription": "Built with accessibility in mind",
+    "version": "Version {{version}}",
+    "openSource": "Open source project",
+    "githubLink": "View source code on GitHub"
   },
   "modal": {
     "terpeneDetail": {
