@@ -28,9 +28,7 @@ staticwebapp.config.json
 specs/**/*.md
 
 # Ignore GitHub prompts and instructions
-.github/prompts/
-.github/instructions/
-.github/copilot-instructions.md
+.github
 
 # Ignore AI Agent files
 .claude/

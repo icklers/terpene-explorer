@@ -40,6 +40,12 @@ concurrency:
   group: azure-swa-deploy-${{ inputs.environment }}
   cancel-in-progress: false
 
+permissions:
+  contents: read
+  checks: read
+  pull-requests: write
+  statuses: read
+
 jobs:
   deploy:
     name: 🚀 Deploy to Azure SWA
@@ -47,13 +53,77 @@ jobs:
     environment: ${{ inputs.environment }}
 
     steps:
+      - name: 📥 Set checkout ref
+        id: set_ref
+        run: |
+          if [ "${{ inputs.environment }}" = "production" ]; then
+            if [ "${{ inputs.release_tag }}" != "latest" ]; then
+              echo "ref=${{ inputs.release_tag }}" >> $GITHUB_OUTPUT
+            else
+              echo "ref=main" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "ref=${{ github.ref }}" >> $GITHUB_OUTPUT
+          fi
+
       - name: 📥 Checkout
         uses: actions/checkout@v5
         with:
-          # Checkout the release tag if provided
-          ref: ${{ inputs.release_tag != 'latest' && inputs.release_tag || 'main' }}
+          ref: ${{ steps.set_ref.outputs.ref }}
           submodules: true
           lfs: false
+
+      - name: Download CI build artifact (azure-swa-build)
+        id: download_ci_artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: azure-swa-build
+          path: dist
+        continue-on-error: true
+
+      - name: 🔎 If CI artifact missing, try release artifacts (release-artifacts)
+        id: download_release_artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: release-artifacts
+          path: .
+        continue-on-error: true
+
+      - name: 🔎 Check for downloaded artifact files
+        id: check_artifact
+        run: |
+          if [ -d "dist" ] && [ "$(ls -A dist | wc -l)" -gt 0 ]; then
+            echo "artifact_present=true" >> $GITHUB_OUTPUT
+          elif [ -f "dist.tar.gz" ]; then
+            echo "Found dist.tar.gz; extracting to dist/";
+            mkdir -p dist
+            tar -xzf dist.tar.gz -C dist
+            echo "artifact_present=true" >> $GITHUB_OUTPUT
+          elif [ -f "dist.zip" ]; then
+            echo "Found dist.zip; extracting to dist/";
+            mkdir -p dist
+            unzip -q dist.zip -d dist
+            echo "artifact_present=true" >> $GITHUB_OUTPUT
+          else
+            echo "artifact_present=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 🏗 Rebuild (fallback) — only when artifact missing
+        if: steps.check_artifact.outputs.artifact_present == 'false'
+        run: |
+          echo "⚠️ Build artifact not found; performing build fallback." >> $GITHUB_STEP_SUMMARY
+          NODE_ENV=production MODE=azure-swa pnpm run build
+          cp staticwebapp.config.json dist/ || true
+          cp dist/index.html dist/404.html || true
+          echo "✅ Rebuild complete" >> $GITHUB_STEP_SUMMARY
+
+      - name: 📝 Artifact usage summary
+        run: |
+          if [ "${{ steps.check_artifact.outputs.artifact_present }}" = "true" ]; then
+            echo "✅ Using downloaded artifact (dist/) for deployment." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "🔁 Artifact missing — deployment used rebuilt artifacts." >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: 📋 Deployment Info
         run: |
