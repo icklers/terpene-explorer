@@ -161,6 +161,12 @@ export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({
       aria-describedby="terpene-modal-description"
       PaperProps={{
         sx: {
+          // UAT Fix: iOS Safari viewport height + safe area insets
+          ...(isMobile && {
+            height: '100dvh', // Dynamic viewport height (accounts for iOS address bar)
+            paddingTop: 'env(safe-area-inset-top)', // iOS notch/status bar
+            paddingBottom: 'env(safe-area-inset-bottom)', // iOS home indicator
+          }),
           // T003: Apply swipe transform and opacity on mobile
           ...(isMobile && {
             transform: `translateY(${Math.max(0, swipe.deltaY)}px)`,
@@ -171,10 +177,17 @@ export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({
       }}
     >
       {/* T003: Mobile-specific AppBar with share button */}
+      {/* UAT Fix: Changed position to 'sticky' for better iOS Safari compatibility */}
       {isMobile && (
-        <MuiAppBar position="static" elevation={0}>
-          <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={onClose} aria-label={t('modal.terpeneDetail.close', 'Close')}>
+        <MuiAppBar position="sticky" elevation={0}>
+          <Toolbar sx={{ minHeight: 56 }}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={onClose}
+              aria-label={t('modal.terpeneDetail.close', 'Close')}
+              sx={{ minWidth: 48, minHeight: 48 }} // UAT Fix: Explicit touch target size
+            >
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
@@ -186,6 +199,7 @@ export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({
               onClick={handleShare}
               aria-label={t('modal.terpeneDetail.share', 'Share terpene')}
               disabled={shareStatus === 'sharing'}
+              sx={{ minWidth: 48, minHeight: 48 }} // UAT Fix: Explicit touch target size
             >
               <ShareIcon />
             </IconButton>

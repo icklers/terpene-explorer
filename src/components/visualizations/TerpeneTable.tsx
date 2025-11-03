@@ -86,7 +86,9 @@ export function TerpeneTable({
 }: TerpeneTableProps): React.ReactElement {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  // UAT Fix: Expand breakpoint to 'md' to show card grid on tablets (≤960px)
+  // This prevents horizontal scrolling issues on mobile/tablet devices
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [sortBy, setSortBy] = useState<SortColumn>(initialSortBy);
   const [sortDirection, setSortDirection] = useState<SortDirection>(initialSortDirection);
 

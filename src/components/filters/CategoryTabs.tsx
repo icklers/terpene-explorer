@@ -166,7 +166,17 @@ export function CategoryTabs({
                 </Button>
               </AccordionSummary>
 
-              <AccordionDetails sx={{ p: 0, pt: 1, m: 0 }}>
+              <AccordionDetails
+                sx={{
+                  p: 0,
+                  pt: 1,
+                  m: 0,
+                  // UAT Fix: Enable scrolling for long effect lists
+                  maxHeight: 300,
+                  overflowY: 'auto',
+                  overflowX: 'hidden',
+                }}
+              >
                 {/* Effect chips for this category */}
                 {(() => {
                   const categoryEffects = categorizedEffects?.[tab.id];
