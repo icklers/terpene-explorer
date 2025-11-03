@@ -65,12 +65,7 @@ interface UseSwipeToCloseReturn {
  * ```
  */
 export function useSwipeToClose(options: UseSwipeToCloseOptions): UseSwipeToCloseReturn {
-  const {
-    distanceThreshold = 100,
-    velocityThreshold = 0.5,
-    onClose,
-    enabled = true,
-  } = options;
+  const { distanceThreshold = 100, velocityThreshold = 0.5, onClose, enabled = true } = options;
 
   const [deltaY, setDeltaY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -152,7 +147,7 @@ export function useSwipeToClose(options: UseSwipeToCloseOptions): UseSwipeToClos
   // Calculate opacity for visual feedback
   // As user drags down, opacity reduces from 1.0 to 0.5
   // Formula: opacity = max(0.5, 1 - (deltaY / distanceThreshold) * 0.5)
-  const opacity = Math.max(0.5, 1 - (deltaY / (distanceThreshold * 2)));
+  const opacity = Math.max(0.5, 1 - deltaY / (distanceThreshold * 2));
 
   return {
     deltaY,

@@ -31,11 +31,11 @@ export function triggerHapticFeedback(duration: number = 10): void {
     } catch (error) {
       // Fallback: silent failure on unsupported/restricted devices
       // Some browsers support the API but restrict usage in certain contexts
-      console.debug('Haptic feedback not available:', error);
+      console.warn('Haptic feedback not available:', error);
     }
   } else {
     // API not supported - no action needed (graceful degradation)
-    console.debug('Vibration API not supported on this device');
+    console.warn('Vibration API not supported on this device');
   }
 }
 

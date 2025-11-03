@@ -39,8 +39,8 @@ import { useTranslation } from 'react-i18next';
 
 import { CategoryBadge } from './CategoryBadge';
 import { DataQualityBadge } from './DataQualityBadge';
-import { useSwipeToClose } from '../hooks/useSwipeToClose';
 import { useShare } from '../hooks/useShare';
+import { useSwipeToClose } from '../hooks/useSwipeToClose';
 import type { TerpeneDetailModalProps } from '../types/terpene';
 import {
   getTherapeuticColor,
@@ -111,9 +111,7 @@ export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({
     if (!terpene) return;
 
     const effectsList = terpene.effects.slice(0, 5).join(', ');
-    const effectsText = terpene.effects.length > 5 
-      ? `${effectsList}, +${terpene.effects.length - 5} more`
-      : effectsList;
+    const effectsText = terpene.effects.length > 5 ? `${effectsList}, +${terpene.effects.length - 5} more` : effectsList;
 
     await share({
       title: terpene.name,
@@ -176,12 +174,7 @@ export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({
       {isMobile && (
         <MuiAppBar position="static" elevation={0}>
           <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={onClose}
-              aria-label={t('modal.terpeneDetail.close', 'Close')}
-            >
+            <IconButton edge="start" color="inherit" onClick={onClose} aria-label={t('modal.terpeneDetail.close', 'Close')}>
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>

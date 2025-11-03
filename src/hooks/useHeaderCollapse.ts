@@ -51,7 +51,7 @@ export function useHeaderCollapse(options: UseHeaderCollapseOptions = {}): UseHe
   const { threshold = 50, debounceDelay = 10 } = options;
 
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
+  const [scrollY, setScrollY] = useState(() => window.scrollY);
 
   // Track previous scroll position for direction detection
   const prevScrollY = useRef(0);
@@ -98,9 +98,6 @@ export function useHeaderCollapse(options: UseHeaderCollapseOptions = {}): UseHe
 
     // Add scroll listener
     window.addEventListener('scroll', debouncedHandleScroll, { passive: true });
-
-    // Initial call to set state
-    handleScroll();
 
     // Cleanup
     return () => {

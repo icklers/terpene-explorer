@@ -21,8 +21,8 @@ These icon files need to be created with actual graphics:
 
 ## Temporary Workaround
 
-Until actual icons are created, the app will use the browser's default PWA icon.
-The manifest.json is correctly configured and waiting for the icon files.
+Until actual icons are created, the app will use the browser's default PWA icon. The manifest.json is correctly configured and waiting for
+the icon files.
 
 ## Task Reference
 

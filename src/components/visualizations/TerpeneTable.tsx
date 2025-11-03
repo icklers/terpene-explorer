@@ -25,13 +25,13 @@ import {
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { TerpeneCardGrid } from './TerpeneCardGrid';
 import type { Terpene } from '../../models/Terpene';
 import { getEffectMetadata } from '../../services/colorService';
 import { getCategoryForEffect } from '../../services/filterService';
 import type { Terpene as NewTerpene } from '../../types/terpene';
 import { toNewTerpene } from '../../utils/terpeneAdapter';
 import { TerpeneDetailModal } from '../TerpeneDetailModal';
-import { TerpeneCardGrid } from './TerpeneCardGrid';
 
 // TODO: Re-enable virtualization with react-window after fixing import issues
 // import { FixedSizeList } from 'react-window';
@@ -205,15 +205,8 @@ export function TerpeneTable({
 
     return (
       <>
-        <TerpeneCardGrid
-          terpenes={newTerpenes}
-          onTerpeneClick={handleCardClick}
-        />
-        <TerpeneDetailModal
-          open={modalOpen}
-          terpene={selectedTerpene}
-          onClose={handleModalClose}
-        />
+        <TerpeneCardGrid terpenes={newTerpenes} onTerpeneClick={handleCardClick} />
+        <TerpeneDetailModal open={modalOpen} terpene={selectedTerpene} onClose={handleModalClose} />
       </>
     );
   }

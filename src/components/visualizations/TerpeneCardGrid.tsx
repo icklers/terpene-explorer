@@ -8,17 +8,7 @@
  * @see tasks.md T002
  */
 
-import {
-  Box,
-  Card,
-  CardContent,
-  CardActionArea,
-  Typography,
-  Chip,
-  Grid2 as Grid,
-  useTheme,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Card, CardContent, CardActionArea, Typography, Chip, Grid2 as Grid, useTheme, useMediaQuery } from '@mui/material';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import React, { useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -186,11 +176,7 @@ TerpeneCard.displayName = 'TerpeneCard';
  * @param props - Component props
  * @returns Rendered component
  */
-export const TerpeneCardGrid: React.FC<TerpeneCardGridProps> = ({
-  terpenes,
-  onTerpeneClick,
-  enableVirtualization,
-}) => {
+export const TerpeneCardGrid: React.FC<TerpeneCardGridProps> = ({ terpenes, onTerpeneClick, enableVirtualization }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -206,6 +192,7 @@ export const TerpeneCardGrid: React.FC<TerpeneCardGridProps> = ({
   // Calculate number of rows for virtualization
   const rowCount = Math.ceil(terpenes.length / columns);
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const virtualizer = useVirtualizer({
     count: rowCount,
     getScrollElement: () => parentRef.current,
