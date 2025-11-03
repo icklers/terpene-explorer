@@ -1,11 +1,11 @@
 # Implementation Plan: Mobile Optimization
 
 **Branch**: `009-mobile-optimization` | **Date**: 2025-11-01 | **Spec**: [spec.md](./spec.md)  
-**Input**: Feature specification from `specs/009-mobile-optimization/spec.md` + `.idea/mobile-optimization-proposal.md`
+**Input**: Feature specification from `specs/009-mobile-optimization/spec.md`
 
 ## Summary
 
-Transform Terpene Explorer into a mobile-first web application by implementing responsive layouts, touch-optimized interactions, a card-based browsing interface, full-screen modals, and bottom-sheet filters. The app will meet WCAG 2.1 AA standards, achieve Lighthouse Performance ≥90, and function as an installable Progressive Web App with offline support.
+Implementation plan for mobile optimization feature. See spec.md for detailed requirements.
 
 ## Technical Context
 
@@ -16,8 +16,8 @@ Transform Terpene Explorer into a mobile-first web application by implementing r
 **Target Platform**: Modern web browsers on mobile (Chrome 120+, Safari 17+, Samsung 23+, Firefox 121+, Edge 120+)  
 **Project Type**: Web application (frontend only, Vite SPA)
 
-**Performance Goals**: Lighthouse ≥90, FCP <1.5s, LCP <2.5s, TTI <5s, 60fps animations, <200ms filter response  
-**Constraints**: JS bundle ≤200KB, CSS ≤50KB, total ≤500KB, 44px touch targets, 4.5:1 contrast ratio  
+**Performance Goals**: Lighthouse ≥90, FCP <1.5s, LCP <2.5s, TTI <5s, 60fps animations, <200ms filter response
+**Constraints**: JS bundle ≤200KB, CSS ≤50KB, total ≤500KB (per spec FR-069-071), 44px touch targets, 4.5:1 contrast ratio
 **Scale/Scope**: ~50-200 terpenes, 1000+ concurrent users, 280px-1024px viewports, 3-week delivery
 
 ## Constitution Check
@@ -33,7 +33,7 @@ Transform Terpene Explorer into a mobile-first web application by implementing r
 
 - [x] Lighthouse score targets: Performance ≥90, Accessibility ≥95
 - [x] Response time targets: filters <200ms, visualization renders <500ms
-- [x] Bundle size budgets: ~200KB JS, ~50KB CSS, ~500KB total
+- [x] Bundle size budgets: ≤200KB JS, ≤50KB CSS, ≤500KB total (per spec requirements)
 - [x] Virtualization plan: TanStack Virtual for lists >50 items
 
 ✅ **Gate 3: Testing Strategy**
@@ -91,13 +91,14 @@ specs/009-mobile-optimization/
 src/
 ├── components/
 │   ├── layout/
-│   │   └── AppBar.tsx                    # 🆕 Mobile-aware header with settings sheet
+│   │   ├── AppBar.tsx                    # 🆕 Mobile-aware header with navigation drawer
+│   │   └── Footer.tsx                    # 🆕 Version display + GitHub link
 │   ├── visualizations/
 │   │   ├── TerpeneCardGrid.tsx           # 🆕 Mobile card grid view
-│   │   ├── TerpeneDetailModal.tsx        # 🔄 Add mobile full-screen mode
+│   │   ├── TerpeneDetailModal.tsx        # 🔄 Add mobile full-screen mode + swipe-to-close
 │   │   └── TerpeneTable.tsx              # 🔄 Integrate card grid for mobile
 │   └── filters/
-│       └── FilterBottomSheet.tsx         # 🆕 Mobile filter interface
+│       └── FilterBottomSheet.tsx         # 🆕 Mobile filter interface (Material UI Drawer)
 ├── pages/
 │   └── Home.tsx                           # 🔄 Add FAB + bottom sheet integration
 ├── theme/
@@ -105,8 +106,9 @@ src/
 │   └── lightTheme.ts                      # 🔄 Add responsive typography + touch targets
 ├── hooks/
 │   ├── useMediaBreakpoints.ts             # 🆕 Custom breakpoint hooks
-│   ├── useSwipeToClose.ts                 # 🆕 Swipe gesture detection
-│   └── useShare.ts                        # 🆕 Web Share API with fallback
+│   ├── useSwipeToClose.ts                 # 🆕 Swipe gesture detection with velocity threshold
+│   ├── useShare.ts                        # 🆕 Web Share API with fallback
+│   └── useSearchDebounce.ts               # 🆕 300ms search debouncing
 └── utils/
     └── pwa.ts                             # 🆕 PWA install prompts, offline detection
 

@@ -21,7 +21,7 @@ A mobile user wants to quickly look up a specific terpene while on the go, view 
 2. **Given** user browses terpene list, **When** they tap any terpene card, **Then** card provides visual feedback within 100ms and all touch targets are minimum 44x44px
 3. **Given** user views terpene card, **When** they read the information, **Then** terpene name, aroma, and top 3 effects are clearly visible without expanding
 4. **Given** user taps a terpene card, **When** detail modal opens, **Then** it slides up from bottom in under 300ms and displays in full-screen on mobile
-5. **Given** user views terpene details in modal, **When** they swipe down from top, **Then** modal closes smoothly and returns to previous view
+5. **Given** user views terpene details in modal, **When** they swipe down from top with drag distance ≥100px OR velocity ≥0.5px/ms, **Then** modal closes smoothly and returns to previous view
 6. **Given** user wants to share terpene information, **When** they tap share button in detail modal, **Then** native mobile share dialog appears with app-appropriate content
 
 ---
@@ -93,7 +93,7 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 **Acceptance Scenarios**:
 
 1. **Given** user is viewing terpene list, **When** they pull down from top of list, **Then** refresh animation appears and content reloads (even if data hasn't changed)
-2. **Given** user opens detail modal, **When** they swipe down with moderate velocity, **Then** modal closes smoothly with physics-based animation
+2. **Given** user opens detail modal, **When** they swipe down with drag distance ≥100px OR velocity ≥0.5px/ms, **Then** modal closes smoothly with physics-based animation
 3. **Given** user taps interactive elements, **When** device supports haptics, **Then** subtle haptic feedback provides tactile confirmation
 4. **Given** user scrolls through long content, **When** they scroll quickly, **Then** scroll momentum feels natural with smooth 60fps performance
 5. **Given** user navigates between views, **When** transitions occur, **Then** animations respect prefers-reduced-motion setting for accessibility
@@ -158,7 +158,14 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 #### Touch Interaction Standards
 
-- **FR-006**: System MUST ensure all interactive elements have minimum touch targets: 44px minimum per WCAG 2.1 AA, 48px recommended for primary action buttons, 56px for floating action buttons (FAB)
+- **FR-006**: System MUST ensure all interactive elements have minimum touch targets per the following rationale:
+
+  | Element Type | Size | Rationale |
+  |--------------|------|-----------|
+  | Minimum (WCAG AA) | 44×44px | Links, secondary buttons, chips, icon buttons |
+  | Primary Actions | 48×48px | Submit buttons, main CTAs, toggle buttons |
+  | Floating Action Buttons | 56×56px | Material Design spec for prominence and easy thumb access |
+
 - **FR-007**: System MUST provide minimum 8px spacing between adjacent tappable elements
 - **FR-008**: System MUST show visual feedback within 100ms of touch interaction (scale to 0.98, increase shadow elevation from 1 to 4, duration 200ms)
 - **FR-009**: System MUST provide haptic feedback on supported devices for primary interactions (card tap, modal open/close, filter apply, share button) using Vibration API with graceful degradation when unsupported
@@ -166,11 +173,10 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 #### Navigation & Header
 
-- **FR-011**: System MUST display mobile-optimized header with hamburger menu (left), app logo (center), and three-dot vertical menu icon (⋮) for settings access (right); all touch targets ≥44x44px
-- **FR-012**: System MUST implement slide-in navigation drawer (bottom sheet) triggered by hamburger menu
-- **FR-013**: System MUST provide settings bottom sheet for theme toggle and language selection
+- **FR-011**: System MUST display mobile-optimized header with hamburger menu (left), app logo (center), and three-dot vertical menu icon (⋮) to access navigation drawer (right); all touch targets ≥44x44px
+- **FR-012**: System MUST implement slide-in navigation drawer (Material UI Drawer with anchor="bottom") triggered by hamburger menu or three-dot menu icon
+- **FR-013**: System MUST provide Settings Bottom Sheet (Material UI Drawer with anchor="bottom") for theme toggle and language selection, accessible from navigation drawer
 - **FR-014**: System MUST collapse header on scroll-down and expand on scroll-up (iOS Safari pattern) while keeping FAB and essential controls visible
-- **FR-015**: (Merged with FR-014 - sticky controls maintained via FAB during header collapse)
 
 #### Content Display - Terpene Cards
 
@@ -205,17 +211,25 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 - **FR-036**: System MUST implement swipe-down gesture to close modals and bottom sheets
 - **FR-037**: System MUST provide pull-to-refresh gesture on main terpene list with loading indicator
-- **FR-038**: System MUST implement smooth, physics-based animations for gesture interactions using spring animations (damping ratio 0.8, stiffness 300) or Material Design motion specifications
-- **FR-039**: System MUST ensure gestures don't conflict with system-level gestures: iOS swipe-back navigation, Android navigation gestures, browser pull-to-refresh (disable when app handles it)
-- **FR-040**: System MUST provide visual feedback during gesture interactions: modal opacity reduces proportionally to drag distance during swipe-to-close
+- **FR-038**: System MUST implement smooth, physics-based animations for gesture interactions using Material UI
+  default transitions (respects theme.transitions.create() with easing and duration)
+- **FR-039**: System MUST ensure gestures don't conflict with system-level gestures: iOS swipe-back navigation,
+  Android navigation gestures, browser pull-to-refresh (disable when app handles it)
+- **FR-040**: System MUST provide visual feedback during gesture interactions: modal opacity reduces proportionally
+  to drag distance during swipe-to-close using formula `opacity = Math.max(0.5, 1 - (dragDistance / 100))`
 
 #### Typography & Readability
 
 - **FR-041**: System MUST use minimum 16px base font size on mobile viewports
 - **FR-042**: System MUST implement fluid typography scaling using CSS clamp() for responsive sizing
 - **FR-043**: System MUST maintain 1.5-1.6 line height for body text readability
-- **FR-044**: System MUST establish clear heading hierarchy using clamp(): H1 (clamp(2rem, 5vw, 2.5rem) = 32-40px), H2 (clamp(1.75rem, 4vw, 2rem) = 28-32px), H3 (clamp(1.5rem, 3.5vw, 1.75rem) = 24-28px)
-- **FR-045**: System MUST ensure text line length stays within optimal reading range by applying max-width: 65ch on body text containers
+- **FR-044**: System MUST establish clear heading hierarchy using clamp() with viewport units:
+  - H1: `clamp(2rem, 5vw, 2.5rem)` (32-40px)
+  - H2: `clamp(1.75rem, 4vw, 2rem)` (28-32px)
+  - H3: `clamp(1.5rem, 3.5vw, 1.75rem)` (24-28px)
+  - Body: `clamp(1rem, 2vw, 1rem)` (16px base)
+- **FR-045**: System MUST ensure text line length stays within optimal reading range by applying max-width:
+  65ch on body text containers
 
 #### Color & Contrast
 
@@ -235,10 +249,10 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 #### Progressive Web App
 
-- **FR-056**: System MUST implement service worker for offline functionality
-- **FR-057**: System MUST provide valid PWA manifest file with app metadata and icons
+- **FR-056**: System MUST implement service worker for offline functionality using Workbox with CacheFirst strategy for static assets and NetworkFirst for terpene data
+- **FR-057**: System MUST provide valid PWA manifest file with app metadata and icons (192x192px and 512x512px PNG icons, theme_color: #4caf50, background_color: #121212)
 - **FR-058**: System MUST support installation to home screen on supported browsers
-- **FR-059**: System MUST cache previously viewed terpene data for offline access
+- **FR-059**: System MUST cache previously viewed terpene data for offline access using Cache API with reasonable size limits
 - **FR-060**: System MUST display offline indicator when network is unavailable: non-intrusive banner at top stating "You're offline. Viewing cached data." with dismiss option
 - **FR-061**: System MUST provide branded splash screen for installed PWA
 
@@ -246,7 +260,9 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 - **FR-062**: System MUST implement Web Share API for sharing terpene information
 - **FR-063**: System MUST adapt to system theme preferences when user hasn't set app theme explicitly
-- **FR-064**: System MUST provide install prompts for PWA where browser supports it (trigger after 30 seconds of engagement OR after viewing 3 terpenes)
+- **FR-064**: System MUST provide install prompts for PWA where browser supports it. Trigger criteria:
+  after 30 seconds of active engagement (defined as any user interaction: tap, scroll, search, or filter
+  action) OR after viewing 3 distinct terpene detail modals
 - **FR-065**: System MUST handle orientation change events for layout adjustments
 
 #### Performance Requirements
@@ -280,8 +296,13 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 - **FR-084**: System MUST make all existing terpene data accessible through mobile interface
 - **FR-085**: System MUST preserve all filtering logic from desktop version
-- **FR-086**: System MUST maintain search functionality with mobile-optimized input (type="search", debouncing, mobile-friendly keyboard)
+- **FR-086**: System MUST maintain search functionality with mobile-optimized input (type="search", debouncing,
+  mobile-friendly keyboard)
 - **FR-087**: System MUST ensure no information is permanently hidden on mobile (use progressive disclosure)
+
+#### Footer & App Information
+
+- **FR-088**: System MUST display app version number in footer, centered, positioned above the GitHub project link
 
 ### Key Entities
 
@@ -291,9 +312,15 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 - **Filter Bottom Sheet**: Mobile interface with drag handle, category-organized effect filters, real-time results preview, clear all button, and sticky apply button in footer
 
-- **Mobile Navigation Header**: Condensed header with hamburger menu (left), app logo (center), three-dot menu icon for settings (right); all touch targets ≥44px with appropriate spacing; collapses on scroll-down, expands on scroll-up
+- **Mobile Navigation Header**: Condensed header with hamburger menu (left), app logo (center), three-dot menu icon
+  to open navigation drawer (right); all touch targets ≥44px with appropriate spacing; collapses on scroll-down,
+  expands on scroll-up
 
-- **Floating Action Button (FAB)**: Circular button positioned bottom-right for filter access; displays badge with active filter count; 56x56px touch target
+- **Floating Action Button (FAB)**: Circular button positioned bottom-right for filter access; displays badge with
+  active filter count; 56x56px touch target
+
+- **App Footer**: Footer component displaying app version number (centered) positioned above GitHub project link;
+  visible on all pages; uses Typography variant caption with muted color
 
 - **Effect Category Badge**: Color-coded chip indicating effect category (Orange/Purple/Blue/Green) and effect name; used in both card summaries and detail modals; inherits from 008-therapeutic-modal-refactor
 
@@ -315,14 +342,14 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 - **SC-002**: 100% of interactive elements meet or exceed minimum touch target sizes (44px minimum, 48px for primary buttons, 56px for FAB)
 - **SC-003**: Users receive visual feedback within 100 milliseconds of any touch interaction
 - **SC-004**: Users can complete terpene lookup task (open app → search/scroll to find specific terpene → view details → close modal) in under 30 seconds on mobile device
-- **SC-005**: 85% or more of users successfully complete primary tasks (browse, filter, view details) on first attempt without assistance
+- **SC-005**: 85% or more of users (n≥10 in usability testing) successfully complete primary tasks (browse, filter, view details) on first attempt without assistance
 
-#### Engagement Metrics
+#### Engagement Metrics (Baseline: Pre-optimization analytics)
 
-- **SC-006**: Mobile session duration increases to average 2 minutes or more per visit
-- **SC-007**: Mobile bounce rate decreases to below 30% of visitors
-- **SC-008**: Users view 3 or more terpene cards per session on average
-- **SC-009**: Time to first meaningful interaction reduces to under 2 seconds
+- **SC-006**: Mobile session duration increases from [current baseline] to average 2 minutes or more per visit (measured via analytics, n≥100 sessions)
+- **SC-007**: Mobile bounce rate decreases from [current baseline] to below 30% of visitors (measured via analytics, n≥100 sessions)
+- **SC-008**: Users view 3 or more terpene cards per session on average (measured via analytics, n≥100 sessions)
+- **SC-009**: Time to first meaningful interaction reduces from [current baseline] to under 2 seconds (measured via performance monitoring)
 
 #### Performance Metrics
 
@@ -350,13 +377,13 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 - **SC-026**: No regression in desktop functionality - all existing features work as before
 - **SC-027**: Support ticket volume related to mobile usability decreases by 50% or more
 
-#### Adoption Metrics
+#### Adoption Metrics (Baseline: Pre-optimization analytics)
 
-- **SC-028**: Progressive Web App can be installed to home screen on supported devices
-- **SC-029**: Mobile traffic to the application increases by 30% or more within 60 days of launch
-- **SC-030**: User retention on mobile improves by 25% compared to pre-optimization baseline
-- **SC-031**: App receives user satisfaction rating of 4.5 or higher out of 5 stars from mobile users
-- **SC-032**: Percentage of users who complete full terpene detail view increases by 40%
+- **SC-028**: Progressive Web App can be installed to home screen on supported devices (verified via beforeinstallprompt event)
+- **SC-029**: Mobile traffic to the application increases from [current baseline] by 30% or more within 60 days of launch (measured via analytics)
+- **SC-030**: User retention on mobile improves from [current baseline] by 25% compared to pre-optimization baseline (measured via analytics, 30-day retention)
+- **SC-031**: App receives user satisfaction rating of 4.5 or higher out of 5 stars from mobile users (measured via in-app survey, n≥20 responses)
+- **SC-032**: Percentage of users who complete full terpene detail view increases from [current baseline] by 40% (measured via analytics)
 
 ## Assumptions _(mandatory)_
 
@@ -398,7 +425,7 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 
 ### Resource Assumptions
 
-- **RESOURCE-001**: Development can be completed within 3-week timeline (120 hours total)
+- **RESOURCE-001**: Development can be completed within 3-week timeline (129 hours total per task estimates)
 - **RESOURCE-002**: Testing devices covering iOS and Android platforms are available
 - **RESOURCE-003**: Team has expertise in React, Material UI, PWA development, and mobile optimization
 - **RESOURCE-004**: No significant changes to backend or data structure are required
@@ -517,30 +544,22 @@ A mobile user expects native app-like gestures such as pull-to-refresh, smooth s
 ### Timeline Constraints
 
 - **CONST-042**: Development must complete within 3 weeks maximum
-- **CONST-043**: Total development time limited to 120 hours
+- **CONST-043**: Total development time limited to 129 hours (per task breakdown)
 - **CONST-044**: Weekly milestone deliverables required
 - **CONST-045**: Daily progress updates expected
 - **CONST-046**: Cannot extend timeline beyond 3 weeks without explicit approval
 
-### Budget Constraints
-
-- **CONST-047**: Total budget range: $13,500 - $21,000
-- **CONST-048**: Development budget: $12,000 - $18,000
-- **CONST-049**: Testing devices budget: $1,000 - $2,000
-- **CONST-050**: Tools/services budget: $500 - $1,000
-- **CONST-051**: Cannot exceed maximum budget without stakeholder approval
-
 ### Scope Constraints
 
-- **CONST-052**: Voice search and control explicitly out of scope
-- **CONST-053**: Augmented reality features explicitly out of scope
-- **CONST-054**: Native mobile app development explicitly out of scope
-- **CONST-055**: User accounts and personalization explicitly out of scope
-- **CONST-056**: Social features and community explicitly out of scope
-- **CONST-057**: Advanced analytics integration explicitly out of scope
-- **CONST-058**: Additional language support beyond English/German explicitly out of scope
-- **CONST-059**: Multi-device synchronization explicitly out of scope
-- **CONST-060**: Offline-first data management (beyond basic caching) explicitly out of scope
+- **CONST-047**: Voice search and control explicitly out of scope
+- **CONST-048**: Augmented reality features explicitly out of scope
+- **CONST-049**: Native mobile app development explicitly out of scope
+- **CONST-050**: User accounts and personalization explicitly out of scope
+- **CONST-051**: Social features and community explicitly out of scope
+- **CONST-052**: Advanced analytics integration explicitly out of scope
+- **CONST-053**: Additional language support beyond English/German explicitly out of scope
+- **CONST-054**: Multi-device synchronization explicitly out of scope
+- **CONST-055**: Offline-first data management (beyond basic caching) explicitly out of scope
 
 ## Risks & Mitigation
 

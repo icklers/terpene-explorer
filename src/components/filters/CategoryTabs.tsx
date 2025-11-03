@@ -166,57 +166,79 @@ export function CategoryTabs({
                 </Button>
               </AccordionSummary>
 
-              <AccordionDetails sx={{ p: 0, pt: 1, m: 0 }}>
+              <AccordionDetails
+                sx={{
+                  p: 2, // UAT Fix: Add padding for better spacing
+                  // UAT Fix: Enable scrolling for long effect lists
+                  maxHeight: 300,
+                  overflowY: 'auto',
+                  overflowX: 'hidden',
+                  // UAT Fix: Ensure background is visible
+                  backgroundColor: 'background.paper',
+                }}
+              >
                 {/* Effect chips for this category */}
                 {(() => {
                   const categoryEffects = categorizedEffects?.[tab.id];
-                  if ((categoryEffects?.length ?? 0) > 0) {
+                  // UAT Fix: Show message if no effects exist
+                  if (!categoryEffects || categoryEffects.length === 0) {
                     return (
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexWrap: 'wrap',
-                          gap: 0.5,
-                          pl: 1,
-                          pb: 1,
-                        }}
-                      >
-                        {categoryEffects!.map((effect) => {
-                          const isSelectedEffect = selectedEffects?.includes(effect.name) || false;
-                          const displayName = effect.displayName[i18n.language as 'en' | 'de'] || effect.displayName.en || effect.name;
-                          const count = effect.terpeneCount;
-                          // Use the category color that's already defined for the tab
-                          const categoryColor = tab.categoryColor;
-                          const contrastText = tab.contrastText;
-
-                          return (
-                            <Button
-                              key={effect.name}
-                              size="small"
-                              variant={isSelectedEffect ? 'contained' : 'outlined'}
-                              onClick={() => onToggleEffect?.(effect.name)}
-                              sx={{
-                                fontSize: '0.75rem',
-                                minHeight: 24,
-                                backgroundColor: isSelectedEffect ? categoryColor : 'transparent',
-                                borderColor: categoryColor,
-                                color: isSelectedEffect ? contrastText : categoryColor,
-                                opacity: isSelectedEffect ? 1 : 0.8,
-                                '&:hover': {
-                                  opacity: 1,
-                                  backgroundColor: isSelectedEffect ? categoryColor : `${categoryColor}20`,
-                                },
-                              }}
-                            >
-                              {displayName}
-                              {count !== undefined && ` (${count})`}
-                            </Button>
-                          );
-                        })}
-                      </Box>
+                      <Typography variant="body2" color="text.secondary" sx={{ py: 2, px: 1 }}>
+                        {t('filters.noEffectsInCategory', 'No effects in this category')}
+                      </Typography>
                     );
                   }
-                  return null;
+                  return (
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 1, // UAT Fix: Larger gap for better spacing
+                      }}
+                    >
+                      {categoryEffects!.map((effect) => {
+                        const isSelectedEffect = selectedEffects?.includes(effect.name) || false;
+                        const displayName = effect.displayName[i18n.language as 'en' | 'de'] || effect.displayName.en || effect.name;
+                        const count = effect.terpeneCount;
+                        // Use the category color that's already defined for the tab
+                        const categoryColor = tab.categoryColor;
+                        const contrastText = tab.contrastText;
+
+                        return (
+                          <Button
+                            key={effect.name}
+                            size="small"
+                            variant={isSelectedEffect ? 'contained' : 'outlined'}
+                            onClick={() => onToggleEffect?.(effect.name)}
+                            sx={{
+                              // UAT Fix: Improve visibility and touch targets on mobile
+                              fontSize: '0.875rem', // Larger text for readability
+                              minHeight: 48, // WCAG AA touch target size
+                              px: 2, // Horizontal padding
+                              // UAT Fix: Ensure color coding is visible
+                              backgroundColor: isSelectedEffect ? categoryColor : 'transparent',
+                              borderWidth: 2, // Thicker border for visibility
+                              borderStyle: 'solid',
+                              borderColor: categoryColor,
+                              color: isSelectedEffect ? contrastText : categoryColor,
+                              fontWeight: isSelectedEffect ? 600 : 400,
+                              textTransform: 'none',
+                              '&:hover': {
+                                backgroundColor: isSelectedEffect ? categoryColor : `${categoryColor}20`,
+                              },
+                              // Ensure text is always visible
+                              '& .MuiButton-label': {
+                                color: isSelectedEffect ? contrastText : categoryColor,
+                              },
+                            }}
+                          >
+                            {displayName}
+                            {count !== undefined && ` (${count})`}
+                          </Button>
+                        );
+                      })}
+                    </Box>
+                  );
                 })()}
               </AccordionDetails>
             </Accordion>

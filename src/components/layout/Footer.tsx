@@ -11,6 +11,8 @@ import { Box, Container, Typography, Link } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { getFormattedVersion } from '../../utils/version';
+
 /**
  * Footer component
  *
@@ -73,8 +75,21 @@ export function Footer(): React.ReactElement {
             textAlign: 'center',
           }}
         >
+          <Typography variant="body2" color="text.secondary">
+            {t('footer.version', 'Version {{version}}', { version: getFormattedVersion() })}
+          </Typography>
           <Typography variant="caption" color="text.secondary">
-            {t('footer.openSource', 'Open source project')} •{' '}
+            <Link
+              href="https://github.com/icklers/terpene-explorer/blob/main/LICENSE"
+              target="_blank"
+              rel="noopener noreferrer"
+              color="text.secondary"
+              underline="hover"
+              aria-label={t('footer.license', 'View license information')}
+            >
+              License
+            </Link>{' '}
+            • {t('footer.openSource', 'Open source project')} •{' '}
             <Link
               href="https://github.com/icklers/terpene-explorer"
               target="_blank"

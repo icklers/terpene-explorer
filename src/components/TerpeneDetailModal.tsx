@@ -9,6 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LaunchIcon from '@mui/icons-material/Launch';
+import ShareIcon from '@mui/icons-material/Share';
 import {
   Dialog,
   DialogTitle,
@@ -28,12 +29,18 @@ import {
   AccordionDetails,
   Alert,
   Snackbar,
+  Slide,
+  AppBar as MuiAppBar,
+  Toolbar,
 } from '@mui/material';
-import React, { useState, useMemo } from 'react';
+import type { TransitionProps } from '@mui/material/transitions';
+import React, { useState, useMemo, forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CategoryBadge } from './CategoryBadge';
 import { DataQualityBadge } from './DataQualityBadge';
+import { useShare } from '../hooks/useShare';
+import { useSwipeToClose } from '../hooks/useSwipeToClose';
 import type { TerpeneDetailModalProps } from '../types/terpene';
 import {
   getTherapeuticColor,
@@ -43,6 +50,17 @@ import {
   copyToClipboard,
   getConcentrationTooltip,
 } from '../utils/terpeneHelpers';
+
+/**
+ * Slide transition component for mobile modal
+ * Slides up from bottom on open, down on close
+ */
+const SlideTransition = forwardRef(function SlideTransition(
+  props: TransitionProps & { children: React.ReactElement },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({
   open,
@@ -54,11 +72,29 @@ export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({
   const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isNarrow = useMediaQuery('(max-width:400px)'); // Stack toggle buttons on very narrow screens
   // T122-T123: prefers-reduced-motion is handled automatically by Material UI TransitionProps
   const [expandedDescription, setExpandedDescription] = useState(false);
   const [viewMode, setViewMode] = useState<'basic' | 'expert'>('basic'); // T111: Default to 'basic'
   const [snackbarOpen, setSnackbarOpen] = useState(false); // T151-T154: Snackbar for copy success
   const [snackbarMessage, setSnackbarMessage] = useState('');
+
+  // T003: Mobile-specific hooks
+  const swipe = useSwipeToClose({
+    onClose,
+    enabled: isMobile && open,
+  });
+
+  const { share, status: shareStatus } = useShare({
+    onSuccess: () => {
+      setSnackbarMessage(t('modal.terpeneDetail.shareSuccess', 'Shared successfully!'));
+      setSnackbarOpen(true);
+    },
+    onError: () => {
+      setSnackbarMessage(t('modal.terpeneDetail.shareError', 'Failed to share'));
+      setSnackbarOpen(true);
+    },
+  });
 
   // Categorize effects for display (Basic View - showAll = false, Expert View - showAll = true)
   const categorizedEffects = useMemo(() => {
@@ -69,6 +105,20 @@ export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({
   const concentrationData = useMemo(() => {
     return terpene?.concentrationRange ? parseConcentration(terpene.concentrationRange, terpene.category) : null;
   }, [terpene]);
+
+  // T003: Share handler for mobile
+  const handleShare = async () => {
+    if (!terpene) return;
+
+    const effectsList = terpene.effects.slice(0, 5).join(', ');
+    const effectsText = terpene.effects.length > 5 ? `${effectsList}, +${terpene.effects.length - 5} more` : effectsList;
+
+    await share({
+      title: terpene.name,
+      text: `${terpene.name}\n\n${terpene.description}\n\nEffects: ${effectsText}`,
+      url: `${window.location.origin}${window.location.pathname}?terpene=${encodeURIComponent(terpene.id)}`,
+    });
+  };
 
   if (!open || !terpene) return null;
 
@@ -106,22 +156,83 @@ export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({
       maxWidth="sm"
       fullWidth
       fullScreen={isMobile}
+      TransitionComponent={isMobile ? SlideTransition : undefined}
       aria-labelledby="terpene-modal-title"
       aria-describedby="terpene-modal-description"
+      PaperProps={{
+        sx: {
+          // UAT Fix: iOS Safari viewport height + safe area insets
+          ...(isMobile && {
+            height: '100dvh', // Dynamic viewport height (accounts for iOS address bar)
+            paddingTop: 'env(safe-area-inset-top)', // iOS notch/status bar
+            paddingBottom: 'env(safe-area-inset-bottom)', // iOS home indicator
+          }),
+          // T003: Apply swipe transform and opacity on mobile
+          ...(isMobile && {
+            transform: `translateY(${Math.max(0, swipe.deltaY)}px)`,
+            opacity: swipe.opacity,
+            transition: swipe.isDragging ? 'none' : 'all 0.3s ease',
+          }),
+        },
+      }}
     >
-      <DialogTitle id="terpene-modal-title">
-        <Box display="flex" alignItems="center" gap={1.5}>
-          <Typography variant="h4" component="h2" fontWeight="bold">
-            {terpene.name}
-          </Typography>
-          <CategoryBadge category={terpene.category} showTooltip={true} />
-        </Box>
-        <IconButton aria-label={t('modal.terpeneDetail.close')} onClick={onClose} sx={{ position: 'absolute', right: 8, top: 8 }}>
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
+      {/* T003: Mobile-specific AppBar with share button */}
+      {/* UAT Fix: Changed position to 'sticky' for better iOS Safari compatibility */}
+      {isMobile && (
+        <MuiAppBar position="sticky" elevation={0}>
+          <Toolbar sx={{ minHeight: 56 }}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={onClose}
+              aria-label={t('modal.terpeneDetail.close', 'Close')}
+              sx={{ minWidth: 48, minHeight: 48 }} // UAT Fix: Explicit touch target size
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
+              {terpene.name}
+            </Typography>
+            <IconButton
+              edge="end"
+              color="inherit"
+              onClick={handleShare}
+              aria-label={t('modal.terpeneDetail.share', 'Share terpene')}
+              disabled={shareStatus === 'sharing'}
+              sx={{ minWidth: 48, minHeight: 48 }} // UAT Fix: Explicit touch target size
+            >
+              <ShareIcon />
+            </IconButton>
+          </Toolbar>
+        </MuiAppBar>
+      )}
 
-      <DialogContent>
+      {/* Desktop Title */}
+      {!isMobile && (
+        <DialogTitle id="terpene-modal-title">
+          <Box display="flex" alignItems="center" gap={1.5}>
+            <Typography variant="h4" component="h2" fontWeight="bold">
+              {terpene.name}
+            </Typography>
+            <CategoryBadge category={terpene.category} showTooltip={true} />
+          </Box>
+          <IconButton
+            aria-label={t('modal.terpeneDetail.close', 'Close')}
+            onClick={onClose}
+            sx={{ position: 'absolute', right: 8, top: 8 }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+      )}
+
+      <DialogContent
+        {...(isMobile && {
+          onTouchStart: swipe.handleTouchStart,
+          onTouchMove: swipe.handleTouchMove,
+          onTouchEnd: swipe.handleTouchEnd,
+        })}
+      >
         {/* View Toggle - T108-T124 */}
         <Box sx={{ mb: 3, display: 'flex', justifyContent: 'center' }}>
           <ToggleButtonGroup
@@ -134,8 +245,14 @@ export const TerpeneDetailModal: React.FC<TerpeneDetailModalProps> = ({
             }}
             aria-label={t('modal.terpeneDetail.viewToggle.label', 'View mode selection')} // T118-T119
             sx={{
-              // T116-T117: Vertical stacking on mobile
-              flexDirection: isMobile ? 'column' : 'row',
+              // T116-T117: Vertical stacking on narrow mobile screens
+              flexDirection: isNarrow ? 'column' : 'row',
+              '& .MuiToggleButton-root': {
+                // T003: Ensure touch targets ≥48px
+                minHeight: isMobile ? 48 : 44,
+                minWidth: isNarrow ? '100%' : 120,
+                px: 2,
+              },
             }}
           >
             <ToggleButton value="basic" aria-label={t('modal.terpeneDetail.viewToggle.basic', 'Basic View')}>

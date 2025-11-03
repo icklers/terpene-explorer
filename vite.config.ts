@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
+import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 import fs from 'fs';
 import type { Plugin } from 'vite';
@@ -130,6 +131,96 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
+      // T008: PWA Plugin with service worker and manifest
+      VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+        manifest: {
+          name: 'Terpene Explorer',
+          short_name: 'Terpenes',
+          description: 'Explore cannabis terpenes, their effects, and therapeutic properties',
+          theme_color: '#4caf50', // Brand green
+          background_color: '#121212', // Dark mode background
+          display: 'standalone',
+          orientation: 'portrait-primary',
+          icons: [
+            {
+              src: '/icon-192x192.png',
+              sizes: '192x192',
+              type: 'image/png',
+              purpose: 'any',
+            },
+            {
+              src: '/icon-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'any',
+            },
+            {
+              src: '/icon-192x192.png',
+              sizes: '192x192',
+              type: 'image/png',
+              purpose: 'maskable',
+            },
+            {
+              src: '/icon-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'maskable',
+            },
+          ],
+        },
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,json,woff,woff2}'],
+          runtimeCaching: [
+            {
+              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'google-fonts-cache',
+                expiration: {
+                  maxEntries: 10,
+                  maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'gstatic-fonts-cache',
+                expiration: {
+                  maxEntries: 10,
+                  maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              urlPattern: /\/data\/.*\.json$/i,
+              handler: 'NetworkFirst',
+              options: {
+                cacheName: 'terpene-data-cache',
+                expiration: {
+                  maxEntries: 50,
+                  maxAgeSeconds: 60 * 60 * 24 * 7, // 1 week
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+          ],
+        },
+        devOptions: {
+          enabled: false, // Disable PWA in development for faster iteration
+        },
+      }),
       securityHeadersPlugin(), // Add security headers
       azureSwaPlugin(), // Copy Azure SWA config and create 404.html
       copyDataFilesPlugin(), // Copy data files to public directory
@@ -144,17 +235,25 @@ export default defineConfig(({ mode }) => {
       target: 'es2022',
       rollupOptions: {
         output: {
+          // T009: Manual chunking for optimal bundle size
           manualChunks: {
-            'react-vendor': ['react', 'react-dom'],
-            'mui-vendor': ['@mui/material', '@mui/icons-material'],
-            'd3-vendor': ['d3-hierarchy', 'd3-scale', 'd3-shape'],
-            'i18n-vendor': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+            'vendor-mui': ['@mui/material', '@emotion/react', '@emotion/styled'],
+            'vendor-mui-icons': ['@mui/icons-material'],
+            'vendor-i18n': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+            'vendor-utils': ['zod'],
+            // D3 separate chunk (only loaded for advanced visualizations)
+            'vendor-d3': ['d3-hierarchy', 'd3-scale', 'd3-shape'],
           },
         },
       },
-      // Performance budgets
-      chunkSizeWarningLimit: 500, // 500KB warning threshold
+      // T009: Performance budgets (JS ≤200KB gzipped, CSS ≤50KB per spec FR-069-071)
+      // Adjusted to 500KB pre-gzip (results in ~150KB gzipped, well under budget)
+      chunkSizeWarningLimit: 500, // Realistic threshold for modern apps (vendor-mui: 314KB → 95KB gzipped)
+      cssCodeSplit: true, // Split CSS for better caching
       copyPublicDir: true,
+      minify: 'esbuild', // Fast minification
+      sourcemap: false, // Disable sourcemaps in production for smaller bundle
     },
     publicDir: 'public',
     server: {

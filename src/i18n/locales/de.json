@@ -179,7 +179,9 @@
     "wcagDescription": "Barrierefrei gebaut",
     "tagline": "Entdecke die aromatische Welt der Terpene",
     "appName": "Terpen Explorer",
-    "accessibility": "Barrierefreiheit"
+    "accessibility": "Barrierefreiheit",
+    "ariaLabel": "Website-Fußzeile",
+    "version": "Version {{version}}"
   },
   "modal": {
     "terpeneDetail": {

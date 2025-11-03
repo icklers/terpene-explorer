@@ -20,10 +20,12 @@ import {
   Chip,
   Typography,
   useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { TerpeneCardGrid } from './TerpeneCardGrid';
 import type { Terpene } from '../../models/Terpene';
 import { getEffectMetadata } from '../../services/colorService';
 import { getCategoryForEffect } from '../../services/filterService';
@@ -84,6 +86,9 @@ export function TerpeneTable({
 }: TerpeneTableProps): React.ReactElement {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
+  // UAT Fix: Expand breakpoint to 'md' to show card grid on tablets (≤960px)
+  // This prevents horizontal scrolling issues on mobile/tablet devices
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [sortBy, setSortBy] = useState<SortColumn>(initialSortBy);
   const [sortDirection, setSortDirection] = useState<SortDirection>(initialSortDirection);
 
@@ -186,6 +191,25 @@ export function TerpeneTable({
           {t('table.noTerpenes', 'No terpenes to display')}
         </Typography>
       </Box>
+    );
+  }
+
+  // T002: Conditional rendering - CardGrid on mobile, Table on desktop
+  if (isMobile) {
+    // Convert legacy Terpene[] to NewTerpene[] for CardGrid
+    const newTerpenes = sortedTerpenes.map(toNewTerpene);
+
+    const handleCardClick = (terpene: NewTerpene) => {
+      setSelectedTerpeneId(terpene.id);
+      setSelectedTerpene(terpene);
+      setModalOpen(true);
+    };
+
+    return (
+      <>
+        <TerpeneCardGrid terpenes={newTerpenes} onTerpeneClick={handleCardClick} />
+        <TerpeneDetailModal open={modalOpen} terpene={selectedTerpene} onClose={handleModalClose} />
+      </>
     );
   }
 
