@@ -19,6 +19,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  checks: read
+  pull-requests: write
+  statuses: read
+
 jobs:
   validate:
     name: 🔍 Validate
@@ -213,17 +219,15 @@ jobs:
           retention-days: 7
 
   deploy_preview:
-    permissions:
-      contents: read
-      pull-requests: write
     name: 🚀 Deploy Preview
     needs: [build]
     # Only deploy for PRs which are not Dependabot
-    if: github.event_name == 'pull_request' && ${{ github.actor != 'dependabot[bot]' }} 
-    permissions:
-      contents: read
-      pull-requests: write
-    uses: ./.github/workflows/azure-static-web-apps-blue-desert-06e30df03.yml
+    if: >
+      github.event_name == 'pull_request' &&
+      !startsWith(github.actor, 'dependabot') &&
+      !startsWith(github.event.pull_request.user.login, 'dependabot')
+    # uses: ./.github/workflows/azure-static-web-apps-blue-desert-06e30df03.yml
+    uses: ./.github/workflows/azure-swa-deploy-v2.yml
     with:
       environment: preview
       release_tag: pr-${{ github.event.pull_request.number }}

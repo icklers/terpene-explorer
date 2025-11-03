@@ -83,6 +83,15 @@ jobs:
             echo "✅ Using existing build artifacts from CI"
           fi
 
+      - name: 📦 Upload release artifacts
+        uses: actions/upload-artifact@v5
+        with:
+          name: release-artifacts
+          path: |
+            dist.tar.gz
+            dist.zip
+          retention-days: 7
+
       - name: 🚀 Run semantic-release
         id: semantic
         env:

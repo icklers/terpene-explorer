@@ -4,15 +4,14 @@ description:
   ecosystem, and security best practices.
 tools:
   [
-    'runCommands',
-    'runTasks',
     'edit',
     'runNotebooks',
     'search',
     'new',
+    'runCommands',
+    'runTasks',
     'context7/*',
     'github/*',
-    'extensions',
     'executePrompt',
     'usages',
     'vscodeAPI',
@@ -23,6 +22,7 @@ tools:
     'openSimpleBrowser',
     'fetch',
     'githubRepo',
+    'extensions',
     'todos',
     'runTests',
   ]
