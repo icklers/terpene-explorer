@@ -73,6 +73,10 @@
           {
             "path": "dist.zip",
             "label": "Production Build (zip)"
+          },
+          {
+            "path": "artifact-manifest.txt",
+            "label": "Artifact Manifest (checksums)"
           }
         ],
         "successComment": false,

@@ -53,11 +53,23 @@ jobs:
     environment: ${{ inputs.environment }}
 
     steps:
+      - name: 📥 Set checkout ref
+        id: set_ref
+        run: |
+          if [ "${{ inputs.environment }}" = "production" ]; then
+            if [ "${{ inputs.release_tag }}" != "latest" ]; then
+              echo "ref=${{ inputs.release_tag }}" >> $GITHUB_OUTPUT
+            else
+              echo "ref=main" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "ref=${{ github.ref }}" >> $GITHUB_OUTPUT
+          fi
+
       - name: 📥 Checkout
         uses: actions/checkout@v5
         with:
-          # Checkout the release tag if provided
-          ref: ${{ inputs.release_tag != 'latest' && inputs.release_tag || 'main' }}
+          ref: ${{ steps.set_ref.outputs.ref }}
           submodules: true
           lfs: false
 

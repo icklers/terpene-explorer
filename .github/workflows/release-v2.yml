@@ -60,7 +60,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: 📥 Download build artifacts from CI
-        uses: dawidd6/action-download-artifact@v9
+        uses: dawidd6/action-download-artifact@v11
         continue-on-error: true
         with:
           workflow: ci.yml
@@ -90,7 +90,31 @@ jobs:
           path: |
             dist.tar.gz
             dist.zip
+            artifact-manifest.txt
           retention-days: 7
+
+      - name: 🔐 Compute artifact checksums
+        id: checksums
+        run: |
+          echo "### 🔐 Artifact Integrity Manifest" > artifact-manifest.txt
+          echo "" >> artifact-manifest.txt
+          echo "**Build Date:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> artifact-manifest.txt
+          echo "**Commit SHA:** $GITHUB_SHA" >> artifact-manifest.txt
+          echo "**Repository:** ${{ github.repository }}" >> artifact-manifest.txt
+          echo "" >> artifact-manifest.txt
+          echo "**SHA256 Checksums:**" >> artifact-manifest.txt
+          echo '```' >> artifact-manifest.txt
+          sha256sum dist.tar.gz dist.zip >> artifact-manifest.txt
+          echo '```' >> artifact-manifest.txt
+
+          # Also output to step summary
+          cat artifact-manifest.txt >> $GITHUB_STEP_SUMMARY
+
+          # Set outputs for use in other steps
+          TAR_SHA=$(sha256sum dist.tar.gz | cut -d' ' -f1)
+          ZIP_SHA=$(sha256sum dist.zip | cut -d' ' -f1)
+          echo "tar_checksum=$TAR_SHA" >> $GITHUB_OUTPUT
+          echo "zip_checksum=$ZIP_SHA" >> $GITHUB_OUTPUT
 
       - name: 🚀 Run semantic-release
         id: semantic

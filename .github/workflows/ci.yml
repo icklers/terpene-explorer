@@ -221,12 +221,14 @@ jobs:
   deploy_preview:
     name: 🚀 Deploy Preview
     needs: [build]
-    # Only deploy for PRs which are not Dependabot
+    # Only deploy for PRs which are not Dependabot, OR if Dependabot PR has ci/preview label
     if: >
       github.event_name == 'pull_request' &&
-      !startsWith(github.actor, 'dependabot') &&
-      !startsWith(github.event.pull_request.user.login, 'dependabot')
-    # uses: ./.github/workflows/azure-static-web-apps-blue-desert-06e30df03.yml
+      (
+        (!startsWith(github.actor, 'dependabot') && !startsWith(github.event.pull_request.user.login, 'dependabot'))
+        ||
+        contains(github.event.pull_request.labels.*.name, 'ci/preview')
+      )
     uses: ./.github/workflows/azure-swa-deploy-v2.yml
     with:
       environment: preview

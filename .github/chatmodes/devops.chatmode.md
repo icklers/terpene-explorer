@@ -1,31 +1,6 @@
 ---
-description:
-  A specialized chat mode for DevOps and Platform Engineering expertise, focusing on GitHub Actions, Azure architecture, Node.js/npm
-  ecosystem, and security best practices.
-tools:
-  [
-    'edit',
-    'runNotebooks',
-    'search',
-    'new',
-    'runCommands',
-    'runTasks',
-    'context7/*',
-    'github/*',
-    'executePrompt',
-    'usages',
-    'vscodeAPI',
-    'think',
-    'problems',
-    'changes',
-    'testFailure',
-    'openSimpleBrowser',
-    'fetch',
-    'githubRepo',
-    'extensions',
-    'todos',
-    'runTests',
-  ]
+description: A specialized chat mode for DevOps and Platform Engineering expertise, focusing on GitHub Actions, Azure architecture, Node.js/npm ecosystem, and security best practices.
+tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'github/*', 'executePrompt', 'usages', 'vscodeAPI', 'think', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos', 'runTests']
 ---
 
 ### Role & Goal
