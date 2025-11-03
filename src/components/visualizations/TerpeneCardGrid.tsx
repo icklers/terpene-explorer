@@ -13,6 +13,7 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import React, { useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { getCategoryForEffect } from '../../services/filterService';
 import type { Terpene } from '../../types/terpene';
 import { triggerHapticFeedback, HapticPattern } from '../../utils/haptics';
 
@@ -62,6 +63,7 @@ interface TerpeneCardProps {
 
 const TerpeneCard: React.FC<TerpeneCardProps> = React.memo(({ terpene, onClick }) => {
   const { t } = useTranslation();
+  const theme = useTheme(); // UAT Fix: Add theme for color coding
   const cardData = useMemo(() => toCardData(terpene), [terpene]);
 
   const handleClick = () => {
@@ -134,17 +136,30 @@ const TerpeneCard: React.FC<TerpeneCardProps> = React.memo(({ terpene, onClick }
 
           {/* Top 3 Effects */}
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
-            {cardData.topEffects.map((effect) => (
-              <Chip
-                key={effect}
-                label={effect}
-                size="small"
-                sx={{
-                  fontSize: '0.75rem',
-                  height: 24,
-                }}
-              />
-            ))}
+            {cardData.topEffects.map((effect) => {
+              // UAT Fix: Add category color coding to effect chips
+              const categoryId = getCategoryForEffect(effect);
+              const categoryPalette = (theme.palette as unknown as { category?: Record<string, string> }).category;
+              const categoryColor = categoryId && categoryPalette ? categoryPalette[categoryId] : theme.palette.primary.main;
+
+              return (
+                <Chip
+                  key={effect}
+                  label={effect}
+                  size="small"
+                  sx={{
+                    fontSize: '0.75rem',
+                    height: 24,
+                    // UAT Fix: Apply category color coding
+                    backgroundColor: `${categoryColor}20`, // 20% opacity for background
+                    borderColor: categoryColor,
+                    color: categoryColor,
+                    borderWidth: '1px',
+                    borderStyle: 'solid',
+                  }}
+                />
+              );
+            })}
           </Box>
 
           {/* "+X more" indicator */}
