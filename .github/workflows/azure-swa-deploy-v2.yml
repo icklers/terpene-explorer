@@ -75,7 +75,7 @@ jobs:
 
       - name: Download CI build artifact (azure-swa-build)
         id: download_ci_artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: azure-swa-build
           path: dist
@@ -83,7 +83,7 @@ jobs:
 
       - name: 🔎 If CI artifact missing, try release artifacts (release-artifacts)
         id: download_release_artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: release-artifacts
           path: .
